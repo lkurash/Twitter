@@ -1,0 +1,365 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic");
+
+/* h2 {
+  margin: 0;
+  font-size: 31px;
+} */
+
+.body {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  padding: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  background-color: rgb(106 145 168 / 37.4%);
+}
+
+.form-wrapper {
+  margin: 0 auto;
+  height: 650px;
+  width: 600px;
+  border-radius: 15px;
+  background-color: rgb(0 0 0);
+}
+
+.login-form-header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: left;
+  align-items: center;
+}
+
+.login-form-main {
+  padding-left: 118px;
+  padding-right: 118px;
+  padding-bottom: 70px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.logo-icon-form {
+  margin-top: 15px;
+  width: 100%;
+  height: 30px;
+  margin-left: 225px;
+}
+
+.button-close:hover {
+  background-color: rgb(128 128 128 / 34.7%);
+}
+
+.login-form-title {
+  color: whitesmoke;
+  padding-top: 20px;
+  margin-left: 30px;
+}
+
+.login-form-title h2 {
+  margin: 0;
+  font-size: 31px;
+}
+
+.login-form-button {
+  width: 298px;
+  height: 38px;
+
+  /* margin: 0 auto; */
+  margin-top: 30px;
+  border-radius: 30px;
+  background-color: rgb(255 255 255 / 97%);
+  border: none;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.button-google {
+  font-weight: normal;
+}
+
+.all-line {
+  display: flex;
+  height: 30px;
+  margin-top: 15px;
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
+.block-input {
+  margin: 0 auto;
+  height: 55px;
+  border: 2px solid rgb(59 204 244);
+  border-radius: 5px;
+}
+
+.login {
+  width: 298px;
+}
+
+.hint {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-left: 8px;
+  color: rgb(59 204 244);
+}
+
+.input-form {
+  width: 275px;
+  height: 20px;
+  margin-top: 3px;
+  margin-left: 8px;
+}
+
+.login-form-footer {
+  margin-top: 52px;
+  font-size: 15px;
+  color: rgb(221 221 221 / 81.3%);
+}
+
+.login-form-button-singup {
+  margin-top: 52px;
+  font-size: 15px;
+  color: rgb(221 221 221 / 81.3%);
+  border: none;
+  background: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.login-form-button-singup:hover {
+  color: rgb(59 204 244);
+}
+
+.password-form-main {
+  height: 536px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.login-form-password-title {
+  color: whitesmoke;
+  padding-top: 20px;
+}
+
+.login-form-password-title h2 {
+  margin: 0;
+  font-size: 35px;
+}
+
+.input-password {
+  width: 100%;
+  border: 0.1px solid rgb(174 174 174 / 55.8%);
+}
+
+.input-password input:focus {
+  border: 2px solid rgb(59 204 244);
+}
+
+.password-form-hint {
+  font-size: 14px;
+  margin-top: 5px;
+  margin-left: 8px;
+  color: rgb(221 221 221 / 81.3%);
+}
+
+.password-form-forgot-password {
+  font-size: 14px;
+  margin-left: 10px;
+  margin-top: 3px;
+  color: rgb(59 204 244);
+}
+
+.password-form-notactive-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 12px;
+  width: 98%;
+  height: 55px;
+  color: rgb(70 70 70 / 81.3%);
+  margin-top: 30px;
+  margin-bottom: 25px;
+  background-color: rgb(54 54 54 / 37.4%);
+  border: 0.1px solid rgb(71 71 71 / 46.2%);
+  border-radius: 5px;
+  cursor: default;
+}
+
+.password-form-notactive-input-email {
+  font-size: 20px;
+}
+
+.password-form-button {
+  margin-top: 200px;
+  width: 100%;
+  height: 50px;
+}
+
+.input-form {
+  width: 93%;
+}
+
+.password-form-button button {
+  height: 50px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.password-form-footer {
+  font-size: 15px;
+  color: rgb(221 221 221 / 81.3%);
+}
+
+/* signUpForm */
+
+.signup-form-main {
+  height: 536px;
+  margin-left: 80px;
+  margin-right: 80px;
+  letter-spacing: 0.5px;
+}
+
+.signup-form-main h2 {
+  margin: 0;
+  font-size: 35px;
+}
+
+.signup-form-input {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 0.1px solid rgb(174 174 174 / 55.8%);
+  width: 435px;
+  height: 56px;
+  margin-top: 30px;
+  cursor: text;
+}
+
+.signup-notactive-input {
+  margin-left: 5px;
+  margin-top: 15px;
+  font-size: 20px;
+  color: grey;
+  cursor: text;
+}
+
+.signup-active-input {
+  margin-top: 5px;
+  font-size: 12px;
+  margin-left: 5px;
+  color: rgb(59 179 244);
+}
+
+.signup-form-input input {
+  margin-left: 5px;
+  width: 380px;
+  font-size: 18px;
+  color: aliceblue;
+  height: 25px;
+  border: none;
+  background-color: black;
+  caret-color: aliceblue;
+}
+
+.signup-birth {
+  margin-top: 50px;
+}
+
+.signup-birth-hint {
+  margin-top: 10px;
+  font: 1em sans-serif;
+  font-size: 14px;
+  color: grey;
+}
+
+.signup-birth-form {
+  margin-top: 20px;
+}
+
+.signup-birth-form-month {
+  height: 55px;
+  width: 200px;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: black;
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.signup-birth-form-day {
+  height: 55px;
+  width: 90px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: black;
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.signup-birth-form-year {
+  height: 55px;
+  width: 115px;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: black;
+  color: aliceblue;
+  cursor: pointer;
+}
+
+.signup-form-button {
+  width: 100%;
+  height: 50px;
+  margin-top: 40px;
+  border-radius: 30px;
+  background-color: aliceblue;
+  border: 0.1px solid rgb(174 174 174 / 55.8%);
+  color: black;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.signup-user-info {
+  margin-top: 5px;
+  font-size: 14px;
+  margin-left: 5px;
+  color: gray;
+  cursor: text;
+}
+
+.signup-user-name,
+.signup-user-email,
+.signup-user-birthdate {
+  margin-left: 5px;
+  margin-top: 5px;
+  font-size: 18px;
+  color: aliceblue;
+  cursor: text;
+}
+
+.signup-form-input-help {
+  color: grey;
+  font-size: 8px;
+  margin-left: 80%;
+}
+
+@media (width <= 400px) {
+  .signup-birth-form-month {
+    width: 100px;
+  }
+
+  .signup-birth-form-year {
+    width: 100px;
+  }
+}

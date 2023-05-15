@@ -1,0 +1,11 @@
+.side-bar {
+  width: 400px;
+  height: 100%;
+  /* background-color: aqua; */
+}
+
+@media (max-width: 990px) {
+  .side-bar {
+    display: none;
+  }
+}

@@ -1,0 +1,180 @@
+.menu {
+  width: 275px;
+  height: 100%;
+  color: #dcdcdc;
+  position: fixed;
+}
+
+.menu-button-twitter {
+  width: 100%;
+}
+
+.button-twit {
+  width: 230px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  border-radius: 35px;
+  cursor: pointer;
+  background-color: #1d9bf0;
+  border: none;
+}
+
+.button-twit:hover {
+  background-color: #1d9cf0e8;
+}
+
+.user-block-menu {
+  bottom: 0;
+  position: fixed;
+}
+
+.tooltip {
+  width: 230px;
+  height: 50px;
+  position: absolute;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -60px;
+  background-color: #000;
+  border: 0.1px solid rgb(88 88 88);
+  box-shadow: 0 0 5px rgb(245 245 245 / 54.1%);
+}
+
+.logout {
+  border: none;
+  width: 95%;
+  height: 40px;
+  font-size: 17px;
+  color: aliceblue;
+  background-color: #000;
+  cursor: pointer;
+}
+
+.button-user {
+  width: 230px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 35px;
+  cursor: pointer;
+  background-color: #000;
+  border: none;
+}
+
+.button-user:hover {
+  background-color: #1f1f1f;
+}
+
+.button-twit span {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 auto;
+  color: aliceblue;
+}
+
+.button-user-desc {
+  display: flex;
+}
+
+.button-user span {
+  font-size: 16px;
+  margin-top: 7px;
+  color: aliceblue;
+}
+
+.button-user p {
+  font-size: 14px;
+  margin-top: 2px;
+  color: gray;
+}
+
+.button-user:focus,
+.button-twit:focus {
+  border: none;
+}
+
+.button-user-photo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  background-color: aquamarine;
+  border-radius: 30px;
+  margin-left: 10px;
+}
+
+.button-user-photo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+}
+
+.button-user-dotmenu-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+
+  /* margin-left: 40px; */
+}
+
+.tweet-icon {
+  display: none;
+}
+
+/* .twit-count-like {
+  margin-left: 3px;
+  color: grey;
+  font-size: 13px;
+} */
+
+@media (width <= 1245px) {
+  .menu {
+    width: 75px;
+  }
+
+  .button-twit {
+    width: 50px;
+    justify-content: center;
+    align-self: center;
+  }
+
+  .button-twit span {
+    display: none;
+  }
+
+  .button-user {
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+  }
+
+  .button-user-photo {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+  }
+
+  .button-user-name {
+    display: none;
+  }
+
+  .button-user-dotmenu-icon {
+    display: none;
+  }
+
+  .tweet-icon {
+    display: block;
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (width <= 550px) {
+  .menu {
+    display: none;
+  }
+}

@@ -1,0 +1,626 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap");
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 275px;
+  width: 100%;
+  height: max-content;
+  border: 0.1px solid rgb(174 174 174 / 31.2%);
+}
+
+.main {
+  width: 100%;
+  height: max-content;
+  margin: 0 auto;
+}
+
+.main-search-block {
+  width: 100%;
+  height: 53px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.main-search-form {
+  display: flex;
+  width: 81%;
+  height: 42px;
+  margin-left: 17px;
+  border-radius: 50px;
+  background-color: rgb(128 128 128 / 34.7%);
+  align-items: center;
+}
+
+.main-search-form-home {
+  display: flex;
+  width: 81%;
+  height: 42px;
+  margin-left: 17px;
+  border-radius: 50px;
+  background-color: rgb(30 33 44 / 53.4%);
+  align-items: center;
+}
+
+.main-search-form-input {
+  width: 100%;
+}
+
+.main-input {
+  width: 90%;
+  border: none;
+  height: 18px;
+  margin-left: 15px;
+  background: transparent;
+  color: aliceblue;
+}
+
+.main-input::placeholder {
+  font-size: 15px;
+}
+
+.active-search-input {
+  border: 1px solid rgb(16 144 230);
+}
+
+.main-search-list-found-message {
+  margin-left: 35px;
+  margin-top: 40px;
+}
+
+.main-search-wrapper-found-users {
+  position: absolute;
+  top: 55px;
+  width: 250px;
+  height: 110px;
+  overflow: scroll;
+  border: 0.1px solid rgb(88 88 88);
+  box-shadow: 0 0 5px rgb(245 245 245 / 54.1%);
+  border-radius: 20px;
+  background-color: black;
+}
+
+.main-search-list-found-users {
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  margin-left: 10px;
+  list-style-type: none;
+}
+
+.main-search-found-list-user {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.main-search-found-list-user img {
+  margin-right: 10px;
+  height: 40px;
+  width: 40px;
+  border-radius: 30px;
+}
+
+.main-input:active,
+:hover,
+:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+.main-search-icon {
+  width: 18px;
+  height: 18px;
+  margin-left: 12px;
+}
+
+.main-search-block-button-return {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  margin-left: 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.main-search-block-button-return:hover {
+  background-color: rgb(128 128 128 / 34.7%);
+}
+
+.main-search-block-button-return img {
+  width: 18px;
+  height: 18px;
+}
+
+.main-button-settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  margin-left: 35px;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.main-content {
+  width: 100%;
+  height: max-content;
+}
+
+.section {
+  margin: 0 auto;
+  height: max-content;
+  width: 92%;
+  padding-bottom: 10px;
+}
+
+.happen-home {
+  margin-top: 20px;
+  padding-top: 1px;
+  margin-left: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 15px;
+  background-color: rgb(30 33 44 / 53.4%);
+}
+
+.main-line {
+  width: 100%;
+  border-bottom: 0.1px solid rgb(174 174 174 / 31.2%);
+}
+
+.main-section-name {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.main-trends-item {
+  width: 100%;
+  height: 60px;
+  margin-top: 20px;
+  display: flex;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.trends-item {
+  width: 93%;
+}
+
+.trends-item-title,
+.trends-item-footer {
+  font-size: 13px;
+  color: rgb(113 118 123);
+}
+
+.trends-item-body {
+  margin-top: 2px;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.dotmenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.dotmenu-icon {
+  height: 19px;
+  width: 19px;
+}
+
+.dotmenu:hover {
+  background-color: rgb(128 128 128 / 34.7%);
+}
+
+.user-main-content-block {
+  width: 100%;
+  min-width: 350px;
+  height: max-content;
+  margin: 0 auto;
+  margin-top: 2px;
+}
+
+.user-main-content-button-panel {
+  display: flex;
+  margin: 0;
+}
+
+.user-main-content-reading-button-panel,
+.user-main-content-foryou-button-panel,
+.user-main-content-likes-button-onpanel,
+.user-main-content-media-button-onpanel,
+.user-main-content-answers-button-onpanel,
+.user-main-content-twits-button-onpanel {
+  width: 100%;
+  height: 50px;
+  color: aliceblue;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  background-color: black;
+  cursor: pointer;
+}
+
+.user-main-content-button-panel button:active {
+  border: none;
+}
+
+.user-main-content-likes-button-onpanel:hover,
+.user-main-content-media-button-onpanel:hover,
+.user-main-content-answers-button-onpanel:hover,
+.user-main-content-twits-button-onpanel:hover {
+  background-color: rgb(128 128 128 / 20.6%);
+}
+
+.active-button-panel {
+  border-bottom: 2px solid rgb(16 144 230);
+}
+
+.user-block-twit {
+  display: flex;
+
+  /* width: 90%; */
+  margin-top: 10px;
+  min-height: max-content;
+  margin-bottom: 10px;
+}
+
+.user-info {
+  width: 50px;
+  margin-right: 15px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.user-info-photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 30px;
+  background-color: blueviolet;
+}
+
+.user-info-photo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+}
+
+.twit-form {
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 0.5px;
+  width: 480px;
+  height: max-content;
+}
+
+.twit-form-button-delete {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  margin-left: 20px;
+  margin-right: 10px;
+  background-color: #626262c1;
+  cursor: pointer;
+}
+
+.twit-form-button-delete:hover {
+  background-color: #828282;
+}
+
+.twit-form h2 {
+  margin: 0;
+}
+
+.twit-form-page-twit {
+  position: absolute;
+}
+
+.twit-form-input-text {
+  height: 50px;
+  margin-bottom: 50px;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.twit-form-input-text div {
+  background-color: black;
+}
+
+.react-input-emoji--input {
+  color: aliceblue;
+  max-height: 70px;
+}
+
+.react-emoji-picker--wrapper {
+  top: 0;
+  margin-top: 50px;
+}
+
+.twit-form-input-text button svg {
+  fill: #626262;
+  width: 15px;
+  height: 15px;
+}
+
+.twit-form-input-text:focus {
+  border: none;
+  outline: none;
+}
+
+.twit-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  border-top: 0.1px solid rgb(174 174 174 / 55.8%);
+}
+
+.twit-panel button {
+  margin-top: 10px;
+  width: 100px;
+  height: 36px;
+  margin-right: 10px;
+  border-radius: 30px;
+  border: none;
+  color: aliceblue;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: #1d9bf0;
+}
+
+.twit-panel-img {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 110px;
+}
+
+#input-file {
+  display: none;
+}
+
+.twit-form-selected-file-img {
+  margin-left: 20px;
+
+  /* height: 200px; */
+  width: 80%;
+}
+
+.trends-home {
+  margin-top: 20px;
+  padding-top: 1px;
+  margin-left: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 15px;
+  background-color: rgb(30 33 44 / 53.4%);
+}
+
+.twits {
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.twit {
+  width: 100%;
+}
+
+.twits-message {
+  font-size: 20px;
+}
+
+.twits-message-button {
+  color: #1d9bf0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.twit-form-input-file img {
+  margin-left: 30px;
+  width: 15px;
+  height: 15px;
+}
+
+.twit-user-name {
+  font-size: 18px;
+}
+
+.twit-text {
+  margin-top: 5px;
+  width: 500px;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+}
+
+.wrapper-twit-img {
+  width: 90%;
+  height: 90%;
+  min-height: 200px;
+}
+
+.twit-img {
+  margin-top: 10px;
+  width: 100%;
+  height: 100%;
+
+  /* width: 500px; */
+  max-height: 400px;
+}
+
+.page-name {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+}
+
+.page-name-user-name {
+  margin-left: 10px;
+}
+
+.page-name p {
+  color: grey;
+  font-size: 14px;
+}
+
+.twit-desc {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-block {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+@media (width <= 1245px) {
+  .main-wrapper {
+    width: 80%;
+    min-width: 605px;
+    margin-left: 75px;
+  }
+}
+
+@media (width <= 990px) {
+  .main-wrapper {
+    min-width: 375px;
+  }
+}
+
+@media (width <= 865px) {
+  .twit-text {
+    width: 440px;
+  }
+}
+
+@media (width <= 820px) {
+  .twit-text {
+    width: 400px;
+  }
+}
+
+@media (width <= 740px) {
+  .twit-text {
+    width: 350px;
+  }
+}
+
+@media (width <= 700px) {
+  .twit-text {
+    width: 330px;
+  }
+}
+
+@media (width <= 650px) {
+  .twit-text {
+    width: 310px;
+  }
+}
+
+@media (width <= 620px) {
+  .twit-text {
+    width: 290px;
+  }
+}
+
+@media (width <= 550px) {
+  .menu {
+    display: none;
+  }
+
+  .main-button-settings {
+    display: none;
+  }
+
+  .mobile-logo,
+  .mobile-button-main-settings {
+    display: block;
+  }
+
+  .mobile-logo {
+    width: 50px;
+    height: 30px;
+  }
+
+  .logo-icon {
+    margin: 0;
+    height: 25px;
+    width: 25px;
+  }
+
+  .main-search-block {
+    margin: 0 auto;
+    width: 92%;
+  }
+
+  .mobile-button-main-settings {
+    margin-left: 10px;
+  }
+
+  .main-wrapper {
+    min-width: 100%;
+    margin-left: 0;
+    border: none;
+  }
+
+  .main-search-form {
+    margin: 0;
+    height: 30px;
+    width: 95%;
+  }
+
+  .user-main-content-button-panel button {
+    width: 100%;
+    height: 53px;
+  }
+
+  .user-main-content-block h2 {
+    display: none;
+  }
+
+  .user-main-content-block-mobile {
+    display: none;
+  }
+
+  .user-info {
+    margin-left: 5px;
+  }
+
+  .twit-text {
+    font-size: 15px;
+    width: 280px;
+  }
+}

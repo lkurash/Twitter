@@ -1,0 +1,179 @@
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 47px;
+  height: 47px;
+  margin-top: 13px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.logo:hover {
+  background-color: rgba(128, 128, 128, 0.347);
+}
+
+.mobile-logo,
+.mobile-button-main-settings {
+  display: none;
+}
+
+.logo-icon {
+  height: 23px;
+  width: 28px;
+}
+
+.menu-button {
+  width: 200px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  border-radius: 35px;
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  background-color: rgba(128, 128, 128, 0.347);
+}
+
+.hashtag-icon {
+  height: 33px;
+  width: 33px;
+  margin-left: 12px;
+}
+
+.settings-icon {
+  height: 25px;
+  width: 25px;
+  margin-left: 12px;
+}
+
+.menu-button-name {
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.main-button-settings:hover {
+  background-color: #6473827e;
+}
+
+.main-settings-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.button-login {
+  cursor: pointer;
+  border: 0.1px solid white;
+  background-color: #1d9bf0;
+  color: white;
+  width: 85px;
+  height: 36px;
+  border-radius: 30px;
+  font-size: 17px;
+  font-weight: 700;
+  margin-right: 12px;
+}
+
+.button-singup {
+  cursor: pointer;
+  width: 85px;
+  height: 36px;
+  border-radius: 30px;
+  border: 0.1px solid white;
+  background-color: white;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.button-login:hover {
+  background-color: #3ea9f1;
+}
+
+.button-singup:hover {
+  background-color: rgb(240, 240, 240);
+}
+
+.close-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.button-close {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.tooltip-delete-twit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -20px;
+  margin-left: -95px;
+  width: 130px;
+  height: 40px;
+  position: absolute;
+  border: 0.1px solid rgb(88, 88, 88);
+  border-radius: 15px;
+  background-color: black;
+}
+
+.button-delete-twit {
+  border: none;
+  font-size: 15px;
+  color: aliceblue;
+  background-color: #000000;
+  cursor: pointer;
+}
+
+.button-dotmenu-twit {
+  margin-right: 10px;
+}
+
+.button-dotmenu-twit img {
+  width: 15px;
+  height: 15px;
+}
+@media (max-width: 1245px) {
+  .menu-button {
+    width: 50px;
+    justify-content: center;
+    align-self: center;
+  }
+
+  .menu-button-name {
+    display: none;
+  }
+
+  .hashtag-icon,
+  .settings-icon {
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 700px) {
+  .button-login,
+  .button-singup {
+    width: 100%;
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 550px) {
+  .button-login,
+  .button-singup {
+    width: 40%;
+  }
+
+  .button-main-settings {
+    margin: 0;
+  }
+}

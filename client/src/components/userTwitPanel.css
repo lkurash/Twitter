@@ -1,0 +1,169 @@
+.user-twit-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 30px;
+}
+
+/* button comment on twit panel */
+
+.user-twit-panel-comments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0;
+  color: #666;
+  font-size: 13px;
+  width: 35px;
+  height: 35px;
+}
+
+.user-twit-panel-comments:hover {
+  color: #1d9bf0;
+}
+
+.user-twit-panel-comments img {
+  width: 14px;
+  height: 14px;
+}
+
+.user-twit-panel-button-comments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.user-twit-panel-button-comments:hover {
+  background-color: #008cff25;
+}
+
+/* button retwit on twit panel */
+
+.user-twit-panel-retwit img {
+  width: 19px;
+  height: 19px;
+}
+
+.user-twit-panel-retwit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 13px;
+  width: 35px;
+  height: 35px;
+}
+
+.user-twit-panel-button-retwit {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.user-twit-panel-retwit:hover {
+  color: #46d452;
+}
+
+.user-twit-panel-button-retwit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.user-twit-panel-button-retwit:hover {
+  background-color: #2efc3f1e;
+}
+
+/* button like on twit panel  */
+
+.user-twit-panel-like {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 13px;
+  width: 35px;
+  height: 35px;
+}
+
+.user-twit-panel-like img {
+  width: 15px;
+  height: 15px;
+}
+
+.user-twit-panel-like:hover {
+  color: #ff4a6e;
+}
+
+.user-twit-panel-button-like {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.user-twit-panel-count-like {
+  margin-left: 3px;
+  min-width: 10px;
+  min-height: 15px;
+}
+
+.user-twit-panel-button-like:hover {
+  background-color: #f02b7d2a;
+}
+
+/* button bookmark on twit panel */
+
+.user-twit-panel-bookmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 13px;
+  width: 35px;
+  height: 35px;
+}
+
+.user-twit-panel-bookmark img {
+  width: 19px;
+  height: 19px;
+}
+
+.user-twit-panel-bookmark:hover {
+  color: #366cff;
+}
+
+.user-twit-panel-button-bookmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.user-twit-panel-button-bookmark:hover {
+  background-color: #008cff25;
+}
+
+@media (width <= 550px) {
+  .user-twit-panel-button-bookmark {
+    margin-right: 20px;
+  }
+}
