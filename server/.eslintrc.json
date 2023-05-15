@@ -1,0 +1,21 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "extends": "airbnb"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "semi": [2, "always"],
+    "indent": ["error", 2],
+    "lines-between-class-members": ["error", "always"],
+    "space-infix-ops": "error",
+    "newline-after-var": "error"
+  }
+}
