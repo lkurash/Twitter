@@ -4,6 +4,7 @@ class UserStore {
   constructor() {
     this._auth = false;
     this._user = [];
+    this._birthDate = "";
     this._allUsers = [];
     this._userFavoriteTwits = [];
     this._userPage = [];
@@ -55,6 +56,10 @@ class UserStore {
     this._hoverFollowUser = user;
   }
 
+  setBirthDate(birthDate) {
+    this._birthDate = birthDate;
+  }
+
   get isAuth() {
     return this._auth;
   }
@@ -93,6 +98,10 @@ class UserStore {
 
   get hoverFollowUser() {
     return this._hoverFollowUser;
+  }
+
+  get birthDate() {
+    return this._birthDate;
   }
 }
 export default UserStore;

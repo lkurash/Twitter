@@ -1,4 +1,3 @@
-
 a,
 p,
 h2 {
@@ -135,12 +134,14 @@ h2 {
 }
 
 .edit-profile-form-header {
-  width: 100%;
-  height: 50px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: left;
   align-items: center;
+  padding-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 50px;
 }
 
 .edit-form-input input {
@@ -310,6 +311,7 @@ h2 {
 
 .edit-form-input-birth {
   margin-top: 20px;
+  margin-bottom: 10px;
   font-size: 20px;
 }
 

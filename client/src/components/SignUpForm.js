@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./loginAndRegistretionForm.css";
 import BirthForm from "./BirthForm";
 import ButtonClose from "./common/ButtonClose";
+import { Context } from "..";
 
 function SignUpForm(props) {
+  const { user } = useContext(Context);
   const [activeDivName, setActivedivName] = useState(false);
   const [activeDivEmail, setActivedivEmail] = useState(false);
   const [activeDivPssword, setActivedivPassword] = useState(false);
@@ -94,12 +96,18 @@ function SignUpForm(props) {
               this account is for a business, a pet, or something else.
             </p>
           </div>
-          <BirthForm
-            getInfoUser={props.getInfoUser}
-            userName={userName}
-            email={email}
-            password={password}
-          />
+          <div className="signup-birth-form">
+            <BirthForm />
+            <button
+              className="signup-form-button"
+              type="button"
+              onClick={() =>
+                props.getInfoUser(userName, email, user.birthDate, password)
+              }
+            >
+              <span>Next</span>
+            </button>
+          </div>
         </main>
       </div>
     </div>

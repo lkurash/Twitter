@@ -27,7 +27,7 @@ const SignUpPage = observer(() => {
         userName,
         userEmail: email,
         userPassword: password,
-        userBirthdate: birthdate,
+        userBirthdate: user.birthDate,
       });
     }
   };
