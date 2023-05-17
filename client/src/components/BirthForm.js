@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import { SIGNUP_PAGE } from "../utils/constans";
+import { observer } from "mobx-react-lite";
+import { useContext, useState } from "react";
+import { Context } from "..";
 
-function BirthForm(props) {
+const BirthForm = observer(() => {
+  const { user } = useContext(Context);
+  const [userSelectMonth, setUserSelectMonth] = useState("");
+  const [userSelectDay, setUserSelectDay] = useState("1");
+  const [userSelectYear, setUserSelectYear] = useState("");
   const listMonths = [
     "January",
     "February",
@@ -17,41 +21,67 @@ function BirthForm(props) {
     "November",
     "December",
   ];
+  const mounth30Days = ["April", "June", "September", "November"];
+  const mounth31Days = [
+    "January",
+    "March",
+    "May",
+    "July",
+    "August",
+    "October",
+    "December",
+  ];
 
-  const listDays = (day) => {
-    for (let index = 0; index < 30; index++) {
-      let element = day[index];
+  const optionDays = [];
+  const optionYears = [];
 
-      element += 1;
-      day.push(element);
+  let birthDate;
+
+  const getYears = () => {
+    for (let year = 1970; year < 2017; year++) {
+      optionYears.push(year);
     }
-    return day;
+    return optionYears;
   };
 
-  const listYears = (year) => {
-    for (let index = 0; index < 52; index++) {
-      let element = year[index];
-
-      element += 1;
-      year.push(element);
+  const getDays = (countDay) => {
+    for (let day = 1; day < countDay; day++) {
+      optionDays.push(day);
     }
-    return year;
   };
 
-  const [userSelectMonth, setUserSelectMonth] = useState("");
-  const [userSelectDay, setUserSelectDay] = useState("1");
-  const [userSelectYear, setUserSelectYear] = useState("");
+  const generateBirthDate = () => {
+    if (userSelectMonth && userSelectDay && userSelectYear) {
+      birthDate = `${userSelectDay} ${userSelectMonth} ${userSelectYear}`;
+      user.setBirthDate(birthDate);
+      return birthDate;
+    }
+  };
 
-  const location = useLocation().pathname;
+  const isDaysMonth = () => {
+    if (mounth30Days.includes(userSelectMonth)) {
+      getDays(31);
+      return optionDays;
+    }
+    if (mounth31Days.includes(userSelectMonth)) {
+      getDays(32);
+      return optionDays;
+    }
+    if (userSelectMonth === "February") {
+      getDays(30);
+      return optionDays;
+    }
+  };
 
-  let date;
-
-  if (userSelectMonth && userSelectDay && userSelectYear) {
-    date = `${userSelectDay} ${userSelectMonth} ${userSelectYear}`;
-  }
+  isDaysMonth();
+  getYears();
+  generateBirthDate();
 
   return (
-    <div className="signup-birth-form">
+    <>
+      <h4 className="edit-form-input-birth">
+        Date of birth: {!birthDate ? user.user.birthdate : birthDate}
+      </h4>
       <select
         name="month"
         value={userSelectMonth}
@@ -71,45 +101,17 @@ function BirthForm(props) {
       <select
         name="day"
         onInput={(e) => {
-          {
-            setUserSelectDay(e.target.value);
-          }
+          setUserSelectDay(e.target.value);
         }}
         className="signup-birth-form-day"
       >
-        <option disabled value={0} />
         {!userSelectMonth && <option disabled>Select month</option>}
-        {userSelectMonth === "February" &&
-          listDays([1])
-            .slice(0, 29)
-            .map((day) => (
-              <option value={day} key={day}>
-                {day}
-              </option>
-            ))}
-        {(userSelectMonth === "April" ||
-          userSelectMonth === "June" ||
-          userSelectMonth === "September" ||
-          userSelectMonth === "November") &&
-          listDays([1])
-            .slice(0, 30)
-            .map((day) => (
-              <option value={day} key={day}>
-                {day}
-              </option>
-            ))}
-        {(userSelectMonth === "January" ||
-          userSelectMonth === "March" ||
-          userSelectMonth === "May" ||
-          userSelectMonth === "July" ||
-          userSelectMonth === "August" ||
-          userSelectMonth === "October" ||
-          userSelectMonth === "December") &&
-          listDays([1]).map((day) => (
-            <option value={day} key={day}>
-              {day}
-            </option>
-          ))}
+
+        {optionDays.map((day) => (
+          <option value={day} key={day}>
+            {day}
+          </option>
+        ))}
       </select>
 
       <select
@@ -121,32 +123,14 @@ function BirthForm(props) {
         }}
       >
         <option disabled />
-        {listYears([1970]).map((year) => (
+        {optionYears.map((year) => (
           <option value={year} key={year}>
             {year}
           </option>
         ))}
       </select>
-      {location === SIGNUP_PAGE ? (
-        <button
-          className="signup-form-button"
-          type="button"
-          onClick={() =>
-            props.getInfoUser(props.userName, props.email, date, props.password)
-          }
-        >
-          <span>Next</span>
-        </button>
-      ) : (
-        <button
-          className="button-for-edit-profile-form"
-          type="button"
-          onClick={() => props.getBirthUser(date)}
-        >
-          <span>Add Date</span>
-        </button>
-      )}
-    </div>
+    </>
   );
-}
+});
+
 export default BirthForm;

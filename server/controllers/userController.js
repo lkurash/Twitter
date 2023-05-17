@@ -92,16 +92,15 @@ class UserController {
   }
 
   async updateUserProfile(request, response, next) {
-    try {
-      let { name, birthdate, web_site_url, about } = request.body;
+    let { name, birthdate, web_site_url, about } = request.body;
 
-      const user = decodeUser(request);
-      const email = user.email;
+    const user = decodeUser(request);
+    const email = user.email;
 
-      const photo = request.files.photo;
-      const background = request.files.background;
+    const file = request.files;
 
-      if (photo) {
+    if (file) {
+      if (file.photo) {
         let { photo } = request.files;
         let fileName = uuid.v4() + ".jpg";
 
@@ -119,12 +118,12 @@ class UserController {
         );
       }
 
-      if (background) {
+      if (file.background) {
         let { background } = request.files;
         let fileName = uuid.v4() + ".jpg";
 
         background.mv(path.resolve(__dirname, "..", "static", fileName));
-
+        
         const profileUpdate = await User.update(
           {
             background: fileName,
@@ -136,61 +135,59 @@ class UserController {
           }
         );
       }
-
-      if (name) {
-        const profileUpdate = await User.update(
-          {
-            user_name: name,
-          },
-          {
-            where: {
-              email: email,
-            },
-          }
-        );
-      }
-      if (birthdate) {
-        const profileUpdate = await User.update(
-          {
-            birthdate: birthdate,
-          },
-          {
-            where: {
-              email: email,
-            },
-          }
-        );
-      }
-      if (web_site_url) {
-        const profileUpdate = await User.update(
-          {
-            web_site_url: web_site_url,
-          },
-          {
-            where: {
-              email: email,
-            },
-          }
-        );
-      }
-      if (about) {
-        const profileUpdate = await User.update(
-          {
-            about: about,
-          },
-          {
-            where: {
-              email: email,
-            },
-          }
-        );
-      }
-      const updateUser = await User.findOne({ where: { email } });
-
-      return response.json(updateUser);
-    } catch (error) {
-      next(ApiError.internal(error.message));
     }
+
+    if (name) {
+      const profileUpdate = await User.update(
+        {
+          user_name: name,
+        },
+        {
+          where: {
+            email: email,
+          },
+        }
+      );
+    }
+    if (birthdate) {
+      const profileUpdate = await User.update(
+        {
+          birthdate: birthdate,
+        },
+        {
+          where: {
+            email: email,
+          },
+        }
+      );
+    }
+    if (web_site_url) {
+      const profileUpdate = await User.update(
+        {
+          web_site_url: web_site_url,
+        },
+        {
+          where: {
+            email: email,
+          },
+        }
+      );
+    }
+    if (about) {
+      const profileUpdate = await User.update(
+        {
+          about: about,
+        },
+        {
+          where: {
+            email: email,
+          },
+        }
+      );
+    }
+    const updateUser = await User.findOne({ where: { email } });
+
+    return response.json(updateUser);
   }
 
   async getUserInfoByEmail(request, response, next) {

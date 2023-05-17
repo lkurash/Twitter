@@ -17,7 +17,6 @@ const EditProfileForm = observer(() => {
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [textWebSiteUrl, setTextWebSiteUrl] = useState("");
-  const [birthdate, setBirthdate] = useState("");
   const [photo, setPhoto] = useState("");
   const [background, setBackground] = useState("");
   const [activInputName, setActivInputName] = useState(false);
@@ -30,12 +29,6 @@ const EditProfileForm = observer(() => {
 
   const selectedFileBackground = (e) => {
     setBackground(e.target.files[0]);
-  };
-
-  const getBirthUser = (date) => {
-    if (date) {
-      setBirthdate(date);
-    }
   };
 
   const getUserBackground = () => {
@@ -51,9 +44,10 @@ const EditProfileForm = observer(() => {
     formData.append("photo", photo);
     formData.append("background", background);
     formData.append("name", name);
-    formData.append("birthdate", birthdate);
+    formData.append("birthdate", user.birthDate);
     formData.append("web_site_url", textWebSiteUrl);
     formData.append("about", about);
+
     updateUserProfile(formData);
     navigate(PROFILE_PAGE_USER + user.user.id);
   };
@@ -172,11 +166,8 @@ const EditProfileForm = observer(() => {
             />
           </div>
         )}
-        <div>
-          <p className="edit-form-input-birth">
-            Date of birth: {!birthdate ? user.user.birthdate : birthdate}
-          </p>
-          <BirthForm getBirthUser={getBirthUser} />
+        <div className="signup-birth-form">
+          <BirthForm />
         </div>
       </main>
     </div>
