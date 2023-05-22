@@ -21,16 +21,14 @@ const AppRouter = observer(() => {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-      <Routes>
-        {authRoutes.map(({ path, Component }) => (
-          <Route key={path} path={path} element={<Component />} exact />
-        ))}
-        {publicRoutes.map(({ path, Component }) => (
-          <Route key={path} path={path} element={<Component />} exact />
-        ))}
-      </Routes>
-    </div>
+    <Routes>
+      {authRoutes.map(({ path, Component }) => (
+        <Route key={path} path={path} element={<Component />} exact />
+      ))}
+      {publicRoutes.map(({ path, Component }) => (
+        <Route key={path} path={path} element={<Component />} exact />
+      ))}
+    </Routes>
   );
 });
 
