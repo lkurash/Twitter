@@ -35,7 +35,7 @@ const ButtonCommentOnTwit = observer((props) => {
       >
         <img src={imgButtonComment(props.twit)} alt="Comment" />
       </div>
-      {props.twit.comments.length > 0 && <p>{props.twit.comments.length}</p>}
+      {props.twit.Comments.length > 0 && <p>{props.twit.Comments.length}</p>}
       {twits.activeTwitComment.id === props.twit.id && (
         <CommentForm twit={props.twit} />
       )}

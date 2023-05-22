@@ -157,9 +157,14 @@
 
 .section {
   margin: 0 auto;
+  min-height: 80px;
   height: max-content;
   width: 92%;
   padding-bottom: 10px;
+}
+
+.section-trends-hidden {
+  margin-top: 10px;
 }
 
 .happen-home {

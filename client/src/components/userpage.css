@@ -394,7 +394,7 @@ h2 {
   margin: 0;
   padding: 0;
   margin-bottom: 25px;
-  margin-left: 10px;
+  margin-left: 5px;
   list-style-type: none;
 }
 
@@ -407,6 +407,10 @@ h2 {
 .section-read-main-user-info {
   display: flex;
   align-items: center;
+}
+
+.section-read-main-hidden {
+  margin-top: 20px;
 }
 
 .follow-page-main-user {

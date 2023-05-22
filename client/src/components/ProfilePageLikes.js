@@ -15,7 +15,7 @@ const ProfilePageLikes = observer(() => {
 
   const getUserLikesTwits = () => {
     twits.twits.map((twit) => {
-      twit.likes.forEach((like) => {
+      twit.Likes.forEach((like) => {
         if (like.userId === user.userPage.id) {
           userLikesTwits.push(twit);
         }

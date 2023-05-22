@@ -1,23 +1,23 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ApiError = require("../error/ApiError");
-const {
-  User,
-  Twits,
-  Likes,
-  Favorite_twits,
-  Retwit,
-  Comments,
-  Following,
-} = require("../models/models");
 const SECRET_KEY = "super_secret_key22";
 const uuid = require("uuid");
 const path = require("path");
 const { profile } = require("console");
 const { where } = require("sequelize");
+const models = require('../models/index');
+const Twits = models.Twits;
+const User = models.User;
+const Likes = models.Likes;
+const Comments = models.Comments;
+const Retwit = models.Retwit;
+const Favorite_twits = models.Favorite_twits;
+const Following = models.Following;
+
 
 const generateJwt = (id, email, role) => {
-  return jwt.sign({ id, email, role }, SECRET_KEY, { expiresIn: "1h" });
+  return jwt.sign({ id, email, role }, SECRET_KEY, { expiresIn: "24h" });
 };
 
 const decodeUser = (request) => {
@@ -123,7 +123,7 @@ class UserController {
         let fileName = uuid.v4() + ".jpg";
 
         background.mv(path.resolve(__dirname, "..", "static", fileName));
-        
+
         const profileUpdate = await User.update(
           {
             background: fileName,
@@ -252,12 +252,12 @@ class UserController {
   async createFollow(request, response, next) {
     try {
       const user = decodeUser(request);
-      const userId = user.id;
+      const UserId = user.id;
 
       const { followUserId } = request.body;
       const follow = await Following.create({
-        userId: followUserId,
-        followUserId: userId,
+        UserId: UserId,
+        followUserId: followUserId
       });
 
       return response.json(follow);
@@ -269,11 +269,11 @@ class UserController {
   async deleteFollow(request, response, next) {
     try {
       const user = decodeUser(request);
-      const userId = user.id;
+      const UserId = user.id;
 
       const { followUserId } = request.body;
       const unFollow = await Following.destroy({
-        where: { followUserId: userId, userId: followUserId },
+        where: { followUserId: followUserId, UserId: UserId },
       });
 
       return response.json(unFollow);
@@ -286,15 +286,15 @@ class UserController {
     try {
       const { id } = request.params;
       const following = await Following.findAll({
-        where: { followUserId: id },
+        where: { UserId: id },
         include: [
           {
-            model: User,
+            model: User, as: "followUser",
             include: [
               {
                 model: Twits,
                 include: [
-                  { model: User, as: "User" },
+                  { model: User },
                   { model: Likes },
                   { model: Retwit },
                   { model: Favorite_twits },
@@ -316,7 +316,7 @@ class UserController {
     try {
       const { id } = request.params;
       const following = await Following.findAll({
-        where: { userId: id },
+        where: { followUserId: id },
         include: [{ model: User, as: "User" }],
       });
 

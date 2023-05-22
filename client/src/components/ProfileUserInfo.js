@@ -26,6 +26,8 @@ const ProfileUserInfo = observer(() => {
   const date = new Date(user.userPage.createdAt).toString().split(" ");
   const registrationDate = `${date[1]}, ${date[3]}`;
 
+  console.log(user.userPage.background);
+
   const getUserBackground = () => {
     if (user.userPage.background) {
       return `http://localhost:5500/${user.userPage.background}`;

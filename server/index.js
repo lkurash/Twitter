@@ -2,7 +2,15 @@ const express = require('express');
 
 const sequelize = require('./dataBase');
 
-const models = require('./models/models');
+// const user = require("./models/user");
+// const twits = require("./models/twits");
+// const following = require("./models/following");
+// const likes = require("./models/likes");
+// const favorite_twits = require("./models/favorite_twits");
+// const retwit = require("./models/retwit");
+// const comments = require("./models/topics");
+const {Topics} = require("./models/comments");
+const models = require('./models/index');
 
 const cors = require('cors');
 
@@ -29,7 +37,6 @@ app.use(middleware);
 const start = async()=>{
   try {
     await sequelize.authenticate();
-    await sequelize.sync();
 
     app.listen(PORT, ()=> console.log('WORKING'));
 

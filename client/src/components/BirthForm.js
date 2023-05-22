@@ -7,7 +7,7 @@ const BirthForm = observer(() => {
   const [userSelectMonth, setUserSelectMonth] = useState("");
   const [userSelectDay, setUserSelectDay] = useState("1");
   const [userSelectYear, setUserSelectYear] = useState("");
-  const listMonths = [
+  const optionMonths = [
     "January",
     "February",
     "March",
@@ -91,7 +91,7 @@ const BirthForm = observer(() => {
         }}
       >
         <option disabled />
-        {listMonths.map((month) => (
+        {optionMonths.map((month) => (
           <option value={month} key={month}>
             {month}
           </option>

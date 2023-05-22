@@ -55,8 +55,8 @@ const UserTwits = observer(() => {
                 }}
               >
                 <div className="user-info-photo">
-                  {twit.twit ? (
-                    <img alt="User" src={getUserPhoto(twit.twit.User)} />
+                  {twit.Twit ? (
+                    <img alt="User" src={getUserPhoto(twit.Twit.User)} />
                   ) : (
                     <img alt="User" src={getUserPhoto(twit.User)} />
                   )}
@@ -64,17 +64,17 @@ const UserTwits = observer(() => {
               </div>
               <div className="twit-desc">
                 <h4 className="twit-user-name">
-                  {twit.twit ? twit.twit.User.user_name : twit.User.user_name}
+                  {twit.Twit ? twit.Twit.User.user_name : twit.User.user_name}
                 </h4>
                 <p className="twit-text">
-                  {twit.twit ? twit.twit.text : twit.text}
+                  {twit.Twit ? twit.Twit.text : twit.text}
                 </p>
-                {twit.twit ? (
+                {twit.Twit ? (
                   <>
-                    {twit.twit.img && (
+                    {twit.Twit.img && (
                       <div className="wrapper-twit-img">
                         <img
-                          src={`http://localhost:5500/${twit.twit.img}`}
+                          src={`http://localhost:5500/${twit.Twit.img}`}
                           alt="Twit"
                           className="twit-img"
                         />
@@ -96,17 +96,17 @@ const UserTwits = observer(() => {
                 )}
               </div>
             </div>
-            {!twit.twit && twit.userId === user.user.id && (
+            {!twit.Twit && twit.UserId === user.user.id && (
               <ButtonDeleteOnTwit twit={twit} />
             )}
           </div>
           <div className="user-twit-panel">
-            {twit.twit ? (
+            {twit.Twit ? (
               <>
-                <ButtonCommentOnTwit twit={twit.twit} />
-                <ButtonRetwitOnTwit twit={twit.twit} />
-                <ButtonLikeOnTwit twit={twit.twit} />
-                <ButtonBookmarkOnTwit twit={twit.twit} />
+                <ButtonCommentOnTwit twit={twit.Twit} />
+                <ButtonRetwitOnTwit twit={twit.Twit} />
+                <ButtonLikeOnTwit twit={twit.Twit} />
+                <ButtonBookmarkOnTwit twit={twit.Twit} />
               </>
             ) : (
               <>

@@ -10,6 +10,7 @@ import ButtonRetwitOnTwit from "./ButtonRetwitOnTwit";
 const UserComments = observer(() => {
   const { comments } = useContext(Context);
   const { user } = useContext(Context);
+  console.log(comments.comments);
 
   return (
     <div>
@@ -20,7 +21,7 @@ const UserComments = observer(() => {
               <div className="connection-twit-comment-photo">
                 <div className="user-info">
                   <div className="user-info-photo">
-                    <img alt="User" src={getUserPhoto(comment.twit.User)} />
+                    <img alt="User" src={getUserPhoto(comment.Twit.User)} />
                   </div>
                 </div>
                 <div className="comment-line" />
@@ -32,13 +33,13 @@ const UserComments = observer(() => {
               </div>
               <div className="twit-desc">
                 <h4 className="twit-user-name">
-                  {comment.twit.User.user_name}
+                  {comment.Twit.User.user_name}
                 </h4>
-                <p className="twit-text">{comment.twit.text}</p>
-                {comment.twit.img && (
+                <p className="twit-text">{comment.Twit.text}</p>
+                {comment.Twit.img && (
                   <div className="wrapper-twit-img">
                     <img
-                      src={`http://localhost:5500/${comment.twit.img}`}
+                      src={`http://localhost:5500/${comment.Twit.img}`}
                       alt=""
                       className="twit-img"
                     />
@@ -55,10 +56,10 @@ const UserComments = observer(() => {
               </div>
             </div>
             <div className="user-twit-panel">
-              <ButtonCommentOnTwit twit={comment.twit} />
-              <ButtonRetwitOnTwit twit={comment.twit} />
-              <ButtonLikeOnTwit twit={comment.twit} />
-              <ButtonBookmarkOnTwit twit={comment.twit} />
+              <ButtonCommentOnTwit twit={comment.Twit} />
+              <ButtonRetwitOnTwit twit={comment.Twit} />
+              <ButtonLikeOnTwit twit={comment.Twit} />
+              <ButtonBookmarkOnTwit twit={comment.Twit} />
             </div>
             <div className="main-line" />
           </div>

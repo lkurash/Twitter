@@ -34,7 +34,7 @@ const ButtonLikeOnTwit = observer((props) => {
   const createLikeTwit = async (twit) => {
     const formData = new FormData();
 
-    formData.append("twitId", twit.id);
+    formData.append("TwitId", twit.id);
     await createLikeTwitByUser(formData);
 
     getTwits();
@@ -59,8 +59,8 @@ const ButtonLikeOnTwit = observer((props) => {
 
   const getUserLikesTwitId = () => {
     twits.twits.map((twit) => {
-      twit.likes.forEach((like) => {
-        if (like.userId === user.user.id) {
+      twit.Likes.forEach((like) => {
+        if (like.UserId === user.user.id) {
           userLikesTwitId.push(twit.id);
         }
       });
@@ -103,7 +103,7 @@ const ButtonLikeOnTwit = observer((props) => {
         </div>
       )}
       <p className="user-twit-panel-count-like">
-        {props.twit.likes.length > 0 && props.twit.likes.length}
+        {props.twit.Likes.length > 0 && props.twit.Likes.length}
       </p>
     </div>
   );

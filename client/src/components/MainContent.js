@@ -13,7 +13,7 @@ function MainContent() {
 
   useEffect(() => {
     try {
-      getAllTopics().then((data) => topics.setTopics(data.rows));
+      getAllTopics().then((data) => topics.setTopics(data));
       getAllUsers().then((data) => user.setAllUsers(data));
       getAllTwits().then((data) => twits.setTwits(data));
     } catch (error) {
