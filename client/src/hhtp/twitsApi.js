@@ -42,8 +42,8 @@ export const createFavoriteTwitByUser = async (id) => {
 
   return data;
 };
-export const createCommentTwitByUser = async (twitId, text) => {
-  const { data } = await $authHost.post("api/twits/comment", { twitId, text });
+export const createCommentTwitByUser = async (TwitId, text) => {
+  const { data } = await $authHost.post("api/twits/comment", { TwitId, text });
 
   return data;
 };

@@ -4,7 +4,7 @@ import TwitterPage from "./TwitterPage";
 function LoginPage() {
   return (
     <div>
-      <TwitterPage />
+      {/* <TwitterPage /> */}
       <LoginForm />
     </div>
   );

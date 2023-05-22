@@ -54,7 +54,7 @@ const SignUpPage = observer(() => {
 
   return (
     <div>
-      <TwitterPage />
+      {/* <TwitterPage /> */}
       {!checkUserInfo ? (
         <SignUpForm getInfoUser={getInfoUser} />
       ) : (

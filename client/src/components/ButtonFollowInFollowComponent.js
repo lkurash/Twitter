@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
+import { async } from "react-input-emoji";
 import { Context } from "..";
 import { createFollow, deleteFollow, getAllUsers } from "../hhtp/userApi";
 
@@ -7,19 +8,19 @@ const ButtonFollowInFollowComponent = observer(
   ({ profile, userId, userFollowingId }) => {
     const { user } = useContext(Context);
 
-    const deleteFollowAndGetAllUsers = (userFollowId) => {
-      deleteFollow(userFollowId);
-      getAllUsers().then((data) => user.setAllUsers(data));
+    const deleteFollowAndGetAllUsers = async(userFollowId) => {
+      await deleteFollow(userFollowId);
+      await getAllUsers().then((data) => user.setAllUsers(data));
     };
 
-    const createFollowAndGetAllUsers = (userFollowId) => {
-      createFollow(userFollowId);
-      getAllUsers().then((data) => user.setAllUsers(data));
+    const createFollowAndGetAllUsers = async(userFollowId) => {
+      await createFollow(userFollowId);
+      await getAllUsers().then((data) => user.setAllUsers(data));
     };
 
     return (
       <>
-        {userFollowingId.includes(profile.userId) ? (
+        {userFollowingId.includes(userId) ? (
           <button
             className="follow-page-main-button-following"
             onMouseEnter={() => {
@@ -37,6 +38,7 @@ const ButtonFollowInFollowComponent = observer(
           </button>
         ) : (
           <button
+            type="submit"
             className="follow-page-main-button-following"
             onClick={() => {
               createFollowAndGetAllUsers(userId);

@@ -13,8 +13,8 @@ const CommentForm = observer(({ twit }) => {
   const { twits } = useContext(Context);
   const [commentText, setCommentText] = useState("");
 
-  const createComment = async (twitId) => {
-    await createCommentTwitByUser(twitId, commentText);
+  const createComment = async (TwitId) => {
+    await createCommentTwitByUser(TwitId, commentText);
     twits.setActiveTwitComment({});
   };
   const createTwitDate = (createdAt) => {

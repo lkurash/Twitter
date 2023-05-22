@@ -33,7 +33,7 @@ const ButtonRetwitOnTwit = observer((props) => {
   const createRetwitTwit = async (twit) => {
     const formData = new FormData();
 
-    formData.append("twitId", twit.id);
+    formData.append("TwitId", twit.id);
     await createRetwitByUser(formData);
 
     getTwits();
@@ -58,8 +58,8 @@ const ButtonRetwitOnTwit = observer((props) => {
 
   const getUserRetwitTwitId = () => {
     twits.twits.map((twit) => {
-      twit.retwits.forEach((retwit) => {
-        if (retwit.userId === user.user.id) {
+      twit.Retwits.forEach((retwit) => {
+        if (retwit.UserId === user.user.id) {
           userRetwitTwitId.push(twit.id);
         }
       });
@@ -104,7 +104,7 @@ const ButtonRetwitOnTwit = observer((props) => {
           />
         </div>
       )}
-      {props.twit.retwits.length > 0 && <p>{props.twit.retwits.length}</p>}
+      {props.twit.Retwits.length > 0 && <p>{props.twit.Retwits.length}</p>}
     </div>
   );
 });

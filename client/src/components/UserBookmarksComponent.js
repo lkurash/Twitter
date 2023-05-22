@@ -30,14 +30,14 @@ const UserBookmarksComponent = observer(() => {
       </div>
       <div className="twits">
         {favoriteTwits.favoriteTwits.map((bookmark) => (
-          <div className="user-main-content-block" key={bookmark.twit.id}>
-            <div className="user-block-twit" key={bookmark.twit.id}>
+          <div className="user-main-content-block" key={bookmark.Twit.id}>
+            <div className="user-block-twit" key={bookmark.Twit.id}>
               <div className="user-info">
                 <div className="user-info-photo">
-                  {bookmark.twit.User.photo ? (
+                  {bookmark.Twit.User.photo ? (
                     <img
                       alt="User"
-                      src={`http://localhost:5500/${bookmark.twit.User.photo}`}
+                      src={`http://localhost:5500/${bookmark.Twit.User.photo}`}
                     />
                   ) : (
                     <img alt="User" src={undefinedUserPhoto} />
@@ -46,13 +46,13 @@ const UserBookmarksComponent = observer(() => {
               </div>
               <div className="twit-desc">
                 <h4 className="twit-user-name">
-                  {bookmark.twit.User.user_name}
+                  {bookmark.Twit.User.user_name}
                 </h4>
-                <p className="twit-text">{bookmark.twit.text}</p>
-                {bookmark.twit.img && (
+                <p className="twit-text">{bookmark.Twit.text}</p>
+                {bookmark.Twit.img && (
                   <div className="wrapper-twit-img">
                     <img
-                      src={`http://localhost:5500/${bookmark.twit.img}`}
+                      src={`http://localhost:5500/${bookmark.Twit.img}`}
                       alt="Twit"
                       className="twit-img"
                     />
@@ -61,10 +61,10 @@ const UserBookmarksComponent = observer(() => {
               </div>
             </div>
             <div className="user-twit-panel">
-              <Comments twit={bookmark.twit} />
-              <Retwit twit={bookmark.twit} />
-              <Likes twit={bookmark.twit} />
-              <Bookmark twit={bookmark.twit} />
+              <Comments twit={bookmark.Twit} />
+              <Retwit twit={bookmark.Twit} />
+              <Likes twit={bookmark.Twit} />
+              <Bookmark twit={bookmark.Twit} />
             </div>
             <div className="main-line" />
           </div>

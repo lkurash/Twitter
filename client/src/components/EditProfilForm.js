@@ -48,7 +48,7 @@ const EditProfileForm = observer(() => {
     formData.append("web_site_url", textWebSiteUrl);
     formData.append("about", about);
 
-    updateUserProfile(formData);
+    await updateUserProfile(formData);
     navigate(PROFILE_PAGE_USER + user.user.id);
   };
 

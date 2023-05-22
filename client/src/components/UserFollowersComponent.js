@@ -13,8 +13,8 @@ const UserFollowersComponent = observer(() => {
 
   const getUserFollowingId = () => {
     user.allUsers.map((allUser) => {
-      allUser.followings.forEach((followUser) => {
-        if (user.user.id === followUser.userId) {
+      allUser.Followings.forEach((followUser) => {
+        if (user.user.id === followUser.UserId) {
           userFollowingId.push(allUser.id);
         }
       });
@@ -22,11 +22,11 @@ const UserFollowersComponent = observer(() => {
   };
 
   getUserFollowingId();
-  
+
   const checkAndDeleteUserFollowingId = () => {
-    if (userFollowingId.includes(user.unfollowUser.userId)) {
+    if (userFollowingId.includes(user.unfollowUser.UserId)) {
       userFollowingId.splice(
-        userFollowingId.indexOf(user.unfollowUser.userId),
+        userFollowingId.indexOf(user.unfollowUser.UserId),
         1
       );
     }
@@ -47,7 +47,7 @@ const UserFollowersComponent = observer(() => {
                   src={`http://localhost:5500/${profile.User.photo}`}
                   alt="User"
                 />
-                <p>{profile.User.user_name}</p>
+                <p className="follow-page-main-user-name">{profile.User.user_name}</p>
               </div>
               <ButtonFollowInFollowComponent
                 profile={profile}

@@ -14,9 +14,9 @@ const UserFollowingComponent = observer(() => {
 
   const getUserFollowingId = () => {
     user.allUsers.map((allUser) => {
-      allUser.followings.forEach((followUser) => {
-        if (user.user.id === followUser.followUserId) {
-          userFollowingId.push(allUser.id);
+      allUser.Followings.forEach((followUser) => {
+        if (user.user.id === followUser.UserId) {
+          userFollowingId.push(followUser.followUserId);
         }
       });
     });
@@ -25,9 +25,9 @@ const UserFollowingComponent = observer(() => {
   getUserFollowingId();
 
   const checkAndDeleteUserFollowingId = () => {
-    if (userFollowingId.includes(user.unfollowUser.userId)) {
+    if (userFollowingId.includes(user.unfollowUser.followUserId)) {
       userFollowingId.splice(
-        userFollowingId.indexOf(user.unfollowUser.userId),
+        userFollowingId.indexOf(user.unfollowUser.followUserId),
         1
       );
     }
@@ -42,14 +42,14 @@ const UserFollowingComponent = observer(() => {
             <li key={profile.id} className="follow-page-main-user">
               <div
                 className="follow-page-main-user-info"
-                onClick={() => navigate(PROFILE_PAGE_USER + profile.user.id)}
+                onClick={() => navigate(PROFILE_PAGE_USER + profile.followUser.id)}
               >
-                <img src={getUserPhoto(profile.user)} alt="User" />
-                <p>{profile.user.user_name}</p>
+                <img src={getUserPhoto(profile.followUser)} alt="User" />
+                <p className="follow-page-main-user-name">{profile.followUser.user_name}</p>
               </div>
               <ButtonFollowInFollowComponent
                 profile={profile}
-                userId={profile.user.id}
+                userId={profile.followUserId}
                 userFollowingId={userFollowingId}
               />
             </li>

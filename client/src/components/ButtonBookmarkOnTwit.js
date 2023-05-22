@@ -33,7 +33,7 @@ const ButtonBookmarkOnTwit = observer((props) => {
   const createFavoriteTwits = async (twit) => {
     const formData = new FormData();
 
-    formData.append("twitId", twit.id);
+    formData.append("TwitId", twit.id);
     await createFavoriteTwitByUser(formData);
     getTwits();
   };
@@ -57,10 +57,10 @@ const ButtonBookmarkOnTwit = observer((props) => {
 
   const getUserBookmarksTwitId = () => {
     twits.twits.map((twit) => {
-      twit.favorite_twits.forEach((bookmark) => {
+      twit.Favorite_twits.forEach((bookmark) => {
         if (
-          bookmark.userId === user.userPage.id ||
-          bookmark.userId === user.user.id
+          bookmark.UserId === user.userPage.id ||
+          bookmark.UserId === user.user.id
         ) {
           userBookmarksTwitId.push(twit.id);
         }

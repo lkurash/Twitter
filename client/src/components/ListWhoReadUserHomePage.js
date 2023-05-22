@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
+import { async } from "react-input-emoji";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 import { createFollow, getAllUsers, getFollowingUser } from "../hhtp/userApi";
@@ -18,25 +19,26 @@ const ListWhoReadUserHomePage = observer(() => {
     }
     return "Follow";
   };
+  const getUsersAndFollowigs = async()=> {
+    await getAllUsers().then((data) => user.setAllUsers(data));
+    await getFollowingUser(user.user.id).then((data) => user.setuserFollowing(data));
+  };
 
-  const createFollowing = (profile) => {
-    createFollow(profile.id);
-    getAllUsers().then((data) => user.setAllUsers(data));
-    getFollowingUser(user.user.id).then((data) => user.setuserFollowing(data));
+  const createFollowing = async (profile) => {
+    await createFollow(profile.id);
+    getUsersAndFollowigs();
   };
 
   const chekFollowingUser = () => {
     user.allUsers.map((allUser) => {
       whoReadingList.push(user.user.id);
-      allUser.followings.forEach((followUser) => {
-        if (user.user.id === followUser.followUserId) {
-          whoReadingList.push(allUser.id);
+      allUser.Followings.forEach((followUser) => {
+        if (user.user.id === followUser.UserId) {
+          whoReadingList.push(followUser.followUserId);
         }
       });
     });
   };
-
-  chekFollowingUser();
 
   const createNotReadingList = () => {
     user.allUsers.map((allUser) => {
@@ -46,7 +48,9 @@ const ListWhoReadUserHomePage = observer(() => {
     });
   };
 
+  chekFollowingUser();
   createNotReadingList();
+
   return (
     <ul className="follow-page-main-users">
       {whoNotReadingList.length > 0 ? (
@@ -76,7 +80,7 @@ const ListWhoReadUserHomePage = observer(() => {
           ))}
         </>
       ) : (
-        <p>You are following all users</p>
+        <p className="section-read-main-hidden">You are following all users</p>
       )}
     </ul>
   );

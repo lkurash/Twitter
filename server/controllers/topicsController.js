@@ -1,13 +1,13 @@
 const ApiError = require("../error/ApiError");
-const { Topics, Topics_info } = require("../models/models");
 const uuid = require("uuid");
 const path = require("path");
+const models = require('../models/index');
 
 class TopicsController {
   async createTopic(request, response, next) {
     try {
       let { trend, title, info } = request.body;
-      const topic = await Topics.create({ trend, title, info });
+      const topic = await models.Topics.create({ trend, title, info });
 
       return response.json(topic);
     } catch (error) {
@@ -23,9 +23,9 @@ class TopicsController {
 
     let offset = page * limit - limit;
 
-    const topics = await Topics.findAndCountAll({ limit, offset });
+    const topic = await models.Topics.findAll();
 
-    return response.json(topics);
+    return response.json(topic);
   }
 }
 

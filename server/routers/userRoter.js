@@ -12,7 +12,7 @@ router.get("/allUsers", userController.getAllUsers);
 router.get("/:id", userController.getUserById);
 router.post("/following", userController.createFollow);
 router.post("/deleteFollowing", userController.deleteFollow);
-router.post("/following/:id", userController.getFollowingUser);
-router.post("/followers/:id", userController.getFollowersUser);
+router.get("/following/:id", userController.getFollowingUser);
+router.get("/followers/:id", userController.getFollowersUser);
 
 module.exports = router;
