@@ -7,7 +7,7 @@ const BirthForm = observer(() => {
   const [userSelectMonth, setUserSelectMonth] = useState("");
   const [userSelectDay, setUserSelectDay] = useState("1");
   const [userSelectYear, setUserSelectYear] = useState("");
-  const optionMonths = [
+  const monthsOption = [
     "January",
     "February",
     "March",
@@ -32,22 +32,17 @@ const BirthForm = observer(() => {
     "December",
   ];
 
-  const optionDays = [];
-  const optionYears = [];
+  let daysOption = [];
+  let yearsOption = [];
 
   let birthDate;
 
   const getYears = () => {
-    for (let year = 1970; year < 2017; year++) {
-      optionYears.push(year);
-    }
-    return optionYears;
+    yearsOption = Array.from({length: 52}, (_, i) => i + 1970)
   };
 
   const getDays = (countDay) => {
-    for (let day = 1; day < countDay; day++) {
-      optionDays.push(day);
-    }
+    daysOption = Array.from({length: countDay}, (_, i) => i + 1)
   };
 
   const generateBirthDate = () => {
@@ -60,16 +55,16 @@ const BirthForm = observer(() => {
 
   const isDaysMonth = () => {
     if (mounth30Days.includes(userSelectMonth)) {
-      getDays(31);
-      return optionDays;
+      getDays(30);
+      return daysOption;
     }
     if (mounth31Days.includes(userSelectMonth)) {
-      getDays(32);
-      return optionDays;
+      getDays(31);
+      return daysOption;
     }
     if (userSelectMonth === "February") {
-      getDays(30);
-      return optionDays;
+      getDays(29);
+      return daysOption;
     }
   };
 
@@ -91,7 +86,7 @@ const BirthForm = observer(() => {
         }}
       >
         <option disabled />
-        {optionMonths.map((month) => (
+        {monthsOption.map((month) => (
           <option value={month} key={month}>
             {month}
           </option>
@@ -107,7 +102,7 @@ const BirthForm = observer(() => {
       >
         {!userSelectMonth && <option disabled>Select month</option>}
 
-        {optionDays.map((day) => (
+        {daysOption.map((day) => (
           <option value={day} key={day}>
             {day}
           </option>
@@ -123,7 +118,7 @@ const BirthForm = observer(() => {
         }}
       >
         <option disabled />
-        {optionYears.map((year) => (
+        {yearsOption.map((year) => (
           <option value={year} key={year}>
             {year}
           </option>
