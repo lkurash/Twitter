@@ -10,7 +10,6 @@ import ButtonRetwitOnTwit from "./ButtonRetwitOnTwit";
 const UserComments = observer(() => {
   const { comments } = useContext(Context);
   const { user } = useContext(Context);
-  console.log(comments.comments);
 
   return (
     <div>

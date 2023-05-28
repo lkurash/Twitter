@@ -5,7 +5,6 @@ import { Context } from "..";
 import MenuComponent from "../components/MenuComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import {
-  getAllUsers,
   getFollowersUser,
   getFollowingUser,
   getUserInfo,
@@ -23,7 +22,6 @@ const FollowPage = observer(() => {
     useEffect(() => {
       try {
         getFollowingUser(id).then((data) => user.setuserFollowing(data));
-        // getAllUsers().then((data) => user.setAllUsers(data));
         getFollowersUser(id).then((data) => user.setuserFollowers(data));
         getUserInfo().then((data) => user.setUser(data));
         getUserPage(id).then((data) => user.setUserPage(data));

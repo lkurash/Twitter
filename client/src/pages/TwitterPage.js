@@ -1,7 +1,7 @@
 import "../App.css";
 import "../components/common/common.css";
 import MenuComponent from "../components/MenuComponent";
-import MainComponent from "../components/MainComponent";
+import MainComponentTwitterPage from "../components/MainComponentTwitterPage";
 import SidebarComponent from "../components/SidebarComponent";
 import FooterComponent from "../components/FooterComponent";
 
@@ -10,7 +10,7 @@ function TwitterPage() {
     <div>
       <div className="page">
         <MenuComponent />
-        <MainComponent />
+        <MainComponentTwitterPage />
         <SidebarComponent />
       </div>
       <FooterComponent />

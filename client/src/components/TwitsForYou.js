@@ -10,9 +10,11 @@ import ButtonBookmarkOnTwit from "./ButtonBookmarkOnTwit";
 import ButtonCommentOnTwit from "./ButtonCommentOnTwit";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 
-const TwitsForYou = observer(() => {
+const TwitsForYou = observer(({showTwitsForYou}) => {
   const { twits } = useContext(Context);
   const navigate = useNavigate();
+
+  if (!showTwitsForYou) return null;
 
   return (
     <div className="twits">
