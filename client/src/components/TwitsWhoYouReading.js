@@ -9,20 +9,23 @@ import ButtonLikeOnTwit from "./ButtonLikeOnTwit";
 import ButtonRetwitOnTwit from "./ButtonRetwitOnTwit";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
 
-const TwitsWhoYouRead = observer(() => {
+const TwitsWhoYouRead = observer(({showTwitsWhoReading}) => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
   const twitsFollowingUsers = [];
 
   const getTwitsFollowingUsers = () => {
-    user.userFollowing.map((followUser) => {
-      followUser.user.twits.forEach((twit) => {
+    user.userFollowing.map((followingUser) => {
+      followingUser.followUser.Twits.forEach((twit) => {
         twitsFollowingUsers.push(twit);
       });
     });
   };
 
   getTwitsFollowingUsers();
+
+  if (!showTwitsWhoReading) return null;
+
   return (
     <div className="twits">
       {twitsFollowingUsers.map((twit) => (

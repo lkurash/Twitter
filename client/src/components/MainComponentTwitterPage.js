@@ -1,12 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import "./main.css";
 import { observer } from "mobx-react-lite";
 import MainSearchBlock from "./MainSearchBlock";
-import MainContent from "./MainContent";
+import MainContentTwitterPage from "./MainContentTwitterPage";
 import { Context } from "..";
 import { TWITTER_USER_PAGE } from "../utils/constans";
 
-const MainComponent = observer(() => {
+const MainComponentTwitterPage = observer(() => {
   const { user } = useContext(Context);
 
   return (
@@ -14,11 +14,11 @@ const MainComponent = observer(() => {
       {!user.isAuth && (
         <main className="main">
           <MainSearchBlock className="main-search-form" page= {TWITTER_USER_PAGE}/>
-          <MainContent />
+          <MainContentTwitterPage />
         </main>
       )}
     </div>
   );
 });
 
-export default MainComponent;
+export default MainComponentTwitterPage;
