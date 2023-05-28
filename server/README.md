@@ -4,7 +4,7 @@
 
 This project was made with PostgreSQL (https://www.postgresql.org/) and Sequelize (https://sequelize.org/).
 
-You need to create a config (/config/.configExample)
+### You need to create a config (/config/.configExample)
 
 Next you need to create Database
 
