@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const uuid = require("uuid");
 const path = require("path");
-const { model } = require("../dataBase");
 const models = require('../models/index');
 const Twits = models.Twits;
 const User = models.User;
