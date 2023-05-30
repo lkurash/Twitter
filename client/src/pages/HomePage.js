@@ -6,6 +6,7 @@ import {
   useRef,
 } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import "../App.css";
 import "../components/common/common.css";
@@ -24,7 +25,7 @@ const HomePage = observer(() => {
   const { user } = useContext(Context);
   const { retwits } = useContext(Context);
   const ref = useRef();
-  const { id } = useParams();
+  const { id } = jwt_decode(localStorage.token);
   const navigate = useNavigate();
 
   useLayoutEffect(() => {

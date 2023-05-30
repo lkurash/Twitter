@@ -11,7 +11,7 @@ function Logo(props) {
   return (
     <div>
       {user.user.id ? (
-        <div className={props.class} onClick={() => navigate(HOME_PAGE + user.user.id)}>
+        <div className={props.class} onClick={() => navigate(HOME_PAGE)}>
           <img src={logo} alt="logo" className="logo-icon" />
         </div>
       ) : (

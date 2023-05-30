@@ -48,7 +48,7 @@ const SignUpPage = observer(() => {
       user.setUser(data);
 
       user.setAuth(true);
-      navigate(HOME_PAGE + user.user.id);
+      navigate(HOME_PAGE);
     }
   };
 

@@ -31,7 +31,7 @@ import {
 
 export const authRoutes = [
   {
-    path: `${HOME_PAGE}:id`,
+    path: HOME_PAGE,
     Component: HomePage,
   },
   {
