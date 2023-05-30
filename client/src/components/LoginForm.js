@@ -85,7 +85,7 @@ const LoginForm = observer(() => {
             <div className="password-form-title">
               <h2>Enter your password</h2>
             </div>
-            <form>
+            <form className="login-form-password">
               <div className="password-form-notactive-input">
                 <p>Email</p>
                 <p className="password-form-notactive-input-email">{email}</p>
@@ -110,7 +110,7 @@ const LoginForm = observer(() => {
                   onClick={signIn}
                   type="button"
                 >
-                  <span>Log in</span>
+                  Log in
                 </button>
               </div>
             </form>

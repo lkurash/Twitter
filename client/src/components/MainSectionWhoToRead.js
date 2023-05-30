@@ -21,7 +21,7 @@ const MainSectionWhoToRead = observer((props) => {
   return (
     <section className={props.className}>
       <h2 className="main-section-name">Who to read</h2>
-      {location === "/twitter" ? (
+      {location === "/" ? (
         <ul className="follow-page-main-users">
           {user.allUsers.map((profile) => (
             <li key={profile.id} className="follow-page-main-user">

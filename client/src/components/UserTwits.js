@@ -48,22 +48,21 @@ const UserTwits = observer(() => {
         <div key={twit.id} className="twit">
           <div className="content-block">
             <div className="user-block-twit">
-              <div
-                className="user-info"
-                onClick={() => {
-                  twit.twit && navigate(PROFILE_PAGE_USER + twit.twit.User.id);
-                }}
-              >
+              <div className="user-info">
                 <div className="user-info-photo">
                   {twit.Twit ? (
-                    <img alt="User" src={getUserPhoto(twit.Twit.User)} />
+                    <img alt="User" src={getUserPhoto(twit.Twit.User)} onClick={() => {
+                      twit.Twit && navigate(PROFILE_PAGE_USER + twit.Twit.User.id);
+                    }}/>
                   ) : (
                     <img alt="User" src={getUserPhoto(twit.User)} />
                   )}
                 </div>
               </div>
               <div className="twit-desc">
-                <h4 className="twit-user-name">
+                <h4 className="twit-user-name" onClick={() => {
+                  twit.Twit && navigate(PROFILE_PAGE_USER + twit.Twit.User.id);
+                }}>
                   {twit.Twit ? twit.Twit.User.user_name : twit.User.user_name}
                 </h4>
                 <p className="twit-text">

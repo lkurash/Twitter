@@ -3,6 +3,7 @@ import EditProfilePage from "./pages/EditProfilePage";
 import FollowPage from "./pages/FollowPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import MessagesPage from "./pages/MessagesPage";
 import SignUpPage from "./pages/SignUpPage";
 import TrendsPage from "./pages/TrendsPage";
 import TwitPage from "./pages/TwitPage";
@@ -16,6 +17,7 @@ import {
   FOLLOWING_PAGE,
   HOME_PAGE,
   LOGIN_PAGE,
+  MESSAGE_PAGE,
   PROFILE_PAGE_USER,
   PROFILE_PAGE_USER_ANSWERS,
   PROFILE_PAGE_USER_LIKES,
@@ -67,6 +69,10 @@ export const authRoutes = [
   {
     path: `${FOLLOWER_PAGE}:id`,
     Component: FollowPage,
+  },
+  {
+    path: `${MESSAGE_PAGE}:id`,
+    Component: MessagesPage,
   },
 ];
 

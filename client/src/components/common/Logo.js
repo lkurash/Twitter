@@ -6,13 +6,12 @@ import logo from "../Img/logo_icon.png";
 
 function Logo(props) {
   const navigate = useNavigate();
-  const { id } = useParams();
   const { user } = useContext(Context);
 
   return (
     <div>
       {user.user.id ? (
-        <div className={props.class} onClick={() => navigate(HOME_PAGE + id)}>
+        <div className={props.class} onClick={() => navigate(HOME_PAGE + user.user.id)}>
           <img src={logo} alt="logo" className="logo-icon" />
         </div>
       ) : (

@@ -69,6 +69,7 @@ const UserBookmarksComponent = observer(() => {
             <div className="main-line" />
           </div>
         ))}
+        {favoriteTwits.favoriteTwits.length === 0 && <p>No favorite twits</p>}
       </div>
     </div>
   );

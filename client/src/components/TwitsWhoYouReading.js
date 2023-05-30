@@ -33,10 +33,11 @@ const TwitsWhoYouRead = observer(({showTwitsWhoReading}) => {
           <div
             className="user-block-twit"
             key={twit.id}
-            onClick={() => navigate(PROFILE_PAGE_USER + twit.User.id)}
           >
             <div className="user-info">
-              <div className="user-info-photo">
+              <div className="user-info-photo"
+                onClick={() => navigate(PROFILE_PAGE_USER + twit.User.id)}
+              >
                 {twit.User.photo ? (
                   <img
                     alt="User"
@@ -48,7 +49,10 @@ const TwitsWhoYouRead = observer(({showTwitsWhoReading}) => {
               </div>
             </div>
             <div className="twit-desc">
-              <h4 className="twit-user-name">{twit.User.user_name}</h4>
+              <h4 className="twit-user-name"
+                onClick={() => navigate(PROFILE_PAGE_USER + twit.User.id)}
+              >
+                {twit.User.user_name}</h4>
               <p className="twit-text">{twit.text}</p>
               {twit.img && (
                 <div className="wrapper-twit-img">

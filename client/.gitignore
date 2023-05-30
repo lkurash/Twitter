@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 .eslintrc.json
+.stylelintrc.json
 
 # testing
 /coverage
