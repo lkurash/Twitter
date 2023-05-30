@@ -1,4 +1,4 @@
-export const TWITTER_PAGE = "/twitter";
+export const TWITTER_PAGE = "/";
 export const TWITTER_USER_PAGE = "/twitter/profile/";
 
 export const PROFILE_PAGE_USER = "/profile/";
@@ -7,6 +7,7 @@ export const PROFILE_PAGE_USER_ANSWERS = "/profile/answers/";
 export const PROFILE_PAGE_USER_MEDIA = "/profile/media/";
 
 export const BOOKMARKS_PAGE = "/bookmarks/";
+export const MESSAGE_PAGE = "/message/";
 export const TRENDS_PAGE = "/trends/";
 export const FOLLOWING_PAGE = "/profile/following/";
 export const FOLLOWER_PAGE = "/profile/followers/";

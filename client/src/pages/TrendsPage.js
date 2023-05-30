@@ -59,7 +59,7 @@ const TrendsPage = observer(() => {
         </main>
         <SidebarComponent />
       </div>
-      {location === "/twitter" ? (
+      {location === "/" ? (
         <FooterComponent />
       ) : (
         <FooterMobileComponent />

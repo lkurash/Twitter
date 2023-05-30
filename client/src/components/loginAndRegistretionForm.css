@@ -215,6 +215,8 @@
 }
 
 .password-form-footer {
+  margin-top: 20px;
+  height: 100px;
   font-size: 15px;
   color: rgb(221 221 221 / 81.3%);
 }

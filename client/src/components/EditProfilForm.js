@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
@@ -10,10 +10,12 @@ import undefinedUserPhoto from "./Img/user_photo.jpeg";
 import ButtonClose from "./common/ButtonClose";
 import getUserPhoto from "../utils/getUserPhoto";
 import { PROFILE_PAGE_USER } from "../utils/constans";
+import useOutsideClick from "../utils/useOutsideClickFunction";
 
 const EditProfileForm = observer(() => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
+  const divRef = useRef(null);
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [textWebSiteUrl, setTextWebSiteUrl] = useState("");
@@ -51,7 +53,13 @@ const EditProfileForm = observer(() => {
     await updateUserProfile(formData);
     navigate(PROFILE_PAGE_USER + user.user.id);
   };
+  const onClose = ()=>{
+    setActivInputName(false);
+    setActivInputAbout(false);
+    setActivInputSite(false);
+  };
 
+  useOutsideClick(divRef, onClose);
   return (
     <div className="edit-profile-form">
       <header className="edit-profile-form-header">
@@ -61,7 +69,7 @@ const EditProfileForm = observer(() => {
           className="edit-profile-form-button-save"
           onClick={updateProfile}
         >
-          <label>Save</label>
+          <p>Save</p>
         </button>
       </header>
       <main className="edit-profile-form-main">
@@ -103,69 +111,54 @@ const EditProfileForm = observer(() => {
             </div>
           </div>
         </div>
-        {!activInputName ? (
+        <div className="edit-form-inputs">
           <div
-            className="edit-form-input edit-form-input-name"
+            className= {activInputName ? "edit-form-input active" : "edit-form-input"}
+            ref={divRef}
             onClick={() => {
-              setName(user.user.user_name);
               setActivInputName(true);
+              setActivInputAbout(false);
+              setActivInputSite(false);
             }}
           >
-            <label>Name</label>
-            <p>{user.user.user_name}</p>
-          </div>
-        ) : (
-          <div className="edit-form-input active edit-form-input-name">
-            <label>Name</label>
+            <h4>Name</h4>
             <input
-              value={name}
+              value={name || user.user.user_name || ''}
               onChange={(e) => setName(e.target.value)}
-              autoFocus
             />
           </div>
-        )}
-        {!activInputAbout ? (
           <div
-            className="edit-form-input about"
+            className= {activInputAbout ? "edit-form-input about active" : "edit-form-input about"
+            }
+            ref={divRef}
             onClick={() => {
-              setAbout(user.user.about);
+              setActivInputName(false);
+              setActivInputSite(false);
               setActivInputAbout(true);
             }}
           >
-            <label>About me</label>
-            <p>{user.user.about}</p>
-          </div>
-        ) : (
-          <div className="edit-form-input about active">
-            <label>About me</label>
+            <h4>About me</h4>
             <textarea
-              value={about}
-              autoFocus
+              value={about || user.user.about || ''}
               onChange={(e) => setAbout(e.target.value)}
             />
           </div>
-        )}
-        {!activInputSite ? (
           <div
-            className="edit-form-input"
+            className= {activInputSite ? "edit-form-input active" : "edit-form-input"}
+            ref={divRef}
             onClick={() => {
-              setTextWebSiteUrl(user.user.web_site_url);
+              setActivInputName(false);
+              setActivInputAbout(false);
               setActivInputSite(true);
             }}
           >
-            <label>Web site</label>
-            <p>{user.user.web_site_url}</p>
-          </div>
-        ) : (
-          <div className="edit-form-input active">
-            <label>Web site</label>
+            <h4>Web site</h4>
             <input
-              autoFocus
-              value={textWebSiteUrl}
+              value={textWebSiteUrl || user.user.web_site_url || "" }
               onChange={(e) => setTextWebSiteUrl(e.target.value)}
             />
           </div>
-        )}
+        </div>
         <div className="signup-birth-form">
           <BirthForm />
         </div>

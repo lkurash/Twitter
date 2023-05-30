@@ -9,12 +9,14 @@ import notification from "./Img/notification_icon.png";
 import profile from "./Img/profile_icon.png";
 import home from "./Img/home_icon.png";
 import setting from "./Img/settings_icon.png";
+import message from "./Img/message_icon.png";
 import tweetIcon from "./Img/feather_icon.png";
 import ButtonMenu from "./common/ButtonMenu";
 import { Context } from "..";
 import {
   BOOKMARKS_PAGE,
   HOME_PAGE,
+  MESSAGE_PAGE,
   PROFILE_PAGE_USER,
   TWIT_PAGE,
 } from "../utils/constans";
@@ -28,21 +30,14 @@ const MenuComponent = observer(() => {
     <aside className="menu">
       <Logo class="logo" />
       <nav className="nav">
-        {!user.user.id ? (
-          <div className="menu-button-twitter">
+        {!user.isAuth ? (
+          <div>
             <ButtonMenu
               type="button"
               path={hashtag}
               alt="hashtag icon"
               class="hashtag-icon"
               buttonName="Explore"
-            />
-            <ButtonMenu
-              type="button"
-              path={setting}
-              alt="settings icon"
-              class="settings-icon"
-              buttonName="Settings"
             />
           </div>
         ) : (
@@ -71,10 +66,11 @@ const MenuComponent = observer(() => {
             />
             <ButtonMenu
               type="button"
-              path={setting}
+              path={message}
               alt="settings icon"
               class="settings-icon"
               buttonName="Message"
+              nav={MESSAGE_PAGE + user.user.id}
             />
             <ButtonMenu
               type="button"
