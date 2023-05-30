@@ -23,7 +23,7 @@ const ProfileUserComponent = observer(() => {
       <div className="page-name">
         <div
           className="main-search-block-button-return"
-          onClick={() => navigate(HOME_PAGE + user.user.id)}
+          onClick={() => navigate(HOME_PAGE)}
         >
           <img src={arrowLeft} alt="Button return" />
         </div>

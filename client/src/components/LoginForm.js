@@ -31,7 +31,7 @@ const LoginForm = observer(() => {
         user.setUser(data);
 
         user.setAuth(true);
-        navigate(HOME_PAGE + data.id);
+        navigate(HOME_PAGE);
       }
     } catch (e) {
       alert(e.response.data.message);

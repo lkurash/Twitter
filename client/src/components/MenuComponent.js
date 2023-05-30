@@ -48,7 +48,7 @@ const MenuComponent = observer(() => {
               alt="hashtag icon"
               class="settings-icon"
               buttonName="Home"
-              nav={HOME_PAGE + user.user.id}
+              nav={HOME_PAGE}
             />
             <ButtonMenu
               type="button"

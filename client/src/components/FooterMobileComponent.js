@@ -31,7 +31,7 @@ function FooterMobileComponent() {
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(HOME_PAGE + user.user.id)}
+          onClick={() => navigate(HOME_PAGE)}
         >
           <img src={home} alt="home" className="settings-icon" />
         </div>
