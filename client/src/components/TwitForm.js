@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createTwitByUser } from "../hhtp/twitsApi";
+import { createTwitByUser } from "../http/twitsApi";
 import { Context } from "..";
 import imgFile from "./Img/file.png";
 import close from "./Img/x_icon.png";

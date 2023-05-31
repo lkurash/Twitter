@@ -6,7 +6,7 @@ import {
   createRetwitByUser,
   getAllTwits,
   getTwitsByUser,
-} from "../hhtp/twitsApi";
+} from "../http/twitsApi";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 import activeRetwit from "./Img/active_retweet_icon.png";
 import notactiveRetwit from "./Img/notactive_retweet_icon.png";
@@ -21,12 +21,12 @@ const ButtonRetwitOnTwit = observer((props) => {
   const userRetwitTwitId = [];
 
   const getTwits = () => {
-    getAllTwits().then((data) => twits.setTwits(data));
+    getAllTwits().then((allTwits) => twits.setTwits(allTwits));
 
     if (location === PROFILE_PAGE_USER + user.user.id) {
-      getTwitsByUser(user.user.id).then((data) => twits.setUserTwits(data));
+      getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
     } else {
-      getTwitsByUser(id).then((data) => twits.setUserTwits(data));
+      getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
     }
   };
 

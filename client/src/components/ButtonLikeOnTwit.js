@@ -11,7 +11,7 @@ import {
   createLikeTwitByUser,
   getAllTwits,
   getTwitsByUser,
-} from "../hhtp/twitsApi";
+} from "../http/twitsApi";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 
 const ButtonLikeOnTwit = observer((props) => {
@@ -22,12 +22,12 @@ const ButtonLikeOnTwit = observer((props) => {
   const userLikesTwitId = [];
 
   const getTwits = () => {
-    getAllTwits().then((data) => twits.setTwits(data));
+    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
     if (location === PROFILE_PAGE_USER + user.user.id) {
-      getTwitsByUser(user.user.id).then((data) => twits.setUserTwits(data));
+      getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
     } else {
-      getTwitsByUser(id).then((data) => twits.setUserTwits(data));
+      getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
     }
   };
 

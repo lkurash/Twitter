@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Routes, Route} from "react-router-dom";
 import { Context } from ".";
-import { checkToken } from "./hhtp/userApi";
+import { checkToken } from "./http/userApi";
 import { authRoutes, publicRoutes } from "./router";
 
 const AppRouter = observer(() => {

@@ -11,13 +11,13 @@ import {
   getAllTwits,
   getRetwitsByUser,
   getTwitsByUser,
-} from "../hhtp/twitsApi";
+} from "../http/twitsApi";
 import {
   getFollowersUser,
   getFollowingUser,
   getUserInfo,
-  getUserPage,
-} from "../hhtp/userApi";
+  getUserById,
+} from "../http/userApi";
 import { TWITTER_PAGE } from "../utils/constans";
 
 const UserPage = observer(() => {
@@ -35,13 +35,13 @@ const UserPage = observer(() => {
   if (user.isAuth) {
     useEffect(() => {
       try {
-        getUserPage(id).then((data) => user.setUserPage(data));
-        getTwitsByUser(id).then((data) => twits.setUserTwits(data));
-        getAllTwits().then((data) => twits.setTwits(data));
-        getRetwitsByUser(id).then((data) => retwits.setRetwits(data));
-        getFollowingUser(id).then((data) => user.setuserFollowing(data));
-        getFollowersUser(id).then((data) => user.setuserFollowers(data));
-        getUserInfo().then((data) => user.setUser(data));
+        getUserById(id).then((userById) => user.setUserPage(userById));
+        getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+        getAllTwits().then((allTwits) => twits.setTwits(allTwits));
+        getRetwitsByUser(id).then((retwitsByUser) => retwits.setRetwits(retwitsByUser));
+        getFollowingUser(id).then((allFollowing) => user.setuserFollowing(allFollowing));
+        getFollowersUser(id).then((allFollowers) => user.setuserFollowers(allFollowers));
+        getUserInfo().then((userInfo) => user.setUser(userInfo));
       } catch (error) {
         console.log(error.response.data.message);
       }

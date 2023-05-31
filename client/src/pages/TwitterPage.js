@@ -7,9 +7,9 @@ import MainComponentTwitterPage from "../components/MainComponentTwitterPage";
 import SidebarComponent from "../components/SidebarComponent";
 import FooterComponent from "../components/FooterComponent";
 import { Context } from "..";
-import { getAllTwits } from "../hhtp/twitsApi";
-import { getAllTopics } from "../hhtp/topicsApi";
-import { getAllUsers, getUserInfo } from "../hhtp/userApi";
+import { getAllTwits } from "../http/twitsApi";
+import { getAllTopics } from "../http/topicsApi";
+import { getAllUsers, getUserInfo } from "../http/userApi";
 
 const TwitterPage = observer(()=> {
   const { user } = useContext(Context);
@@ -18,9 +18,9 @@ const TwitterPage = observer(()=> {
 
   useEffect(() => {
     try {
-      getAllTopics().then((data) => topics.setTopics(data));
-      getAllUsers().then((data) => user.setAllUsers(data));
-      getAllTwits().then((data) => twits.setTwits(data));
+      getAllTopics().then((allTopics) => topics.setTopics(allTopics));
+      getAllUsers().then((users) => user.setAllUsers(users));
+      getAllTwits().then((alltwits) => twits.setTwits(alltwits));
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -29,7 +29,7 @@ const TwitterPage = observer(()=> {
   if (user.isAuth) {
     useEffect(() => {
       try {
-        getUserInfo().then((data) => user.setUser(data));
+        getUserInfo().then((userInfo) => user.setUser(userInfo));
       } catch (error) {
         console.log(error.response.data.message);
       }

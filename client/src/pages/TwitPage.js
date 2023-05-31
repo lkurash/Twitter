@@ -6,14 +6,14 @@ import FooterMobileComponent from "../components/FooterMobileComponent";
 import MenuComponent from "../components/MenuComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import TwitForm from "../components/TwitForm";
-import { getUserInfo } from "../hhtp/userApi";
+import { getUserInfo } from "../http/userApi";
 
 function TwitPage() {
   const { user } = useContext(Context);
 
   useEffect(() => {
     try {
-      getUserInfo().then((data) => user.setUser(data));
+      getUserInfo().then((userInfo) => user.setUser(userInfo));
     } catch (error) {
       console.log(error.response.data.message);
     }

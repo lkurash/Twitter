@@ -7,7 +7,7 @@ import {
   createFavoriteTwitByUser,
   getAllTwits,
   getTwitsByUser,
-} from "../hhtp/twitsApi";
+} from "../http/twitsApi";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 
 import activeBookmark from "./Img/active_bookmark_icon.png";
@@ -21,12 +21,12 @@ const ButtonBookmarkOnTwit = observer((props) => {
   const userBookmarksTwitId = [];
 
   const getTwits = () => {
-    getAllTwits().then((data) => twits.setTwits(data));
+    getAllTwits().then((allTwits) => twits.setTwits(allTwits));
 
     if (location === PROFILE_PAGE_USER + user.user.id) {
-      getTwitsByUser(user.user.id).then((data) => twits.setUserTwits(data));
+      getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
     } else {
-      getTwitsByUser(id).then((data) => twits.setUserTwits(data));
+      getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
     }
   };
 

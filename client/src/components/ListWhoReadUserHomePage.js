@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
-import { async } from "react-input-emoji";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
-import { createFollow, getAllUsers, getFollowingUser } from "../hhtp/userApi";
+import { createFollow, getAllUsers, getFollowingUser } from "../http/userApi";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 
@@ -20,8 +19,8 @@ const ListWhoReadUserHomePage = observer(() => {
     return "Follow";
   };
   const getUsersAndFollowigs = async()=> {
-    await getAllUsers().then((data) => user.setAllUsers(data));
-    await getFollowingUser(user.user.id).then((data) => user.setuserFollowing(data));
+    await getAllUsers().then((users) => user.setAllUsers(users));
+    await getFollowingUser(user.user.id).then((allFollowing) => user.setuserFollowing(allFollowing));
   };
 
   const createFollowing = async (profile) => {
@@ -50,7 +49,6 @@ const ListWhoReadUserHomePage = observer(() => {
 
   chekFollowingUser();
   createNotReadingList();
-
   return (
     <ul className="follow-page-main-users">
       {whoNotReadingList.length > 0 ? (

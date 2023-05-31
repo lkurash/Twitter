@@ -8,8 +8,8 @@ import {
   getFollowersUser,
   getFollowingUser,
   getUserInfo,
-  getUserPage,
-} from "../hhtp/userApi";
+  getUserById,
+} from "../http/userApi";
 import ContentFollowPage from "../components/ContentFollowPage";
 import { TWITTER_PAGE } from "../utils/constans";
 
@@ -21,10 +21,10 @@ const FollowPage = observer(() => {
   if (user.isAuth) {
     useEffect(() => {
       try {
-        getFollowingUser(id).then((data) => user.setuserFollowing(data));
-        getFollowersUser(id).then((data) => user.setuserFollowers(data));
-        getUserInfo().then((data) => user.setUser(data));
-        getUserPage(id).then((data) => user.setUserPage(data));
+        getFollowingUser(id).then((allFollowing) => user.setuserFollowing(allFollowing));
+        getFollowersUser(id).then((allFollowers) => user.setuserFollowers(allFollowers));
+        getUserInfo().then((userInfo) => user.setUser(userInfo));
+        getUserById(id).then((userById) => user.setUserPage(userById));
       } catch (error) {
         console.log(error.response.data.message);
       }

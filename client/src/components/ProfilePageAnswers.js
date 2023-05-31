@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
-import { getCommentsByUser } from "../hhtp/twitsApi";
+import { getCommentsByUser } from "../http/twitsApi";
 import UserComments from "./UserComments";
 
 const ProfilePageAnswers = observer(() => {
@@ -10,7 +10,7 @@ const ProfilePageAnswers = observer(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    getCommentsByUser(id).then((data) => comments.setComments(data));
+    getCommentsByUser(id).then((commentsByUser) => comments.setComments(commentsByUser));
   });
 
   return (

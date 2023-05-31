@@ -7,7 +7,7 @@ import LoginFormButton from "./LoginFormButton";
 import Logo from "./common/Logo";
 import "./loginAndRegistretionForm.css";
 import { HOME_PAGE, SIGNUP_PAGE } from "../utils/constans";
-import { authorization } from "../hhtp/userApi";
+import { authorization } from "../http/userApi";
 import ButtonClose from "./common/ButtonClose";
 
 const LoginForm = observer(() => {
@@ -26,9 +26,9 @@ const LoginForm = observer(() => {
   const signIn = async () => {
     try {
       if (email && password) {
-        const data = await authorization(email, password);
+        const userLogin = await authorization(email, password);
 
-        user.setUser(data);
+        user.setUser(userLogin);
 
         user.setAuth(true);
         navigate(HOME_PAGE);

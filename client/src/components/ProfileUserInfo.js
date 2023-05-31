@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Context } from "..";
-import { createFollow, getFollowingUser } from "../hhtp/userApi";
+import { createFollow, getFollowingUser } from "../http/userApi";
 import birthdateIcon from "./Img/birthday_icon.png";
 import webSiteIcon from "./Img/url_web_icon.png";
 import registrationIcon from "./Img/month_icon.png";
@@ -32,7 +32,7 @@ const ProfileUserInfo = observer(() => {
     }
     return undefinedUserPhoto;
   };
-  
+
   const checkFollowingUser = () => {
     user.userFollowers.map((follower) => {
       if (follower.followUserId === user.user.id) {
@@ -44,7 +44,7 @@ const ProfileUserInfo = observer(() => {
   const createFollowing = () => {
     setFollowing(true);
     createFollow(user.userPage.id);
-    getFollowingUser(id).then((data) => user.setuserFollowing(data));
+    getFollowingUser(id).then((allFollowing) => user.setuserFollowing(allFollowing));
   };
 
   checkFollowingUser();
