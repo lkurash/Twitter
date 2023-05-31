@@ -2,7 +2,7 @@ import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
-import { updateUserProfile } from "../hhtp/userApi";
+import { updateUserProfile } from "../http/userApi";
 import BirthForm from "./BirthForm";
 import buttonEditPhoto from "./Img/add_photo_icon.png";
 import "./userpage.css";

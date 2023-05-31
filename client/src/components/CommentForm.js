@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import { Context } from "..";
-import { createCommentTwitByUser } from "../hhtp/twitsApi";
+import { createCommentTwitByUser } from "../http/twitsApi";
 import getUserPhoto from "../utils/getUserPhoto";
 import TwitPanel from "./common/TwitPanel";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";

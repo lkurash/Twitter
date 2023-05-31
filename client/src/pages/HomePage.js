@@ -14,8 +14,8 @@ import "../components/main.css";
 import "../components/userpage.css";
 import MenuComponent from "../components/MenuComponent";
 import SidebarComponent from "../components/SidebarComponent";
-import { getAllTwits, getRetwitsByUser } from "../hhtp/twitsApi";
-import { getAllUsers, getFollowingUser, getUserInfo } from "../hhtp/userApi";
+import { getAllTwits, getRetwitsByUser } from "../http/twitsApi";
+import { getAllUsers, getFollowingUser, getUserInfo } from "../http/userApi";
 import FooterMobileComponent from "../components/FooterMobileComponent";
 import { TWITTER_PAGE } from "../utils/constans";
 import MainComponentHomePage from "../components/MainComponentHomePage";
@@ -35,11 +35,11 @@ const HomePage = observer(() => {
   if (user.isAuth) {
     useEffect(() => {
       try {
-        getUserInfo().then((data) => user.setUser(data));
-        getAllTwits().then((data) => twits.setTwits(data));
-        getRetwitsByUser(id).then((data) => retwits.setRetwits(data));
-        getFollowingUser(id).then((data) => user.setuserFollowing(data));
-        getAllUsers().then((data) => user.setAllUsers(data));
+        getUserInfo().then((userInfo) => user.setUser(userInfo));
+        getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+        getRetwitsByUser(id).then((retwitsByUser) => retwits.setRetwits(retwitsByUser));
+        getFollowingUser(id).then((allFollowing) => user.setuserFollowing(allFollowing));
+        getAllUsers().then((users) => user.setAllUsers(users));
       } catch (e) {
         console.log(e.response.data.message);
       }
@@ -49,6 +49,7 @@ const HomePage = observer(() => {
       navigate(TWITTER_PAGE);
     });
   }
+
   return (
     <div>
       <div className="page" ref={ref}>

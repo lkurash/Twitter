@@ -6,7 +6,7 @@ import FooterMobileComponent from "../components/FooterMobileComponent";
 import MenuComponent from "../components/MenuComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import UserMessagesComponent from "../components/UserMessagesComponent";
-import { getAllUsers, getUserInfo } from "../hhtp/userApi";
+import { getAllUsers, getUserInfo } from "../http/userApi";
 import { TWITTER_PAGE } from "../utils/constans";
 
 const MessagesPage = observer(()=>{
@@ -16,8 +16,8 @@ const MessagesPage = observer(()=>{
   if (user.isAuth) {
     useEffect(() => {
       try {
-        getUserInfo().then((data) => user.setUser(data));
-        getAllUsers().then((data) => user.setAllUsers(data));
+        getUserInfo().then((userInfo) => user.setUser(userInfo));
+        getAllUsers().then((users) => user.setAllUsers(users));
       } catch (error) {
         console.log(error.response.data.message);
       }

@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
-import { getAllTopics } from "../hhtp/topicsApi";
-import { getAllUsers } from "../hhtp/userApi";
+import { getAllTopics } from "../http/topicsApi";
+import { getAllUsers } from "../http/userApi";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
@@ -15,8 +15,8 @@ const SidebarComponent = observer(() => {
 
   useEffect(() => {
     try {
-      getAllTopics().then((data) => topics.setTopics(data));
-      getAllUsers().then((data) => user.setAllUsers(data));
+      getAllTopics().then((allTopics) => topics.setTopics(allTopics));
+      getAllUsers().then((allUsers) => user.setAllUsers(allUsers));
     } catch (error) {
       console.log(error.response.data.message);
     }

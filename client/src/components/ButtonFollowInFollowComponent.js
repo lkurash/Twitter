@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { async } from "react-input-emoji";
 import { Context } from "..";
-import { createFollow, deleteFollow, getAllUsers } from "../hhtp/userApi";
+import { createFollow, deleteFollow, getAllUsers } from "../http/userApi";
 
 const ButtonFollowInFollowComponent = observer(
   ({ profile, userId, userFollowingId }) => {
@@ -10,12 +10,12 @@ const ButtonFollowInFollowComponent = observer(
 
     const deleteFollowAndGetAllUsers = async(userFollowId) => {
       await deleteFollow(userFollowId);
-      await getAllUsers().then((data) => user.setAllUsers(data));
+      await getAllUsers().then((users) => user.setAllUsers(users));
     };
 
     const createFollowAndGetAllUsers = async(userFollowId) => {
       await createFollow(userFollowId);
-      await getAllUsers().then((data) => user.setAllUsers(data));
+      await getAllUsers().then((users) => user.setAllUsers(users));
     };
 
     return (

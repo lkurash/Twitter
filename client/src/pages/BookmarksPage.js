@@ -6,8 +6,8 @@ import FooterMobileComponent from "../components/FooterMobileComponent";
 import MenuComponent from "../components/MenuComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import UserBookmarksComponent from "../components/UserBookmarksComponent";
-import { getAllTwits, getFavoriteTwits } from "../hhtp/twitsApi";
-import { getUserInfo } from "../hhtp/userApi";
+import { getAllTwits, getFavoriteTwits } from "../http/twitsApi";
+import { getUserInfo } from "../http/userApi";
 import { TWITTER_PAGE } from "../utils/constans";
 
 const BookmarksPage = observer(() => {
@@ -19,9 +19,9 @@ const BookmarksPage = observer(() => {
   if (user.isAuth) {
     useEffect(() => {
       try {
-        getAllTwits().then((data) => twits.setTwits(data));
-        getUserInfo().then((data) => user.setUser(data));
-        getFavoriteTwits().then((data) => favoriteTwits.setFavoriteTwits(data));
+        getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+        getUserInfo().then((userInfo) => user.setUser(userInfo));
+        getFavoriteTwits().then((favoriteTwitsByUser) => favoriteTwits.setFavoriteTwits(favoriteTwitsByUser));
       } catch (error) {
         console.log(error.response.data.message);
       }

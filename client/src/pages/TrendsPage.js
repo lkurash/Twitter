@@ -7,7 +7,7 @@ import MenuComponent from "../components/MenuComponent";
 import SidebarComponent from "../components/SidebarComponent";
 import FooterComponent from "../components/FooterComponent";
 import { Context } from "..";
-import { getAllTwits } from "../hhtp/twitsApi";
+import { getAllTwits } from "../http/twitsApi";
 import TwitsForTrends from "../components/TwitsForTrends";
 import searchIcon from "../components/Img/zoom__icon.png";
 import arrowLeft from "../components/Img/arrow_left_icon.png";
@@ -22,7 +22,7 @@ const TrendsPage = observer(() => {
   const location = useLocation().pathname;
 
   useEffect(() => {
-    getAllTwits().then((data) => twits.setTwits(data));
+    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
   });
 
   return (
