@@ -1,43 +1,34 @@
-import { useContext, useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 import "../App.css";
-import ButtonClose from "../components/common/ButtonClose";
-import FooterMobileComponent from "../components/FooterMobileComponent";
-import MenuComponent from "../components/MenuComponent";
-import SidebarComponent from "../components/SidebarComponent";
-import TwitForm from "../components/TwitForm";
-import { getUserInfo } from "../http/userApi";
+import TwitPageComponent from "../components/TwitPageComponent";
+import { checkToken } from "../http/userApi";
+import { EXPLORE_PAGE } from "../utils/constans";
 
-function TwitPage() {
+const TwitPage = observer(()=> {
   const { user } = useContext(Context);
+  const [loadingPage, setLoadingPage] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     try {
-      getUserInfo().then((userInfo) => user.setUser(userInfo));
-    } catch (error) {
-      console.log(error.response.data.message);
+      checkToken()
+        .then((data) => {
+          user.setAuth(true);
+        })
+        .finally(() => setLoadingPage(false));
+    } catch (e) {
+      navigate(EXPLORE_PAGE);
     }
-  });
+  }, []);
 
   return (
-    <div>
-      <div className="page">
-        <MenuComponent />
-        <div className="main">
-          <div className="main-wrapper">
-            <div className="twit-page">
-              <div className="twit-page-form">
-                <ButtonClose />
-                <TwitForm />
-              </div>
-            </div>
-          </div>
-        </div>
-        <SidebarComponent />
-      </div>
-      <FooterMobileComponent />
-    </div>
+    <>
+      {!loadingPage && <TwitPageComponent />}
+    </>
   );
-}
+});
 
 export default TwitPage;

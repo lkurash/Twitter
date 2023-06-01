@@ -82,13 +82,17 @@ class UserController {
   }
 
   async checkToken(request, response, next) {
-    const token = generateJwt(
-      request.user.id,
-      request.user.email,
-      request.user.role
-    );
+    try {
+      const token = generateJwt(
+        request.user.id,
+        request.user.email,
+        request.user.role
+      );
 
-    return response.json({ token });
+      return response.json({ token });
+    } catch (error) {
+      next(ApiError.badRequest("Check auth"));
+    }
   }
 
   async updateUserProfile(request, response, next) {

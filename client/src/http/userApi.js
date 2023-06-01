@@ -3,7 +3,8 @@ import { $authHost, $host } from ".";
 export const authorization = async (email, password) => {
   const response = await $host.post("api/user/login", { email, password });
 
-  return localStorage.setItem("token", response.data.token);
+  localStorage.setItem("token", response.data.token);
+  return response.data.token;
 };
 
 export const registration = async (name, email, password, birthdate) => {
@@ -14,13 +15,16 @@ export const registration = async (name, email, password, birthdate) => {
     birthdate,
   });
 
-  return localStorage.setItem("token", response.data.token);
+  localStorage.setItem("token", response.data.token);
+  return response.data.token;
 };
 
 export const checkToken = async () => {
   const response = await $authHost.get("api/user/auth");
 
-  return localStorage.setItem("token", response.data.token);
+  localStorage.setItem("token", response.data.token);
+
+  return response.data.token;
 };
 
 export const getUserInfo = async (email) => {
