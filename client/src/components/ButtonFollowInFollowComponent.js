@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
-import { async } from "react-input-emoji";
 import { Context } from "..";
 import { createFollow, deleteFollow, getAllUsers } from "../http/userApi";
 

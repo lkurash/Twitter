@@ -1,74 +1,38 @@
 import { observer } from "mobx-react-lite";
-import {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { AxiosHeaders } from "axios";
 import { Context } from "..";
-import "../App.css";
-import "../components/common/common.css";
-import "../components/main.css";
-import "../components/userpage.css";
-import MenuComponent from "../components/MenuComponent";
-import SidebarComponent from "../components/SidebarComponent";
-import { getAllTwits, getRetwitsByUser } from "../http/twitsApi";
-import { getAllUsers, getFollowingUser, getUserInfo } from "../http/userApi";
-import FooterMobileComponent from "../components/FooterMobileComponent";
-import { TWITTER_PAGE } from "../utils/constans";
-import MainComponentHomePage from "../components/MainComponentHomePage";
+import { checkToken } from "../http/userApi";
+import { LOGIN_PAGE } from "../utils/constans";
+import HomePageComponent from "../components/HomePageComponent";
 
-const HomePage = observer(()=> {
-  const { twits } = useContext(Context);
+const HomePage = observer(()=>{
   const { user } = useContext(Context);
-  const { retwits } = useContext(Context);
-  const ref = useRef();
-  const { id } = jwt_decode(localStorage.token);
+  const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    try {
+      checkToken()
+        .then((data) => {
+          user.setAuth(true);
+        })
+        .finally(() => {
+          setLoadingPage(false);
+          if (!user.isAuth) {
+            navigate(LOGIN_PAGE)
+          }
+        });
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  }, []);
 
-  useLayoutEffect(() => {
-    ref.current.scrollIntoView();
-  });
-
-  // async function checkAuth(){
-  //   await checkToken()
-  //     .then((data) => {
-  //       user.setAuth(true);
-  //     })
-  //     .finally(() => setLoadingPage(false));
-  // }
-  // checkAuth();
-
-  if (user.isAuth) {
-    useEffect(() => {
-      try {
-        getUserInfo().then((userInfo) => user.setUser(userInfo));
-        getAllTwits().then((alltwits) => twits.setTwits(alltwits));
-        getRetwitsByUser(id).then((retwitsByUser) => retwits.setRetwits(retwitsByUser));
-        getFollowingUser(id).then((allFollowing) => user.setuserFollowing(allFollowing));
-        getAllUsers().then((users) => user.setAllUsers(users));
-      } catch (e) {
-        console.log(e.response.data.message);
-      }
-    });
-  }
-  else {
-    useEffect(() => {
-      navigate(TWITTER_PAGE);
-    });
-  }
   return (
-    <div>
-      <div className="page" ref={ref}>
-        <MenuComponent />
-        <MainComponentHomePage />
-        <SidebarComponent />
-      </div>
-      <FooterMobileComponent />
-    </div>
+    <>
+      {!loadingPage && user.isAuth && <HomePageComponent />}
+    </>
   );
 });
 
