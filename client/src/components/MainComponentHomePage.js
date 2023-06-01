@@ -1,13 +1,31 @@
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TwitForm from "./TwitForm";
 import TwitsForYou from "./TwitsForYou";
 import TwitsWhoYouRead from "./TwitsWhoYouReading";
 
 const MainComponentHomePage = observer(()=>{
   const [showTwitsForYou, setShowTwitsForYou] = useState(true);
-  const [showTwitsWhoReading, setShowTwitsWhoReading] = useState(false);
+  const [showTwitsWhoReading, setShowTwitsWhoReading] = useState('');
 
+  const setLocalStorageTwitsForYou = (show)=>{
+    localStorage.setItem("twitsForYou", show);
+  };
+
+  const checkLocalStorageTwitsForYou = ()=>{
+    if (localStorage.getItem('twitsForYou') === 'true') {
+      setShowTwitsForYou(true);
+      setShowTwitsWhoReading(false);
+    }else{
+      setShowTwitsForYou(false);
+      setShowTwitsWhoReading(true);
+    }
+  };
+
+  useEffect(()=>{
+    checkLocalStorageTwitsForYou();
+  });
+  
   return(
     <main className="main-wrapper">
       <div className="main">
@@ -25,8 +43,8 @@ const MainComponentHomePage = observer(()=>{
                     type="button"
                     className="user-main-content-foryou-button-panel active-button-panel"
                     onClick={() => {
-                      setShowTwitsForYou(true);
-                      setShowTwitsWhoReading(false);
+                      setLocalStorageTwitsForYou(true);
+                      checkLocalStorageTwitsForYou();
                     }}
                   >
                     <span>For you</span>
@@ -36,8 +54,8 @@ const MainComponentHomePage = observer(()=>{
                     type="button"
                     className="user-main-content-foryou-button-panel"
                     onClick={() => {
-                      setShowTwitsForYou(true);
-                      setShowTwitsWhoReading(false);
+                      setLocalStorageTwitsForYou(true);
+                      checkLocalStorageTwitsForYou();
                     }}
                   >
                     <span>For you</span>
@@ -48,8 +66,8 @@ const MainComponentHomePage = observer(()=>{
                     type="button"
                     className="user-main-content-reading-button-panel active-button-panel"
                     onClick={() => {
-                      setShowTwitsForYou(false);
-                      setShowTwitsWhoReading(true);
+                      setLocalStorageTwitsForYou(false);
+                      checkLocalStorageTwitsForYou();
                     }}
                   >
                     <span> You ara reading</span>
@@ -59,8 +77,8 @@ const MainComponentHomePage = observer(()=>{
                     type="button"
                     className="user-main-content-reading-button-panel"
                     onClick={() => {
-                      setShowTwitsForYou(false);
-                      setShowTwitsWhoReading(true);
+                      setLocalStorageTwitsForYou(false);
+                      checkLocalStorageTwitsForYou();
                     }}
                   >
                     <span> You are reading</span>

@@ -30,7 +30,7 @@ const UserPage = observer(() => {
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
-  });
+  },[]);
 
   if (user.isAuth) {
     useEffect(() => {
@@ -58,7 +58,7 @@ const UserPage = observer(() => {
         <MenuComponent />
         <div className="main-wrapper" ref={ref}>
           <main className="main">
-            <ProfileUserComponent />
+            <ProfileUserComponent/>
           </main>
         </div>
         <SidebarComponent />

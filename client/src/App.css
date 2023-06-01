@@ -5,6 +5,11 @@ body {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+  color: rgb(20 161 255);
+}
+
 html,
 body {
   width: 100%;

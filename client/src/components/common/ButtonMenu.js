@@ -5,7 +5,7 @@ export default function ButtonMenu(props) {
   const navigate = useNavigate();
   return (
     <div
-      className="menu-button"
+      className={`menu-button ${props.button}`}
       type="button"
       onClick={() => navigate(props.nav)}
     >

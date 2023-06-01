@@ -63,8 +63,10 @@ const EditProfileForm = observer(() => {
   return (
     <div className="edit-profile-form">
       <header className="edit-profile-form-header">
-        <ButtonClose />
-        <h4 className="edit-profile-title">Edit Profile</h4>
+        <div className="edit-profile-form-header-title">
+          <ButtonClose />
+          <h4 className="edit-profile-title">Edit Profile</h4>
+        </div>
         <button
           className="edit-profile-form-button-save"
           onClick={updateProfile}

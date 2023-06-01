@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
-import { TWITTER_PAGE } from "../utils/constans";
+import { EXPLORE_PAGE } from "../utils/constans";
 import useOutsideClick from "../utils/useOutsideClickFunction";
 
 function ButtonSignOut({ showButtonSignOut, onClose }) {
@@ -13,7 +13,7 @@ function ButtonSignOut({ showButtonSignOut, onClose }) {
     localStorage.removeItem("token");
     user.setUser([]);
     user.setAuth(false);
-    navigate(TWITTER_PAGE);
+    navigate(EXPLORE_PAGE);
   };
 
   useOutsideClick(tooltipRef, onClose, showButtonSignOut);

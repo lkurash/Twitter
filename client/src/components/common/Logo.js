@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../..";
-import { HOME_PAGE, TWITTER_PAGE } from "../../utils/constans";
+import { EXPLORE_PAGE, HOME_PAGE } from "../../utils/constans";
 import logo from "../Img/logo_icon.png";
 
 function Logo(props) {
@@ -15,7 +15,7 @@ function Logo(props) {
           <img src={logo} alt="logo" className="logo-icon" />
         </div>
       ) : (
-        <div className={props.class} onClick={() => navigate(TWITTER_PAGE)}>
+        <div className={props.class} onClick={() => navigate(EXPLORE_PAGE)}>
           <img src={logo} alt="logo" className="logo-icon" />
         </div>
       )}

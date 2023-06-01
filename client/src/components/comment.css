@@ -79,7 +79,7 @@
 .comment-form-input {
   width: 467px;
   height: 100px;
-  margin-top: 45px;
+  margin-top: 20px;
   font-size: 17px;
   color: aliceblue;
   caret-color: aliceblue;
@@ -135,7 +135,7 @@
 }
 
 .connection-twit-comment-text {
-  margin-top: 20px;
+  margin-top: 80px;
 }
 
 .comment-form-input div {

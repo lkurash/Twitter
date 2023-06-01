@@ -5,7 +5,7 @@ import {
   useLayoutEffect,
   useRef,
 } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import "../App.css";
@@ -20,7 +20,7 @@ import FooterMobileComponent from "../components/FooterMobileComponent";
 import { TWITTER_PAGE } from "../utils/constans";
 import MainComponentHomePage from "../components/MainComponentHomePage";
 
-const HomePage = observer(() => {
+const HomePage = observer(()=> {
   const { twits } = useContext(Context);
   const { user } = useContext(Context);
   const { retwits } = useContext(Context);
@@ -28,9 +28,19 @@ const HomePage = observer(() => {
   const { id } = jwt_decode(localStorage.token);
   const navigate = useNavigate();
 
+
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
   });
+
+  // async function checkAuth(){
+  //   await checkToken()
+  //     .then((data) => {
+  //       user.setAuth(true);
+  //     })
+  //     .finally(() => setLoadingPage(false));
+  // }
+  // checkAuth();
 
   if (user.isAuth) {
     useEffect(() => {
@@ -44,12 +54,12 @@ const HomePage = observer(() => {
         console.log(e.response.data.message);
       }
     });
-  } else {
+  }
+  else {
     useEffect(() => {
       navigate(TWITTER_PAGE);
     });
   }
-
   return (
     <div>
       <div className="page" ref={ref}>

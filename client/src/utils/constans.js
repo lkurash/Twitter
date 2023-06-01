@@ -1,4 +1,6 @@
 export const TWITTER_PAGE = "/";
+export const EXPLORE_PAGE = "/explore";
+
 export const TWITTER_USER_PAGE = "/twitter/profile/";
 
 export const PROFILE_PAGE_USER = "/profile/";
