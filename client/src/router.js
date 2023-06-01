@@ -13,6 +13,7 @@ import UserPage from "./pages/UserPage";
 import {
   BOOKMARKS_PAGE,
   EDIT_PROFILE_PAGE,
+  EXPLORE_PAGE,
   FOLLOWER_PAGE,
   FOLLOWING_PAGE,
   HOME_PAGE,
@@ -79,6 +80,10 @@ export const authRoutes = [
 export const publicRoutes = [
   {
     path: TWITTER_PAGE,
+    Component: TwitterPage,
+  },
+  {
+    path: EXPLORE_PAGE,
     Component: TwitterPage,
   },
   {

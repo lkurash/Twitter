@@ -7,7 +7,7 @@ import { HOME_PAGE, TWITTER_PAGE } from "../utils/constans";
 import SignUpForm from "../components/SignUpForm";
 import TwitterPage from "./TwitterPage";
 import { Context } from "..";
-import { registration } from "../http/userApi";
+import { getUserInfo, registration } from "../http/userApi";
 
 const SignUpPage = observer(() => {
   const { user } = useContext(Context);
@@ -44,8 +44,9 @@ const SignUpPage = observer(() => {
         userInfo.userPassword,
         userInfo.userBirthdate
       );
+      const newUser = await getUserInfo();
 
-      user.setUser(userRegistration);
+      user.setUser(newUser);
 
       user.setAuth(true);
       navigate(HOME_PAGE);

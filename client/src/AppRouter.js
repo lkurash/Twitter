@@ -10,11 +10,15 @@ const AppRouter = observer(() => {
   const [loadingPage, setLoadingPage] = useState(true);
 
   useEffect(() => {
-    checkToken()
-      .then((data) => {
-        user.setAuth(true);
-      })
-      .finally(() => setLoadingPage(false));
+    try {
+      checkToken()
+        .then((data) => {
+          user.setAuth(true);
+        })
+        .finally(() => setLoadingPage(false));
+    } catch (e) {
+      console.log(e.response.data.message);
+    }
   }, []);
 
   if (loadingPage) {

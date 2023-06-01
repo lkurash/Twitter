@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
 const BirthForm = observer(() => {
   const { user } = useContext(Context);
   const [userSelectMonth, setUserSelectMonth] = useState("");
-  const [userSelectDay, setUserSelectDay] = useState("1");
+  const [userSelectDay, setUserSelectDay] = useState("");
   const [userSelectYear, setUserSelectYear] = useState("");
   const monthsOption = [
     "January",
@@ -33,16 +33,17 @@ const BirthForm = observer(() => {
   ];
 
   let daysOption = [];
+
   let yearsOption = [];
 
   let birthDate;
 
   const getYears = () => {
-    yearsOption = Array.from({length: 52}, (_, i) => i + 1970)
+    yearsOption = Array.from({length: 52}, (_, i) => i + 1970);
   };
 
   const getDays = (countDay) => {
-    daysOption = Array.from({length: countDay}, (_, i) => i + 1)
+    daysOption = Array.from({length: countDay}, (_, i) => i + 1);
   };
 
   const generateBirthDate = () => {
@@ -72,6 +73,20 @@ const BirthForm = observer(() => {
   getYears();
   generateBirthDate();
 
+  const checkUserBirthdate = ()=>{
+    if (user.user.birthdate && !userSelectDay && !userSelectMonth && !userSelectYear) {
+      const userBirthdate = user.user.birthdate.split(' ');
+
+      setUserSelectDay(userBirthdate[0]);
+      setUserSelectMonth(userBirthdate[1]);
+      setUserSelectYear(userBirthdate[2]);
+    }
+  };
+
+  useEffect(()=>{
+    checkUserBirthdate();
+  });
+
   return (
     <>
       <h4 className="edit-form-input-birth">
@@ -95,6 +110,7 @@ const BirthForm = observer(() => {
 
       <select
         name="day"
+        value={userSelectDay}
         onInput={(e) => {
           setUserSelectDay(e.target.value);
         }}

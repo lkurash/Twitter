@@ -23,7 +23,7 @@
   color: #1d9bf0;
 }
 
-.user-twit-panel-comments img {
+.user-twit-panel-comments-img {
   width: 14px;
   height: 14px;
 }
@@ -45,7 +45,7 @@
 
 /* button retwit on twit panel */
 
-.user-twit-panel-retwit img {
+.user-twit-panel-retwit-img {
   width: 19px;
   height: 19px;
 }
@@ -97,7 +97,7 @@
   height: 35px;
 }
 
-.user-twit-panel-like img {
+.user-twit-panel-like-img {
   width: 15px;
   height: 15px;
 }
@@ -138,7 +138,7 @@
   height: 35px;
 }
 
-.user-twit-panel-bookmark img {
+.user-twit-panel-bookmark-img {
   width: 19px;
   height: 19px;
 }

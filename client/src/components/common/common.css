@@ -10,7 +10,7 @@
 }
 
 .logo:hover {
-  background-color: rgba(128, 128, 128, 0.347);
+  background-color: rgb(128 128 128 / 34.7%);
 }
 
 .mobile-logo,
@@ -19,8 +19,8 @@
 }
 
 .logo-icon {
-  height: 23px;
-  width: 28px;
+  height: 25px;
+  width: 30px;
 }
 
 .menu-button {
@@ -34,7 +34,7 @@
 }
 
 .menu-button:hover {
-  background-color: rgba(128, 128, 128, 0.347);
+  background-color: rgb(128 128 128 / 34.7%);
 }
 
 .hashtag-icon {
@@ -43,10 +43,20 @@
   margin-left: 12px;
 }
 
+.explore {
+  background-color: rgb(128 128 128 / 16.7%);
+}
+
 .settings-icon {
   height: 25px;
   width: 25px;
   margin-left: 12px;
+}
+
+.home-icon {
+  height: 30px;
+  width: 30px;
+  margin-left: 10px;
 }
 
 .menu-button-name {
@@ -92,7 +102,7 @@
 }
 
 .button-singup:hover {
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(240 240 240);
 }
 
 .close-icon {
@@ -121,7 +131,7 @@
   width: 130px;
   height: 40px;
   position: absolute;
-  border: 0.1px solid rgb(88, 88, 88);
+  border: 0.1px solid rgb(88 88 88);
   border-radius: 15px;
   background-color: black;
 }
@@ -130,7 +140,7 @@
   border: none;
   font-size: 15px;
   color: aliceblue;
-  background-color: #000000;
+  background-color: #000;
   cursor: pointer;
 }
 
@@ -142,7 +152,93 @@
   width: 15px;
   height: 15px;
 }
-@media (max-width: 1245px) {
+
+.wrapper-tooltip-notauth-user {
+  left: 0;
+  top: 0;
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #6473827e;
+}
+
+.tooltip-notauth-user {
+  width: 600px;
+  height: 400px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #000;
+  border: 0.1px solid rgb(88 88 88);
+  box-shadow: 0 0 5px rgb(245 245 245 / 54.1%);
+}
+
+.tooltip-notauth-user-header {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.tooltip-notauth-user-text {
+  width: 78%;
+}
+
+.tooltip-notauth-user-text h2 {
+  font-size: 30px;
+  margin-top: 20px;
+  color: aliceblue;
+}
+
+.tooltip-notauth-user-text p {
+  margin-top: 25px;
+  width: 80%;
+  font-size: 15px;
+  color: gray;
+}
+
+.tooltip-notauth-user-button-login,
+.tooltip-notauth-user-button-signup {
+  width: 80%;
+  height: 50px;
+  margin-top: 20px;
+  border-radius: 30px;
+  border: 0.1px solid rgb(174 174 174 / 55.8%);
+  color: rgb(255 255 255);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tooltip-notauth-user-button-login {
+  background-color: #1d9bf0;
+  color: rgb(255 255 255);
+}
+
+.tooltip-notauth-user-button-signup {
+  background-color: rgb(0 0 0);
+  color: #1d9bf0;
+}
+
+.tooltip-notauth-user-button-login:hover {
+  background-color: #1883cb;
+}
+
+.tooltip-notauth-user-button-signup:hover {
+  background-color: rgb(1 18 43 / 71.7%);
+}
+
+.tooltip-notauth-user-img {
+  width: 60px;
+  height: 60px;
+}
+
+@media (width <= 1245px) {
   .menu-button {
     width: 50px;
     justify-content: center;
@@ -154,12 +250,13 @@
   }
 
   .hashtag-icon,
+  .home-icon,
   .settings-icon {
-    margin-left: 0px;
+    margin-left: 0;
   }
 }
 
-@media (max-width: 700px) {
+@media (width <= 700px) {
   .button-login,
   .button-singup {
     width: 100%;
@@ -167,7 +264,7 @@
   }
 }
 
-@media (max-width: 550px) {
+@media (width <= 550px) {
   .button-login,
   .button-singup {
     width: 40%;

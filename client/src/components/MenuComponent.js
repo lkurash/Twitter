@@ -8,13 +8,13 @@ import bookmark from "./Img/bookmark_icon.png";
 import notification from "./Img/notification_icon.png";
 import profile from "./Img/profile_icon.png";
 import home from "./Img/home_icon.png";
-import setting from "./Img/settings_icon.png";
 import message from "./Img/message_icon.png";
 import tweetIcon from "./Img/feather_icon.png";
 import ButtonMenu from "./common/ButtonMenu";
 import { Context } from "..";
 import {
   BOOKMARKS_PAGE,
+  EXPLORE_PAGE,
   HOME_PAGE,
   MESSAGE_PAGE,
   PROFILE_PAGE_USER,
@@ -35,9 +35,11 @@ const MenuComponent = observer(() => {
             <ButtonMenu
               type="button"
               path={hashtag}
-              alt="hashtag icon"
-              class="hashtag-icon"
+              alt="Explore"
+              class="settings-icon"
               buttonName="Explore"
+              button="explore"
+              nav={EXPLORE_PAGE}
             />
           </div>
         ) : (
@@ -45,17 +47,18 @@ const MenuComponent = observer(() => {
             <ButtonMenu
               type="button"
               path={home}
-              alt="hashtag icon"
-              class="settings-icon"
+              alt="Home"
+              class="home-icon"
               buttonName="Home"
               nav={HOME_PAGE}
             />
             <ButtonMenu
               type="button"
-              path={setting}
-              alt="settings icon"
+              path={hashtag}
+              alt="Review"
               class="settings-icon"
               buttonName="Review"
+              nav={EXPLORE_PAGE}
             />
             <ButtonMenu
               type="button"
@@ -67,7 +70,7 @@ const MenuComponent = observer(() => {
             <ButtonMenu
               type="button"
               path={message}
-              alt="settings icon"
+              alt="Message"
               class="settings-icon"
               buttonName="Message"
               nav={MESSAGE_PAGE + user.user.id}
@@ -75,7 +78,7 @@ const MenuComponent = observer(() => {
             <ButtonMenu
               type="button"
               path={bookmark}
-              alt="settings icon"
+              alt="Bookmarks"
               class="settings-icon"
               buttonName="Bookmarks"
               nav={BOOKMARKS_PAGE + user.user.id}
@@ -84,7 +87,7 @@ const MenuComponent = observer(() => {
             <ButtonMenu
               type="button"
               path={profile}
-              alt="settings icon"
+              alt="Profile"
               class="settings-icon"
               buttonName="Profile"
               nav={PROFILE_PAGE_USER + user.user.id}

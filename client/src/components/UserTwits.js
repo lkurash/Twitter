@@ -43,7 +43,7 @@ const UserTwits = observer(() => {
   getUserTwit();
   sortTwitAndRetwit();
   return (
-    <div className="twits">
+    <div className="twits" >
       {twitsAndRetwits.map((twit) => (
         <div key={twit.id} className="twit">
           <div className="content-block">
