@@ -6,7 +6,7 @@ function ButtonClose(props) {
   const navigate = useNavigate();
 
   return (
-    <div className="button-close" onClick={() => navigate(-1)}>
+    <div className="button-close" onClick={() => navigate(props.nav)}>
       <img src={close} alt="close-icon" className="close-icon" />
     </div>
   );

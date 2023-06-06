@@ -6,7 +6,7 @@ import MessagesPageComponent from "../components/MessagePageComponent";
 import { checkToken } from "../http/userApi";
 import { LOGIN_PAGE } from "../utils/constans";
 
-const MessagesPage = observer(()=>{
+const MessagesPage = observer(() => {
   const { user } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
@@ -23,15 +23,10 @@ const MessagesPage = observer(()=>{
             navigate(LOGIN_PAGE);
           }
         });
-    } catch (e) {
-    }
+    } catch (e) {}
   }, []);
 
-  return(
-    <>
-      {!loadingPage && user.isAuth && <MessagesPageComponent />}
-    </>
-  );
+  return <>{!loadingPage && user.isAuth && <MessagesPageComponent />}</>;
 });
 
 export default MessagesPage;

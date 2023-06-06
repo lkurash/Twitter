@@ -23,16 +23,10 @@ const EditProfilePage = observer(() => {
             navigate(LOGIN_PAGE);
           }
         });
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }, []);
 
-  return(
-    <>
-      {!loadingPage && user.isAuth && <EditProfilePageComponent />}
-    </>
-  );
+  return <>{!loadingPage && user.isAuth && <EditProfilePageComponent />}</>;
 });
 
 export default EditProfilePage;

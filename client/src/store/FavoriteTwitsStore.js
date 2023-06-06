@@ -15,7 +15,7 @@ class FavoriteTwitsStore {
   setHoverTwitBookmark(twit) {
     this._hoverTwitBookmark = twit;
   }
-  
+
   sethoverTwitRetwit(twit) {
     this._hoverTwitRetwit = twit;
   }

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useLocation, useNavigate, useParams} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   PROFILE_PAGE_USER,
   PROFILE_PAGE_USER_ANSWERS,
@@ -14,7 +14,7 @@ const ProfileButtonPanel = observer(() => {
 
   return (
     <>
-      <div className="user-main-content-button-panel" >
+      <div className="user-main-content-button-panel">
         {location === `/profile/${id}` ? (
           <button
             className="user-main-content-twits-button-onpanel active-button-panel"

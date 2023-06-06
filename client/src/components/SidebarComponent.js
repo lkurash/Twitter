@@ -24,7 +24,10 @@ const SidebarComponent = observer(() => {
     <aside className="side-bar">
       {user.isAuth && (
         <>
-          <MainSearchBlock className="main-search-form-home" page={PROFILE_PAGE_USER}/>
+          <MainSearchBlock
+            className="main-search-form-home"
+            page={PROFILE_PAGE_USER}
+          />
           <div className="main-content">
             <MainSectionTrends className="section trends-home" />
             <MainSectionWhoToRead className="section happen-home" user={user} />

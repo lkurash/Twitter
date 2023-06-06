@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import {
   createRetwitByUser,
   getAllTwits,
   getTwitsByUser,
 } from "../http/twitsApi";
-import { PROFILE_PAGE_USER } from "../utils/constans";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 import activeRetwit from "./Img/active_retweet_icon.png";
 import notactiveRetwit from "./Img/notactive_retweet_icon.png";
@@ -16,19 +16,22 @@ import "./userTwitPanel.css";
 const ButtonRetwitOnTwit = observer((props) => {
   const { twits } = useContext(Context);
   const { retwits } = useContext(Context);
-  const location = useLocation().pathname;
-  const { id } = useParams();
+  const userPage = useParams();
   const { user } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userRetwitTwitId = [];
 
   const getTwits = () => {
-    getAllTwits().then((allTwits) => twits.setTwits(allTwits));
+    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
-    if (location === PROFILE_PAGE_USER + user.user.id) {
-      getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
-    } else {
+    if (user.isAuth) {
+      const { id } = jwt_decode(localStorage.token);
+
       getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+    } else {
+      getTwitsByUser(userPage.id).then((twitsById) =>
+        twits.setUserTwits(twitsById)
+      );
     }
   };
 
@@ -68,7 +71,7 @@ const ButtonRetwitOnTwit = observer((props) => {
     });
   };
 
-  const onCloseTooltip = ()=>{
+  const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);
   };
 
@@ -77,15 +80,19 @@ const ButtonRetwitOnTwit = observer((props) => {
     <div className="user-twit-panel-retwit">
       {!userRetwitTwitId.includes(props.twit.id) ? (
         <>
-          <TooltipUserNotAuth tooltipUserNotAuth={tooltipUserNotAuth} onCloseTooltip={onCloseTooltip} retwit/>
+          <TooltipUserNotAuth
+            tooltipUserNotAuth={tooltipUserNotAuth}
+            onCloseTooltip={onCloseTooltip}
+            retwit
+          />
           <div
             className="user-twit-panel-button-retwit"
             key={props.twit.id}
             onClick={() => {
-              if (user.user.isAuth) {
+              if (user.isAuth) {
                 retwits.setRetwitTwit(props.twit);
                 createRetwitTwit(props.twit);
-              }else{
+              } else {
                 setTooltipUserNotAuth(true);
               }
             }}
@@ -94,7 +101,11 @@ const ButtonRetwitOnTwit = observer((props) => {
             }}
             onMouseLeave={() => retwits.sethoverTwitRetwit({})}
           >
-            <img src={imgButtonRetwit(props.twit)} alt="button retwit" className="user-twit-panel-retwit-img"/>
+            <img
+              src={imgButtonRetwit(props.twit)}
+              alt="button retwit"
+              className="user-twit-panel-retwit-img"
+            />
           </div>
         </>
       ) : (

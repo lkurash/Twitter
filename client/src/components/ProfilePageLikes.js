@@ -66,7 +66,7 @@ const ProfilePageLikes = observer(() => {
           <div className="main-line" />
         </div>
       ))}
-      {userLikesTwits.length === 0 && <p>No twits</p>}
+      {userLikesTwits.length === 0 && <p className="empty-twits">No twits</p>}
     </div>
   );
 });

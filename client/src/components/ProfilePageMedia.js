@@ -65,7 +65,9 @@ const ProfilePageMedia = observer(() => {
           <div className="main-line" />
         </div>
       ))}
-      {userTwitsWithMedia.length === 0 && <p>No twits</p>}
+      {userTwitsWithMedia.length === 0 && (
+        <p className="empty-twits">No twits</p>
+      )}
     </div>
   );
 });

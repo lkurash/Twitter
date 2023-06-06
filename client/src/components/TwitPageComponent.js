@@ -9,7 +9,7 @@ import MenuComponent from "./MenuComponent";
 import SidebarComponent from "./SidebarComponent";
 import TwitForm from "./TwitForm";
 
-const TwitPageComponent = observer(()=> {
+const TwitPageComponent = observer(() => {
   const { user } = useContext(Context);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const TwitPageComponent = observer(()=> {
           <div className="main-wrapper">
             <div className="twit-page">
               <div className="twit-page-form">
-                <ButtonClose />
+                <ButtonClose nav={-1} />
                 <TwitForm />
               </div>
             </div>

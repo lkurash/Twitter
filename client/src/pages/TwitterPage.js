@@ -11,7 +11,7 @@ import { getAllTwits } from "../http/twitsApi";
 import { getAllTopics } from "../http/topicsApi";
 import { getAllUsers, getUserInfo } from "../http/userApi";
 
-const TwitterPage = observer(()=> {
+const TwitterPage = observer(() => {
   const { user } = useContext(Context);
   const { twits } = useContext(Context);
   const { topics } = useContext(Context);

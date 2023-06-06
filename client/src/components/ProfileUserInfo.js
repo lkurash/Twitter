@@ -35,7 +35,7 @@ const ProfileUserInfo = observer(() => {
 
   const checkFollowingUser = () => {
     user.userFollowers.map((follower) => {
-      if (follower.followUserId === user.user.id) {
+      if (follower.UserId === user.user.id) {
         followingUser.push(follower);
       }
     });
@@ -44,7 +44,9 @@ const ProfileUserInfo = observer(() => {
   const createFollowing = () => {
     setFollowing(true);
     createFollow(user.userPage.id);
-    getFollowingUser(id).then((allFollowing) => user.setuserFollowing(allFollowing));
+    getFollowingUser(id).then((allFollowing) =>
+      user.setuserFollowing(allFollowing)
+    );
   };
 
   checkFollowingUser();
@@ -66,32 +68,32 @@ const ProfileUserInfo = observer(() => {
               location === `/profile/answers/${user.user.id}` ||
               location === `/profile/media/${user.user.id}` ||
               location === `/profile/likes/${user.user.id}` ? (
-                  <button
-                    type="button"
-                    className="button-edit-profile"
-                    onClick={() => navigate(EDIT_PROFILE_PAGE + user.user.id)}
-                  >
-                    <span>Edit Profile</span>
-                  </button>
-                ) : (
-                  <>
-                    {followingUser.length > 0 || following ? (
-                      <button type="button" className="button-edit-profile">
-                        <span>Following</span>
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        className="button-edit-profile"
-                        onClick={() => {
-                          createFollowing();
-                        }}
-                      >
-                        <span>Follow</span>
-                      </button>
-                    )}
-                  </>
-                )}
+                <button
+                  type="button"
+                  className="button-edit-profile"
+                  onClick={() => navigate(EDIT_PROFILE_PAGE + user.user.id)}
+                >
+                  <span>Edit Profile</span>
+                </button>
+              ) : (
+                <>
+                  {followingUser.length > 0 || following ? (
+                    <button type="button" className="button-edit-profile">
+                      <span>Following</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="button-edit-profile"
+                      onClick={() => {
+                        createFollowing();
+                      }}
+                    >
+                      <span>Follow</span>
+                    </button>
+                  )}
+                </>
+              )}
             </>
           )}
         </div>

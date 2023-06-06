@@ -64,7 +64,7 @@ const EditProfileForm = observer(() => {
     <div className="edit-profile-form">
       <header className="edit-profile-form-header">
         <div className="edit-profile-form-header-title">
-          <ButtonClose />
+          <ButtonClose nav = {-1}/>
           <h4 className="edit-profile-title">Edit Profile</h4>
         </div>
         <button

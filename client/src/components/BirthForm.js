@@ -117,7 +117,7 @@ const BirthForm = observer(() => {
         className="signup-birth-form-day"
       >
         {!userSelectMonth && <option disabled>Select month</option>}
-
+        <option disabled />
         {daysOption.map((day) => (
           <option value={day} key={day}>
             {day}

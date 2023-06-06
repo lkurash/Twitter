@@ -10,7 +10,8 @@ import ButtonBookmarkOnTwit from "./ButtonBookmarkOnTwit";
 import ButtonCommentOnTwit from "./ButtonCommentOnTwit";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 
-const TwitsForYou = observer(({showTwitsForYou}) => {
+const TwitsForYou = observer(({ showTwitsForYou }) => {
+  const { user } = useContext(Context);
   const { twits } = useContext(Context);
   const navigate = useNavigate();
 
@@ -20,13 +21,16 @@ const TwitsForYou = observer(({showTwitsForYou}) => {
     <div className="twits">
       {twits.twits.map((twit) => (
         <div className="user-main-content-block" key={twit.id}>
-          <div
-            className="user-block-twit"
-            key={twit.id}
-          >
+          <div className="user-block-twit" key={twit.id}>
             <div className="user-info">
-              <div className="user-info-photo"
-                onClick={() => navigate(PROFILE_PAGE_USER + twit.User.id)}>
+              <div
+                className="user-info-photo"
+                onClick={() => {
+                  user.setUserPage({});
+                  twits.setUserTwits([]);
+                  navigate(PROFILE_PAGE_USER + twit.User.id);
+                }}
+              >
                 {twit.User.photo ? (
                   <img
                     alt="User"
@@ -38,9 +42,12 @@ const TwitsForYou = observer(({showTwitsForYou}) => {
               </div>
             </div>
             <div className="twit-desc">
-              <h4 className="twit-user-name"
-                onClick={() => navigate(PROFILE_PAGE_USER + twit.User.id)}>
-                {twit.User.user_name}</h4>
+              <h4
+                className="twit-user-name"
+                onClick={() => navigate(PROFILE_PAGE_USER + twit.User.id)}
+              >
+                {twit.User.user_name}
+              </h4>
               <p className="twit-text">{twit.text}</p>
               {twit.img && (
                 <div className="wrapper-twit-img">
@@ -62,7 +69,7 @@ const TwitsForYou = observer(({showTwitsForYou}) => {
           <div className="main-line" />
         </div>
       ))}
-      {twits.twits.length === 0 && <p>No twits</p>}
+      {twits.twits.length === 0 && <p className="empty-twits">No twits</p>}
     </div>
   );
 });

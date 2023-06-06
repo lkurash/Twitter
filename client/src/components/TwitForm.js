@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import { useLocation, useNavigate } from "react-router-dom";
-import { createTwitByUser } from "../http/twitsApi";
+import { createTwitByUser, getAllTwits } from "../http/twitsApi";
 import { Context } from "..";
 import imgFile from "./Img/file.png";
 import close from "./Img/x_icon.png";
@@ -10,6 +10,7 @@ import getUserPhoto from "../utils/getUserPhoto";
 
 const TwitForm = observer(() => {
   const { user } = useContext(Context);
+  const { twits } = useContext(Context);
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [text, setText] = useState("");
@@ -19,13 +20,15 @@ const TwitForm = observer(() => {
     setImg(e.target.files[0]);
   };
 
-  const createTwits = () => {
+  const createTwits = async () => {
     try {
       const formData = new FormData();
 
       formData.append("text", text);
       formData.append("img", img);
-      createTwitByUser(formData);
+      await createTwitByUser(formData);
+      await getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+      setText("");
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -45,7 +48,6 @@ const TwitForm = observer(() => {
       <form className="twit-form">
         <div className="twit-form-input-text">
           <InputEmoji
-            cleanOnEnter
             borderRadius="0"
             borderColor="#000000"
             value={text}
@@ -89,7 +91,7 @@ const TwitForm = observer(() => {
               <span>Tweet</span>
             </button>
           ) : (
-            <button onClick={createTwits}>
+            <button onClick={createTwits} type="button">
               <span>Tweet</span>
             </button>
           )}

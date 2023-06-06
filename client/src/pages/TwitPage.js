@@ -7,7 +7,7 @@ import TwitPageComponent from "../components/TwitPageComponent";
 import { checkToken } from "../http/userApi";
 import { EXPLORE_PAGE } from "../utils/constans";
 
-const TwitPage = observer(()=> {
+const TwitPage = observer(() => {
   const { user } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
@@ -24,11 +24,7 @@ const TwitPage = observer(()=> {
     }
   }, []);
 
-  return (
-    <>
-      {!loadingPage && <TwitPageComponent />}
-    </>
-  );
+  return <>{!loadingPage && <TwitPageComponent />}</>;
 });
 
 export default TwitPage;

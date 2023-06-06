@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import "./userTwitPanel.css";
 import {
@@ -8,8 +9,6 @@ import {
   getAllTwits,
   getTwitsByUser,
 } from "../http/twitsApi";
-import { PROFILE_PAGE_USER } from "../utils/constans";
-
 import activeBookmark from "./Img/active_bookmark_icon.png";
 import notactiveBookmark from "./Img/notactive_bookmark_icon.png";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
@@ -17,18 +16,21 @@ import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 const ButtonBookmarkOnTwit = observer((props) => {
   const { twits } = useContext(Context);
   const { user } = useContext(Context);
-  const location = useLocation().pathname;
-  const { id } = useParams();
+  const userPage = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userBookmarksTwitId = [];
 
   const getTwits = () => {
-    getAllTwits().then((allTwits) => twits.setTwits(allTwits));
+    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
-    if (location === PROFILE_PAGE_USER + user.user.id) {
-      getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
-    } else {
+    if (user.isAuth) {
+      const { id } = jwt_decode(localStorage.token);
+
       getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+    } else {
+      getTwitsByUser(userPage.id).then((twitsById) =>
+        twits.setUserTwits(twitsById)
+      );
     }
   };
 
@@ -72,7 +74,7 @@ const ButtonBookmarkOnTwit = observer((props) => {
 
   getUserBookmarksTwitId();
 
-  const onCloseTooltip = ()=>{
+  const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);
   };
 
@@ -80,15 +82,19 @@ const ButtonBookmarkOnTwit = observer((props) => {
     <div className="user-twit-panel-bookmark">
       {!userBookmarksTwitId.includes(props.twit.id) ? (
         <>
-          <TooltipUserNotAuth tooltipUserNotAuth={tooltipUserNotAuth} onCloseTooltip={onCloseTooltip} bookmark/>
+          <TooltipUserNotAuth
+            tooltipUserNotAuth={tooltipUserNotAuth}
+            onCloseTooltip={onCloseTooltip}
+            bookmark
+          />
           <div
             className="user-twit-panel-button-bookmark"
             key={props.twit.id}
             onClick={() => {
-              if (user.user.isAuth) {
+              if (user.isAuth) {
                 twits.setFavoriteTwit(props.twit);
                 createFavoriteTwits(props.twit);
-              }else{
+              } else {
                 setTooltipUserNotAuth(true);
               }
             }}
@@ -97,7 +103,11 @@ const ButtonBookmarkOnTwit = observer((props) => {
             }}
             onMouseLeave={() => twits.sethoverTwitBookmark({})}
           >
-            <img src={hoverAndActiveButtonBookmark(props.twit)} alt="Bookmark" className="user-twit-panel-bookmark-img"/>
+            <img
+              src={hoverAndActiveButtonBookmark(props.twit)}
+              alt="Bookmark"
+              className="user-twit-panel-bookmark-img"
+            />
           </div>
         </>
       ) : (
@@ -114,7 +124,11 @@ const ButtonBookmarkOnTwit = observer((props) => {
           }}
           onMouseLeave={() => twits.sethoverTwitBookmark({})}
         >
-          <img src={notActiveButtonBookmark(props.twit)} alt="Bookmark" className="user-twit-panel-bookmark-img"/>
+          <img
+            src={notActiveButtonBookmark(props.twit)}
+            alt="Bookmark"
+            className="user-twit-panel-bookmark-img"
+          />
         </div>
       )}
     </div>

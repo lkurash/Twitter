@@ -12,6 +12,7 @@ import {
   getFollowingUser,
   getUserInfo,
   getUserById,
+  getAllUsers,
 } from "../http/userApi";
 import FooterMobileComponent from "./FooterMobileComponent";
 import MenuComponent from "./MenuComponent";
@@ -27,16 +28,23 @@ const UserPageComponent = observer(() => {
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
-  },[]);
+  }, []);
 
   useEffect(() => {
     try {
       getUserById(id).then((userById) => user.setUserPage(userById));
       getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+      getAllUsers().then((users) => user.setAllUsers(users));
       getAllTwits().then((allTwits) => twits.setTwits(allTwits));
-      getRetwitsByUser(id).then((retwitsByUser) => retwits.setRetwits(retwitsByUser));
-      getFollowingUser(id).then((allFollowing) => user.setuserFollowing(allFollowing));
-      getFollowersUser(id).then((allFollowers) => user.setuserFollowers(allFollowers));
+      getRetwitsByUser(id).then((retwitsByUser) =>
+        retwits.setRetwits(retwitsByUser)
+      );
+      getFollowingUser(id).then((allFollowing) =>
+        user.setuserFollowing(allFollowing)
+      );
+      getFollowersUser(id).then((allFollowers) =>
+        user.setuserFollowers(allFollowers)
+      );
       getUserInfo().then((userInfo) => user.setUser(userInfo));
     } catch (error) {
       console.log(error.response.data.message);
@@ -49,7 +57,7 @@ const UserPageComponent = observer(() => {
         <MenuComponent />
         <div className="main-wrapper" ref={ref}>
           <main className="main">
-            <ProfileUserComponent/>
+            <ProfileUserComponent />
           </main>
         </div>
         <SidebarComponent />

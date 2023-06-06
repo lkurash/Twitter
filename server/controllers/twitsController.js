@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const uuid = require("uuid");
 const path = require("path");
-const models = require('../models/index');
+const models = require("../models/index");
 const Twits = models.Twits;
 const User = models.User;
 const Likes = models.Likes;
@@ -153,7 +153,7 @@ class TwitsController {
           {
             model: Twits,
             include: [
-              { model: User},
+              { model: User },
               { model: Likes },
               { model: Retwit },
               { model: Favorite_twits },
@@ -250,7 +250,7 @@ class TwitsController {
             {
               model: Twits,
               include: [
-                { model: User},
+                { model: User },
                 { model: Likes },
                 { model: Retwit },
                 { model: Favorite_twits },
@@ -271,9 +271,27 @@ class TwitsController {
     try {
       const { id } = request.body;
       const twit = await Twits.findOne({ where: { id } });
+      const like = await Likes.findAll({ where: { TwitId: id } });
+      const bookmark = await Favorite_twits.findAll({ where: { TwitId: id } });
+      const comment = await Comments.findAll({ where: { TwitId: id } });
+      const retwit = await Retwit.findAll({ where: { TwitId: id } });
 
       if (twit) {
         await Twits.destroy({ where: { id } });
+
+        if (like) {
+          await Likes.destroy({ where: { TwitId: id } });
+        }
+        if (comment) {
+          await Comments.destroy({ where: { TwitId: id } });
+        }
+        if (bookmark) {
+          await Favorite_twits.destroy({ where: { TwitId: id } });
+        }
+        if (retwit) {
+          await Retwit.destroy({ where: { TwitId: id } });
+        }
+
         return response.json(twit);
       }
     } catch (error) {

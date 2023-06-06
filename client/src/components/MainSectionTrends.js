@@ -12,7 +12,9 @@ const MainSectionTrends = observer((props) => {
       {topics.topics.map((topic) => (
         <Trends key={topic.id} topic={topic} />
       ))}
-      {topics.topics.length === 0 && <p className="section-trends-hidden"> No trends today</p>}
+      {topics.topics.length === 0 && (
+        <p className="section-trends-hidden"> No trends today</p>
+      )}
     </section>
   );
 });

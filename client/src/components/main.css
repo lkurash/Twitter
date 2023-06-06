@@ -168,6 +168,7 @@
 }
 
 .happen-home {
+  min-width: 250px;
   margin-top: 20px;
   padding-top: 1px;
   margin-left: 20px;
@@ -432,11 +433,15 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 .twit {
   width: 100%;
+}
+
+.empty-twits{
+  width: 100%;
+  margin-left: 46%;
 }
 
 .twits-message {
@@ -511,6 +516,10 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+}
+
+.content-block-comment{
+  padding-top: 10px;
 }
 
 .page-messages-welcome {

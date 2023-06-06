@@ -15,7 +15,9 @@ const ListFoundUserSearchBlock = observer(
     const getAllUsersName = () => {
       user.allUsers.map((profile) => {
         if (profile.user_name) {
-          usersName.push(profile.user_name[0].toLowerCase() + profile.user_name.slice(1));
+          usersName.push(
+            profile.user_name[0].toLowerCase() + profile.user_name.slice(1)
+          );
         }
       });
     };
@@ -27,7 +29,10 @@ const ListFoundUserSearchBlock = observer(
         usersName.forEach((element) => {
           if (element.includes(userName.toLowerCase())) {
             user.allUsers.map((profile) => {
-              if (profile.user_name === element[0].toUpperCase() + element.slice(1)) {
+              if (
+                profile.user_name ===
+                element[0].toUpperCase() + element.slice(1)
+              ) {
                 return usersFound.push(profile);
               }
             });

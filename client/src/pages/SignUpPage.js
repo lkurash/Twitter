@@ -5,7 +5,6 @@ import close from "../components/Img/x_icon.png";
 import "../components/loginAndRegistretionForm.css";
 import { HOME_PAGE, TWITTER_PAGE } from "../utils/constans";
 import SignUpForm from "../components/SignUpForm";
-import TwitterPage from "./TwitterPage";
 import { Context } from "..";
 import { getUserInfo, registration } from "../http/userApi";
 
@@ -55,7 +54,6 @@ const SignUpPage = observer(() => {
 
   return (
     <div>
-      {/* <TwitterPage /> */}
       {!checkUserInfo ? (
         <SignUpForm getInfoUser={getInfoUser} />
       ) : (
@@ -89,7 +87,7 @@ const SignUpPage = observer(() => {
               </div>
               <button
                 className="signup-form-button"
-                type="button"
+                type="submit"
                 onClick={signUp}
               >
                 <span>Sign up</span>

@@ -9,7 +9,7 @@ import Retwit from "./ButtonRetwitOnTwit";
 import arrowLeft from "./Img/arrow_left_icon.png";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
 
-const UserBookmarksComponent = observer(() => {
+const UserBookmarks = observer(() => {
   const { user } = useContext(Context);
   const { favoriteTwits } = useContext(Context);
   const navigate = useNavigate();
@@ -69,10 +69,12 @@ const UserBookmarksComponent = observer(() => {
             <div className="main-line" />
           </div>
         ))}
-        {favoriteTwits.favoriteTwits.length === 0 && <p>No favorite twits</p>}
+        {favoriteTwits.favoriteTwits.length === 0 && (
+          <p className="empty-twits">No twits</p>
+        )}
       </div>
     </div>
   );
 });
 
-export default UserBookmarksComponent;
+export default UserBookmarks;

@@ -8,6 +8,7 @@ import ButtonFollowInFollowComponent from "./ButtonFollowInFollowComponent";
 
 const UserFollowingComponent = observer(() => {
   const { user } = useContext(Context);
+  const { twits } = useContext(Context);
   const navigate = useNavigate();
 
   const userFollowingId = [];
@@ -42,10 +43,16 @@ const UserFollowingComponent = observer(() => {
             <li key={profile.id} className="follow-page-main-user">
               <div
                 className="follow-page-main-user-info"
-                onClick={() => navigate(PROFILE_PAGE_USER + profile.followUser.id)}
+                onClick={() => {
+                  user.setUserPage({});
+                  twits.setUserTwits([]);
+                  navigate(PROFILE_PAGE_USER + profile.followUser.id);
+                }}
               >
                 <img src={getUserPhoto(profile.followUser)} alt="User" />
-                <p className="follow-page-main-user-name">{profile.followUser.user_name}</p>
+                <p className="follow-page-main-user-name">
+                  {profile.followUser.user_name}
+                </p>
               </div>
               <ButtonFollowInFollowComponent
                 profile={profile}

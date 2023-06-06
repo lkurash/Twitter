@@ -18,9 +18,11 @@ const ListWhoReadUserHomePage = observer(() => {
     }
     return "Follow";
   };
-  const getUsersAndFollowigs = async()=> {
+  const getUsersAndFollowigs = async () => {
     await getAllUsers().then((users) => user.setAllUsers(users));
-    await getFollowingUser(user.user.id).then((allFollowing) => user.setuserFollowing(allFollowing));
+    await getFollowingUser(user.user.id).then((allFollowing) =>
+      user.setuserFollowing(allFollowing)
+    );
   };
 
   const createFollowing = async (profile) => {

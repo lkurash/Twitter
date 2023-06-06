@@ -17,7 +17,7 @@ const MainSearchBlock = observer((props) => {
     setShowListFoundUsers(false);
     setActiveInput(false);
   };
-  
+
   return (
     <div className="main-search-block">
       <Logo path={logo} class="mobile-logo" />
@@ -43,7 +43,7 @@ const MainSearchBlock = observer((props) => {
             userName={userName}
             showListFoundUsers={showListFoundUsers}
             onClose={onClose}
-            page = {props.page}
+            page={props.page}
           />
         </div>
       ) : (

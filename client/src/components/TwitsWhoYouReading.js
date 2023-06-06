@@ -9,15 +9,16 @@ import ButtonLikeOnTwit from "./ButtonLikeOnTwit";
 import ButtonRetwitOnTwit from "./ButtonRetwitOnTwit";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
 
-const TwitsWhoYouRead = observer(({showTwitsWhoReading}) => {
+const TwitsWhoYouRead = observer(({ showTwitsWhoReading }) => {
   const { user } = useContext(Context);
+  const { twits } = useContext(Context);
   const navigate = useNavigate();
   const twitsFollowingUsers = [];
 
   const getTwitsFollowingUsers = () => {
     user.userFollowing.map((followingUser) => {
-      followingUser.followUser.Twits.forEach((twit) => {
-        twitsFollowingUsers.push(twit);
+      return followingUser.followUser.Twits.forEach((twit) => {
+        return twitsFollowingUsers.push(twit);
       });
     });
   };
@@ -30,13 +31,15 @@ const TwitsWhoYouRead = observer(({showTwitsWhoReading}) => {
     <div className="twits">
       {twitsFollowingUsers.map((twit) => (
         <div className="user-main-content-block" key={twit.id}>
-          <div
-            className="user-block-twit"
-            key={twit.id}
-          >
+          <div className="user-block-twit" key={twit.id}>
             <div className="user-info">
-              <div className="user-info-photo"
-                onClick={() => navigate(PROFILE_PAGE_USER + twit.User.id)}
+              <div
+                className="user-info-photo"
+                onClick={() => {
+                  user.setUserPage({});
+                  twits.setUserTwits([]);
+                  navigate(PROFILE_PAGE_USER + twit.User.id);
+                }}
               >
                 {twit.User.photo ? (
                   <img
@@ -49,10 +52,12 @@ const TwitsWhoYouRead = observer(({showTwitsWhoReading}) => {
               </div>
             </div>
             <div className="twit-desc">
-              <h4 className="twit-user-name"
+              <h4
+                className="twit-user-name"
                 onClick={() => navigate(PROFILE_PAGE_USER + twit.User.id)}
               >
-                {twit.User.user_name}</h4>
+                {twit.User.user_name}
+              </h4>
               <p className="twit-text">{twit.text}</p>
               {twit.img && (
                 <div className="wrapper-twit-img">
@@ -74,7 +79,9 @@ const TwitsWhoYouRead = observer(({showTwitsWhoReading}) => {
           <div className="main-line" />
         </div>
       ))}
-      {twitsFollowingUsers.length === 0 && <p>You don't have following</p>}
+      {twitsFollowingUsers.length === 0 && (
+        <p className="empty-twits">You don't have following</p>
+      )}
     </div>
   );
 });

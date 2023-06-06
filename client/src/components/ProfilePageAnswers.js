@@ -10,7 +10,9 @@ const ProfilePageAnswers = observer(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    getCommentsByUser(id).then((commentsByUser) => comments.setComments(commentsByUser));
+    getCommentsByUser(id).then((commentsByUser) =>
+      comments.setComments(commentsByUser)
+    );
   });
 
   return (

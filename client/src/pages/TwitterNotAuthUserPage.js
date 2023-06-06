@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { async } from "react-input-emoji";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
 import FooterComponent from "../components/FooterComponent";
@@ -24,17 +25,20 @@ const TwitterPageNotAuthUser = observer(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    try {
-      getUserById(id).then((userById) => user.setUserPage(userById));
-      getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
-      getAllTwits().then((allTwits) => twits.setTwits(allTwits));
-      getRetwitsByUser(id).then((retwitsByUser) => retwits.setRetwits(retwitsByUser));
-      getFollowingUser(id).then((allFollowing) => user.setuserFollowing(allFollowing));
-      getFollowersUser(id).then((allFollowers) => user.setuserFollowers(allFollowers));
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
+    getUserById(id).then((userById) => user.setUserPage(userById));
+    getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+    getAllTwits().then((allTwits) => twits.setTwits(allTwits));
+    getRetwitsByUser(id).then((retwitsByUser) =>
+      retwits.setRetwits(retwitsByUser)
+    );
+    getFollowingUser(id).then((allFollowing) =>
+      user.setuserFollowing(allFollowing)
+    );
+    getFollowersUser(id).then((allFollowers) =>
+      user.setuserFollowers(allFollowers)
+    );
   });
+
   return (
     <div>
       <div className="page">
