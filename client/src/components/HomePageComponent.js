@@ -33,7 +33,14 @@ const HomePageComponent = observer(() => {
     getFollowingUser(id).then((allFollowing) =>
       user.setuserFollowing(allFollowing)
     );
-    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+    getAllTwits().then((alltwits) => {
+      if (alltwits) {
+        twits.setTwits(alltwits);
+      }
+      else{
+        twits.setTwits('No twits');
+      }
+    });
   });
 
   return (

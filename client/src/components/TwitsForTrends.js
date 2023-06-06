@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
+import ButtonBookmarkOnTwit from "./ButtonBookmarkOnTwit";
+import ButtonCommentOnTwit from "./ButtonCommentOnTwit";
+import ButtonLikeOnTwit from "./ButtonLikeOnTwit";
+import ButtonRetwitOnTwit from "./ButtonRetwitOnTwit";
 
 const TwitsForTrends = observer((props) => {
   const { twits } = useContext(Context);
@@ -49,7 +53,12 @@ const TwitsForTrends = observer((props) => {
               )}
             </div>
           </div>
-          <div className="user-twit-panel" />
+          <div className="user-twit-panel">
+            <ButtonCommentOnTwit twit={twit} />
+            <ButtonRetwitOnTwit twit={twit} />
+            <ButtonLikeOnTwit twit={twit} />
+            <ButtonBookmarkOnTwit twit={twit} />
+          </div>
           <div className="main-line" />
         </div>
       ))}
