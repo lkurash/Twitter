@@ -9,6 +9,7 @@ import ButtonRetwitOnTwit from "./ButtonRetwitOnTwit";
 import ButtonBookmarkOnTwit from "./ButtonBookmarkOnTwit";
 import ButtonCommentOnTwit from "./ButtonCommentOnTwit";
 import { PROFILE_PAGE_USER } from "../utils/constans";
+import { ColorRing } from "react-loader-spinner";
 
 const TwitsForYou = observer(({ showTwitsForYou }) => {
   const { user } = useContext(Context);
@@ -16,6 +17,22 @@ const TwitsForYou = observer(({ showTwitsForYou }) => {
   const navigate = useNavigate();
 
   if (!showTwitsForYou) return null;
+
+  if (twits.twits.length === 0) {
+    return (
+      <div className="load-spinner">
+        <ColorRing
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="blocks-wrapper"
+          colors={["#1d9bf0", "#2188cc", "#1d9bf0", "#2188cc", "#1d9bf0"]}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="twits">

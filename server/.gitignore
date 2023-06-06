@@ -2,6 +2,7 @@
 /.pnp
 .pnp.js
 /config/config.json
+.eslintrc.json
 
 # testing
 /coverage
