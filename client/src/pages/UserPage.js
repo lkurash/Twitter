@@ -23,15 +23,10 @@ const UserPage = observer(() => {
             navigate(LOGIN_PAGE);
           }
         });
-    } catch (e) {
-    }
+    } catch (e) {}
   }, []);
 
-  return (
-    <>
-      {!loadingPage && user.isAuth && <UserPageComponent />}
-    </>
-  );
+  return <>{!loadingPage && user.isAuth && <UserPageComponent />}</>;
 });
 
 export default UserPage;

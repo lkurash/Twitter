@@ -3,6 +3,7 @@ import "./loginAndRegistretionForm.css";
 import BirthForm from "./BirthForm";
 import ButtonClose from "./common/ButtonClose";
 import { Context } from "..";
+import { EXPLORE_PAGE } from "../utils/constans";
 
 function SignUpForm(props) {
   const { user } = useContext(Context);
@@ -27,7 +28,7 @@ function SignUpForm(props) {
     <div className="body">
       <div className="form-wrapper">
         <header className="login-form-header">
-          <ButtonClose />
+          <ButtonClose nav={EXPLORE_PAGE} />
         </header>
         <main className="signup-form-main">
           <h2>Create your account</h2>
@@ -100,7 +101,7 @@ function SignUpForm(props) {
             <BirthForm />
             <button
               className="signup-form-button"
-              type="button"
+              type="submit"
               onClick={() =>
                 props.getInfoUser(userName, email, user.birthDate, password)
               }

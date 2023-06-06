@@ -59,11 +59,7 @@ const TrendsPage = observer(() => {
         </main>
         <SidebarComponent />
       </div>
-      {location === "/" ? (
-        <FooterComponent />
-      ) : (
-        <FooterMobileComponent />
-      )}
+      {location === "/" ? <FooterComponent /> : <FooterMobileComponent />}
     </div>
   );
 });

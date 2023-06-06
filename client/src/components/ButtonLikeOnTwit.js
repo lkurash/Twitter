@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import activeLike from "./Img/active_like.png";
 import notactiveLike from "./Img/notactive_like.png";
@@ -12,24 +13,26 @@ import {
   getAllTwits,
   getTwitsByUser,
 } from "../http/twitsApi";
-import { PROFILE_PAGE_USER } from "../utils/constans";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 
 const ButtonLikeOnTwit = observer((props) => {
   const { twits } = useContext(Context);
   const { user } = useContext(Context);
-  const location = useLocation().pathname;
-  const { id } = useParams();
+  const userPage = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userLikesTwitId = [];
 
   const getTwits = () => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
-    if (location === PROFILE_PAGE_USER + user.user.id) {
-      getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
-    } else {
+    if (user.isAuth) {
+      const { id } = jwt_decode(localStorage.token);
+
       getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+    } else {
+      getTwitsByUser(userPage.id).then((twitsById) =>
+        twits.setUserTwits(twitsById)
+      );
     }
   };
 
@@ -71,7 +74,7 @@ const ButtonLikeOnTwit = observer((props) => {
 
   getUserLikesTwitId();
 
-  const onCloseTooltip = ()=>{
+  const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);
   };
 
@@ -79,16 +82,20 @@ const ButtonLikeOnTwit = observer((props) => {
     <div className="user-twit-panel-like">
       {!userLikesTwitId.includes(props.twit.id) ? (
         <>
-          <TooltipUserNotAuth tooltipUserNotAuth={tooltipUserNotAuth} onCloseTooltip={onCloseTooltip} like/>
+          <TooltipUserNotAuth
+            tooltipUserNotAuth={tooltipUserNotAuth}
+            onCloseTooltip={onCloseTooltip}
+            like
+          />
           <div
             className="user-twit-panel-button-like"
             key={props.twit.id}
             onClick={() => {
-              if (user.user.isAuth) {
+              if (user.isAuth) {
                 twits.setLikedTwit(props.twit);
                 twits.setDislikeTwit({});
                 createLikeTwit(props.twit);
-              }else{
+              } else {
                 setTooltipUserNotAuth(true);
               }
             }}
@@ -97,7 +104,11 @@ const ButtonLikeOnTwit = observer((props) => {
             }}
             onMouseLeave={() => twits.sethoverTwitLike({})}
           >
-            <img src={imgButtonLike(props.twit)} alt="Like" className="user-twit-panel-like-img"/>
+            <img
+              src={imgButtonLike(props.twit)}
+              alt="Like"
+              className="user-twit-panel-like-img"
+            />
           </div>
         </>
       ) : (

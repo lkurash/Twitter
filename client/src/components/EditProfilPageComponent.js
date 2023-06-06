@@ -5,13 +5,13 @@ import UserPage from "../pages/UserPage";
 import EditProfileForm from "./EditProfilForm";
 
 const EditProfilePageComponent = observer(() => {
-  const {user} = useContext(Context);
+  const { user } = useContext(Context);
 
-  return(
+  return (
     <div>
       <UserPage />
       <div className="edit-profile-page">
-        <EditProfileForm userName= {user.user.user_name}/>
+        <EditProfileForm userName={user.user.user_name} />
       </div>
     </div>
   );

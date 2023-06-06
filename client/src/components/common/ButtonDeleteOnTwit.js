@@ -12,8 +12,8 @@ const ButtonDeleteOnTwit = observer((props) => {
   const tooltipDeleteTwit = useRef(null);
 
   const deleteTwit = async (twit) => {
-    deleteTwitByUser(twit.id);
-    getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
+    await deleteTwitByUser(twit.id);
+    await getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
   };
   const onClose = () => {
     setShowDeleteButton(false);

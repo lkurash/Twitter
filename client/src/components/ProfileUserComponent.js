@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { ColorRing } from "react-loader-spinner";
 
 import { useContext } from "react";
 import ProfilePageAnswers from "./ProfilePageAnswers";
@@ -17,6 +18,22 @@ const ProfileUserComponent = observer(() => {
   const navigate = useNavigate();
   const { user } = useContext(Context);
   const { id } = useParams();
+
+  if (!user.userPage.id) {
+    return (
+      <div className="load-spinner">
+        <ColorRing
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="blocks-wrapper"
+          colors={["#1d9bf0", "#2188cc", "#1d9bf0", "#2188cc", "#1d9bf0"]}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="user-main-content-block">

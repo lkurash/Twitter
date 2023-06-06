@@ -12,12 +12,16 @@ const MainComponentTwitterPage = observer(() => {
 
   return (
     <main className="main-wrapper">
-      {!user.isAuth ?
+      {!user.isAuth ? (
         <div className="main">
-          <MainSearchBlock className="main-search-form" page= {TWITTER_USER_PAGE}/>
+          <MainSearchBlock
+            className="main-search-form"
+            page={TWITTER_USER_PAGE}
+          />
           <MainContentTwitterPage />
         </div>
-        : <div className="main">
+      ) : (
+        <div className="main">
           <div className="user-main-content">
             <div className="user-main-content-block">
               <div className="page-name">
@@ -26,11 +30,11 @@ const MainComponentTwitterPage = observer(() => {
                 </div>
               </div>
               <div className="main-line" />
-              <TwitsForYou showTwitsForYou='true'/>
+              <TwitsForYou showTwitsForYou="true" />
             </div>
           </div>
         </div>
-      }
+      )}
     </main>
   );
 });

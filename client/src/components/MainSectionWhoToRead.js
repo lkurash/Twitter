@@ -21,7 +21,7 @@ const MainSectionWhoToRead = observer((props) => {
   return (
     <section className={props.className}>
       <h2 className="main-section-name">Who to read</h2>
-      {location === "/" || location === "/explore"  ? (
+      {location === "/" || location === "/explore" ? (
         <ul className="follow-page-main-users">
           {user.allUsers.map((profile) => (
             <li key={profile.id} className="follow-page-main-user">
@@ -29,10 +29,7 @@ const MainSectionWhoToRead = observer((props) => {
                 className="section-read-main-user-info"
                 onClick={() => navigate(TWITTER_USER_PAGE + profile.id)}
               >
-                <img
-                  src={getUserPhoto(profile)}
-                  alt="User"
-                />
+                <img src={getUserPhoto(profile)} alt="User" />
                 <p>{profile.user_name}</p>
               </div>
             </li>

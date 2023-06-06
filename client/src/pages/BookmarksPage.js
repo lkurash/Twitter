@@ -23,15 +23,10 @@ const BookmarksPage = observer(() => {
             navigate(LOGIN_PAGE);
           }
         });
-    } catch (e) {
-    }
+    } catch (e) {}
   }, []);
 
-  return (
-    <>
-      {!loadingPage && user.isAuth && <BookmarksPageComponent />}
-    </>
-  );
+  return <>{!loadingPage && user.isAuth && <BookmarksPageComponent />}</>;
 });
 
 export default BookmarksPage;

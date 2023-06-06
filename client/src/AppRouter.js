@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { authRoutes, publicRoutes } from "./router";
 
 const AppRouter = observer(() => (

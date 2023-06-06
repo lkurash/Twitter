@@ -4,29 +4,29 @@ import TwitForm from "./TwitForm";
 import TwitsForYou from "./TwitsForYou";
 import TwitsWhoYouRead from "./TwitsWhoYouReading";
 
-const MainComponentHomePage = observer(()=>{
+const MainComponentHomePage = observer(() => {
   const [showTwitsForYou, setShowTwitsForYou] = useState(true);
-  const [showTwitsWhoReading, setShowTwitsWhoReading] = useState('');
+  const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
 
-  const setLocalStorageTwitsForYou = (show)=>{
+  const setLocalStorageTwitsForYou = (show) => {
     localStorage.setItem("twitsForYou", show);
   };
 
-  const checkLocalStorageTwitsForYou = ()=>{
-    if (localStorage.getItem('twitsForYou') === 'true') {
+  const checkLocalStorageTwitsForYou = () => {
+    if (localStorage.getItem("twitsForYou") === "true") {
       setShowTwitsForYou(true);
       setShowTwitsWhoReading(false);
-    }else{
+    } else {
       setShowTwitsForYou(false);
       setShowTwitsWhoReading(true);
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     checkLocalStorageTwitsForYou();
-  });
-  
-  return(
+  }, []);
+
+  return (
     <main className="main-wrapper">
       <div className="main">
         <div className="user-main-content">
@@ -70,7 +70,7 @@ const MainComponentHomePage = observer(()=>{
                       checkLocalStorageTwitsForYou();
                     }}
                   >
-                    <span> You ara reading</span>
+                    <span> You are reading</span>
                   </button>
                 ) : (
                   <button
@@ -91,8 +91,8 @@ const MainComponentHomePage = observer(()=>{
               <TwitForm />
             </div>
             <div className="main-line" />
-            <TwitsForYou showTwitsForYou={showTwitsForYou}/>
-            <TwitsWhoYouRead showTwitsWhoReading={showTwitsWhoReading}/>
+            <TwitsForYou showTwitsForYou={showTwitsForYou} />
+            <TwitsWhoYouRead showTwitsWhoReading={showTwitsWhoReading} />
           </div>
         </div>
       </div>

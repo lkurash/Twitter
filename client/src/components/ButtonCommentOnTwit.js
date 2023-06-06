@@ -23,20 +23,24 @@ const ButtonCommentOnTwit = observer((props) => {
     return notactiveComment;
   };
 
-  const onCloseTooltip = ()=>{
+  const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);
   };
 
   return (
     <div className="user-twit-panel-comments">
-      <TooltipUserNotAuth tooltipUserNotAuth={tooltipUserNotAuth} onCloseTooltip={onCloseTooltip} comment/>
+      <TooltipUserNotAuth
+        tooltipUserNotAuth={tooltipUserNotAuth}
+        onCloseTooltip={onCloseTooltip}
+        comment
+      />
       <div
         className="user-twit-panel-button-comments"
         key={props.twit.id}
         onClick={() => {
-          if (user.user.isAuth) {
+          if (user.isAuth) {
             twits.setActiveTwitComment(props.twit);
-          }else{
+          } else {
             setTooltipUserNotAuth(true);
           }
         }}
@@ -45,7 +49,11 @@ const ButtonCommentOnTwit = observer((props) => {
         }}
         onMouseLeave={() => twits.sethoverTwitComment({})}
       >
-        <img src={imgButtonComment(props.twit)} alt="Comment" className="user-twit-panel-comments-img"/>
+        <img
+          src={imgButtonComment(props.twit)}
+          alt="Comment"
+          className="user-twit-panel-comments-img"
+        />
       </div>
       {props.twit.Comments.length > 0 && <p>{props.twit.Comments.length}</p>}
       {twits.activeTwitComment.id === props.twit.id && (

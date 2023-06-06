@@ -20,14 +20,16 @@ const UserTwits = observer(() => {
 
   const getUserRetwit = () => {
     retwits.retwits.map((retwit) => {
-      twitsAndRetwits.push(retwit);
+      return twitsAndRetwits.push(retwit);
     });
   };
 
   const getUserTwit = () => {
-    twits.userTwits.map((twit) => {
-      twitsAndRetwits.push(twit);
-    });
+    if (twits.userTwits) {
+      twits.userTwits.map((twit) => {
+        return twitsAndRetwits.push(twit);
+      });
+    }
   };
 
   const sortTwitAndRetwit = () => {
@@ -43,7 +45,7 @@ const UserTwits = observer(() => {
   getUserTwit();
   sortTwitAndRetwit();
   return (
-    <div className="twits" >
+    <div className="twits">
       {twitsAndRetwits.map((twit) => (
         <div key={twit.id} className="twit">
           <div className="content-block">
@@ -51,18 +53,28 @@ const UserTwits = observer(() => {
               <div className="user-info">
                 <div className="user-info-photo">
                   {twit.Twit ? (
-                    <img alt="User" src={getUserPhoto(twit.Twit.User)} onClick={() => {
-                      twit.Twit && navigate(PROFILE_PAGE_USER + twit.Twit.User.id);
-                    }}/>
+                    <img
+                      alt="User"
+                      src={getUserPhoto(twit.Twit.User)}
+                      onClick={() => {
+                        twit.Twit && user.setUserPage({});
+                        twits.setUserTwits([]);
+                        navigate(PROFILE_PAGE_USER + twit.Twit.User.id);
+                      }}
+                    />
                   ) : (
                     <img alt="User" src={getUserPhoto(twit.User)} />
                   )}
                 </div>
               </div>
               <div className="twit-desc">
-                <h4 className="twit-user-name" onClick={() => {
-                  twit.Twit && navigate(PROFILE_PAGE_USER + twit.Twit.User.id);
-                }}>
+                <h4
+                  className="twit-user-name"
+                  onClick={() => {
+                    twit.Twit &&
+                      navigate(PROFILE_PAGE_USER + twit.Twit.User.id);
+                  }}
+                >
                   {twit.Twit ? twit.Twit.User.user_name : twit.User.user_name}
                 </h4>
                 <p className="twit-text">
@@ -119,7 +131,7 @@ const UserTwits = observer(() => {
           <div className="main-line" />
         </div>
       ))}
-      {twitsAndRetwits.length === 0 && <p>No twits</p>}
+      {twitsAndRetwits.length === 0 && <p className="empty-twits">No twits</p>}
     </div>
   );
 });

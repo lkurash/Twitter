@@ -15,7 +15,7 @@ const UserComments = observer(() => {
     <div>
       {comments.comments.map((comment) => (
         <div className="user-main-content-block" key={comment.id}>
-          <div>
+          <div className="content-block-comment">
             <div className="user-block-twit">
               <div className="connection-twit-comment-photo">
                 <div className="user-info">
@@ -64,7 +64,9 @@ const UserComments = observer(() => {
           </div>
         </div>
       ))}
-      {comments.comments.length === 0 && <p>No comments</p>}
+      {comments.comments.length === 0 && (
+        <p className="empty-twits">No comments</p>
+      )}
     </div>
   );
 });

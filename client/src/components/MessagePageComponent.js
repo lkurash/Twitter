@@ -7,8 +7,8 @@ import MenuComponent from "./MenuComponent";
 import SidebarComponent from "./SidebarComponent";
 import UserMessagesComponent from "./UserMessagesComponent";
 
-const MessagesPageComponent = observer(()=>{
-  const {user} = useContext(Context);
+const MessagesPageComponent = observer(() => {
+  const { user } = useContext(Context);
 
   useEffect(() => {
     try {
@@ -19,7 +19,7 @@ const MessagesPageComponent = observer(()=>{
     }
   });
 
-  return(
+  return (
     <div>
       <div className="page">
         <MenuComponent />

@@ -6,7 +6,7 @@ import { getUserInfo } from "../http/userApi";
 import FooterMobileComponent from "./FooterMobileComponent";
 import MenuComponent from "./MenuComponent";
 import SidebarComponent from "./SidebarComponent";
-import UserBookmarksComponent from "./UserBookmarksComponent";
+import UserBookmarks from "./UserBookmarks";
 
 const BookmarksPageComponent = observer(() => {
   const { twits } = useContext(Context);
@@ -17,7 +17,9 @@ const BookmarksPageComponent = observer(() => {
     try {
       getAllTwits().then((alltwits) => twits.setTwits(alltwits));
       getUserInfo().then((userInfo) => user.setUser(userInfo));
-      getFavoriteTwits().then((favoriteTwitsByUser) => favoriteTwits.setFavoriteTwits(favoriteTwitsByUser));
+      getFavoriteTwits().then((favoriteTwitsByUser) =>
+        favoriteTwits.setFavoriteTwits(favoriteTwitsByUser)
+      );
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -30,7 +32,7 @@ const BookmarksPageComponent = observer(() => {
         <div className="main-wrapper">
           <main className="main">
             <div className="user-main-content">
-              <UserBookmarksComponent />
+              <UserBookmarks />
             </div>
           </main>
         </div>

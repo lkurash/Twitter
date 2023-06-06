@@ -59,6 +59,12 @@ body {
   border-radius: 20px;
 }
 
+.load-spinner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 @media (width <= 825px) {
   .page {
     width: 90%;

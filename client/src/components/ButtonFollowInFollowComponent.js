@@ -7,12 +7,12 @@ const ButtonFollowInFollowComponent = observer(
   ({ profile, userId, userFollowingId }) => {
     const { user } = useContext(Context);
 
-    const deleteFollowAndGetAllUsers = async(userFollowId) => {
+    const deleteFollowAndGetAllUsers = async (userFollowId) => {
       await deleteFollow(userFollowId);
       await getAllUsers().then((users) => user.setAllUsers(users));
     };
 
-    const createFollowAndGetAllUsers = async(userFollowId) => {
+    const createFollowAndGetAllUsers = async (userFollowId) => {
       await createFollow(userFollowId);
       await getAllUsers().then((users) => user.setAllUsers(users));
     };

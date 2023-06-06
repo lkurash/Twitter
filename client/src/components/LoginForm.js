@@ -6,7 +6,7 @@ import LoginFormTitle from "./LoginFormTitle";
 import LoginFormButton from "./LoginFormButton";
 import Logo from "./common/Logo";
 import "./loginAndRegistretionForm.css";
-import { HOME_PAGE, SIGNUP_PAGE } from "../utils/constans";
+import { EXPLORE_PAGE, HOME_PAGE, SIGNUP_PAGE } from "../utils/constans";
 import { authorization, getUserInfo } from "../http/userApi";
 import ButtonClose from "./common/ButtonClose";
 
@@ -39,11 +39,18 @@ const LoginForm = observer(() => {
     }
   };
 
+  const signInKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      signIn();
+    }
+  };
+
   return (
     <div className="body">
       <div className="form-wrapper">
         <header className="login-form-header">
-          <ButtonClose />
+          <ButtonClose nav={EXPLORE_PAGE} />
           <Logo class="logo-icon-form" />
         </header>
         {!showFormPassword ? (
@@ -64,7 +71,7 @@ const LoginForm = observer(() => {
               </div>
               <button
                 className="login-form-button"
-                type="button"
+                type="submit"
                 onClick={() => showPasswordForm()}
               >
                 <span>Next</span>
@@ -74,6 +81,7 @@ const LoginForm = observer(() => {
             <div className="login-form-footer">
               Don’t have an account?
               <button
+                type="button"
                 className="login-form-button-singup"
                 onClick={() => navigate(SIGNUP_PAGE)}
               >
@@ -99,6 +107,7 @@ const LoginForm = observer(() => {
                     className="input-form"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(event) => signInKeyDown(event)}
                   />
                 </label>
               </div>
@@ -108,8 +117,8 @@ const LoginForm = observer(() => {
               <div className="button password-form-button">
                 <button
                   className="login-form-button"
-                  onClick={signIn}
                   type="button"
+                  onClick={signIn}
                 >
                   Log in
                 </button>
@@ -118,7 +127,7 @@ const LoginForm = observer(() => {
             <div className="password-form-footer">
               Don’t have an account?
               <button
-                type="submit"
+                type="button"
                 className="login-form-button-singup"
                 onClick={() => navigate(SIGNUP_PAGE)}
               >

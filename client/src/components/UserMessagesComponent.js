@@ -5,12 +5,12 @@ import { Context } from "..";
 import arrowLeft from "./Img/arrow_left_icon.png";
 import NewMessageComponent from "./NewMessageComponent";
 
-const UserMessagesComponent = observer(()=>{
-  const {user} = useContext(Context);
+const UserMessagesComponent = observer(() => {
+  const { user } = useContext(Context);
   const navigate = useNavigate();
   const [writeMessage, setWriteMessage] = useState(false);
 
-  return(
+  return (
     <div className="user-main-content-block">
       <div className="page-name">
         <div
@@ -29,15 +29,16 @@ const UserMessagesComponent = observer(()=>{
         <div className="page-messages-welcome-desc">
           <h2>Welcome to inbox!</h2>
           <p>Send a message in a private message with other Twitter users.</p>
-          <button className="page-messages-button-write"
-            type='button'
-            onClick={()=>setWriteMessage(true)}>
+          <button
+            className="page-messages-button-write"
+            type="button"
+            onClick={() => setWriteMessage(true)}
+          >
             <span>Write a new message</span>
           </button>
         </div>
       </div>
-      <NewMessageComponent writeMessage={writeMessage}/>
-
+      <NewMessageComponent writeMessage={writeMessage} />
     </div>
   );
 });

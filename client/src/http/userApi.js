@@ -39,7 +39,7 @@ export const updateUserProfile = async (user) => {
   return userProfile.data;
 };
 export const getAllUsers = async () => {
-  const users  = await $host.get("api/user/allUsers");
+  const users = await $host.get("api/user/allUsers");
 
   return users.data;
 };
@@ -49,7 +49,9 @@ export const getUserById = async (id) => {
   return userById.data;
 };
 export const createFollow = async (followUserId) => {
-  const following = await $authHost.post("api/user/following", { followUserId });
+  const following = await $authHost.post("api/user/following", {
+    followUserId,
+  });
 
   return following.data;
 };
