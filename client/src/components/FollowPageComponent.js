@@ -7,6 +7,7 @@ import {
   getFollowingUser,
   getUserInfo,
   getUserById,
+  getAllUsers,
 } from "../http/userApi";
 import ContentFollowPage from "./ContentFollowPage";
 import MenuComponent from "./MenuComponent";
@@ -24,6 +25,7 @@ const FollowPageComponent = observer(() => {
       getFollowersUser(id).then((allFollowers) =>
         user.setuserFollowers(allFollowers)
       );
+      getAllUsers().then((users) => user.setAllUsers(users));
       getUserInfo().then((userInfo) => user.setUser(userInfo));
       getUserById(id).then((userById) => user.setUserPage(userById));
     } catch (error) {

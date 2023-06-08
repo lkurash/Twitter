@@ -230,6 +230,9 @@ class TwitsController {
               { model: Comments },
             ],
           },
+          {
+            model: User,
+          },
         ],
       });
 
