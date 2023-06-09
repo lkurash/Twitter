@@ -1,10 +1,12 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "..";
 import TwitForm from "./TwitForm";
 import TwitsForYou from "./TwitsForYou";
 import TwitsWhoYouRead from "./TwitsWhoYouReading";
 
 const MainComponentHomePage = observer(() => {
+  const { twits } = useContext(Context);
   const [showTwitsForYou, setShowTwitsForYou] = useState(true);
   const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
 
@@ -92,7 +94,10 @@ const MainComponentHomePage = observer(() => {
             </div>
             <div className="main-line" />
             <TwitsForYou showTwitsForYou={showTwitsForYou} />
-            <TwitsWhoYouRead showTwitsWhoReading={showTwitsWhoReading} />
+            <TwitsWhoYouRead
+              showTwitsWhoReading={showTwitsWhoReading}
+              userTwits={twits.userTwits}
+            />
           </div>
         </div>
       </div>

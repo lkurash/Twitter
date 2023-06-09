@@ -4,7 +4,7 @@ import UserPhoto from "./UserPhoto";
 
 const Twit = ({ twit }) => {
   return (
-    <div key={twit.id}>
+    <div>
       <div className="twit">
         <div className="content-block">
           <div className="user-block-twit">

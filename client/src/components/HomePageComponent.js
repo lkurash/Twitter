@@ -8,7 +8,7 @@ import "./main.css";
 import "./userpage.css";
 import MenuComponent from "./MenuComponent";
 import SidebarComponent from "./SidebarComponent";
-import { getAllTwits, getRetwitsByUser } from "../http/twitsApi";
+import { getAllTwits, getRetwitsByUser, getTwitsByUser } from "../http/twitsApi";
 import { getAllUsers, getFollowingUser, getUserInfo } from "../http/userApi";
 import FooterMobileComponent from "./FooterMobileComponent";
 import MainComponentHomePage from "./MainComponentHomePage";
@@ -33,6 +33,7 @@ const HomePageComponent = observer(() => {
     getFollowingUser(id).then((allFollowing) =>
       user.setuserFollowing(allFollowing)
     );
+    getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
     getAllTwits().then((alltwits) => {
       if (alltwits) {
         twits.setTwits(alltwits);

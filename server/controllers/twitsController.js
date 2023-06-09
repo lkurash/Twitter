@@ -34,6 +34,8 @@ class TwitsController {
 
         img.mv(path.resolve(__dirname, "..", "static", fileName));
         const twit = await Twits.create({ text, img: fileName, UserId });
+
+        return response.json(twit);
       } else {
         const twit = await Twits.create({ text, UserId });
 

@@ -6,7 +6,7 @@ const uuid = require("uuid");
 const path = require("path");
 const { profile } = require("console");
 const { where } = require("sequelize");
-const models = require('../models/index');
+const models = require("../models/index");
 const Twits = models.Twits;
 const User = models.User;
 const Likes = models.Likes;
@@ -14,7 +14,6 @@ const Comments = models.Comments;
 const Retwit = models.Retwit;
 const Favorite_twits = models.Favorite_twits;
 const Following = models.Following;
-
 
 const generateJwt = (id, email, role) => {
   return jwt.sign({ id, email, role }, SECRET_KEY, { expiresIn: "24h" });
@@ -259,12 +258,22 @@ class UserController {
       const UserId = user.id;
 
       const { followUserId } = request.body;
-      const follow = await Following.create({
-        UserId: UserId,
-        followUserId: followUserId
+      const follow = await Following.findOne({
+        where: { UserId: UserId, followUserId: followUserId },
       });
 
-      return response.json(follow);
+      if (follow) {
+        next(ApiError.badRequest("The following already exists."));
+      }
+
+      if (!follow) {
+        const follow = await Following.create({
+          UserId: UserId,
+          followUserId: followUserId,
+        });
+
+        return response.json(follow);
+      }
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
@@ -293,7 +302,8 @@ class UserController {
         where: { UserId: id },
         include: [
           {
-            model: User, as: "followUser",
+            model: User,
+            as: "followUser",
             include: [
               {
                 model: Twits,
