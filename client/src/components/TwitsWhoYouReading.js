@@ -3,28 +3,39 @@ import { useContext } from "react";
 import { Context } from "..";
 import Twit from "./Twit";
 
-const TwitsWhoYouRead = observer(({ showTwitsWhoReading }) => {
+const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
   const { user } = useContext(Context);
-  const twitsFollowingUsers = [];
+
+  const userTwitsAndTwitsFollowingUsers = userTwits.slice(0);
 
   const getTwitsFollowingUsers = () => {
     user.userFollowing.map((followingUser) => {
       return followingUser.followUser.Twits.forEach((twit) => {
-        return twitsFollowingUsers.push(twit);
+        return userTwitsAndTwitsFollowingUsers.push(twit);
       });
     });
   };
 
   getTwitsFollowingUsers();
 
+  const sortTwit = () => {
+    userTwitsAndTwitsFollowingUsers.sort((a, b) => {
+      const dateOne = new Date(a.createdAt);
+      const dateTwo = new Date(b.createdAt);
+
+      return dateTwo - dateOne;
+    });
+  };
+  sortTwit();
+
   if (!showTwitsWhoReading) return null;
 
   return (
     <div className="twits">
-      {twitsFollowingUsers.map((twit) => (
+      {userTwitsAndTwitsFollowingUsers.map((twit) => (
         <Twit twit={twit} key={twit.id} />
       ))}
-      {twitsFollowingUsers.length === 0 && (
+      {userTwitsAndTwitsFollowingUsers.length === 0 && (
         <p className="empty-twits">You don't have following</p>
       )}
     </div>

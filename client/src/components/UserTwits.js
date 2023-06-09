@@ -35,13 +35,11 @@ const UserTwits = observer(() => {
   getUserRetwit();
   getUserTwit();
   sortTwitAndRetwit();
+
   return (
     <div className="twits">
       {twitsAndRetwits.map((twit) => (
-        <Twit
-          twit={twit.Twit ? twit.Twit : twit}
-          key={twit.Twit ? twit.Twit.id : twit.id}
-        />
+        <Twit key={twit.createdAt} twit={twit.Twit ? twit.Twit : twit} />
 
         // {!twit.Twit && twit.UserId === user.user.id && (
         //       <ButtonDeleteOnTwit twit={twit} />

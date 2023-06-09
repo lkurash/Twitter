@@ -324,8 +324,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 30px;
-  margin-left: 20px;
-  margin-right: 10px;
+  margin-left: 25px;
+  margin-top: 5px;
   background-color: #626262c1;
   cursor: pointer;
 }
@@ -413,9 +413,8 @@
 
 .twit-form-selected-file-img {
   margin-left: 20px;
-
-  /* height: 200px; */
   width: 80%;
+  margin-bottom: 10px;
 }
 
 .trends-home {
@@ -459,6 +458,20 @@
   margin-left: 30px;
   width: 15px;
   height: 15px;
+}
+
+.aside.EmojiPickerReact.epr-main{
+  position: absolute;
+}
+
+.twit-form-emoji{
+  margin-left: 10px;
+  width: 17px;
+  height: 17px;
+}
+
+#emoji{
+  position: absolute;
 }
 
 .twit-user-name {

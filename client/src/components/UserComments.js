@@ -10,7 +10,7 @@ const UserComments = observer(() => {
   return (
     <>
       {comments.comments.map((comment) => (
-        <div className="twit">
+        <div className="twit" key={comment.id}>
           <div className="content-block">
             <div className="user-block-twit">
               <div className="connection-twit-comment-photo">

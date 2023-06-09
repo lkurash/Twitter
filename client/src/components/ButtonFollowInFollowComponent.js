@@ -4,7 +4,7 @@ import { Context } from "..";
 import { createFollow, deleteFollow, getAllUsers } from "../http/userApi";
 
 const ButtonFollowInFollowComponent = observer(
-  ({ profile, userId, userFollowingId }) => {
+  ({ profile, userId, userFollowingIds }) => {
     const { user } = useContext(Context);
 
     const deleteFollowAndGetAllUsers = async (userFollowId) => {
@@ -13,13 +13,15 @@ const ButtonFollowInFollowComponent = observer(
     };
 
     const createFollowAndGetAllUsers = async (userFollowId) => {
-      await createFollow(userFollowId);
+      await createFollow(userFollowId).catch((error) => {
+        console.log(error.response.data.message);
+      });
       await getAllUsers().then((users) => user.setAllUsers(users));
     };
 
     return (
       <>
-        {userFollowingId.includes(userId) ? (
+        {userFollowingIds.includes(userId) ? (
           <button
             className="follow-page-main-button-following"
             onMouseEnter={() => {
@@ -41,7 +43,7 @@ const ButtonFollowInFollowComponent = observer(
             className="follow-page-main-button-following"
             onClick={() => {
               createFollowAndGetAllUsers(userId);
-              user.setUnfollowUser(profile);
+              user.setStartFollowUser(profile);
             }}
           >
             <span>Follow</span>
