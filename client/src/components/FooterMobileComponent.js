@@ -24,7 +24,7 @@ function FooterMobileComponent() {
         type="button"
         onClick={() => navigate(TWIT_PAGE)}
       >
-        <img src={tweetIcon} alt="tweet" className="settings-icon" />
+        <img src={tweetIcon} alt="tweet" className="button-icon-menu" />
       </div>
 
       <div className="footer-buttons-mobile">
@@ -33,21 +33,21 @@ function FooterMobileComponent() {
           type="button"
           onClick={() => navigate(HOME_PAGE)}
         >
-          <img src={home} alt="home" className="settings-icon" />
+          <img src={home} alt="home" className="button-icon-menu" />
         </div>
         <div
           className="footer-mobile-menu-button"
           type="button"
           onClick={() => navigate(BOOKMARKS_PAGE + user.user.id)}
         >
-          <img src={bookmark} alt="bookmark" className="settings-icon" />
+          <img src={bookmark} alt="bookmark" className="button-icon-menu" />
         </div>
         <div
           className="footer-mobile-menu-button"
           type="button"
           onClick={() => navigate(PROFILE_PAGE_USER + user.user.id)}
         >
-          <img src={profile} alt="profile" className="settings-icon" />
+          <img src={profile} alt="profile" className="button-icon-menu" />
         </div>
       </div>
     </footer>

@@ -43,11 +43,11 @@
   margin-left: 12px;
 }
 
-.explore {
+.active-button-explore {
   background-color: rgb(128 128 128 / 16.7%);
 }
 
-.settings-icon {
+.button-icon-menu {
   height: 25px;
   width: 25px;
   margin-left: 12px;
@@ -248,7 +248,7 @@
 
   .hashtag-icon,
   .home-icon,
-  .settings-icon {
+  .button-icon-menu {
     margin-left: 0;
   }
 }
