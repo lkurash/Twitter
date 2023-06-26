@@ -1,12 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import InputEmoji from "react-input-emoji";
 import { Context } from "..";
 import { createCommentTwitByUser } from "../http/twitsApi";
 import getUserPhoto from "../utils/getUserPhoto";
-import TwitPanel from "./common/TwitPanel";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
 import close from "./Img/x_icon.png";
+import ButtonEmoji from "./ButtonEmoji";
 
 const CommentForm = observer(({ twit }) => {
   const { user } = useContext(Context);
@@ -26,6 +25,11 @@ const CommentForm = observer(({ twit }) => {
   if (commentText.length > 255) {
     return setCommentText(commentText.slice(0, 254));
   }
+
+  const addEmojiInTwitText = (event) => {
+    setCommentText(commentText + event.emoji);
+  };
+
   return (
     <div className="comment-background">
       <div className="comment-form">
@@ -60,25 +64,21 @@ const CommentForm = observer(({ twit }) => {
               <p className="twit-comment-text">{twit.text}</p>
             </div>
             <div className="comment-form-input">
-              <InputEmoji
-                cleanOnEnter
-                borderRadius="0"
-                height="100"
-                borderColor="#000000"
+              <textarea
                 value={commentText}
-                placeholder="What is happening?"
-                onChange={setCommentText}
+                className="twit-form-input-text"
+                onChange={(e) => setCommentText(e.target.value)}
+                placeholder="What's happening?"
               />
             </div>
           </div>
         </div>
-        <TwitPanel
-          buttonName="Answer"
-          className="comment-twit-panel"
-          textComment={commentText}
-          twitId={twit.id}
-          fun={createComment}
-        />
+        <div className="comment-twit-panel">
+          <ButtonEmoji addEmojiInTwitText={addEmojiInTwitText} />
+          <button onClick={() => createComment(twit.id)}>
+            <span>Answer</span>
+          </button>
+        </div>
       </div>
     </div>
   );

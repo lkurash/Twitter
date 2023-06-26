@@ -7,6 +7,35 @@ import Twit from "./Twit";
 
 const TwitsForYou = observer(({ showTwitsForYou }) => {
   const { twits } = useContext(Context);
+  const { retwits } = useContext(Context);
+  const twitsAndRetwits = [];
+
+  const getUserRetwit = () => {
+    retwits.retwits.map((retwit) => {
+      return twitsAndRetwits.push(retwit);
+    });
+  };
+
+  const getTwits = () => {
+    if (twits.twits) {
+      twits.twits.map((twit) => {
+        return twitsAndRetwits.push(twit);
+      });
+    }
+  };
+
+  const sortTwitAndRetwit = () => {
+    twitsAndRetwits.sort((a, b) => {
+      const dateOne = new Date(a.createdAt);
+      const dateTwo = new Date(b.createdAt);
+
+      return dateTwo - dateOne;
+    });
+  };
+
+  getUserRetwit();
+  getTwits();
+  sortTwitAndRetwit();
 
   if (!showTwitsForYou) return null;
 
@@ -28,10 +57,10 @@ const TwitsForYou = observer(({ showTwitsForYou }) => {
 
   return (
     <div className="twits">
-      {twits.twits.map((twit) => (
-        <Twit twit={twit} key={twit.id}/>
+      {twitsAndRetwits.map((twit) => (
+        <Twit twit={twit.Twit ? twit.Twit : twit} key={twit.createdAt} />
       ))}
-      {twits.twits.length === 0 && <p className="empty-twits">No twits</p>}
+      {twitsAndRetwits.length === 0 && <p className="empty-twits">No twits</p>}
     </div>
   );
 });

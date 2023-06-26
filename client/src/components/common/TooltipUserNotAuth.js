@@ -17,7 +17,7 @@ function TooltipUserNotAuth({tooltipUserNotAuth, onCloseTooltip, bookmark, like,
   if(!tooltipUserNotAuth) return null;
   return(
     <div className="wrapper-tooltip-notauth-user">
-      <div ref={tooltipRef} className="tooltip-notauth-user">
+      <div ref={tooltipRef} className="tooltip-notauth-user wrapper-border">
         <div className="tooltip-notauth-user-header">
           <div className="button-close"
             onClick={()=> onCloseTooltip()}>

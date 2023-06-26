@@ -20,13 +20,14 @@ const UserComments = observer(() => {
               </div>
               <div className="comment-desc">
                 <TwitDesc twit={comment.Twit} />
-                <div className="connection-twit-comment-text">
-                  <TwitDesc twit={comment} />
-                </div>
+                {!comment.Twit.img && (
+                  <div className="connection-twit-comment-text"/>
+                )}
+                <TwitDesc twit={comment} />
               </div>
             </div>
-            <div className="main-line" />
           </div>
+          <div className="main-line" />
         </div>
       ))}
       {comments.comments.length === 0 && (

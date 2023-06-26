@@ -1,18 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import "./loginAndRegistretionForm.css";
 import BirthForm from "./BirthForm";
 import ButtonClose from "./common/ButtonClose";
 import { Context } from "..";
 import { EXPLORE_PAGE } from "../utils/constans";
+import useOutsideClick from "../utils/useOutsideClickFunction";
+import SignUpFormInput from "./SignUpFormInput";
 
-function SignUpForm(props) {
+function SignUpForm({ getInfoUser }) {
   const { user } = useContext(Context);
   const [activeDivName, setActivedivName] = useState(false);
   const [activeDivEmail, setActivedivEmail] = useState(false);
-  const [activeDivPssword, setActivedivPassword] = useState(false);
+  const [activeDivPassword, setActivedivPassword] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const divRef = useRef(null);
 
   if (userName.length > 30) {
     setUserName(userName.slice(0, 30));
@@ -24,72 +27,57 @@ function SignUpForm(props) {
     setPassword(password.slice(0, 30));
   }
 
+  const onClose = () => {
+    setActivedivName(false);
+    setActivedivEmail(false);
+    setActivedivPassword(false);
+  };
+
+  useOutsideClick(divRef, onClose);
+
   return (
     <div className="body">
-      <div className="form-wrapper">
+      <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
           <ButtonClose nav={EXPLORE_PAGE} />
         </header>
         <main className="signup-form-main">
           <h2>Create your account</h2>
-          {!activeDivName ? (
-            <div
-              className="signup-form-input"
-              onClick={() => setActivedivName(true)}
-            >
-              <label className="signup-notactive-input">Name</label>
-            </div>
-          ) : (
-            <div className="signup-form-input active">
-              <label className="signup-active-input">Name</label>
-              <input
-                type="text"
-                autoFocus
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-              />
-              <p className="signup-form-input-help">Min length 1 max 30</p>
-            </div>
-          )}
-          {!activeDivEmail ? (
-            <div
-              className="signup-form-input"
-              onClick={() => setActivedivEmail(true)}
-            >
-              <label className="signup-notactive-input">Email</label>
-            </div>
-          ) : (
-            <div className="signup-form-input active">
-              <label className="signup-active-input">Email</label>
-              <input
-                type="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <p className="signup-form-input-help">Min length 1 max 30</p>
-            </div>
-          )}
-          {!activeDivPssword ? (
-            <div
-              className="signup-form-input"
-              onClick={() => setActivedivPassword(true)}
-            >
-              <label className="signup-notactive-input">Password</label>
-            </div>
-          ) : (
-            <div className="signup-form-input active">
-              <label className="signup-active-input">Password</label>
-              <input
-                type="password"
-                autoFocus
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <p className="signup-form-input-help">Min length 1 max 30</p>
-            </div>
-          )}
-
+          <div ref={divRef}>
+            <SignUpFormInput
+              placeholder={"Name"}
+              value={userName}
+              setUserInfo={setUserName}
+              activeInput={activeDivName}
+              onClick={() => {
+                setActivedivName(true);
+                setActivedivPassword(false);
+                setActivedivEmail(false);
+              }}
+            />
+            <SignUpFormInput
+              placeholder={"Email"}
+              value={email}
+              setUserInfo={setEmail}
+              activeInput={activeDivEmail}
+              onClick={() => {
+                setActivedivEmail(true);
+                setActivedivName(false);
+                setActivedivPassword(false);
+              }}
+            />
+            <SignUpFormInput
+              placeholder={"Password"}
+              value={password}
+              setUserInfo={setPassword}
+              activeInput={activeDivPassword}
+              onClick={() => {
+                setActivedivPassword(true);
+                setActivedivEmail(false);
+                setActivedivName(false);
+              }}
+            />
+          </div>
           <div className="signup-birth">
             <h4>Date of birth</h4>
             <p className="signup-birth-hint">
@@ -103,7 +91,7 @@ function SignUpForm(props) {
               className="signup-form-button"
               type="submit"
               onClick={() =>
-                props.getInfoUser(userName, email, user.birthDate, password)
+                getInfoUser(userName, email, user.birthDate, password)
               }
             >
               <span>Next</span>

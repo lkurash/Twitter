@@ -48,7 +48,7 @@ const LoginForm = observer(() => {
 
   return (
     <div className="body">
-      <div className="form-wrapper">
+      <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
           <ButtonClose nav={EXPLORE_PAGE} />
           <Logo class="logo-icon-form" />
@@ -104,6 +104,7 @@ const LoginForm = observer(() => {
                   <p className="password-form-hint">Password</p>
                   <input
                     autoFocus
+                    type="password"
                     className="input-form"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
