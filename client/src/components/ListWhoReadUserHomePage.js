@@ -62,7 +62,10 @@ const ListWhoReadUserHomePage = observer(() => {
                 onClick={() => navigate(PROFILE_PAGE_USER + profile.id)}
               >
                 <img src={getUserPhoto(profile)} alt="User" />
-                <p>{profile.user_name}</p>
+                <div className="section-read-main-user-name">
+                  <p className="user-name">{profile.user_name}</p>
+                  <p className="profile-name">{`@${profile.user_name}`}</p>
+                </div>
               </div>
               {user.user.id && (
                 <button

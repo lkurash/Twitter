@@ -60,12 +60,14 @@ const TwitForm = observer(({ setShowTwitForm }) => {
           </div>
         </div>
         <form className="twit-form">
-          <textarea
-            value={text}
-            className="twit-form-input-text"
-            onChange={(e) => setText(e.target.value)}
-            placeholder="What's happening?"
-          />
+          <div className="twit-form-input">
+            <textarea
+              value={text}
+              className="twit-form-input-text"
+              onChange={(e) => setText(e.target.value)}
+              placeholder="What's happening?"
+            />
+          </div>
           {img && (
             <div className="wrapper-twit-form-img">
               <div
