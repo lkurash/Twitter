@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
-import { async } from "react-input-emoji";
+import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
 import FooterComponent from "../components/FooterComponent";

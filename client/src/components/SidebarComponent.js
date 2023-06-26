@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Context } from "..";
 import { getAllTopics } from "../http/topicsApi";
 import { PROFILE_PAGE_USER } from "../utils/constans";
@@ -11,6 +12,7 @@ import "./sideBar.css";
 const SidebarComponent = observer(() => {
   const { user } = useContext(Context);
   const { topics } = useContext(Context);
+  const location = useLocation().pathname;
 
   useEffect(() => {
     try {
@@ -22,7 +24,7 @@ const SidebarComponent = observer(() => {
 
   return (
     <aside className="side-bar">
-      {user.isAuth && (
+      {(user.isAuth || location === "/") && (
         <>
           <MainSearchBlock
             className="main-search-form-home"

@@ -8,8 +8,12 @@ import "./main.css";
 import "./userpage.css";
 import MenuComponent from "./MenuComponent";
 import SidebarComponent from "./SidebarComponent";
-import { getAllTwits, getRetwitsByUser, getTwitsByUser } from "../http/twitsApi";
-import { getAllUsers, getFollowingUser, getUserInfo } from "../http/userApi";
+import {
+  getAllTwits,
+  getRetwitsByUser,
+  getTwitsByUser,
+} from "../http/twitsApi";
+import { getAllUsers, getFollowingUser } from "../http/userApi";
 import FooterMobileComponent from "./FooterMobileComponent";
 import MainComponentHomePage from "./MainComponentHomePage";
 
@@ -25,7 +29,6 @@ const HomePageComponent = observer(() => {
   });
 
   useEffect(() => {
-    getUserInfo().then((userInfo) => user.setUser(userInfo));
     getRetwitsByUser(id).then((retwitsByUser) =>
       retwits.setRetwits(retwitsByUser)
     );
@@ -37,9 +40,8 @@ const HomePageComponent = observer(() => {
     getAllTwits().then((alltwits) => {
       if (alltwits) {
         twits.setTwits(alltwits);
-      }
-      else{
-        twits.setTwits('No twits');
+      } else {
+        twits.setTwits("No twits");
       }
     });
   });

@@ -40,7 +40,7 @@ const MenuComponent = observer(() => {
               class="button-icon-menu"
               buttonName="Explore"
               button={
-                location === "/explore"
+                location === "/explore" || location === "/"
                   ? "active-button-explore"
                   : "notactive-button-explore"
               }
@@ -60,9 +60,9 @@ const MenuComponent = observer(() => {
             <ButtonMenu
               type="button"
               path={hashtag}
-              alt="Review"
+              alt="Explore"
               class="button-icon-menu"
-              buttonName="Review"
+              buttonName="Explore"
               nav={EXPLORE_PAGE}
             />
             <ButtonMenu

@@ -8,7 +8,7 @@ import SignUpPage from "./pages/SignUpPage";
 import TrendsPage from "./pages/TrendsPage";
 import TwitPage from "./pages/TwitPage";
 import TwitterPageNotAuthUser from "./pages/TwitterNotAuthUserPage";
-import TwitterPage from "./pages/TwitterPage";
+import ExplorePage from "./pages/ExplorePage";
 import UserPage from "./pages/UserPage";
 import {
   BOOKMARKS_PAGE,
@@ -30,6 +30,7 @@ import {
   TWITTER_USER_PAGE,
   TWIT_PAGE,
 } from "./utils/constans";
+import TwitterPage from "./pages/TwitterPage";
 
 export const authRoutes = [
   {
@@ -85,7 +86,7 @@ export const publicRoutes = [
   },
   {
     path: EXPLORE_PAGE,
-    Component: TwitterPage,
+    Component: ExplorePage,
   },
   {
     path: LOGIN_PAGE,

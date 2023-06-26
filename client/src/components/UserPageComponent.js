@@ -10,7 +10,6 @@ import {
 import {
   getFollowersUser,
   getFollowingUser,
-  getUserInfo,
   getUserById,
   getAllUsers,
 } from "../http/userApi";
@@ -45,7 +44,6 @@ const UserPageComponent = observer(() => {
       getFollowersUser(id).then((allFollowers) =>
         user.setuserFollowers(allFollowers)
       );
-      getUserInfo().then((userInfo) => user.setUser(userInfo));
     } catch (error) {
       console.log(error.response.data.message);
     }

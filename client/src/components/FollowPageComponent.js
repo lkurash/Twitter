@@ -5,7 +5,6 @@ import { Context } from "..";
 import {
   getFollowersUser,
   getFollowingUser,
-  getUserInfo,
   getUserById,
   getAllUsers,
 } from "../http/userApi";
@@ -26,7 +25,6 @@ const FollowPageComponent = observer(() => {
         user.setuserFollowers(allFollowers)
       );
       getAllUsers().then((users) => user.setAllUsers(users));
-      getUserInfo().then((userInfo) => user.setUser(userInfo));
       getUserById(id).then((userById) => user.setUserPage(userById));
     } catch (error) {
       console.log(error.response.data.message);

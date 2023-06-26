@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
-import { getAllUsers, getUserInfo } from "../http/userApi";
+import { getAllUsers } from "../http/userApi";
 import FooterMobileComponent from "./FooterMobileComponent";
 import MenuComponent from "./MenuComponent";
 import SidebarComponent from "./SidebarComponent";
@@ -12,7 +12,6 @@ const MessagesPageComponent = observer(() => {
 
   useEffect(() => {
     try {
-      getUserInfo().then((userInfo) => user.setUser(userInfo));
       getAllUsers().then((users) => user.setAllUsers(users));
     } catch (error) {
       console.log(error.response.data.message);
