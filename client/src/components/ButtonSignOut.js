@@ -11,6 +11,7 @@ function ButtonSignOut({ showButtonSignOut, onClose }) {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("twitsWhoReading");
     user.setUser([]);
     user.setAuth(false);
     navigate(EXPLORE_PAGE);
