@@ -6,7 +6,6 @@ import LoginPage from "./pages/LoginPage";
 import MessagesPage from "./pages/MessagesPage";
 import SignUpPage from "./pages/SignUpPage";
 import TrendsPage from "./pages/TrendsPage";
-import TwitPage from "./pages/TwitPage";
 import TwitterPageNotAuthUser from "./pages/TwitterNotAuthUserPage";
 import ExplorePage from "./pages/ExplorePage";
 import UserPage from "./pages/UserPage";
@@ -28,7 +27,6 @@ import {
   TRENDS_PAGE,
   TWITTER_PAGE,
   TWITTER_USER_PAGE,
-  TWIT_PAGE,
 } from "./utils/constans";
 import TwitterPage from "./pages/TwitterPage";
 
@@ -56,10 +54,6 @@ export const authRoutes = [
   {
     path: `${PROFILE_PAGE_USER_MEDIA}:id`,
     Component: UserPage,
-  },
-  {
-    path: TWIT_PAGE,
-    Component: TwitPage,
   },
   {
     path: `${EDIT_PROFILE_PAGE}:id`,

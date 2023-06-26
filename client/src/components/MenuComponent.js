@@ -9,7 +9,6 @@ import notification from "./Img/notification_icon.png";
 import profile from "./Img/profile_icon.png";
 import home from "./Img/home_icon.png";
 import message from "./Img/message_icon.png";
-import tweetIcon from "./Img/feather_icon.png";
 import ButtonMenu from "./common/ButtonMenu";
 import { Context } from "..";
 import {
@@ -17,10 +16,10 @@ import {
   EXPLORE_PAGE,
   HOME_PAGE,
   MESSAGE_PAGE,
-  PROFILE_PAGE_USER,
-  TWIT_PAGE,
+  PROFILE_PAGE_USER
 } from "../utils/constans";
 import UserInfoAndButtonSignOut from "./UserInfoAndButtonSignOut";
+import ButtonWriteTwit from "./ButtonWriteTwit";
 
 const MenuComponent = observer(() => {
   const { user } = useContext(Context);
@@ -98,14 +97,7 @@ const MenuComponent = observer(() => {
               nav={PROFILE_PAGE_USER + user.user.id}
             />
 
-            <button
-              type="button"
-              className="button-twit"
-              onClick={() => navigate(TWIT_PAGE)}
-            >
-              <span>Tweet</span>
-              <img src={tweetIcon} alt="Tweet" className="tweet-icon" />
-            </button>
+            <ButtonWriteTwit />
             <UserInfoAndButtonSignOut />
           </div>
         )}
