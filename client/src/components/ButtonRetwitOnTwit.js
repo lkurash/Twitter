@@ -6,6 +6,7 @@ import { Context } from "..";
 import {
   createRetwitByUser,
   getAllTwits,
+  getRetwitsByUser,
   getTwitsByUser,
 } from "../http/twitsApi";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
@@ -28,6 +29,9 @@ const ButtonRetwitOnTwit = observer((props) => {
       const { id } = jwt_decode(localStorage.token);
 
       getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+      getRetwitsByUser(id).then((retwitsByUser) =>
+        retwits.setRetwits(retwitsByUser)
+      );
     } else {
       getTwitsByUser(userPage.id).then((twitsById) =>
         twits.setUserTwits(twitsById)

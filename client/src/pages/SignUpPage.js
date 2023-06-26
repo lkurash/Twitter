@@ -55,10 +55,10 @@ const SignUpPage = observer(() => {
   return (
     <div>
       {!checkUserInfo ? (
-        <SignUpForm getInfoUser={getInfoUser} />
+        <SignUpForm getInfoUser={getInfoUser}/>
       ) : (
         <div className="body">
-          <div className="form-wrapper">
+          <div className="form-wrapper wrapper-border">
             <header className="login-form-header">
               <div
                 className="button-close"

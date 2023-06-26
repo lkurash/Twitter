@@ -42,6 +42,7 @@ h2 {
   width: 100%;
   height: 100%;
   border-radius: 70px;
+  object-position: center;
 }
 
 .button-edit-profile {
@@ -165,11 +166,11 @@ h2 {
 
 .edit-profile-form {
   margin: 0 auto;
-  height: 700px;
+  height: 620px;
   max-width: 600px;
   margin-top: 60px;
+  overflow: scroll;
   border-radius: 15px;
-  background-color: rgb(0 0 0);
 }
 
 .edit-profile-title {
@@ -200,8 +201,7 @@ h2 {
 }
 
 .edit-profile-form-main {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 20px 20px 30px 20px;
 }
 
 .edit-form-input {
@@ -261,6 +261,7 @@ h2 {
 }
 
 .edit-profile-background-photo {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -277,9 +278,12 @@ h2 {
 .edit-profile-background-photo img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .edit-profile-form-photo {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -330,6 +334,7 @@ h2 {
   width: 100%;
   height: 100%;
   border-radius: 70px;
+  object-position: center;
 }
 
 .follow-page-header {

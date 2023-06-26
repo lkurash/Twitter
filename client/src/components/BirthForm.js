@@ -36,22 +36,12 @@ const BirthForm = observer(() => {
 
   let yearsOption = [];
 
-  let birthDate;
-
   const getYears = () => {
     yearsOption = Array.from({length: 52}, (_, i) => i + 1970);
   };
 
   const getDays = (countDay) => {
     daysOption = Array.from({length: countDay}, (_, i) => i + 1);
-  };
-
-  const generateBirthDate = () => {
-    if (userSelectMonth && userSelectDay && userSelectYear) {
-      birthDate = `${userSelectDay} ${userSelectMonth} ${userSelectYear}`;
-      user.setBirthDate(birthDate);
-      return birthDate;
-    }
   };
 
   const isDaysMonth = () => {
@@ -71,7 +61,6 @@ const BirthForm = observer(() => {
 
   isDaysMonth();
   getYears();
-  generateBirthDate();
 
   const checkUserBirthdate = ()=>{
     if (user.user.birthdate && !userSelectDay && !userSelectMonth && !userSelectYear) {
@@ -90,7 +79,7 @@ const BirthForm = observer(() => {
   return (
     <>
       <h4 className="edit-form-input-birth">
-        Date of birth: {!birthDate ? user.user.birthdate : birthDate}
+        Date of birth:
       </h4>
       <select
         name="month"

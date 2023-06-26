@@ -15,15 +15,7 @@ const ProfileButtonPanel = observer(() => {
   return (
     <>
       <div className="user-main-content-button-panel">
-        {location === `/profile/${id}` ? (
-          <button
-            className="user-main-content-twits-button-onpanel active-button-panel"
-            type="button"
-            onClick={() => navigate(PROFILE_PAGE_USER + id)}
-          >
-            <span>Twits</span>
-          </button>
-        ) : (
+        <div className="wrapper-button">
           <button
             className="user-main-content-twits-button-onpanel"
             type="button"
@@ -31,17 +23,11 @@ const ProfileButtonPanel = observer(() => {
           >
             <span>Twits</span>
           </button>
-        )}
-
-        {location === `/profile/answers/${id}` ? (
-          <button
-            className="user-main-content-answers-button-onpanel active-button-panel"
-            type="button"
-            onClick={() => navigate(PROFILE_PAGE_USER_ANSWERS + id)}
-          >
-            <span>Answers</span>
-          </button>
-        ) : (
+          {location === `/profile/${id}` && (
+            <div className="active-button-panel" />
+          )}
+        </div>
+        <div className="wrapper-button">
           <button
             className="user-main-content-answers-button-onpanel"
             type="button"
@@ -49,17 +35,11 @@ const ProfileButtonPanel = observer(() => {
           >
             <span>Answers</span>
           </button>
-        )}
-
-        {location === `/profile/media/${id}` ? (
-          <button
-            className="user-main-content-media-button-onpanel active-button-panel"
-            type="button"
-            onClick={() => navigate(PROFILE_PAGE_USER_MEDIA + id)}
-          >
-            <span>Media</span>
-          </button>
-        ) : (
+          {location === `/profile/answers/${id}` && (
+            <div className="active-button-panel" />
+          )}
+        </div>
+        <div className="wrapper-button">
           <button
             className="user-main-content-media-button-onpanel"
             type="button"
@@ -67,17 +47,11 @@ const ProfileButtonPanel = observer(() => {
           >
             <span>Media</span>
           </button>
-        )}
-
-        {location === `/profile/likes/${id}` ? (
-          <button
-            className="user-main-content-likes-button-onpanel active-button-panel"
-            type="button"
-            onClick={() => navigate(PROFILE_PAGE_USER_LIKES + id)}
-          >
-            <span>Likes</span>
-          </button>
-        ) : (
+          {location === `/profile/media/${id}` && (
+            <div className="active-button-panel" />
+          )}
+        </div>
+        <div className="wrapper-button">
           <button
             className="user-main-content-likes-button-onpanel"
             type="button"
@@ -85,7 +59,10 @@ const ProfileButtonPanel = observer(() => {
           >
             <span>Likes</span>
           </button>
-        )}
+          {location === `/profile/likes/${id}` && (
+            <div className="active-button-panel" />
+          )}
+        </div>
       </div>
       <div className="main-line" />
     </>

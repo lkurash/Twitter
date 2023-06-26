@@ -40,18 +40,7 @@ const MainComponentHomePage = observer(() => {
                 </div>
               </div>
               <div className="user-main-content-button-panel">
-                {showTwitsForYou ? (
-                  <button
-                    type="button"
-                    className="user-main-content-foryou-button-panel active-button-panel"
-                    onClick={() => {
-                      setLocalStorageTwitsForYou(true);
-                      checkLocalStorageTwitsForYou();
-                    }}
-                  >
-                    <span>For you</span>
-                  </button>
-                ) : (
+                <div className="wrapper-button">
                   <button
                     type="button"
                     className="user-main-content-foryou-button-panel"
@@ -62,19 +51,9 @@ const MainComponentHomePage = observer(() => {
                   >
                     <span>For you</span>
                   </button>
-                )}
-                {showTwitsWhoReading ? (
-                  <button
-                    type="button"
-                    className="user-main-content-reading-button-panel active-button-panel"
-                    onClick={() => {
-                      setLocalStorageTwitsForYou(false);
-                      checkLocalStorageTwitsForYou();
-                    }}
-                  >
-                    <span> You are reading</span>
-                  </button>
-                ) : (
+                  {showTwitsForYou && <div className="active-button-panel" />}
+                </div>
+                <div className="wrapper-button">
                   <button
                     type="button"
                     className="user-main-content-reading-button-panel"
@@ -85,7 +64,10 @@ const MainComponentHomePage = observer(() => {
                   >
                     <span> You are reading</span>
                   </button>
-                )}
+                  {showTwitsWhoReading && (
+                    <div className="active-button-panel" />
+                  )}
+                </div>
               </div>
             </div>
             <div className="main-line" />

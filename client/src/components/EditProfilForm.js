@@ -61,7 +61,7 @@ const EditProfileForm = observer(() => {
 
   useOutsideClick(divRef, onClose);
   return (
-    <div className="edit-profile-form">
+    <div className="edit-profile-form wrapper-border">
       <header className="edit-profile-form-header">
         <div className="edit-profile-form-header-title">
           <ButtonClose nav = {-1}/>

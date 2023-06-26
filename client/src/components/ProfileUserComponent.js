@@ -49,7 +49,7 @@ const ProfileUserComponent = observer(() => {
           <p>@{user.userPage.user_name}</p>
         </div>
       </div>
-      {location === `/profile/${id}` && (
+      {(location === `/profile/${id}` || location === `/editprofile/${id}`) && (
         <>
           <div className="user-main-content-profile-panel">
             <ProfileUserInfo />
