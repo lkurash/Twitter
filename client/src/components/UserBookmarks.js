@@ -20,13 +20,13 @@ const UserBookmarks = observer(() => {
           <img src={arrowLeft} alt="Button return" />
         </div>
         <div className="page-name-user-name">
-          <h2>{user.user.user_name}</h2>
+          <h2>Bookmarks</h2>
           <p>@{user.user.user_name}</p>
         </div>
       </div>
       <div className="twits">
         {favoriteTwits.favoriteTwits.map((bookmark) => (
-          <Twit twit={bookmark.Twit} key={bookmark.Twit} />
+          <Twit twit={bookmark.Twit} key={bookmark.Twit.id} />
         ))}
         {favoriteTwits.favoriteTwits.length === 0 && (
           <p className="empty-twits">No twits</p>

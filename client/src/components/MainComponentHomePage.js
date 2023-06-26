@@ -11,16 +11,16 @@ const MainComponentHomePage = observer(() => {
   const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
 
   const setLocalStorageTwitsForYou = (show) => {
-    localStorage.setItem("twitsForYou", show);
+    localStorage.setItem("twitsWhoReading", show);
   };
-
+console.log(localStorage.getItem("twitsWhoReading"));
   const checkLocalStorageTwitsForYou = () => {
-    if (localStorage.getItem("twitsForYou") === "true") {
-      setShowTwitsForYou(true);
-      setShowTwitsWhoReading(false);
-    } else {
+    if (localStorage.getItem("twitsWhoReading") === "true") {
       setShowTwitsForYou(false);
       setShowTwitsWhoReading(true);
+    } else {
+      setShowTwitsForYou(true);
+      setShowTwitsWhoReading(false);
     }
   };
 
@@ -45,7 +45,7 @@ const MainComponentHomePage = observer(() => {
                     type="button"
                     className="user-main-content-foryou-button-panel"
                     onClick={() => {
-                      setLocalStorageTwitsForYou(true);
+                      setLocalStorageTwitsForYou(false);
                       checkLocalStorageTwitsForYou();
                     }}
                   >
@@ -58,7 +58,7 @@ const MainComponentHomePage = observer(() => {
                     type="button"
                     className="user-main-content-reading-button-panel"
                     onClick={() => {
-                      setLocalStorageTwitsForYou(false);
+                      setLocalStorageTwitsForYou(true);
                       checkLocalStorageTwitsForYou();
                     }}
                   >
