@@ -15,6 +15,7 @@ export const FOLLOWING_PAGE = "/profile/following/";
 export const FOLLOWER_PAGE = "/profile/followers/";
 export const HOME_PAGE = "/home";
 export const LOGIN_PAGE = "/login";
+export const LOGIN_PAGE_NOT_AUTH = "/auth/login";
 export const SIGNUP_PAGE = "/registration";
 export const TWIT_PAGE = "/twit";
 export const EDIT_PROFILE_PAGE = "/editprofile/";

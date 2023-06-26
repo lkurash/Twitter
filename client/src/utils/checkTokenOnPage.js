@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { checkToken } from "../http/userApi";
-import { LOGIN_PAGE } from "./constans";
+import { LOGIN_PAGE_NOT_AUTH } from "./constans";
 
 export default function CheckTokenOnPage(user, navigate, loadingPage) {
-  useEffect(()=>{
+  useEffect(() => {
     checkToken()
       .then((data) => {
         user.setAuth(true);
@@ -11,11 +11,11 @@ export default function CheckTokenOnPage(user, navigate, loadingPage) {
       .finally(() => {
         loadingPage(false);
         if (!user.isAuth) {
-          navigate(LOGIN_PAGE);
+          navigate(LOGIN_PAGE_NOT_AUTH);
         }
       })
       .catch((error) => {
         console.log(error.response.data.message);
       });
-  },[])
+  }, []);
 }

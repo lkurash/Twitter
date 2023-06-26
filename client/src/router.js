@@ -18,6 +18,7 @@ import {
   FOLLOWING_PAGE,
   HOME_PAGE,
   LOGIN_PAGE,
+  LOGIN_PAGE_NOT_AUTH,
   MESSAGE_PAGE,
   PROFILE_PAGE_USER,
   PROFILE_PAGE_USER_ANSWERS,
@@ -88,6 +89,10 @@ export const publicRoutes = [
   },
   {
     path: LOGIN_PAGE,
+    Component: LoginPage,
+  },
+  {
+    path: LOGIN_PAGE_NOT_AUTH,
     Component: LoginPage,
   },
   {

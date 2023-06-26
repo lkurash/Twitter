@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "..";
 import LoginFormTitle from "./LoginFormTitle";
@@ -16,6 +16,7 @@ const LoginForm = observer(() => {
   const [showFormPassword, setShowFormPassword] = useState();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const location = useLocation().pathname;
 
   const showPasswordForm = () => {
     if (email) {
@@ -50,7 +51,7 @@ const LoginForm = observer(() => {
     <div className="body">
       <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
-          <ButtonClose nav={EXPLORE_PAGE} />
+          <ButtonClose nav={location === "/auth/login" ? EXPLORE_PAGE : -1} />
           <Logo class="logo-icon-form" />
         </header>
         {!showFormPassword ? (
