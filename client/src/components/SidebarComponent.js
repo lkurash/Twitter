@@ -27,12 +27,12 @@ const SidebarComponent = observer(() => {
       {(user.isAuth || location === "/") && (
         <>
           <MainSearchBlock
-            className="main-search-form-home"
+            className="main-search-form-home section-background"
             page={PROFILE_PAGE_USER}
           />
           <div className="main-content">
-            <MainSectionTrends className="section trends-home" />
-            <MainSectionWhoToRead className="section happen-home" user={user} />
+            <MainSectionTrends className="section trends-home section-background" />
+            <MainSectionWhoToRead className="section happen-home section-background" user={user} />
           </div>
         </>
       )}

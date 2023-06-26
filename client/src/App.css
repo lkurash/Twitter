@@ -77,6 +77,15 @@ body {
   justify-content: center;
 }
 
+.user-name{
+  font-size: 18px;
+}
+
+.profile-name{
+  color: grey;
+  font-size: 12px;
+}
+
 @media (width <= 825px) {
   .page {
     width: 90%;
