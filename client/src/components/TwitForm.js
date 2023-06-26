@@ -12,10 +12,9 @@ import close from "./Img/x_icon.png";
 import getUserPhoto from "../utils/getUserPhoto";
 import ButtonEmoji from "./ButtonEmoji";
 
-const TwitForm = observer(() => {
+const TwitForm = observer(({ setShowTwitForm }) => {
   const { user } = useContext(Context);
   const { twits } = useContext(Context);
-  const navigate = useNavigate();
   const location = useLocation().pathname;
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
@@ -98,21 +97,17 @@ const TwitForm = observer(() => {
               </label>
               <ButtonEmoji addEmojiInTwitText={addEmojiInTwitText} />
             </div>
-            {location === "/twit" ? (
-              <button
-                type="button"
-                onClick={() => {
-                  createTwits();
-                  navigate(-1);
-                }}
-              >
-                <span>Tweet</span>
-              </button>
-            ) : (
-              <button onClick={createTwits} type="button">
-                <span>Tweet</span>
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => {
+                if (setShowTwitForm) {
+                  setShowTwitForm(false);
+                }
+                createTwits();
+              }}
+            >
+              <span>Tweet</span>
+            </button>
           </div>
         </form>
       </div>

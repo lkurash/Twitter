@@ -1,29 +1,21 @@
 import { observer } from "mobx-react-lite";
 import "../App.css";
-import ButtonClose from "./common/ButtonClose";
-import FooterMobileComponent from "./FooterMobileComponent";
-import MenuComponent from "./MenuComponent";
-import SidebarComponent from "./SidebarComponent";
 import TwitForm from "./TwitForm";
+import close from "./Img/x_icon.png";
 
-const TwitPageComponent = observer(() => {
+const TwitPageComponent = observer(({ showTwitForm, setShowTwitForm }) => {
+  if (!showTwitForm) return null;
+
   return (
-    <div>
-      <div className="page">
-        <MenuComponent />
-        <div className="main">
-          <div className="main-wrapper">
-            <div className="twit-page">
-              <div className="twit-page-form">
-                <ButtonClose nav={-1} />
-                <TwitForm />
-              </div>
-            </div>
-          </div>
+    <div className="twit-page">
+      <div className="twit-page-form wrapper-border">
+        <div className="button-close" onClick={() => setShowTwitForm(false)}>
+          <img src={close} alt="close-icon" className="close-icon" />
         </div>
-        <SidebarComponent />
+        <div className="twit-page-twit-form">
+          <TwitForm setShowTwitForm={setShowTwitForm} />
+        </div>
       </div>
-      <FooterMobileComponent />
     </div>
   );
 });
