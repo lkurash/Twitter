@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../..";
-import { EXPLORE_PAGE, HOME_PAGE } from "../../utils/constans";
+import { HOME_PAGE, TWITTER_PAGE } from "../../utils/constans";
 import logo from "../Img/logo_icon.png";
 
 const Logo = observer((props) => {
@@ -29,7 +29,7 @@ const Logo = observer((props) => {
           onClick={() => {
             user.setUserPage({});
             twits.setUserTwits([]);
-            navigate(EXPLORE_PAGE);
+            navigate(TWITTER_PAGE);
           }}
         >
           <img src={logo} alt="logo" className="logo-icon" />

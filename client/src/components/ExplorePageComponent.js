@@ -1,18 +1,20 @@
-import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
+import "./main.css";
+import { observer } from "mobx-react-lite";
+import MainContentExplorePage from "./MainContentExplorePage";
 import { Context } from "..";
-import FooterComponent from "../components/FooterComponent";
-import MainContentExplorePageAllTwits from "../components/MainContentExplorePageAllTwits";
-import MenuComponent from "../components/MenuComponent";
-import SidebarComponent from "../components/SidebarComponent";
 import { getAllTopics } from "../http/topicsApi";
-import { getAllTwits } from "../http/twitsApi";
 import { getAllUsers } from "../http/userApi";
+import { getAllTwits } from "../http/twitsApi";
+import MenuComponent from "./MenuComponent";
+import SidebarComponent from "./SidebarComponent";
+import FooterComponent from "./FooterComponent";
+import MainContentExplorePageAllTwits from "./MainContentExplorePageAllTwits";
 
-const TwitterPage = observer(() => {
+const MainComponentExplorePage = observer(() => {
   const { user } = useContext(Context);
-  const { topics } = useContext(Context);
   const { twits } = useContext(Context);
+  const { topics } = useContext(Context);
 
   useEffect(() => {
     try {
@@ -23,15 +25,21 @@ const TwitterPage = observer(() => {
       console.log(error.response.data.message);
     }
   });
+
   return (
     <div>
       <div className="page">
         <MenuComponent />
-        <MainContentExplorePageAllTwits />
+        {user.isAuth ? (
+          <MainContentExplorePageAllTwits />
+        ) : (
+          <MainContentExplorePage />
+        )}
         <SidebarComponent />
       </div>
       {!user.isAuth && <FooterComponent />}
     </div>
   );
 });
-export default TwitterPage;
+
+export default MainComponentExplorePage;
