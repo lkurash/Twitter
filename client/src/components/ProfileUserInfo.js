@@ -13,14 +13,16 @@ import {
   FOLLOWING_PAGE,
 } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
+import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 
 const ProfileUserInfo = observer(() => {
   const { user } = useContext(Context);
-
   const location = useLocation().pathname;
   const navigate = useNavigate();
   const { id } = useParams();
+
   const [following, setFollowing] = useState(false);
+  const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const followingUser = [];
 
   const date = new Date(user.userPage.createdAt).toString().split(" ");
@@ -47,6 +49,10 @@ const ProfileUserInfo = observer(() => {
     getFollowingUser(id).then((allFollowing) =>
       user.setuserFollowing(allFollowing)
     );
+  };
+
+  const onCloseTooltip = () => {
+    setTooltipUserNotAuth(false);
   };
 
   checkFollowingUser();
@@ -107,15 +113,34 @@ const ProfileUserInfo = observer(() => {
           <p>{user.userPage.about}</p>
         </article>
         <div className="profile-panel-followers">
-          <p onClick={() => navigate(FOLLOWING_PAGE + id)}>
+          <p
+            onClick={() => {
+              if (location === "/twitter/profile/" + id) {
+                setTooltipUserNotAuth(true);
+              } else {
+                navigate(FOLLOWING_PAGE + id);
+              }
+            }}
+          >
             <span>{user.userFollowing.length}</span> Following
           </p>
           <p
             className="profile-panel-count-followers"
-            onClick={() => navigate(FOLLOWER_PAGE + id)}
+            onClick={() => {
+              if (location === "/twitter/profile/" + id) {
+                setTooltipUserNotAuth(true);
+              } else {
+                navigate(FOLLOWER_PAGE + id);
+              }
+            }}
           >
             <span>{user.userFollowers.length}</span> Followers
           </p>
+          <TooltipUserNotAuth
+            tooltipUserNotAuth={tooltipUserNotAuth}
+            onCloseTooltip={onCloseTooltip}
+            follow
+          />
         </div>
         <div className="profile-panel-info-user">
           {user.userPage.web_site_url ? (
