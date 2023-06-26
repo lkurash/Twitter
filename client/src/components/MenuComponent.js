@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "./menu.css";
 import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./common/Logo";
 import hashtag from "./Img/hashtag_icon.png";
 import bookmark from "./Img/bookmark_icon.png";
@@ -25,6 +25,7 @@ import UserInfoAndButtonSignOut from "./UserInfoAndButtonSignOut";
 const MenuComponent = observer(() => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
+  const location = useLocation().pathname;
 
   return (
     <aside className="menu">
@@ -36,9 +37,13 @@ const MenuComponent = observer(() => {
               type="button"
               path={hashtag}
               alt="Explore"
-              class="settings-icon"
+              class="button-icon-menu"
               buttonName="Explore"
-              button="explore"
+              button={
+                location === "/explore"
+                  ? "active-button-explore"
+                  : "notactive-button-explore"
+              }
               nav={EXPLORE_PAGE}
             />
           </div>
@@ -56,7 +61,7 @@ const MenuComponent = observer(() => {
               type="button"
               path={hashtag}
               alt="Review"
-              class="settings-icon"
+              class="button-icon-menu"
               buttonName="Review"
               nav={EXPLORE_PAGE}
             />
@@ -64,14 +69,14 @@ const MenuComponent = observer(() => {
               type="button"
               path={notification}
               alt="settings icon"
-              class="settings-icon"
+              class="button-icon-menu"
               buttonName="Notifications"
             />
             <ButtonMenu
               type="button"
               path={message}
               alt="Message"
-              class="settings-icon"
+              class="button-icon-menu"
               buttonName="Message"
               nav={MESSAGE_PAGE + user.user.id}
             />
@@ -79,7 +84,7 @@ const MenuComponent = observer(() => {
               type="button"
               path={bookmark}
               alt="Bookmarks"
-              class="settings-icon"
+              class="button-icon-menu"
               buttonName="Bookmarks"
               nav={BOOKMARKS_PAGE + user.user.id}
             />
@@ -88,7 +93,7 @@ const MenuComponent = observer(() => {
               type="button"
               path={profile}
               alt="Profile"
-              class="settings-icon"
+              class="button-icon-menu"
               buttonName="Profile"
               nav={PROFILE_PAGE_USER + user.user.id}
             />
