@@ -2,7 +2,9 @@
   width: 275px;
   height: 100%;
   color: #dcdcdc;
-  position: fixed;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
 .button-twit {

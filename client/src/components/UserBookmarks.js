@@ -12,7 +12,7 @@ const UserBookmarks = observer(() => {
 
   return (
     <div className="user-main-content-block">
-      <div className="page-name">
+      <div className="page-name main-stiky-panel">
         <div
           className="main-search-block-button-return"
           onClick={() => navigate(-1)}

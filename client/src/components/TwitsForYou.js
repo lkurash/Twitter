@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Context } from "..";
 import { ColorRing } from "react-loader-spinner";
 import Twit from "./Twit";
+import retwitIcon from "./Img/notactive_retweet_icon.png";
 
 const TwitsForYou = observer(({ showTwitsForYou }) => {
   const { twits } = useContext(Context);
@@ -58,7 +59,14 @@ const TwitsForYou = observer(({ showTwitsForYou }) => {
   return (
     <div className="twits">
       {twitsAndRetwits.map((twit) => (
-        <Twit twit={twit.Twit ? twit.Twit : twit} key={twit.createdAt} />
+        <>
+          {twit.Twit && (
+            <div className="retwit-info-twit">
+              <img src={retwitIcon} alt="Retwit" /> <p>You retweeted</p>
+            </div>
+          )}
+          <Twit key={twit.createdAt} twit={twit.Twit ? twit.Twit : twit} />
+        </>
       ))}
       {twitsAndRetwits.length === 0 && <p className="empty-twits">No twits</p>}
     </div>

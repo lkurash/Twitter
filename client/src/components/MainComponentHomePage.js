@@ -33,7 +33,7 @@ console.log(localStorage.getItem("twitsWhoReading"));
       <div className="main">
         <div className="user-main-content">
           <div className="user-main-content-block">
-            <div>
+            <div className="main-stiky-panel">
               <div className="page-name">
                 <div className="page-name-user-name">
                   <h2>Home</h2>
