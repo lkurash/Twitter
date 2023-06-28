@@ -79,6 +79,10 @@ h2 {
   letter-spacing: 0.5px;
 }
 
+.profile-panel-about-user p {
+  white-space: pre-wrap;
+}
+
 .profile-panel-followers {
   display: flex;
   height: 19px;

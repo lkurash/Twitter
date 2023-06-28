@@ -4,7 +4,7 @@
 .main-wrapper {
   display: flex;
   flex-direction: column;
-  margin-left: 275px;
+  margin-left: 30px;
   margin-bottom: 25px;
   width: 100%;
   max-width: 750px;
@@ -164,7 +164,7 @@
   padding-bottom: 10px;
 }
 
-.section-background{
+.section-background {
   background-color: rgb(43 44 49 / 53%);
 }
 
@@ -239,6 +239,12 @@
   background-color: rgb(128 128 128 / 34.7%);
 }
 
+.main-stiky-panel {
+  position: sticky;
+  top: 0;
+  background-color: #000000d4;
+}
+
 .user-main-content-block {
   width: 100%;
   min-width: 350px;
@@ -252,7 +258,7 @@
   margin: 0;
 }
 
-.wrapper-button{
+.wrapper-button {
   margin: 0 auto;
   width: 100%;
   height: 50px;
@@ -270,7 +276,7 @@
   font-size: 15px;
   font-weight: bold;
   border: none;
-  background-color: black;
+  background-color: #0000003d;
   cursor: pointer;
 }
 
@@ -332,7 +338,7 @@
   height: max-content;
 }
 
-.wrapper-twit-form-img{
+.wrapper-twit-form-img {
   width: 100%;
   height: 100%;
 }
@@ -363,12 +369,13 @@
   position: absolute;
 }
 
-.twit-form-input{
+.twit-form-input {
   height: 80px;
 }
 
 .twit-form-input-text {
   width: 90%;
+  height: 100%;
   margin-right: 5px;
   margin-bottom: 10px;
   background-color: black;
@@ -445,6 +452,25 @@
   justify-content: center;
 }
 
+.retwit-info-twit {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  margin-left: 60px;
+}
+
+.retwit-info-twit img {
+  width: 18px;
+  height: 18px;
+}
+
+.retwit-info-twit p {
+  color: grey;
+  font-size: 12px;
+  margin-left: 6px;
+  font-weight: 700;
+}
+
 .twit {
   width: 100%;
 }
@@ -487,10 +513,21 @@
   background-color: black;
 }
 
+.twit-user-name-block {
+  display: flex;
+  align-items: center;
+}
+
+.twit-user-name-block p {
+  margin-top: 5px;
+  font-size: 15px;
+}
+
 .twit-user-name {
   width: max-content;
   font-size: 18px;
   margin-top: 3px;
+  margin-right: 5px;
   cursor: pointer;
 }
 
@@ -502,6 +539,7 @@
   font-size: 15px;
   line-height: 20px;
   letter-spacing: 0.4px;
+  white-space: pre-wrap;
 }
 
 .wrapper-twit-img {
@@ -510,7 +548,7 @@
   min-height: 200px;
 }
 
-.twit-form-img{
+.twit-form-img {
   margin: 0 auto;
   width: 100%;
 }
@@ -549,7 +587,7 @@
 .content-block {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .content-block-comment {

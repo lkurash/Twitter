@@ -11,22 +11,25 @@ const TwitDesc = ({ twit }) => {
 
   return (
     <div className="twit-desc">
-      <h4
-        className="twit-user-name"
-        onClick={() => {
-          if (location === `/twitter/profile/${user.userPage.id}`) {
-            user.setUserPage({});
-            twits.setUserTwits([]);
-            navigate(TWITTER_USER_PAGE + twit.User.id);
-          } else {
-            user.setUserPage({});
-            twits.setUserTwits([]);
-            navigate(PROFILE_PAGE_USER + twit.User.id);
-          }
-        }}
-      >
-        {twit.User.user_name}
-      </h4>
+      <div className="twit-user-name-block">
+        <h4
+          className="twit-user-name"
+          onClick={() => {
+            if (location === `/twitter/profile/${user.userPage.id}`) {
+              user.setUserPage({});
+              twits.setUserTwits([]);
+              navigate(TWITTER_USER_PAGE + twit.User.id);
+            } else {
+              user.setUserPage({});
+              twits.setUserTwits([]);
+              navigate(PROFILE_PAGE_USER + twit.User.id);
+            }
+          }}
+        >
+          {twit.User.user_name}
+        </h4>
+        <p className="profile-name">{`@${twit.User.user_name}`}</p>
+      </div>
       <p className="twit-text">{twit.text}</p>
       {twit.img && (
         <div className="wrapper-twit-img">

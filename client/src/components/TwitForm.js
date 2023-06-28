@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import {
   createTwitByUser,
   getAllTwits,
@@ -15,7 +14,6 @@ import ButtonEmoji from "./ButtonEmoji";
 const TwitForm = observer(({ setShowTwitForm }) => {
   const { user } = useContext(Context);
   const { twits } = useContext(Context);
-  const location = useLocation().pathname;
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
 
@@ -48,8 +46,6 @@ const TwitForm = observer(({ setShowTwitForm }) => {
   const addEmojiInTwitText = (event) => {
     setText(text + event.emoji);
   };
-
-  console.log(img);
 
   return (
     <>

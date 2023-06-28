@@ -10,7 +10,7 @@ const MainContentExplorePageAllTwits = observer(() => {
     <main className="main-wrapper">
       <div className="main">
         <div className="main-content">
-          <div className="page-name">
+          <div className="page-name main-stiky-panel">
             <div className="page-name-user-name">
               <h2>Explore</h2>
             </div>
