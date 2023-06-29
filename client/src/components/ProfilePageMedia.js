@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "..";
+import spinner from "../utils/spinner";
 import Twit from "./Twit";
 
 const ProfilePageMedia = observer(() => {
@@ -17,6 +18,9 @@ const ProfilePageMedia = observer(() => {
   };
 
   getUserTwitsWithMedia();
+
+  if (userTwitsWithMedia.length === 0) return spinner();
+
   return (
     <div className="twits">
       {userTwitsWithMedia.map((twit) => (

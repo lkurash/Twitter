@@ -9,6 +9,7 @@ const Logo = observer((props) => {
   const navigate = useNavigate();
   const { user } = useContext(Context);
   const { twits } = useContext(Context);
+  const { favoriteTwits } = useContext(Context);
 
   return (
     <div>
@@ -16,8 +17,9 @@ const Logo = observer((props) => {
         <div
           className={props.class}
           onClick={() => {
-            user.setUserPage({});
-            twits.setUserTwits([]);
+            // user.setUserPage({});
+            // twits.setUserTwits([]);
+            // favoriteTwits.setFavoriteTwits({});
             navigate(HOME_PAGE);
           }}
         >

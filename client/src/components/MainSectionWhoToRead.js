@@ -29,8 +29,13 @@ const MainSectionWhoToRead = observer((props) => {
                 className="section-read-main-user-info"
                 onClick={() => navigate(TWITTER_USER_PAGE + profile.id)}
               >
-                <img src={getUserPhoto(profile)} alt="User" />
-                <p>{profile.user_name}</p>
+                <div className="wrapper-follow-user-img">
+                  <img src={getUserPhoto(profile)} alt="User" />
+                </div>
+                <div className="section-read-main-user-name">
+                  <p className="user-name">{profile.user_name}</p>
+                  <p className="profile-name">{`@${profile.user_name}`}</p>
+                </div>
               </div>
             </li>
           ))}

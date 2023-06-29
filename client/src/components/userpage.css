@@ -4,6 +4,50 @@ h2 {
   margin: 0;
 }
 
+.load-page p {
+  width: 70px;
+  height: 19px;
+  background-color: rgba(51, 51, 51, 0.56);
+  margin-top: 5px;
+  margin-left: 3px;
+  border-radius: 5px;
+}
+
+.about-user-load-page {
+  width: 300px;
+  height: 40px;
+  background-color: rgba(51, 51, 51, 0.56);
+  border-radius: 5px;
+}
+
+.load-page h2 {
+  width: 180px;
+  height: 20px;
+  background-color: rgba(51, 51, 51, 0.56);
+  margin-left: 3px;
+  border-radius: 10px;
+}
+
+.load-page-user-name {
+  margin-top: 30px;
+}
+
+.load-page button {
+  background-color: rgba(51, 51, 51, 0.56);
+}
+
+.load-page-button-trends {
+  width: 35px;
+  height: 32px;
+  display: flex;
+  margin-top: 5px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+}
+
 .user-main-content-profile-panel {
   height: max-content;
 }
@@ -14,7 +58,7 @@ h2 {
 
 .profile-panel-background-user {
   height: 200px;
-  background-color: rgb(255 228 196 / 54.3%);
+  background-color: rgba(51, 51, 51, 0.56);
 }
 
 .profile-panel-background-user img {
@@ -35,7 +79,7 @@ h2 {
   margin-top: -70px;
   margin-left: 20px;
   border-radius: 70px;
-  background-color: rgb(0 255 255 / 67.2%);
+  background-color: rgba(51, 51, 51, 0.56);
 }
 
 .profile-panel-photo-user img {
@@ -427,6 +471,14 @@ h2 {
 .section-read-main-user-info {
   display: flex;
   align-items: center;
+}
+
+.wrapper-follow-user-img {
+  margin-right: 10px;
+  height: 50px;
+  width: 50px;
+  border-radius: 30px;
+  background-color: rgba(51, 51, 51, 0.56);
 }
 
 .section-read-main-hidden {
