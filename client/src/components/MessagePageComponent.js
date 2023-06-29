@@ -6,6 +6,10 @@ import FooterMobileComponent from "./FooterMobileComponent";
 import MenuComponent from "./MenuComponent";
 import SidebarComponent from "./SidebarComponent";
 import UserMessagesComponent from "./UserMessagesComponent";
+import "../App.css";
+import "./common/common.css";
+import "./main.css";
+import "./userpage.css";
 
 const MessagesPageComponent = observer(() => {
   const { user } = useContext(Context);
@@ -22,13 +26,13 @@ const MessagesPageComponent = observer(() => {
     <div>
       <div className="page">
         <MenuComponent />
-        <div className="main-wrapper">
-          <main className="main">
+        <main className="main-wrapper">
+          <div className="main">
             <div className="user-main-content">
               <UserMessagesComponent />
             </div>
-          </main>
-        </div>
+          </div>
+        </main>
         <SidebarComponent />
       </div>
       <FooterMobileComponent />
