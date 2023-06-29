@@ -13,7 +13,7 @@ const MainComponentHomePage = observer(() => {
   const setLocalStorageTwitsForYou = (show) => {
     localStorage.setItem("twitsWhoReading", show);
   };
-console.log(localStorage.getItem("twitsWhoReading"));
+  
   const checkLocalStorageTwitsForYou = () => {
     if (localStorage.getItem("twitsWhoReading") === "true") {
       setShowTwitsForYou(false);
