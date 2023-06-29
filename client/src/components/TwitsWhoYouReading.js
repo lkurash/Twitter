@@ -5,7 +5,6 @@ import Twit from "./Twit";
 
 const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
   const { user } = useContext(Context);
-
   const userTwitsAndTwitsFollowingUsers = userTwits.slice(0);
 
   const getTwitsFollowingUsers = () => {

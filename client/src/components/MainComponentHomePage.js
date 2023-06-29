@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
+import spinner from "../utils/spinner";
 import TwitForm from "./TwitForm";
 import TwitsForYou from "./TwitsForYou";
 import TwitsWhoYouRead from "./TwitsWhoYouReading";
@@ -9,11 +10,12 @@ const MainComponentHomePage = observer(() => {
   const { twits } = useContext(Context);
   const [showTwitsForYou, setShowTwitsForYou] = useState(true);
   const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const setLocalStorageTwitsForYou = (show) => {
     localStorage.setItem("twitsWhoReading", show);
   };
-  
+
   const checkLocalStorageTwitsForYou = () => {
     if (localStorage.getItem("twitsWhoReading") === "true") {
       setShowTwitsForYou(false);
@@ -26,6 +28,9 @@ const MainComponentHomePage = observer(() => {
 
   useEffect(() => {
     checkLocalStorageTwitsForYou();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 400);
   }, []);
 
   return (
@@ -75,11 +80,17 @@ const MainComponentHomePage = observer(() => {
               <TwitForm />
             </div>
             <div className="main-line" />
-            <TwitsForYou showTwitsForYou={showTwitsForYou} />
-            <TwitsWhoYouRead
-              showTwitsWhoReading={showTwitsWhoReading}
-              userTwits={twits.userTwits}
-            />
+            {isLoading ? (
+              spinner()
+            ) : (
+              <>
+                <TwitsForYou showTwitsForYou={showTwitsForYou} />
+                <TwitsWhoYouRead
+                  showTwitsWhoReading={showTwitsWhoReading}
+                  userTwits={twits.userTwits}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>

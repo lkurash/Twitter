@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Context } from "..";
 import Twit from "./Twit";
 import retwitIcon from "./Img/notactive_retweet_icon.png";
+import spinner from "../utils/spinner";
 
 const UserTwits = observer(() => {
   const { twits } = useContext(Context);
@@ -36,6 +37,8 @@ const UserTwits = observer(() => {
   getUserRetwit();
   getUserTwit();
   sortTwitAndRetwit();
+
+  if (twitsAndRetwits.length === 0) return spinner();
 
   return (
     <div className="twits">

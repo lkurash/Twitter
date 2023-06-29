@@ -3,26 +3,12 @@ import { useContext } from "react";
 import { Context } from "..";
 import ProfileUserInfo from "./ProfileUserInfo";
 import UserTwits from "./UserTwits";
-import { ColorRing } from "react-loader-spinner";
+import spinner from "../utils/spinner";
 
 const TwitterNotAuthProfileUser = observer(() => {
   const { user } = useContext(Context);
 
-  if (!user.userPage.id) {
-    return (
-      <div className="load-spinner">
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={["#1d9bf0", "#2188cc", "#1d9bf0", "#2188cc", "#1d9bf0"]}
-        />
-      </div>
-    );
-  }
+  if (!user.userPage.id) return spinner();
   return (
     <div className="user-main-content">
       <div className="user-main-content-block">

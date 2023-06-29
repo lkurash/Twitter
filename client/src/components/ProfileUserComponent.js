@@ -1,8 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ColorRing } from "react-loader-spinner";
-
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProfilePageAnswers from "./ProfilePageAnswers";
 import ProfilePageLikes from "./ProfilePageLikes";
 import ProfilePageMedia from "./ProfilePageMedia";
@@ -12,28 +10,25 @@ import ProfileUserInfo from "./ProfileUserInfo";
 import { Context } from "..";
 import arrowLeft from "./Img/arrow_left_icon.png";
 import { HOME_PAGE } from "../utils/constans";
+import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
+import spinner from "../utils/spinner";
 
 const ProfileUserComponent = observer(() => {
   const location = useLocation().pathname;
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(Context);
   const { id } = useParams();
 
-  if (!user.userPage.id) {
-    return (
-      <div className="load-spinner">
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={["#1d9bf0", "#2188cc", "#1d9bf0", "#2188cc", "#1d9bf0"]}
-        />
-      </div>
-    );
-  }
+   useEffect(() => {
+     setTimeout(() => {
+       setIsLoading(false);
+     }, 300);
+   }, []);
+
+   if (isLoading || !user.userPage.id) {
+     return loadPageUserInfo();
+   }
 
   return (
     <div className="user-main-content-block">

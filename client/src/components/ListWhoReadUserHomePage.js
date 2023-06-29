@@ -1,14 +1,16 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 import { createFollow, getAllUsers, getFollowingUser } from "../http/userApi";
 import { PROFILE_PAGE_USER } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
+import spinner from "../utils/spinner";
 
 const ListWhoReadUserHomePage = observer(() => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const whoReadingList = [];
   const whoNotReadingList = [];
 
@@ -51,6 +53,17 @@ const ListWhoReadUserHomePage = observer(() => {
 
   chekFollowingUser();
   createNotReadingList();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 400);
+  }, []);
+
+  if (isLoading || whoNotReadingList.length === 0) {
+    return spinner();
+  }
+
   return (
     <ul className="follow-page-main-users">
       {whoNotReadingList.length > 0 ? (

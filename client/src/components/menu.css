@@ -17,6 +17,7 @@
   cursor: pointer;
   background-color: #1d9bf0;
   border: none;
+  background-color: #1d9cf0ed;
 }
 
 .button-twit:hover {

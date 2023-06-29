@@ -15,7 +15,7 @@ const ExplorePage = observer(() => {
 
   CheckTokenOnPage(user, navigate, setLoadingPage);
 
-  return <MainComponentExplorePage/>;
+  return <MainComponentExplorePage />;
 });
 
 export default ExplorePage;
