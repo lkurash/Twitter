@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import "./userTwitPanel.css";
 import {
@@ -11,8 +10,9 @@ import {
 } from "../http/twitsApi";
 import activeBookmark from "./Img/active_bookmark_icon.png";
 import notactiveBookmark from "./Img/notactive_bookmark_icon.png";
-import hoverBookmark from "./Img/hover_bookmark.png"
+import hoverBookmark from "./Img/hover_bookmark.png";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const ButtonBookmarkOnTwit = observer((props) => {
   const { twits } = useContext(Context);
@@ -25,9 +25,11 @@ const ButtonBookmarkOnTwit = observer((props) => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
     if (user.isAuth) {
-      const { id } = jwt_decode(localStorage.token);
+      const authUserID = getAuthUserID(user)
 
-      getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+      getTwitsByUser(authUserID).then((twitsById) =>
+        twits.setUserTwits(twitsById)
+      );
     } else {
       getTwitsByUser(userPage.id).then((twitsById) =>
         twits.setUserTwits(twitsById)

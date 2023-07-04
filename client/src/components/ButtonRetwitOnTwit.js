@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import {
   createRetwitByUser,
@@ -13,6 +12,7 @@ import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 import activeRetwit from "./Img/active_retweet_icon.png";
 import notactiveRetwit from "./Img/notactive_retweet_icon.png";
 import "./userTwitPanel.css";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const ButtonRetwitOnTwit = observer((props) => {
   const { twits } = useContext(Context);
@@ -26,10 +26,10 @@ const ButtonRetwitOnTwit = observer((props) => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
     if (user.isAuth) {
-      const { id } = jwt_decode(localStorage.token);
+      const authUserID =getAuthUserID(user)
 
-      getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
-      getRetwitsByUser(id).then((retwitsByUser) =>
+      getTwitsByUser(authUserID).then((twitsById) => twits.setUserTwits(twitsById));
+      getRetwitsByUser(authUserID).then((retwitsByUser) =>
         retwits.setRetwits(retwitsByUser)
       );
     } else {

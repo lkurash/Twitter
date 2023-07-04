@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useLayoutEffect, useRef } from "react";
-import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import "../App.css";
 import "./common/common.css";
@@ -16,27 +15,28 @@ import {
 import { getAllUsers, getFollowingUser } from "../http/userApi";
 import FooterMobileComponent from "./FooterMobileComponent";
 import MainComponentHomePage from "./MainComponentHomePage";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const HomePageComponent = observer(() => {
   const { twits } = useContext(Context);
   const { user } = useContext(Context);
   const { retwits } = useContext(Context);
   const ref = useRef();
-  const { id } = jwt_decode(localStorage.token);
+  const authUserID = getAuthUserID(user)
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
   });
 
   useEffect(() => {
-    getRetwitsByUser(id).then((retwitsByUser) =>
+    getRetwitsByUser(authUserID).then((retwitsByUser) =>
       retwits.setRetwits(retwitsByUser)
     );
     getAllUsers().then((users) => user.setAllUsers(users));
-    getFollowingUser(id).then((allFollowing) =>
+    getFollowingUser(authUserID).then((allFollowing) =>
       user.setuserFollowing(allFollowing)
     );
-    getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+    getTwitsByUser(authUserID).then((twitsById) => twits.setUserTwits(twitsById));
     getAllTwits().then((alltwits) => {
       if (alltwits) {
         twits.setTwits(alltwits);

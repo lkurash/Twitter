@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 import { Context } from "..";
 import activeLike from "./Img/active_like.png";
 import notactiveLike from "./Img/notactive_like.png";
@@ -14,6 +13,7 @@ import {
   getTwitsByUser,
 } from "../http/twitsApi";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const ButtonLikeOnTwit = observer((props) => {
   const { twits } = useContext(Context);
@@ -26,9 +26,9 @@ const ButtonLikeOnTwit = observer((props) => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
     if (user.isAuth) {
-      const { id } = jwt_decode(localStorage.token);
+      const authUserID = getAuthUserID(user)
 
-      getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+      getTwitsByUser(authUserID).then((twitsById) => twits.setUserTwits(twitsById));
     } else {
       getTwitsByUser(userPage.id).then((twitsById) =>
         twits.setUserTwits(twitsById)

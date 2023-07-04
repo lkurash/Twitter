@@ -4,7 +4,6 @@
   justify-content: center;
   width: 47px;
   height: 47px;
-  margin-top: 13px;
   border-radius: 30px;
   cursor: pointer;
 }
@@ -54,8 +53,8 @@
 }
 
 .home-icon {
-  height: 30px;
-  width: 30px;
+  height: 27px;
+  width: 27px;
   margin-left: 10px;
 }
 

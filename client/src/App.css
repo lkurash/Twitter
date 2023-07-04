@@ -55,6 +55,7 @@ body {
   position: fixed;
   top: 0;
   background-color: rgb(106 145 168 / 37.4%);
+  z-index: 3;
 }
 
 .twit-page-form {

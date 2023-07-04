@@ -7,13 +7,13 @@ import FooterMobileComponent from "./FooterMobileComponent";
 import MenuComponent from "./MenuComponent";
 import SidebarComponent from "./SidebarComponent";
 import UserBookmarks from "./UserBookmarks";
-import jwt_decode from "jwt-decode";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const BookmarksPageComponent = observer(() => {
   const { twits } = useContext(Context);
   const { user } = useContext(Context);
   const { favoriteTwits } = useContext(Context);
-  const { id } = jwt_decode(localStorage.token);
+ const authUserID = getAuthUserID(user);
 
   useEffect(() => {
     try {
@@ -22,7 +22,7 @@ const BookmarksPageComponent = observer(() => {
         favoriteTwits.setFavoriteTwits(favoriteTwitsByUser)
       );
       getAllUsers().then((users) => user.setAllUsers(users));
-      getFollowingUser(id).then((allFollowing) =>
+      getFollowingUser(authUserID).then((allFollowing) =>
         user.setuserFollowing(allFollowing)
       );
     } catch (error) {

@@ -3,60 +3,36 @@ import "./main.css";
 import { useContext } from "react";
 import { Context } from "..";
 import Twit from "./Twit";
-import retwitIcon from "./Img/notactive_retweet_icon.png";
 import spinner from "../utils/spinner";
+import TooltipRetwitOnTwit from "./TolltipRetwitOnTwit";
+import sortTwits from "../utils/sortTwits";
 
 const UserTwits = observer(() => {
   const { twits } = useContext(Context);
   const { retwits } = useContext(Context);
-  const twitsAndRetwits = [];
 
-  const getUserRetwit = () => {
-    retwits.retwits.map((retwit) => {
-      return twitsAndRetwits.push(retwit);
-    });
-  };
+  const userTwitsAndRetwits = sortTwits(twits.userTwits, retwits.retwits);
 
-  const getUserTwit = () => {
-    if (twits.userTwits) {
-      twits.userTwits.map((twit) => {
-        return twitsAndRetwits.push(twit);
-      });
-    }
-  };
-
-  const sortTwitAndRetwit = () => {
-    twitsAndRetwits.sort((a, b) => {
-      const dateOne = new Date(a.createdAt);
-      const dateTwo = new Date(b.createdAt);
-
-      return dateTwo - dateOne;
-    });
-  };
-
-  getUserRetwit();
-  getUserTwit();
-  sortTwitAndRetwit();
-
-  if (twitsAndRetwits.length === 0) return spinner();
+  if (userTwitsAndRetwits.length === 0) return spinner();
 
   return (
     <div className="twits">
-      {twitsAndRetwits.map((twit) => (
+      {userTwitsAndRetwits.map((twit) => (
         <>
-          {twit.Twit && (
-            <div className="retwit-info-twit">
-              <img src={retwitIcon} alt="Retwit" /> <p>You retweeted</p>
-            </div>
-          )}
-          <Twit key={twit.createdAt} twit={twit.Twit ? twit.Twit : twit} />
+          <TooltipRetwitOnTwit retwit={twit.Twit} />
+          <Twit
+            key={twit.Twit ? `retwit-${twit.Twit.id}` : `twit-${twit.id}`}
+            twit={twit.Twit ? twit.Twit : twit}
+          />
         </>
 
         // {!twit.Twit && twit.UserId === user.user.id && (
         //       <ButtonDeleteOnTwit twit={twit} />
         //     )}
       ))}
-      {twitsAndRetwits.length === 0 && <p className="empty-twits">No twits</p>}
+      {userTwitsAndRetwits.length === 0 && (
+        <p className="empty-twits">No twits</p>
+      )}
     </div>
   );
 });

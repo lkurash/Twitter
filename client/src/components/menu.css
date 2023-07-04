@@ -5,6 +5,11 @@
   position: sticky;
   top: 0;
   z-index: 3;
+  padding-top: 10px;
+}
+
+.active-menu-button{
+  font-weight: 600;
 }
 
 .button-twit {
