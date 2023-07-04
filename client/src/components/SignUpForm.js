@@ -6,12 +6,14 @@ import { Context } from "..";
 import { EXPLORE_PAGE } from "../utils/constans";
 import useOutsideClick from "../utils/useOutsideClickFunction";
 import SignUpFormInput from "./SignUpFormInput";
+import { useLocation } from "react-router-dom";
 
 function SignUpForm({ getInfoUser }) {
   const { user } = useContext(Context);
   const [activeDivName, setActivedivName] = useState(false);
   const [activeDivEmail, setActivedivEmail] = useState(false);
   const [activeDivPassword, setActivedivPassword] = useState(false);
+  const location = useLocation().pathname;
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +41,7 @@ function SignUpForm({ getInfoUser }) {
     <div className="body">
       <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
-          <ButtonClose nav={EXPLORE_PAGE} />
+          <ButtonClose nav={location === "/auth/login" ? EXPLORE_PAGE : -1} />
         </header>
         <main className="signup-form-main">
           <h2>Create your account</h2>

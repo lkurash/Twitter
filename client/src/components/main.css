@@ -38,8 +38,8 @@
 
 .main-search-form-home {
   display: flex;
-  width: 81%;
-  height: 42px;
+  width: 100%;
+  height: 100%;
   margin-left: 17px;
   border-radius: 50px;
   align-items: center;
@@ -250,7 +250,6 @@
   min-width: 350px;
   height: max-content;
   margin: 0 auto;
-  margin-top: 2px;
 }
 
 .user-main-content-button-panel {
@@ -566,13 +565,18 @@
 
 .page-name {
   display: flex;
-  margin-top: 10px;
   margin-bottom: 10px;
   padding-bottom: 20px;
+  padding-top: 15px;
 }
 
 .page-name-user-name {
   margin-left: 10px;
+}
+
+.page-name-user-name h2{
+  margin: 0;
+  font-size: 20px;
 }
 
 .page-name p {

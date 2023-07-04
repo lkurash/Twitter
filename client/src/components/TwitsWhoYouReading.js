@@ -1,40 +1,37 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "..";
+import sortTwits from "../utils/sortTwits";
 import Twit from "./Twit";
 
 const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
   const { user } = useContext(Context);
-  const userTwitsAndTwitsFollowingUsers = userTwits.slice(0);
+  const { retwits } = useContext(Context);
+  const twitsByFollowingUsers = [];
 
-  const getTwitsFollowingUsers = () => {
+  const getTwitsByFollowingUsers = () => {
     user.userFollowing.map((followingUser) => {
       return followingUser.followUser.Twits.forEach((twit) => {
-        return userTwitsAndTwitsFollowingUsers.push(twit);
+        return twitsByFollowingUsers.push(twit);
       });
     });
   };
 
-  getTwitsFollowingUsers();
+  getTwitsByFollowingUsers();
 
-  const sortTwit = () => {
-    userTwitsAndTwitsFollowingUsers.sort((a, b) => {
-      const dateOne = new Date(a.createdAt);
-      const dateTwo = new Date(b.createdAt);
-
-      return dateTwo - dateOne;
-    });
-  };
-  sortTwit();
+  const userTwitsRetwitsFollowingUserTwits = sortTwits(userTwits, twitsByFollowingUsers, retwits.retwits);
 
   if (!showTwitsWhoReading) return null;
 
   return (
     <div className="twits">
-      {userTwitsAndTwitsFollowingUsers.map((twit) => (
-        <Twit twit={twit} key={twit.id} />
+      {userTwitsRetwitsFollowingUserTwits.map((twit) => (
+        <Twit
+          twit={twit.Twit ? twit.Twit : twit}
+          key={twit.Twit ? `retwet-${twit.Twit.id}` : `twit-${twit.id}`}
+        />
       ))}
-      {userTwitsAndTwitsFollowingUsers.length === 0 && (
+      {userTwitsRetwitsFollowingUserTwits.length === 0 && (
         <p className="empty-twits">You don't have following</p>
       )}
     </div>

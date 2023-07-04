@@ -3,55 +3,30 @@ import "./main.css";
 import { useContext } from "react";
 import { Context } from "..";
 import Twit from "./Twit";
-import retwitIcon from "./Img/notactive_retweet_icon.png";
+import TooltipRetwitOnTwit from "./TolltipRetwitOnTwit";
+import sortTwits from "../utils/sortTwits";
 
 const TwitsForYou = observer(({ showTwitsForYou }) => {
   const { twits } = useContext(Context);
   const { retwits } = useContext(Context);
-  const twitsAndRetwits = [];
-
-  const getUserRetwit = () => {
-    retwits.retwits.map((retwit) => {
-      return twitsAndRetwits.push(retwit);
-    });
-  };
-
-  const getTwits = () => {
-    if (twits.twits) {
-      twits.twits.map((twit) => {
-        return twitsAndRetwits.push(twit);
-      });
-    }
-  };
-
-  const sortTwitAndRetwit = () => {
-    twitsAndRetwits.sort((a, b) => {
-      const dateOne = new Date(a.createdAt);
-      const dateTwo = new Date(b.createdAt);
-
-      return dateTwo - dateOne;
-    });
-  };
-
-  getUserRetwit();
-  getTwits();
-  sortTwitAndRetwit();
+  const allTwitsAndUserRetwits = sortTwits(retwits.retwits, twits.twits);
 
   if (!showTwitsForYou) return null;
 
   return (
     <div className="twits">
-      {twitsAndRetwits.map((twit) => (
+      {allTwitsAndUserRetwits.map((twit) => (
         <>
-          {twit.Twit && (
-            <div className="retwit-info-twit">
-              <img src={retwitIcon} alt="Retwit" /> <p>You retweeted</p>
-            </div>
-          )}
-          <Twit key={twit.createdAt} twit={twit.Twit ? twit.Twit : twit} />
+          <TooltipRetwitOnTwit retwit={twit.Twi} />
+          <Twit
+            key={twit.Twit ? `retwet-${twit.Twit.id}` : `twit-${twit.id}`}
+            twit={twit.Twit ? twit.Twit : twit}
+          />
         </>
       ))}
-      {twitsAndRetwits.length === 0 && <p className="empty-twits">No twits</p>}
+      {allTwitsAndUserRetwits.length === 0 && (
+        <p className="empty-twits">No twits</p>
+      )}
     </div>
   );
 });

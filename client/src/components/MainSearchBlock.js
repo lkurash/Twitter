@@ -69,14 +69,14 @@ const MainSearchBlock = observer((props) => {
           </div>
         </div>
       )}
-      <ButtonSettings
+      {/* <ButtonSettings
         path={setting}
         alt="settings icon"
         class="main-settings-icon"
-      />
-      <div className="mobile-button-main-settings">
+      /> */}
+      {/* <div className="mobile-button-main-settings">
         <ButtonDotMenu />
-      </div>
+      </div> */}
     </div>
   );
 });
