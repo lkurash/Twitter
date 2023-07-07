@@ -8,6 +8,9 @@ In the project directory, you can run:
 
 ### `cd client`
 
+### Install npm packages
+### `npm install`
+
 ### `npm start`
 
 Runs the app in the development mode.\

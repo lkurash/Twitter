@@ -4,11 +4,12 @@
 
 #### This project was made with PostgreSQL (https://www.postgresql.org/) and Sequelize (https://sequelize.org/).
 
+### `cd server`
+
 ### Install npm packages
 ### `npm install`
 
 ## Create database config
-### `cd server`
 ### `cp config/config.example.json config/config.json`
 
 ## Create database
@@ -22,7 +23,7 @@
 
 ### or
 
-### `npx sequelize-cli db:seed --seed my-seed`
+### `npx sequelize-cli db:seed --seed SEED_NAME`
 
 ## Run the app
 ### `npm start`
