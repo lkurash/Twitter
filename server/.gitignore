@@ -3,6 +3,7 @@
 .pnp.js
 /config/config.json
 .eslintrc.json
+/static
 
 # testing
 /coverage
