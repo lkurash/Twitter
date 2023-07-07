@@ -28,7 +28,6 @@ const SidebarComponent = observer(() => {
         <>
           <MainSearchBlock
             className="main-search-form-home section-background"
-            page={PROFILE_PAGE_USER}
           />
           <div className="main-content">
             <MainSectionTrends className="section trends-home section-background" />

@@ -66,10 +66,7 @@ const ButtonBookmarkOnTwit = observer((props) => {
   const getUserBookmarksTwitId = () => {
     twits.twits.map((twit) => {
       twit.Favorite_twits.forEach((bookmark) => {
-        if (
-          bookmark.UserId === user.userPage.id ||
-          bookmark.UserId === user.user.id
-        ) {
+        if (bookmark.UserId === user.user.id) {
           userBookmarksTwitId.push(twit.id);
         }
       });

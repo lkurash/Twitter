@@ -2,11 +2,12 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
+import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 import useOutsideClick from "../utils/useOutsideClickFunction";
 
 const ListFoundUserSearchBlock = observer(
-  ({ userName, showListFoundUsers, onClose, page }) => {
+  ({ userName, showListFoundUsers, onClose }) => {
     const { user } = useContext(Context);
     const navigate = useNavigate();
     const listUsersRef = useRef(null);
@@ -58,7 +59,13 @@ const ListFoundUserSearchBlock = observer(
               <li
                 key={profile.id}
                 className="main-search-found-list-user"
-                onClick={() => navigate(page + profile.id)}
+                onClick={() => {
+                  if (user.isAuth) {
+                    navigate(PROFILE_PAGE_USER + profile.id);
+                  } else {
+                    navigate(TWITTER_USER_PAGE + profile.id);
+                  }
+                }}
               >
                 <img src={getUserPhoto(profile)} alt="User" />
                 <p>{profile.user_name}</p>

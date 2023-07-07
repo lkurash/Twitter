@@ -1,12 +1,19 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "..";
-import { createFollow, deleteFollow, getAllUsers } from "../http/userApi";
+import {
+  createFollow,
+  deleteFollow,
+  getAllUsers,
+} from "../http/userApi";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const ButtonFollowInFollowComponent = observer(
   ({ profile, userId, userFollowingIds }) => {
     const { user } = useContext(Context);
     const { usersFollow } = useContext(Context);
+    const authUserID = getAuthUserID(user);
+    const listFollowingUserIds = [];
 
     const deleteFollowAndGetAllUsers = async (userFollowId) => {
       await deleteFollow(userFollowId);
@@ -20,10 +27,23 @@ const ButtonFollowInFollowComponent = observer(
       await getAllUsers().then((users) => user.setAllUsers(users));
     };
 
+    const createListFollowingUserIds = (userId) => {
+      user.allUsers.forEach((allUser) => {
+        allUser.Followings.forEach((followUser) => {
+          if (authUserID === followUser.UserId) {
+            listFollowingUserIds.push(followUser.followUserId);
+          }
+        });
+      });
+    };
+
+    createListFollowingUserIds();
+
     return (
       <>
-        {userFollowingIds.includes(userId) ? (
+        {listFollowingUserIds.includes(userId) ? (
           <button
+            key={profile.id}
             className="follow-page-main-button-following button-following-hover"
             onMouseEnter={() => {
               usersFollow.setHoverFollowUser(profile.id);
@@ -49,7 +69,9 @@ const ButtonFollowInFollowComponent = observer(
               usersFollow.setStartFollowUser(profile);
             }}
           >
-            <span>Follow</span>
+            <span>
+              Follow
+            </span>
           </button>
         )}
       </>
