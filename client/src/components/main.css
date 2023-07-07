@@ -73,7 +73,7 @@
 
 .main-search-wrapper-found-users {
   position: absolute;
-  top: 55px;
+  top: 75px;
   width: 250px;
   height: 110px;
   overflow: scroll;
@@ -168,8 +168,9 @@
   background-color: rgb(43 44 49 / 53%);
 }
 
-.section-trends-hidden {
-  margin-top: 10px;
+.section-aside-hidden {
+  margin-top: 20px;
+  color: grey;
 }
 
 .happen-home {
@@ -477,6 +478,7 @@
 .empty-twits {
   width: 100%;
   margin-left: 46%;
+  color: gray;
 }
 
 .twits-message {
@@ -574,7 +576,7 @@
   margin-left: 10px;
 }
 
-.page-name-user-name h2{
+.page-name-user-name h2 {
   margin: 0;
   font-size: 20px;
 }

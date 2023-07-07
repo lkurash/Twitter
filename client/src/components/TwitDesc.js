@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
 
@@ -7,7 +7,6 @@ const TwitDesc = ({ twit }) => {
   const { user } = useContext(Context);
   const { twits } = useContext(Context);
   const navigate = useNavigate();
-  const location = useLocation().pathname;
 
   return (
     <div className="twit-desc">
@@ -15,14 +14,14 @@ const TwitDesc = ({ twit }) => {
         <h4
           className="twit-user-name"
           onClick={() => {
-            if (location === `/twitter/profile/${user.userPage.id}`) {
-              user.setUserPage({});
-              twits.setUserTwits([]);
-              navigate(TWITTER_USER_PAGE + twit.User.id);
-            } else {
+            if (user.isAuth) {
               user.setUserPage({});
               twits.setUserTwits([]);
               navigate(PROFILE_PAGE_USER + twit.User.id);
+            } else {
+              user.setUserPage({});
+              twits.setUserTwits([]);
+              navigate(TWITTER_USER_PAGE + twit.User.id);
             }
           }}
         >

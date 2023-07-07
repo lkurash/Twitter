@@ -11,7 +11,6 @@ import { Context } from "..";
 import arrowLeft from "./Img/arrow_left_icon.png";
 import { HOME_PAGE } from "../utils/constans";
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
-import spinner from "../utils/spinner";
 
 const ProfileUserComponent = observer(() => {
   const location = useLocation().pathname;

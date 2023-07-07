@@ -21,6 +21,7 @@ const TwitterPageNotAuthUser = observer(() => {
   const { user } = useContext(Context);
   const { twits } = useContext(Context);
   const { retwits } = useContext(Context);
+  const { usersFollow } = useContext(Context);
   const { id } = useParams();
 
   useEffect(() => {
@@ -31,10 +32,10 @@ const TwitterPageNotAuthUser = observer(() => {
       retwits.setRetwits(retwitsByUser)
     );
     getFollowingUser(id).then((allFollowing) =>
-      user.setuserFollowing(allFollowing)
+      usersFollow.setuserFollowing(allFollowing)
     );
     getFollowersUser(id).then((allFollowers) =>
-      user.setuserFollowers(allFollowers)
+      usersFollow.setuserFollowers(allFollowers)
     );
   });
 

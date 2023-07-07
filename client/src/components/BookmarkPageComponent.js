@@ -13,7 +13,8 @@ const BookmarksPageComponent = observer(() => {
   const { twits } = useContext(Context);
   const { user } = useContext(Context);
   const { favoriteTwits } = useContext(Context);
- const authUserID = getAuthUserID(user);
+  const { usersFollow } = useContext(Context);
+  const authUserID = getAuthUserID(user);
 
   useEffect(() => {
     try {
@@ -23,7 +24,7 @@ const BookmarksPageComponent = observer(() => {
       );
       getAllUsers().then((users) => user.setAllUsers(users));
       getFollowingUser(authUserID).then((allFollowing) =>
-        user.setuserFollowing(allFollowing)
+        usersFollow.setuserFollowing(allFollowing)
       );
     } catch (error) {
       console.log(error.response.data.message);

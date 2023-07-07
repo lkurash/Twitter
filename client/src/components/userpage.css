@@ -450,7 +450,11 @@ h2 {
   cursor: pointer;
 }
 
-.follow-page-main-button-following:hover {
+/* .follow-page-main-button-following:hover {
+  color: rgb(168 42 42);
+} */
+
+.button-following-hover:hover {
   color: rgb(168 42 42);
 }
 
@@ -479,10 +483,6 @@ h2 {
   width: 50px;
   border-radius: 30px;
   background-color: rgba(51, 51, 51, 0.56);
-}
-
-.section-read-main-hidden {
-  margin-top: 20px;
 }
 
 .follow-page-main-user {

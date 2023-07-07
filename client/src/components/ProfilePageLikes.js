@@ -11,18 +11,20 @@ const ProfilePageLikes = observer(() => {
   const userLikesTwits = [];
 
   const getUserLikesTwits = () => {
-    twits.twits.map((twit) => {
-      twit.Likes.forEach((like) => {
-        if (like.UserId === user.userPage.id) {
-          userLikesTwits.push(twit);
-        }
+    if (twits.twits) {
+      twits.twits.map((twit) => {
+        twit.Likes.forEach((like) => {
+          if (like.UserId === user.userPage.id) {
+            userLikesTwits.push(twit);
+          }
+        });
       });
-    });
+    }
   };
 
   getUserLikesTwits();
 
-  if (userLikesTwits.length === 0) return spinner();
+  if (twits.twits.length === 0) return spinner();
 
   return (
     <div className="twits">

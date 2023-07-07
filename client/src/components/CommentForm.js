@@ -3,18 +3,17 @@ import { useContext, useState } from "react";
 import { Context } from "..";
 import { createCommentTwitByUser } from "../http/twitsApi";
 import getUserPhoto from "../utils/getUserPhoto";
-import undefinedUserPhoto from "./Img/user_photo.jpeg";
 import close from "./Img/x_icon.png";
 import ButtonEmoji from "./ButtonEmoji";
 
 const CommentForm = observer(({ twit }) => {
   const { user } = useContext(Context);
-  const { twits } = useContext(Context);
+  const { comments } = useContext(Context);
   const [commentText, setCommentText] = useState("");
 
   const createComment = async (TwitId) => {
     await createCommentTwitByUser(TwitId, commentText);
-    twits.setActiveTwitComment({});
+    comments.setActiveComment({});
   };
   const createTwitDate = (createdAt) => {
     const date = new Date(createdAt).toString().split(" ");
@@ -35,20 +34,13 @@ const CommentForm = observer(({ twit }) => {
       <div className="comment-form">
         <div
           className="button-close"
-          onClick={() => twits.setActiveTwitComment({})}
+          onClick={() => comments.setActiveComment({})}
         >
           <img src={close} alt="close-icon" className="close-icon" />
         </div>
         <div className="comment-form-info">
           <div className="comment-user-info">
-            {twit.User.photo ? (
-              <img
-                alt="User"
-                src={`http://localhost:5500/${twit.User.photo}`}
-              />
-            ) : (
-              <img alt="User" src={undefinedUserPhoto} />
-            )}
+            <img alt="User" src={getUserPhoto(twit.User)} />
             <div className="comment-line" />
             <img src={getUserPhoto(user.user)} alt="User" />
           </div>

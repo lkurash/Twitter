@@ -17,8 +17,13 @@ const TwitForm = observer(({ setShowTwitForm }) => {
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
 
-  const selectedFile = (e) => {
+  const getSelectedImgFile = (e) => {
     setImg(e.target.files[0]);
+  };
+
+  const deleteSelectedImg = () => {
+    setImg("");
+    document.getElementById("input-file").value = "";
   };
 
   const createTwits = async () => {
@@ -68,7 +73,7 @@ const TwitForm = observer(({ setShowTwitForm }) => {
             <div className="wrapper-twit-form-img">
               <div
                 className="twit-form-button-delete"
-                onClick={() => setImg("")}
+                onClick={deleteSelectedImg}
               >
                 <img src={close} alt="close-icon" className="close-icon" />
               </div>
@@ -88,7 +93,9 @@ const TwitForm = observer(({ setShowTwitForm }) => {
                 multiple
                 accept=".jpg, .jpeg, .png"
                 id="input-file"
-                onChange={selectedFile}
+                onChange={(e) => {
+                  getSelectedImgFile(e);
+                }}
               />
               <label htmlFor="input-file" className="twit-form-input-file">
                 <img src={imgFile} alt="File" />

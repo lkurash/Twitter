@@ -37,11 +37,11 @@ const BirthForm = observer(() => {
   let yearsOption = [];
 
   const getYears = () => {
-    yearsOption = Array.from({length: 52}, (_, i) => i + 1970);
+    yearsOption = Array.from({ length: 52 }, (_, i) => i + 1970);
   };
 
   const getDays = (countDay) => {
-    daysOption = Array.from({length: countDay}, (_, i) => i + 1);
+    daysOption = Array.from({ length: countDay }, (_, i) => i + 1);
   };
 
   const isDaysMonth = () => {
@@ -62,9 +62,14 @@ const BirthForm = observer(() => {
   isDaysMonth();
   getYears();
 
-  const checkUserBirthdate = ()=>{
-    if (user.user.birthdate && !userSelectDay && !userSelectMonth && !userSelectYear) {
-      const userBirthdate = user.user.birthdate.split(' ');
+  const checkUserBirthdate = () => {
+    if (
+      user.user.birthdate &&
+      !userSelectDay &&
+      !userSelectMonth &&
+      !userSelectYear
+    ) {
+      const userBirthdate = user.user.birthdate.split(" ");
 
       setUserSelectDay(userBirthdate[0]);
       setUserSelectMonth(userBirthdate[1]);
@@ -72,15 +77,23 @@ const BirthForm = observer(() => {
     }
   };
 
-  useEffect(()=>{
+  const createUserBirthdate = () => {
+    if (userSelectDay && userSelectMonth && userSelectYear) {
+      user.setBirthDate(
+        `${userSelectDay} ${userSelectMonth} ${userSelectYear}`
+      );
+    }
+  };
+
+  createUserBirthdate();
+
+  useEffect(() => {
     checkUserBirthdate();
   });
 
   return (
     <>
-      <h4 className="edit-form-input-birth">
-        Date of birth:
-      </h4>
+      <h4 className="edit-form-input-birth">Date of birth:</h4>
       <select
         name="month"
         value={userSelectMonth}

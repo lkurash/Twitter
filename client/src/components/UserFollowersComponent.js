@@ -7,44 +7,41 @@ import ButtonFollowInFollowComponent from "./ButtonFollowInFollowComponent";
 
 const UserFollowersComponent = observer(() => {
   const { user } = useContext(Context);
+  const { usersFollow } = useContext(Context);
   const { twits } = useContext(Context);
   const navigate = useNavigate();
 
   const userFollowingIds = [];
 
   const getUserFollowingId = () => {
-    user.allUsers.map((allUser) => {
-      allUser.Followings.forEach((followUser) => {
-        if (user.user.id === followUser.followUserId) {
-          userFollowingIds.push(allUser.id);
-        }
-      });
+    usersFollow.userFollowing.forEach((follower) => {
+      userFollowingIds.push(follower.followUserId);
     });
   };
 
   getUserFollowingId();
 
   const checkAndDeleteUserFollowingId = () => {
-    if (userFollowingIds.includes(user.unfollowUser.UserId)) {
+    if (userFollowingIds.includes(usersFollow.unfollowUser.UserId)) {
       userFollowingIds.splice(
-        userFollowingIds.indexOf(user.unfollowUser.UserId),
+        userFollowingIds.indexOf(usersFollow.unfollowUser.UserId),
         1
       );
     }
     if (
-      !userFollowingIds.includes(user.startFollowUser.UserId) &&
-      user.startFollowUser.UserId
+      !userFollowingIds.includes(usersFollow.startFollowUser.UserId) &&
+      usersFollow.startFollowUser.UserId
     ) {
-      userFollowingIds.push(user.startFollowUser.UserId);
+      userFollowingIds.push(usersFollow.startFollowUser.UserId);
     }
   };
 
   checkAndDeleteUserFollowingId();
   return (
     <div>
-      {user.userFollowers.length > 0 ? (
+      {usersFollow.userFollowers.length > 0 ? (
         <ul className="follow-page-main-users">
-          {user.userFollowers.map((profile) => (
+          {usersFollow.userFollowers.map((profile) => (
             <li key={profile.id} className="follow-page-main-user">
               <div
                 className="follow-page-main-user-info"

@@ -4,6 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import CommentsStore from "./store/CommentsStore";
 import FavoriteTwitsStore from "./store/FavoriteTwitsStore";
+import UsersFollowStore from "./store/UsersFollowStore";
 import RetwitsStore from "./store/RetwitStore";
 import TopicsStore from "./store/TopicsStore";
 import TwitsStore from "./store/TwitsStore";
@@ -21,6 +22,7 @@ root.render(
       comments: new CommentsStore(),
       retwits: new RetwitsStore(),
       favoriteTwits: new FavoriteTwitsStore(),
+      usersFollow: new UsersFollowStore(),
     }}
   >
     <App />

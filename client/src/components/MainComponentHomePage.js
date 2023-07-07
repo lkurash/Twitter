@@ -80,7 +80,7 @@ const MainComponentHomePage = observer(() => {
               <TwitForm />
             </div>
             <div className="main-line" />
-            {isLoading ? (
+            {twits.twits.length === 0 || isLoading ? (
               spinner()
             ) : (
               <>

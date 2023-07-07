@@ -17,6 +17,7 @@ import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 
 const ProfileUserInfo = observer(() => {
   const { user } = useContext(Context);
+  const { usersFollow } = useContext(Context);
   const location = useLocation().pathname;
   const navigate = useNavigate();
   const { id } = useParams();
@@ -36,7 +37,7 @@ const ProfileUserInfo = observer(() => {
   };
 
   const checkFollowingUser = () => {
-    user.userFollowers.map((follower) => {
+    usersFollow.userFollowers.map((follower) => {
       if (follower.UserId === user.user.id) {
         followingUser.push(follower);
       }
@@ -47,7 +48,7 @@ const ProfileUserInfo = observer(() => {
     setFollowing(true);
     createFollow(user.userPage.id);
     getFollowingUser(id).then((allFollowing) =>
-      user.setuserFollowing(allFollowing)
+      usersFollow.setuserFollowing(allFollowing)
     );
   };
 
@@ -122,7 +123,7 @@ const ProfileUserInfo = observer(() => {
               }
             }}
           >
-            <span>{user.userFollowing.length}</span> Following
+            <span>{usersFollow.userFollowing.length}</span> Following
           </p>
           <p
             className="profile-panel-count-followers"
@@ -134,7 +135,7 @@ const ProfileUserInfo = observer(() => {
               }
             }}
           >
-            <span>{user.userFollowers.length}</span> Followers
+            <span>{usersFollow.userFollowers.length}</span> Followers
           </p>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}

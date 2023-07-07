@@ -4,6 +4,7 @@ const SignUpFormInput = ({
   setUserInfo,
   activeInput,
   onClick,
+  name,
 }) => {
   return (
     <div
@@ -23,7 +24,11 @@ const SignUpFormInput = ({
         value={value}
         onChange={(e) => setUserInfo(e.target.value)}
       />
-      {activeInput && (
+      {activeInput && name && (
+        <p className="signup-form-input-help">Min length 1 max 20</p>
+      )}
+
+      {activeInput &&  !name &&(
         <p className="signup-form-input-help">Min length 1 max 30</p>
       )}
     </div>

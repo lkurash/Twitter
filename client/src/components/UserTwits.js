@@ -13,18 +13,15 @@ const UserTwits = observer(() => {
 
   const userTwitsAndRetwits = sortTwits(twits.userTwits, retwits.retwits);
 
-  if (userTwitsAndRetwits.length === 0) return spinner();
+  if (twits.userTwits.length === 0) return spinner();
 
   return (
     <div className="twits">
       {userTwitsAndRetwits.map((twit) => (
-        <>
-          <TooltipRetwitOnTwit retwit={twit.Twit} />
-          <Twit
-            key={twit.Twit ? `retwit-${twit.Twit.id}` : `twit-${twit.id}`}
-            twit={twit.Twit ? twit.Twit : twit}
-          />
-        </>
+        <div key={twit.Twit ? `retwit-${twit.Twit.id}` : `twit-${twit.id}`}>
+          {twit.retwit && <TooltipRetwitOnTwit retwit={twit} />}
+          <Twit twit={twit.retwit ? twit.Twit : twit} />
+        </div>
 
         // {!twit.Twit && twit.UserId === user.user.id && (
         //       <ButtonDeleteOnTwit twit={twit} />

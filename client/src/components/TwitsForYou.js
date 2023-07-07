@@ -9,6 +9,7 @@ import sortTwits from "../utils/sortTwits";
 const TwitsForYou = observer(({ showTwitsForYou }) => {
   const { twits } = useContext(Context);
   const { retwits } = useContext(Context);
+
   const allTwitsAndUserRetwits = sortTwits(retwits.retwits, twits.twits);
 
   if (!showTwitsForYou) return null;
@@ -16,13 +17,13 @@ const TwitsForYou = observer(({ showTwitsForYou }) => {
   return (
     <div className="twits">
       {allTwitsAndUserRetwits.map((twit) => (
-        <>
-          <TooltipRetwitOnTwit retwit={twit.Twi} />
+        <div key={twit.Twit ? `retwet-${twit.Twit.id}` : `twit-${twit.id}`}>
+          {twit.retwit && <TooltipRetwitOnTwit retwit={twit} />}
           <Twit
             key={twit.Twit ? `retwet-${twit.Twit.id}` : `twit-${twit.id}`}
             twit={twit.Twit ? twit.Twit : twit}
           />
-        </>
+        </div>
       ))}
       {allTwitsAndUserRetwits.length === 0 && (
         <p className="empty-twits">No twits</p>

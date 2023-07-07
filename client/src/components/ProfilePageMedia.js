@@ -10,16 +10,18 @@ const ProfilePageMedia = observer(() => {
   const userTwitsWithMedia = [];
 
   const getUserTwitsWithMedia = () => {
-    twits.userTwits.map((twit) => {
-      if (twit.img) {
-        userTwitsWithMedia.push(twit);
-      }
-    });
+    if (twits.userTwits) {
+      twits.userTwits.map((twit) => {
+        if (twit.img) {
+          userTwitsWithMedia.push(twit);
+        }
+      });
+    }
   };
 
   getUserTwitsWithMedia();
 
-  if (userTwitsWithMedia.length === 0) return spinner();
+  if (twits.userTwits.length === 0) return spinner();
 
   return (
     <div className="twits">

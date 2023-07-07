@@ -4,20 +4,29 @@ class FavoriteTwitsStore {
   constructor() {
     this._favoriteTwits = [];
     this._hoverTwitBookmark = {};
+    this._newTwitBookmark = {};
     this._notActiveFavoriteTwit = {};
     makeAutoObservable(this);
   }
 
   setFavoriteTwits(twit) {
-    this._favoriteTwits = twit;
+    if (twit.length !== 0) {
+      this._favoriteTwits = twit;
+    } else {
+      this._favoriteTwits = false;
+    }
   }
 
   setHoverTwitBookmark(twit) {
     this._hoverTwitBookmark = twit;
   }
 
-  sethoverTwitRetwit(twit) {
-    this._hoverTwitRetwit = twit;
+  setNewTwitBookmark(twit) {
+    this._newTwitBookmark = twit;
+  }
+
+  setNotActiveFavoriteTwit(twit) {
+    this._notActiveFavoriteTwit = twit;
   }
 
   get favoriteTwits() {
@@ -26,6 +35,10 @@ class FavoriteTwitsStore {
 
   get hoverTwitBookmark() {
     return this._hoverTwitBookmark;
+  }
+
+  get notActiveFavoriteTwit() {
+    return this._notActiveFavoriteTwit;
   }
 }
 export default FavoriteTwitsStore;

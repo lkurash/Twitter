@@ -6,7 +6,11 @@ class TopicsStore {
     makeAutoObservable(this);
   }
   setTopics(topics) {
-    this._topics = topics;
+    if (topics.length !== 0) {
+       this._topics = topics;
+    } else {
+      this._topics = false;
+    }
   }
   get topics() {
     return this._topics;

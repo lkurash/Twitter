@@ -38,9 +38,11 @@ const MainContentExplorePageAllTwits = observer(() => {
             spinner()
           ) : (
             <div className="twits">
-              {twits.twits.map((twit) => (
-                <Twit twit={twit} key={twit.id} />
-              ))}
+              {twits.twits ? (
+                twits.twits.map((twit) => <Twit twit={twit} key={twit.id} />)
+              ) : (
+                <p className="empty-twits">No twits</p>
+              )}
             </div>
           )}
         </div>

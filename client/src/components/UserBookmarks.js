@@ -28,10 +28,11 @@ const UserBookmarks = observer(() => {
         </div>
       </div>
       <div className="twits">
-        {favoriteTwits.favoriteTwits.map((bookmark) => (
-          <Twit twit={bookmark.Twit} key={bookmark.Twit.id} />
-        ))}
-        {favoriteTwits.favoriteTwits.length === 0 && (
+        {favoriteTwits.favoriteTwits ? (
+          favoriteTwits.favoriteTwits.map((bookmark) => (
+            <Twit twit={bookmark.Twit} key={bookmark.Twit.id} />
+          ))
+        ) : (
           <p className="empty-twits">No twits</p>
         )}
       </div>
