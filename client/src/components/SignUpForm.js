@@ -19,8 +19,8 @@ function SignUpForm({ getInfoUser }) {
   const [password, setPassword] = useState("");
   const divRef = useRef(null);
 
-  if (userName.length > 30) {
-    setUserName(userName.slice(0, 30));
+  if (userName.length > 20) {
+    setUserName(userName.slice(0, 20));
   }
   if (email.length > 30) {
     setEmail(email.slice(0, 30));
@@ -56,6 +56,7 @@ function SignUpForm({ getInfoUser }) {
                 setActivedivPassword(false);
                 setActivedivEmail(false);
               }}
+              name
             />
             <SignUpFormInput
               placeholder={"Email"}

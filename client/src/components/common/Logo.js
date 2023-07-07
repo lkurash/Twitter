@@ -12,7 +12,7 @@ const Logo = observer((props) => {
 
   return (
     <div>
-      {user.user.id ? (
+      {user.isAuth ? (
         <div
           className={props.class}
           onClick={() => {

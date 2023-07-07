@@ -14,15 +14,16 @@ import SidebarComponent from "./SidebarComponent";
 
 const FollowPageComponent = observer(() => {
   const { user } = useContext(Context);
+  const { usersFollow } = useContext(Context);
   const { id } = useParams();
 
   useEffect(() => {
     try {
       getFollowingUser(id).then((allFollowing) =>
-        user.setuserFollowing(allFollowing)
+        usersFollow.setuserFollowing(allFollowing)
       );
       getFollowersUser(id).then((allFollowers) =>
-        user.setuserFollowers(allFollowers)
+        usersFollow.setuserFollowers(allFollowers)
       );
       getAllUsers().then((users) => user.setAllUsers(users));
       getUserById(id).then((userById) => user.setUserPage(userById));

@@ -21,6 +21,7 @@ import SidebarComponent from "./SidebarComponent";
 const UserPageComponent = observer(() => {
   const { user } = useContext(Context);
   const { twits } = useContext(Context);
+  const { usersFollow } = useContext(Context);
   const { retwits } = useContext(Context);
   const ref = useRef();
   const { id } = useParams();
@@ -39,10 +40,10 @@ const UserPageComponent = observer(() => {
         retwits.setRetwits(retwitsByUser)
       );
       getFollowingUser(id).then((allFollowing) =>
-        user.setuserFollowing(allFollowing)
+        usersFollow.setuserFollowing(allFollowing)
       );
       getFollowersUser(id).then((allFollowers) =>
-        user.setuserFollowers(allFollowers)
+        usersFollow.setuserFollowers(allFollowers)
       );
     } catch (error) {
       console.log(error.response.data.message);

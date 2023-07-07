@@ -21,8 +21,9 @@ const HomePageComponent = observer(() => {
   const { twits } = useContext(Context);
   const { user } = useContext(Context);
   const { retwits } = useContext(Context);
+  const { usersFollow } = useContext(Context);
   const ref = useRef();
-  const authUserID = getAuthUserID(user)
+  const authUserID = getAuthUserID(user);
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
@@ -34,16 +35,12 @@ const HomePageComponent = observer(() => {
     );
     getAllUsers().then((users) => user.setAllUsers(users));
     getFollowingUser(authUserID).then((allFollowing) =>
-      user.setuserFollowing(allFollowing)
+      usersFollow.setuserFollowing(allFollowing)
     );
-    getTwitsByUser(authUserID).then((twitsById) => twits.setUserTwits(twitsById));
-    getAllTwits().then((alltwits) => {
-      if (alltwits) {
-        twits.setTwits(alltwits);
-      } else {
-        twits.setTwits("No twits");
-      }
-    });
+    getTwitsByUser(authUserID).then((twitsById) =>
+      twits.setUserTwits(twitsById)
+    );
+    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
   });
 
   return (

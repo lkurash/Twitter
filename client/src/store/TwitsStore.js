@@ -7,21 +7,24 @@ class TwitsStore {
     this._userTwits = [];
     this._likedTwit = {};
     this._hoverTwitLike = {};
-    this._hoverTwitComment = {};
-    this._activeTwitComment = {};
-    this._hoverTwitBookmark = {};
-    this._favoriteTwit = {};
-    this._deleteFavoriteTwit = {};
     this._dislikeTwit = {};
     makeAutoObservable(this);
   }
 
-  setTwits(twit) {
-    this._twits = twit;
+  setTwits(twits) {
+    if (twits.length !== 0) {
+      this._twits = twits;
+    } else {
+      this._twits = false;
+    }
   }
 
   setUserTwits(twits) {
-    this._userTwits = twits;
+    if (twits.length !== 0) {
+      this._userTwits = twits;
+    } else {
+      this._userTwits = false;
+    }
   }
 
   setLikedTwit(twit) {
@@ -32,30 +35,10 @@ class TwitsStore {
     this._hoverTwitLike = twit;
   }
 
-  sethoverTwitComment(twit) {
-    this._hoverTwitComment = twit;
-  }
-
-  setActiveTwitComment(twit) {
-    this._activeTwitComment = twit;
-  }
-
-  sethoverTwitBookmark(twit) {
-    this._hoverTwitBookmark = twit;
-  }
-
   setDislikeTwit(twit) {
     this._dislikeTwit = twit;
   }
-
-  setFavoriteTwit(twit) {
-    this._favoriteTwit = twit;
-  }
-
-  setDeleteFavoriteTwit(twit) {
-    this._deleteFavoriteTwit = twit;
-  }
-
+  
   setTwitsWhoReading(bool) {
     this._twitsWhoReading = bool;
   }
@@ -76,28 +59,8 @@ class TwitsStore {
     return this._hoverTwitLike;
   }
 
-  get hoverTwitComment() {
-    return this._hoverTwitComment;
-  }
-
-  get hoverTwitBookmark() {
-    return this._hoverTwitBookmark;
-  }
-
   get dislikeTwit() {
     return this._dislikeTwit;
-  }
-
-  get favoriteTwit() {
-    return this._favoriteTwit;
-  }
-
-  get deleteFavoriteTwit() {
-    return this._deleteFavoriteTwit;
-  }
-
-  get activeTwitComment() {
-    return this._activeTwitComment;
   }
 
   get twitsWhoReading() {

@@ -9,15 +9,15 @@ import CommentForm from "./CommentForm";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 
 const ButtonCommentOnTwit = observer((props) => {
-  const { twits } = useContext(Context);
+  const { comments } = useContext(Context);
   const { user } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
   const imgButtonComment = (twit) => {
-    if (twit.id === twits.hoverTwitComment.id) {
+    if (twit.id === comments.hoverButtonComment.id) {
       return activeComment;
     }
-    if (twit.id === twits.activeTwitComment.id) {
+    if (twit.id === comments.activeComment.id) {
       return activeComment;
     }
     return notactiveComment;
@@ -39,15 +39,15 @@ const ButtonCommentOnTwit = observer((props) => {
         key={props.twit.id}
         onClick={() => {
           if (user.isAuth) {
-            twits.setActiveTwitComment(props.twit);
+            comments.setActiveComment(props.twit);
           } else {
             setTooltipUserNotAuth(true);
           }
         }}
         onMouseEnter={() => {
-          twits.sethoverTwitComment(props.twit);
+          comments.setHoverButtonComment(props.twit);
         }}
-        onMouseLeave={() => twits.sethoverTwitComment({})}
+        onMouseLeave={() => comments.setHoverButtonComment({})}
       >
         <img
           src={imgButtonComment(props.twit)}
@@ -56,7 +56,7 @@ const ButtonCommentOnTwit = observer((props) => {
         />
       </div>
       {props.twit.Comments.length > 0 && <p>{props.twit.Comments.length}</p>}
-      {twits.activeTwitComment.id === props.twit.id && (
+      {comments.activeComment.id === props.twit.id && (
         <CommentForm twit={props.twit} />
       )}
     </div>
