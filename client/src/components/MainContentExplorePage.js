@@ -20,7 +20,6 @@ const MainContentExplorePage = observer(() => {
       <div className="main">
         <MainSearchBlock
           className="main-search-form"
-          page={TWITTER_USER_PAGE}
         />
         {isLoading ? (
           spinner()

@@ -12,32 +12,6 @@ const UserFollowingComponent = observer(() => {
   const { twits } = useContext(Context);
   const navigate = useNavigate();
 
-  const userFollowingIds = [];
-
-  const getUserFollowingId = () => {
-    usersFollow.userFollowing.forEach((follower) => {
-      userFollowingIds.push(follower.followUserId);
-    });
-  };
-
-  getUserFollowingId();
-
-  const checkAndDeleteUserFollowingId = () => {
-    if (userFollowingIds.includes(usersFollow.unfollowUser.followUserId)) {
-      userFollowingIds.splice(
-        userFollowingIds.indexOf(usersFollow.unfollowUser.followUserId),
-        1
-      );
-    }
-    if (
-      !userFollowingIds.includes(usersFollow.startFollowUser.followUserId) &&
-      usersFollow.startFollowUser.followUserId
-    ) {
-      userFollowingIds.push(usersFollow.startFollowUser.followUserId);
-    }
-  };
-  checkAndDeleteUserFollowingId();
-
   return (
     <div>
       {usersFollow.userFollowing.length > 0 ? (
@@ -60,7 +34,6 @@ const UserFollowingComponent = observer(() => {
               <ButtonFollowInFollowComponent
                 profile={profile}
                 userId={profile.followUserId}
-                userFollowingIds={userFollowingIds}
               />
             </li>
           ))}

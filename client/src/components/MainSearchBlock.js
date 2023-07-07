@@ -2,10 +2,7 @@ import { useState } from "react";
 import { observer } from "mobx-react-lite";
 import Logo from "./common/Logo";
 import logo from "./Img/logo_icon.png";
-import setting from "./Img/settings_icon.png";
 import searchIcon from "./Img/zoom__icon.png";
-import ButtonSettings from "./common/ButtonSettings";
-import ButtonDotMenu from "./common/ButtonDotMenu";
 import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 
 const MainSearchBlock = observer((props) => {
@@ -43,7 +40,6 @@ const MainSearchBlock = observer((props) => {
             userName={userName}
             showListFoundUsers={showListFoundUsers}
             onClose={onClose}
-            page={props.page}
           />
         </div>
       ) : (

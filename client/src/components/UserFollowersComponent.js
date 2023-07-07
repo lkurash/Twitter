@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 import { PROFILE_PAGE_USER } from "../utils/constans";
+import getAuthUserID from "../utils/getAuthUserID";
 import ButtonFollowInFollowComponent from "./ButtonFollowInFollowComponent";
 
 const UserFollowersComponent = observer(() => {
@@ -10,33 +11,8 @@ const UserFollowersComponent = observer(() => {
   const { usersFollow } = useContext(Context);
   const { twits } = useContext(Context);
   const navigate = useNavigate();
+  const authUserID = getAuthUserID(user);
 
-  const userFollowingIds = [];
-
-  const getUserFollowingId = () => {
-    usersFollow.userFollowing.forEach((follower) => {
-      userFollowingIds.push(follower.followUserId);
-    });
-  };
-
-  getUserFollowingId();
-
-  const checkAndDeleteUserFollowingId = () => {
-    if (userFollowingIds.includes(usersFollow.unfollowUser.UserId)) {
-      userFollowingIds.splice(
-        userFollowingIds.indexOf(usersFollow.unfollowUser.UserId),
-        1
-      );
-    }
-    if (
-      !userFollowingIds.includes(usersFollow.startFollowUser.UserId) &&
-      usersFollow.startFollowUser.UserId
-    ) {
-      userFollowingIds.push(usersFollow.startFollowUser.UserId);
-    }
-  };
-
-  checkAndDeleteUserFollowingId();
   return (
     <div>
       {usersFollow.userFollowers.length > 0 ? (
@@ -59,11 +35,12 @@ const UserFollowersComponent = observer(() => {
                   {profile.User.user_name}
                 </p>
               </div>
-              <ButtonFollowInFollowComponent
-                profile={profile}
-                userId={profile.User.id}
-                userFollowingIds={userFollowingIds}
-              />
+              {profile.User.id !== authUserID && (
+                <ButtonFollowInFollowComponent
+                  profile={profile}
+                  userId={profile.UserId}
+                />
+              )}
             </li>
           ))}
         </ul>
