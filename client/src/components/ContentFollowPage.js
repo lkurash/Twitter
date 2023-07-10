@@ -12,6 +12,14 @@ const ContentFollowPage = observer(() => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
 
+  const getClassNameButton = (page) => {
+    if (location === `${page}${user.userPage.id}`) {
+      return "follow-page-main-button-onpanel follow-page-active-button-panel";
+    } else {
+      return "follow-page-main-button-onpanel";
+    }
+  };
+
   return (
     <div>
       <div className="follow-page-header">
@@ -31,47 +39,27 @@ const ContentFollowPage = observer(() => {
         </div>
 
         <div className="user-main-content-button-panel">
-          {location === `/profile/followers/${user.userPage.id}` ? (
-            <button
-              className="follow-page-main-button-onpanel follow-page-active-button-panel"
-              type="button"
-              onClick={() => navigate(FOLLOWER_PAGE + user.userPage.id)}
-            >
-              <span>Followers</span>
-            </button>
-          ) : (
-            <button
-              className="follow-page-main-button-onpanel"
-              type="button"
-              onClick={() => navigate(FOLLOWER_PAGE + user.userPage.id)}
-            >
-              <span>Followers</span>
-            </button>
-          )}
+          <button
+            className={getClassNameButton(FOLLOWER_PAGE)}
+            type="button"
+            onClick={() => navigate(FOLLOWER_PAGE + user.userPage.id)}
+          >
+            <span>Followers</span>
+          </button>
 
-          {location === `/profile/following/${user.userPage.id}` ? (
-            <button
-              className="follow-page-main-button-onpanel follow-page-active-button-panel"
-              type="button"
-              onClick={() => navigate(FOLLOWING_PAGE + user.userPage.id)}
-            >
-              <span>Following</span>
-            </button>
-          ) : (
-            <button
-              className="follow-page-main-button-onpanel"
-              type="button"
-              onClick={() => navigate(FOLLOWING_PAGE + user.userPage.id)}
-            >
-              <span>Following</span>
-            </button>
-          )}
+          <button
+            className={getClassNameButton(FOLLOWING_PAGE)}
+            type="button"
+            onClick={() => navigate(FOLLOWING_PAGE + user.userPage.id)}
+          >
+            <span>Following</span>
+          </button>
         </div>
       </div>
-      {location === `/profile/following/${user.userPage.id}` && (
+      {location === `${FOLLOWING_PAGE}${user.userPage.id}` && (
         <UserFollowingComponent />
       )}
-      {location === `/profile/followers/${user.userPage.id}` && (
+      {location === `${FOLLOWER_PAGE}${user.userPage.id}` && (
         <UserFollowersComponent />
       )}
     </div>

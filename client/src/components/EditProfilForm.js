@@ -47,13 +47,13 @@ const EditProfileForm = observer(() => {
     formData.append("background", background);
     formData.append("name", name);
     formData.append("birthdate", user.birthDate);
-    formData.append("web_site_url", textWebSiteUrl);
-    formData.append("about", about);
+    formData.append("web_site_url", textWebSiteUrl.trim());
+    formData.append("about", about.trim());
 
     await updateUserProfile(formData);
     navigate(PROFILE_PAGE_USER + user.user.id);
   };
-  const onClose = ()=>{
+  const onClose = () => {
     setActivInputName(false);
     setActivInputAbout(false);
     setActivInputSite(false);
@@ -64,7 +64,7 @@ const EditProfileForm = observer(() => {
     <div className="edit-profile-form wrapper-border">
       <header className="edit-profile-form-header">
         <div className="edit-profile-form-header-title">
-          <ButtonClose nav = {-1}/>
+          <ButtonClose nav={-1} />
           <h4 className="edit-profile-title">Edit Profile</h4>
         </div>
         <button
@@ -115,7 +115,9 @@ const EditProfileForm = observer(() => {
         </div>
         <div className="edit-form-inputs">
           <div
-            className= {activInputName ? "edit-form-input active" : "edit-form-input"}
+            className={
+              activInputName ? "edit-form-input active" : "edit-form-input"
+            }
             ref={divRef}
             onClick={() => {
               setActivInputName(true);
@@ -125,12 +127,15 @@ const EditProfileForm = observer(() => {
           >
             <h4>Name</h4>
             <input
-              value={name || user.user.user_name || ''}
-              onChange={(e) => setName(e.target.value)}
+              value={name || user.user.user_name || ""}
+              onChange={(e) => setName(e.target.value.trim())}
             />
           </div>
           <div
-            className= {activInputAbout ? "edit-form-input about active" : "edit-form-input about"
+            className={
+              activInputAbout
+                ? "edit-form-input about active"
+                : "edit-form-input about"
             }
             ref={divRef}
             onClick={() => {
@@ -141,12 +146,14 @@ const EditProfileForm = observer(() => {
           >
             <h4>About me</h4>
             <textarea
-              value={about || user.user.about || ''}
+              value={about || user.user.about || ""}
               onChange={(e) => setAbout(e.target.value)}
             />
           </div>
           <div
-            className= {activInputSite ? "edit-form-input active" : "edit-form-input"}
+            className={
+              activInputSite ? "edit-form-input active" : "edit-form-input"
+            }
             ref={divRef}
             onClick={() => {
               setActivInputName(false);
@@ -156,7 +163,7 @@ const EditProfileForm = observer(() => {
           >
             <h4>Web site</h4>
             <input
-              value={textWebSiteUrl || user.user.web_site_url || "" }
+              value={textWebSiteUrl || user.user.web_site_url || ""}
               onChange={(e) => setTextWebSiteUrl(e.target.value)}
             />
           </div>

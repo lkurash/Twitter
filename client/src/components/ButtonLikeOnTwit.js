@@ -26,9 +26,11 @@ const ButtonLikeOnTwit = observer((props) => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
     if (user.isAuth) {
-      const authUserID = getAuthUserID(user)
+      const authUserID = getAuthUserID(user);
 
-      getTwitsByUser(authUserID).then((twitsById) => twits.setUserTwits(twitsById));
+      getTwitsByUser(authUserID).then((twitsById) =>
+        twits.setUserTwits(twitsById)
+      );
     } else {
       getTwitsByUser(userPage.id).then((twitsById) =>
         twits.setUserTwits(twitsById)

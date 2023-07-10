@@ -1,33 +1,29 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "..";
-import { createFollow, getFollowingUser } from "../http/userApi";
 import birthdateIcon from "./Img/birthday_icon.png";
 import webSiteIcon from "./Img/url_web_icon.png";
 import registrationIcon from "./Img/month_icon.png";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
-import {
-  EDIT_PROFILE_PAGE,
-  FOLLOWER_PAGE,
-  FOLLOWING_PAGE,
-} from "../utils/constans";
+import { FOLLOWER_PAGE, FOLLOWING_PAGE } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
+import ButtonEditProfile from "./ButtonEditProfile";
+import ButtonFollowProfile from "./ButtonFollowProfile";
 
 const ProfileUserInfo = observer(() => {
   const { user } = useContext(Context);
   const { usersFollow } = useContext(Context);
-  const location = useLocation().pathname;
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [following, setFollowing] = useState(false);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
-  const followingUser = [];
 
-  const date = new Date(user.userPage.createdAt).toString().split(" ");
-  const registrationDate = `${date[1]}, ${date[3]}`;
+  const getRegistrationDate = new Date(user.userPage.createdAt)
+    .toString()
+    .split(" ");
+  const registrationDate = `${getRegistrationDate[1]}, ${getRegistrationDate[3]}`;
 
   const getUserBackground = () => {
     if (user.userPage.background) {
@@ -36,27 +32,9 @@ const ProfileUserInfo = observer(() => {
     return undefinedUserPhoto;
   };
 
-  const checkFollowingUser = () => {
-    usersFollow.userFollowers.map((follower) => {
-      if (follower.UserId === user.user.id) {
-        followingUser.push(follower);
-      }
-    });
-  };
-
-  const createFollowing = () => {
-    setFollowing(true);
-    createFollow(user.userPage.id);
-    getFollowingUser(id).then((allFollowing) =>
-      usersFollow.setuserFollowing(allFollowing)
-    );
-  };
-
   const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);
   };
-
-  checkFollowingUser();
 
   return (
     <>
@@ -69,38 +47,10 @@ const ProfileUserInfo = observer(() => {
             <img src={getUserPhoto(user.userPage)} alt="User" />
           </div>
 
-          {location !== `/twitter/profile/${user.userPage.id}` && (
+          {user.isAuth && (
             <>
-              {location === `/profile/${user.user.id}` ||
-              location === `/profile/answers/${user.user.id}` ||
-              location === `/profile/media/${user.user.id}` ||
-              location === `/profile/likes/${user.user.id}` ? (
-                <button
-                  type="button"
-                  className="button-edit-profile"
-                  onClick={() => navigate(EDIT_PROFILE_PAGE + user.user.id)}
-                >
-                  <span>Edit Profile</span>
-                </button>
-              ) : (
-                <>
-                  {followingUser.length > 0 || following ? (
-                    <button type="button" className="button-edit-profile">
-                      <span>Following</span>
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      className="button-edit-profile"
-                      onClick={() => {
-                        createFollowing();
-                      }}
-                    >
-                      <span>Follow</span>
-                    </button>
-                  )}
-                </>
-              )}
+              <ButtonEditProfile user={user} />
+              <ButtonFollowProfile user={user} usersFollow={usersFollow} />
             </>
           )}
         </div>
@@ -116,10 +66,10 @@ const ProfileUserInfo = observer(() => {
         <div className="profile-panel-followers">
           <p
             onClick={() => {
-              if (location === "/twitter/profile/" + id) {
-                setTooltipUserNotAuth(true);
-              } else {
+              if (user.isAuth) {
                 navigate(FOLLOWING_PAGE + id);
+              } else {
+                setTooltipUserNotAuth(true);
               }
             }}
           >
@@ -128,10 +78,10 @@ const ProfileUserInfo = observer(() => {
           <p
             className="profile-panel-count-followers"
             onClick={() => {
-              if (location === "/twitter/profile/" + id) {
-                setTooltipUserNotAuth(true);
-              } else {
+              if (user.isAuth) {
                 navigate(FOLLOWER_PAGE + id);
+              } else {
+                setTooltipUserNotAuth(true);
               }
             }}
           >
@@ -144,15 +94,13 @@ const ProfileUserInfo = observer(() => {
           />
         </div>
         <div className="profile-panel-info-user">
-          {user.userPage.web_site_url ? (
+          {user.userPage.web_site_url && (
             <div className="profile-panel-info-user-web-site">
               <img src={webSiteIcon} className="info-icon" alt="Info" />
               <a href={`https://${user.userPage.web_site_url}`}>
                 {user.userPage.web_site_url}
               </a>
             </div>
-          ) : (
-            <div />
           )}
           <div className="profile-panel-info-user-birthdate">
             <img src={birthdateIcon} className="info-icon" alt="Info" />

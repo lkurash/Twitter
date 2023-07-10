@@ -6,8 +6,6 @@ import retwitIcon from "./Img/notactive_retweet_icon.png";
 const TooltipRetwitOnTwit = ({ retwit }) => {
   const { user } = useContext(Context);
 
-  console.log(retwit);
-
   return (
     <>
       {retwit && (

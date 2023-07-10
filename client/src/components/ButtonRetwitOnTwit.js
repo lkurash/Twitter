@@ -26,9 +26,11 @@ const ButtonRetwitOnTwit = observer((props) => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
     if (user.isAuth) {
-      const authUserID =getAuthUserID(user)
+      const authUserID = getAuthUserID(user);
 
-      getTwitsByUser(authUserID).then((twitsById) => twits.setUserTwits(twitsById));
+      getTwitsByUser(authUserID).then((twitsById) =>
+        twits.setUserTwits(twitsById)
+      );
       getRetwitsByUser(authUserID).then((retwitsByUser) =>
         retwits.setRetwits(retwitsByUser)
       );
@@ -80,6 +82,7 @@ const ButtonRetwitOnTwit = observer((props) => {
   };
 
   getUserRetwitTwitId();
+
   return (
     <div className="user-twit-panel-retwit">
       {!userRetwitTwitId.includes(props.twit.id) ? (

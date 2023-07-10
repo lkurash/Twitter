@@ -22,13 +22,13 @@ const SignUpFormInput = ({
         placeholder={activeInput ? "" : placeholder}
         type="text"
         value={value}
-        onChange={(e) => setUserInfo(e.target.value)}
+        onChange={(e) => setUserInfo(e.target.value.trim())}
       />
       {activeInput && name && (
         <p className="signup-form-input-help">Min length 1 max 20</p>
       )}
 
-      {activeInput &&  !name &&(
+      {activeInput && !name && (
         <p className="signup-form-input-help">Min length 1 max 30</p>
       )}
     </div>
