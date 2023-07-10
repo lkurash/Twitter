@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 import { createFollow, getAllUsers, getFollowingUser } from "../http/userApi";
 import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
+import getAuthUserID from "../utils/getAuthUserID";
 import getUserPhoto from "../utils/getUserPhoto";
 import spinner from "../utils/spinner";
 
@@ -12,6 +13,7 @@ const ListWhoReadUserHomePage = observer(() => {
   const { usersFollow } = useContext(Context);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const authUserID = getAuthUserID(user);
   const whoReadingList = [];
   const whoNotReadingList = [];
 
@@ -34,10 +36,10 @@ const ListWhoReadUserHomePage = observer(() => {
   };
 
   const chekFollowingUser = () => {
-    user.allUsers.map((allUser) => {
-      whoReadingList.push(user.user.id);
+    user.allUsers.forEach((allUser) => {
+      whoReadingList.push(authUserID);
       allUser.Followings.forEach((followUser) => {
-        if (user.user.id === followUser.UserId) {
+        if (authUserID === followUser.UserId) {
           whoReadingList.push(followUser.followUserId);
         }
       });
@@ -45,7 +47,7 @@ const ListWhoReadUserHomePage = observer(() => {
   };
 
   const createNotReadingList = () => {
-    user.allUsers.map((allUser) => {
+    user.allUsers.forEach((allUser) => {
       if (!whoReadingList.includes(allUser.id)) {
         whoNotReadingList.push(allUser);
       }
