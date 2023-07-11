@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "..";
 import sortTwits from "../utils/sortTwits";
-import TooltipRetwitOnTwit from "./TolltipRetwitOnTwit";
+import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import Twit from "./Twit";
 
 const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {

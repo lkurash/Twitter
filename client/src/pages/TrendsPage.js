@@ -4,14 +4,14 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import MenuComponent from "../components/MenuComponent";
-import SidebarComponent from "../components/SidebarComponent";
+import SidebarContent from "../components/SidebarContent";
 import FooterComponent from "../components/FooterComponent";
 import { Context } from "..";
 import { getAllTwits } from "../http/twitsApi";
 import TwitsForTrends from "../components/TwitsForTrends";
 import searchIcon from "../components/Img/zoom__icon.png";
 import arrowLeft from "../components/Img/arrow_left_icon.png";
-import ButtonDotMenu from "../components/common/ButtonDotMenu";
+import ButtonDotMenu from "../components/buttons/ButtonDotMenu";
 import FooterMobileComponent from "../components/FooterMobileComponent";
 
 const TrendsPage = observer(() => {
@@ -57,7 +57,7 @@ const TrendsPage = observer(() => {
             </div>
           </div>
         </main>
-        <SidebarComponent />
+        <SidebarContent />
       </div>
       {location === "/" ? <FooterComponent /> : <FooterMobileComponent />}
     </div>

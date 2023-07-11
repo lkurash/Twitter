@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { TRENDS_PAGE } from "../utils/constans";
-import ButtonDotMenu from "./common/ButtonDotMenu";
+import ButtonDotMenu from "./buttons/ButtonDotMenu";
 
 function Trends({ topic }) {
   const navigate = useNavigate();

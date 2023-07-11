@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { Context } from "..";
 import FooterComponent from "../components/FooterComponent";
 import MenuComponent from "../components/MenuComponent";
-import SidebarComponent from "../components/SidebarComponent";
+import SidebarContent from "../components/SidebarContent";
 import TwitterNotAuthProfileUser from "../components/TwitterNotAuthProfileUser";
 import {
   getAllTwits,
@@ -48,7 +48,7 @@ const TwitterPageNotAuthUser = observer(() => {
             <TwitterNotAuthProfileUser />
           </main>
         </div>
-        <SidebarComponent />
+        <SidebarContent />
       </div>
       <FooterComponent />
     </div>

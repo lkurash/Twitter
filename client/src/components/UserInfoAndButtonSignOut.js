@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "..";
 import dotMenu from "./Img/more_dots_icon.png";
-import ButtonSignOut from "./ButtonSignOut";
+import ButtonSignOut from "./buttons/ButtonSignOut";
 import getUserPhoto from "../utils/getUserPhoto";
 
 const UserInfoAndButtonSignOut = observer(() => {

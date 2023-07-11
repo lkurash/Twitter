@@ -2,9 +2,9 @@ import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import close from "../components/Img/x_icon.png";
-import "../components/loginAndRegistretionForm.css";
+import "../components/forms/loginAndRegistretionForm.css";
 import { HOME_PAGE, TWITTER_PAGE } from "../utils/constans";
-import SignUpForm from "../components/SignUpForm";
+import SignUpForm from "../components/forms/SignUpForm";
 import { Context } from "..";
 import { getUserInfo, registration } from "../http/userApi";
 
@@ -12,41 +12,30 @@ const SignUpPage = observer(() => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
   const [checkUserInfo, setCheckUserInfo] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    userName: "",
-    userEmail: "",
-    userPassword: "",
-    userBirthdate: "",
-  });
+  const [registrationUserInfo, setRegistrationUserInfo] = useState({});
 
-  const getInfoUser = (userName, email, birthdate, password) => {
+  const getRegistrationUserInfo = (userName, email, birthdate, password) => {
     if ((userName && email && birthdate, password)) {
       setCheckUserInfo(true);
-      setUserInfo({
+      setRegistrationUserInfo({
         userName,
-        userEmail: email,
-        userPassword: password,
-        userBirthdate: user.birthDate,
+        email,
+        password,
+        birthdate,
       });
     }
   };
   const signUp = async () => {
-    if (
-      userInfo.userName &&
-      userInfo.userEmail &&
-      userInfo.userBirthdate &&
-      userInfo.userPassword
-    ) {
-      const userRegistration = await registration(
-        userInfo.userName,
-        userInfo.userEmail,
-        userInfo.userPassword,
-        userInfo.userBirthdate
+    if (checkUserInfo) {
+      await registration(
+        registrationUserInfo.userName,
+        registrationUserInfo.email,
+        registrationUserInfo.password,
+        registrationUserInfo.birthdate
       );
-      const newUser = await getUserInfo();
 
-      user.setUser(newUser);
-
+      const getNewUserInfo = await getUserInfo();
+      user.setUser(getNewUserInfo);
       user.setAuth(true);
       navigate(HOME_PAGE);
     }
@@ -55,7 +44,7 @@ const SignUpPage = observer(() => {
   return (
     <div>
       {!checkUserInfo ? (
-        <SignUpForm getInfoUser={getInfoUser}/>
+        <SignUpForm getRegistrationUserInfo={getRegistrationUserInfo} />
       ) : (
         <div className="body">
           <div className="form-wrapper wrapper-border">
@@ -71,18 +60,20 @@ const SignUpPage = observer(() => {
               <h2>Create your account</h2>
               <div className="signup-form-input">
                 <label className="signup-user-info">Name</label>
-                <label className="signup-user-name">{userInfo.userName}</label>
+                <label className="signup-user-name">
+                  {registrationUserInfo.userName}
+                </label>
               </div>
               <div className="signup-form-input">
                 <label className="signup-user-info">Email</label>
                 <label className="signup-user-email">
-                  {userInfo.userEmail}
+                  {registrationUserInfo.email}
                 </label>
               </div>
               <div className="signup-form-input">
                 <label className="signup-user-info">Date of birth</label>
                 <label className="signup-user-birthdate">
-                  {userInfo.userBirthdate}
+                  {registrationUserInfo.birthdate}
                 </label>
               </div>
               <button

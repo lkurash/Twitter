@@ -1,7 +1,7 @@
-import ButtonLikeOnTwit from "./ButtonLikeOnTwit";
-import ButtonRetwitOnTwit from "./ButtonRetwitOnTwit";
-import ButtonCommentOnTwit from "./ButtonCommentOnTwit";
-import ButtonBookmarkOnTwit from "./ButtonBookmarkOnTwit";
+import ButtonLikeOnTwit from "./buttons/ButtonLikeOnTwit";
+import ButtonRetwitOnTwit from "./buttons/ButtonRetwitOnTwit";
+import ButtonCommentOnTwit from "./buttons/ButtonCommentOnTwit";
+import ButtonBookmarkOnTwit from "./buttons/ButtonBookmarkOnTwit";
 
 const TwitActions = ({ twit }) => {
   return (
