@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Context } from "..";
 import { FOLLOWER_PAGE, FOLLOWING_PAGE } from "../utils/constans";
 import arrowLeft from "./Img/arrow_left_icon.png";
-import UserFollowersComponent from "./UserFollowersComponent";
-import UserFollowingComponent from "./UserFollowingComponent";
+import UserFollowersList from "./UserFollowersList";
+import UserFollowingList from "./UserFollowingList";
 
 const ContentFollowPage = observer(() => {
   const { user } = useContext(Context);
@@ -57,10 +57,10 @@ const ContentFollowPage = observer(() => {
         </div>
       </div>
       {location === `${FOLLOWING_PAGE}${user.userPage.id}` && (
-        <UserFollowingComponent />
+        <UserFollowingList />
       )}
       {location === `${FOLLOWER_PAGE}${user.userPage.id}` && (
-        <UserFollowersComponent />
+        <UserFollowersList />
       )}
     </div>
   );

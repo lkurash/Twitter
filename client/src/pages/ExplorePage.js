@@ -3,7 +3,7 @@ import "../components/common/common.css";
 import { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 
-import MainComponentExplorePage from "../components/ExplorePageComponent";
+import MainComponentExplorePage from "../pagesComponents/ExplorePageComponent";
 import { Context } from "..";
 import { useNavigate } from "react-router-dom";
 import CheckTokenOnPage from "../utils/checkTokenOnPage";

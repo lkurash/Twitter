@@ -11,7 +11,7 @@ import home from "./Img/home_icon.png";
 import bookmark from "./Img/bookmark_icon.png";
 import profile from "./Img/profile_icon.png";
 import tweetIcon from "./Img/feather_icon.png";
-import TwitPageComponent from "./TwitPageComponent";
+import PopUpWriteTwit from "./PopUpWriteTwit";
 
 function FooterMobileComponent() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function FooterMobileComponent() {
       >
         <img src={tweetIcon} alt="tweet" className="button-icon-menu" />
       </div>
-      <TwitPageComponent
+      <PopUpWriteTwit
         showTwitForm={showTwitForm}
         setShowTwitForm={setShowTwitForm}
       />

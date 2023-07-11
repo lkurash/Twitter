@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
-import FollowPageComponent from "../components/FollowPageComponent";
+import FollowPageComponent from "../pagesComponents/FollowPageComponent";
 import CheckTokenOnPage from "../utils/checkTokenOnPage";
 
 const FollowPage = observer(() => {

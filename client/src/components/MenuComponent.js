@@ -4,13 +4,11 @@ import { observer } from "mobx-react-lite";
 import { useLocation } from "react-router-dom";
 import Logo from "./common/Logo";
 import hashtag from "./Img/hashtag_icon.png";
-import ButtonMenu from "./common/ButtonMenu";
+import ButtonMenu from "./buttons/ButtonMenu";
 import { Context } from "..";
-import {
-  EXPLORE_PAGE,
-} from "../utils/constans";
+import { EXPLORE_PAGE } from "../utils/constans";
 import UserInfoAndButtonSignOut from "./UserInfoAndButtonSignOut";
-import ButtonWriteTwit from "./ButtonWriteTwit";
+import ButtonWriteTwit from "./buttons/ButtonWriteTwit";
 import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 
 const MenuComponent = observer(() => {

@@ -9,8 +9,8 @@ import undefinedUserPhoto from "./Img/user_photo.jpeg";
 import { FOLLOWER_PAGE, FOLLOWING_PAGE } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
-import ButtonEditProfile from "./ButtonEditProfile";
-import ButtonFollowProfile from "./ButtonFollowProfile";
+import ButtonEditProfile from "./buttons/ButtonEditProfile";
+import ButtonFollowingUsersProfile from "./buttons/ButtonFollowingUsersProfile";
 
 const ProfileUserInfo = observer(() => {
   const { user } = useContext(Context);
@@ -50,7 +50,10 @@ const ProfileUserInfo = observer(() => {
           {user.isAuth && (
             <>
               <ButtonEditProfile user={user} />
-              <ButtonFollowProfile user={user} usersFollow={usersFollow} />
+              <ButtonFollowingUsersProfile
+                user={user}
+                usersFollow={usersFollow}
+              />
             </>
           )}
         </div>

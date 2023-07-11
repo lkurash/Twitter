@@ -3,7 +3,7 @@ import "./main.css";
 import { useContext } from "react";
 import { Context } from "..";
 import Twit from "./Twit";
-import TooltipRetwitOnTwit from "./TolltipRetwitOnTwit";
+import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import sortTwits from "../utils/sortTwits";
 
 const TwitsForYou = observer(({ showTwitsForYou }) => {

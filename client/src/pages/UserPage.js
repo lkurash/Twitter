@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
-import UserPageComponent from "../components/UserPageComponent";
+import UserPageComponent from "../pagesComponents/UserPageComponent";
 import CheckTokenOnPage from "../utils/checkTokenOnPage";
 
 const UserPage = observer(() => {
