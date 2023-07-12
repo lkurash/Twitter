@@ -5,6 +5,7 @@ const SignUpFormInput = ({
   activeInput,
   onClick,
   name,
+  password
 }) => {
   return (
     <div
@@ -20,7 +21,7 @@ const SignUpFormInput = ({
       )}
       <input
         placeholder={activeInput ? "" : placeholder}
-        type="text"
+        type={password ? "password" : "text"}
         value={value}
         onChange={(e) => setUserInfo(e.target.value.trim())}
       />
