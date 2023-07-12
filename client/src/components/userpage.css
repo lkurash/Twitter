@@ -87,6 +87,7 @@ h2 {
   height: 100%;
   border-radius: 70px;
   object-position: center;
+  object-fit: cover;
 }
 
 .button-edit-profile {

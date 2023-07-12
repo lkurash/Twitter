@@ -79,6 +79,7 @@ function SignUpForm({ getRegistrationUserInfo }) {
                 setActivedivEmail(false);
                 setActivedivName(false);
               }}
+              password
             />
           </div>
           <div className="signup-birth">

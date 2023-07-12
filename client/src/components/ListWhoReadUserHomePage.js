@@ -17,12 +17,6 @@ const ListWhoReadUserHomePage = observer(() => {
   const whoReadingList = [];
   const whoNotReadingList = [];
 
-  const textOnButtonFollow = (id) => {
-    if (usersFollow.startFollowUser.id === id) {
-      return "Following";
-    }
-    return "Follow";
-  };
   const getUsersAndFollowigs = async () => {
     await getAllUsers().then((users) => user.setAllUsers(users));
     await getFollowingUser(user.user.id).then((allFollowing) =>
@@ -97,7 +91,7 @@ const ListWhoReadUserHomePage = observer(() => {
                     createFollowing(profile);
                   }}
                 >
-                  <span>{textOnButtonFollow(profile.id)}</span>
+                  <span>Follow</span>
                 </button>
               )}
             </li>
