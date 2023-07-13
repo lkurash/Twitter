@@ -9,7 +9,7 @@ import {
   getRetwitsByUser,
   getTwitsByUser,
 } from "../http/twitsApi";
-import { getAllUsers, getFollowingsUser } from "../http/userApi";
+import { getAllUsers, getFollowingUsers } from "../http/userApi";
 import FooterMobileComponent from "../components/FooterMobileComponent";
 import ContentHomePage from "../components/ContentHomePage";
 import getAuthUserID from "../utils/getAuthUserID";
@@ -36,7 +36,7 @@ const HomePageComponent = observer(() => {
       retwits.setRetwits(retwitsByUser)
     );
     getAllUsers().then((users) => user.setAllUsers(users));
-    getFollowingsUser(authUserID).then((followings) =>
+    getFollowingUsers(authUserID).then((followings) =>
       usersFollow.setuserFollowing(followings)
     );
     getTwitsByUser(authUserID).then((usersTwits) =>

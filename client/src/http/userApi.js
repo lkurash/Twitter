@@ -65,13 +65,13 @@ export const deleteFollowings = async (id, followUserId) => {
   return unFollowings.data;
 };
 
-export const getFollowingsUser = async (id) => {
+export const getFollowingUsers = async (id) => {
   const followings = await $authHost.get(`api/users/${id}/followings`);
 
   return followings.data;
 };
 
-export const getFollowersUser = async (id) => {
+export const getFollowerUsers = async (id) => {
   const followers = await $authHost.get(`api/users/${id}/followers`);
 
   return followers.data;

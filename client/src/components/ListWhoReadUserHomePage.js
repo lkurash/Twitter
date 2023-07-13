@@ -3,7 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import { createFollowings, getAllUsers, getFollowingsUser } from "../http/userApi";
+import {
+  createFollowings,
+  getAllUsers,
+  getFollowingUsers,
+} from "../http/userApi";
 import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
 import getUserPhoto from "../utils/getUserPhoto";
@@ -20,7 +24,7 @@ const ListWhoReadUserHomePage = observer(() => {
 
   const getUsersAndFollowigs = async () => {
     await getAllUsers().then((users) => user.setAllUsers(users));
-    await getFollowingsUser(user.user.id).then((followings) =>
+    await getFollowingUsers(user.user.id).then((followings) =>
       usersFollow.setuserFollowing(followings)
     );
   };

@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { Context } from "..";
 
 import { getAllTwits, getFavoriteTwits } from "../http/twitsApi";
-import { getAllUsers, getFollowingsUser } from "../http/userApi";
+import { getAllUsers, getFollowingUsers } from "../http/userApi";
 import FooterMobileComponent from "../components/FooterMobileComponent";
 import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
@@ -24,7 +24,7 @@ const BookmarksPageComponent = observer(() => {
         favoriteTwits.setFavoriteTwits(favoriteTwitsByUser)
       );
       getAllUsers().then((users) => user.setAllUsers(users));
-      getFollowingsUser(authUserID).then((followings) =>
+      getFollowingUsers(authUserID).then((followings) =>
         usersFollow.setuserFollowing(followings)
       );
     } catch (error) {
