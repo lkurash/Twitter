@@ -1,12 +1,14 @@
 import { useContext, useRef, useState } from "react";
-import "./loginAndRegistretionForm.css";
-import BirthForm from "./BirthForm";
-import ButtonClose from "../buttons/ButtonClose";
+import { useLocation } from "react-router-dom";
 import { Context } from "../..";
+
 import { EXPLORE_PAGE } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 import SignUpFormInput from "../SignUpFormInput";
-import { useLocation } from "react-router-dom";
+import BirthForm from "./BirthForm";
+import ButtonClose from "../buttons/ButtonClose";
+
+import "./loginAndRegistretionForm.css";
 
 function SignUpForm({ getRegistrationUserInfo }) {
   const { user } = useContext(Context);

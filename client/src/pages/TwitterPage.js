@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
+
 import FooterComponent from "../components/FooterComponent";
 import MainContentExplorePageAllTwits from "../components/ContentExplorePageAllTwits";
 import MenuComponent from "../components/MenuComponent";

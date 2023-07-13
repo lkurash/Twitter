@@ -2,17 +2,20 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
-import "../userTwitPanel.css";
+
 import {
   createFavoriteTwitByUser,
   getAllTwits,
   getTwitsByUser,
 } from "../../http/twitsApi";
+import getAuthUserID from "../../utils/getAuthUserID";
+
+import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
+
+import "../userTwitPanel.css";
 import activeBookmark from "../Img/active_bookmark_icon.png";
 import notactiveBookmark from "../Img/notactive_bookmark_icon.png";
 import hoverBookmark from "../Img/hover_bookmark.png";
-import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
-import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonBookmarkOnTwit = observer((props) => {
   const { twits } = useContext(Context);
@@ -21,28 +24,26 @@ const ButtonBookmarkOnTwit = observer((props) => {
   const userPage = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userBookmarksTwitId = [];
+  const authUserID = getAuthUserID(user);
 
   const getTwits = () => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
     if (user.isAuth) {
-      const authUserID = getAuthUserID(user);
-
-      getTwitsByUser(authUserID).then((twitsById) =>
-        twits.setUserTwits(twitsById)
+      getTwitsByUser(authUserID).then((usersTwits) =>
+        twits.setUserTwits(usersTwits)
       );
     } else {
-      getTwitsByUser(userPage.id).then((twitsById) =>
-        twits.setUserTwits(twitsById)
+      getTwitsByUser(userPage.id).then((usersTwits) =>
+        twits.setUserTwits(usersTwits)
       );
     }
   };
 
   const createFavoriteTwits = async (twit) => {
-    const formData = new FormData();
 
-    formData.append("TwitId", twit.id);
-    await createFavoriteTwitByUser(formData);
+    await createFavoriteTwitByUser(authUserID, twit.id);
+    
     getTwits();
   };
 

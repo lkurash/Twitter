@@ -1,6 +1,7 @@
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../..";
+
 import { EXPLORE_PAGE } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 

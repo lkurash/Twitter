@@ -2,10 +2,12 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Context } from "..";
+
 import { FOLLOWER_PAGE, FOLLOWING_PAGE } from "../utils/constans";
-import arrowLeft from "./Img/arrow_left_icon.png";
 import UserFollowersList from "./UserFollowersList";
 import UserFollowingList from "./UserFollowingList";
+
+import arrowLeft from "./Img/arrow_left_icon.png";
 
 const ContentFollowPage = observer(() => {
   const { user } = useContext(Context);

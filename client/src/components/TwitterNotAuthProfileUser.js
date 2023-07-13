@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "..";
+
 import ProfileUserInfo from "./ProfileUserInfo";
 import UserTwits from "./UserTwits";
 import spinner from "../utils/spinner";

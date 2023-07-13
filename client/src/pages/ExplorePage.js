@@ -1,7 +1,8 @@
-import "../App.css";
-import "../components/common/common.css";
 import { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
+
+import "../App.css";
+import "../components/common/common.css";
 
 import MainComponentExplorePage from "../pagesComponents/ExplorePageComponent";
 import { Context } from "..";

@@ -1,16 +1,18 @@
 import { observer } from "mobx-react-lite";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
+import { Context } from "..";
+
 import ProfilePageAnswers from "./ProfilePageAnswers";
 import ProfilePageLikes from "./ProfilePageLikes";
 import ProfilePageMedia from "./ProfilePageMedia";
 import UserTwits from "./UserTwits";
 import ProfileButtonPanel from "./ProfileButtonPanel";
 import ProfileUserInfo from "./ProfileUserInfo";
-import { Context } from "..";
-import arrowLeft from "./Img/arrow_left_icon.png";
 import { HOME_PAGE } from "../utils/constans";
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
+
+import arrowLeft from "./Img/arrow_left_icon.png";
 
 const ContentUsersPage = observer(() => {
   const location = useLocation().pathname;

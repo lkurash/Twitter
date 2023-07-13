@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
+
 import activeLike from "../Img/active_like.png";
 import notactiveLike from "../Img/notactive_like.png";
 import hoverLike from "../Img/hover_like.png";
@@ -21,28 +22,26 @@ const ButtonLikeOnTwit = observer((props) => {
   const userPage = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userLikesTwitId = [];
+  const authUserID = getAuthUserID(user);
 
   const getTwits = () => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
 
     if (user.isAuth) {
-      const authUserID = getAuthUserID(user);
 
-      getTwitsByUser(authUserID).then((twitsById) =>
-        twits.setUserTwits(twitsById)
+      getTwitsByUser(authUserID).then((usersTwits) =>
+        twits.setUserTwits(usersTwits)
       );
     } else {
-      getTwitsByUser(userPage.id).then((twitsById) =>
-        twits.setUserTwits(twitsById)
+      getTwitsByUser(userPage.id).then((usersTwits) =>
+        twits.setUserTwits(usersTwits)
       );
     }
   };
 
   const createLikeTwit = async (twit) => {
-    const formData = new FormData();
-
-    formData.append("TwitId", twit.id);
-    await createLikeTwitByUser(formData);
+    
+    await createLikeTwitByUser(authUserID, twit.id);
 
     getTwits();
   };

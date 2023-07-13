@@ -2,13 +2,15 @@ import { observer } from "mobx-react-lite";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "../..";
-import Logo from "../common/Logo";
-import "./loginAndRegistretionForm.css";
+
 import { EXPLORE_PAGE, HOME_PAGE } from "../../utils/constans";
-import { authorization, getUserInfo } from "../../http/userApi";
+import { authentication } from "../../http/userApi";
 import ButtonClose from "../buttons/ButtonClose";
 import LoginPasswordForm from "./LoginPasswordForm";
 import LoginEmailForm from "./LoginEmailForm";
+import Logo from "../common/Logo";
+
+import "./loginAndRegistretionForm.css";
 
 const LoginForm = observer(() => {
   const { user } = useContext(Context);
@@ -28,10 +30,9 @@ const LoginForm = observer(() => {
   const signIn = async () => {
     try {
       if (email && password) {
-        await authorization(email, password);
-        const userInfo = await getUserInfo();
+        const userProfile = await authentication(email, password);
 
-        user.setUser(userInfo);
+        user.setUser(userProfile);
         user.setAuth(true);
         navigate(HOME_PAGE);
       }

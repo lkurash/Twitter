@@ -1,68 +1,75 @@
 import { $authHost, $host } from ".";
 
 export const createTwitByUser = async (twit) => {
-  const newTwit = await $authHost.post("api/twits/createtwit", twit);
+  const newTwit = await $authHost.post("api/twits/twit", twit);
 
   return newTwit.data;
 };
 
 export const getAllTwits = async () => {
-  const alltwits = await $host.get("api/twits/alltwits");
+  const alltwits = await $host.get("api/twits");
 
   return alltwits.data;
 };
 
-export const getTwitsByUser = async (id) => {
-  if (id) {
-    const twitsById = await $authHost.get(`api/twits/userTwits/${id}`);
+export const getTwitsByUser = async (userId) => {
+  const usersTwits = await $authHost.get(`api/twits/user/${userId}`);
 
-    return twitsById.data;
-  }
-
-  const twitsById = await $authHost.get(`api/twits/userTwits`);
-
-  return twitsById.data;
+  return usersTwits.data;
 };
 
-export const createLikeTwitByUser = async (id) => {
-  const like = await $authHost.post("api/twits/like", id);
+export const createLikeTwitByUser = async (userId, twitId) => {
+  const usersTwitsLikes = await $authHost.post(
+    `api/twits/twit/${twitId}/user/${userId}/likes`
+  );
 
-  return like.data;
+  return usersTwitsLikes.data;
 };
 
-export const createRetwitByUser = async (id) => {
-  const retwitByUser = await $authHost.post("api/twits/retwit", id);
+export const createRetwitByUser = async (userId, twitId) => {
+  const retwitByUser = await $authHost.post(
+    `api/twits/twit/${twitId}/user/${userId}/retwits`
+  );
 
   return retwitByUser.data;
 };
 
-export const createFavoriteTwitByUser = async (id) => {
-  const favoriteTwit = await $authHost.post("api/twits/bookmarks", id);
+export const createFavoriteTwitByUser = async (userId, twitId) => {
+  const favoriteTwit = await $authHost.post(
+    `api/twits/twit/${twitId}/user/${userId}/bookmarks`
+  );
 
   return favoriteTwit.data;
 };
-export const createCommentTwitByUser = async (TwitId, text) => {
-  const comment = await $authHost.post("api/twits/comment", { TwitId, text });
+export const createCommentTwitByUser = async (userId, twitId, text) => {
+  const comment = await $authHost.post(
+    `api/twits/twit/${twitId}/user/${userId}/comments`,
+    {
+      text,
+    }
+  );
 
   return comment.data;
 };
-export const getCommentsByUser = async (id) => {
-  const comments = await $authHost.get(`api/twits/allUserComments/${id}`);
+export const getCommentsByUser = async (userId) => {
+  const comments = await $authHost.get(`api/twits/user/${userId}/comments`);
 
   return comments.data;
 };
-export const getFavoriteTwits = async () => {
-  const favoriteTwits = await $authHost.get("api/twits/allUserBookmarks");
+export const getFavoriteTwits = async (userId) => {
+  const favoriteTwits = await $authHost.get(
+    `api/twits/user/${userId}/bookmarks`
+  );
 
   return favoriteTwits.data;
 };
-export const getRetwitsByUser = async (id) => {
-  const retwitsByUser = await $authHost.get(`api/twits/allUserRetwits/${id}`);
+export const getRetwitsByUser = async (userId) => {
+  const retwitsByUser = await $authHost.get(`api/twits/user/${userId}/retwits`);
 
   return retwitsByUser.data;
 };
-export const deleteTwitByUser = async (id) => {
-  const twit = await $authHost.post("api/twits/deleteTwit", { id });
+export const deleteTwitByUser = async (twitId) => {
+  const twit = await $authHost.delete(`api/twits/${twitId}`);
 
   return twit.data;
 };

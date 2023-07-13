@@ -2,8 +2,9 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
-import arrowLeft from "./Img/arrow_left_icon.png";
+
 import NewMessageComponent from "./NewMessageComponent";
+import arrowLeft from "./Img/arrow_left_icon.png";
 
 const ContentMessagesPage = observer(() => {
   const { user } = useContext(Context);

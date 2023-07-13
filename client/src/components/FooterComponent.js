@@ -1,6 +1,7 @@
-import "./footer.css";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_PAGE, SIGNUP_PAGE } from "../utils/constans";
+
+import "./footer.css";
 
 function FooterComponent() {
   const navigate = useNavigate();

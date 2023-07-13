@@ -40,6 +40,7 @@ class UserController {
         next(ApiError.badRequest("User with email is registration"));
       }
       const hashpassword = await bcrypt.hash(password, 5);
+
       const user = await User.create({
         user_name: name,
         email,
@@ -49,7 +50,7 @@ class UserController {
       });
       const token = generateJwt(user.id, user.email, user.role);
 
-      return response.json({ token });
+      return response.json({ token, user });
     } catch (error) {
       next(ApiError.internal(error.message));
     }
@@ -60,7 +61,7 @@ class UserController {
       const { email, password } = request.body;
 
       if (!email || !password) {
-        next(ApiError.badRequest("!!!Email or Password error"));
+        next(ApiError.badRequest("Email or Password error"));
       }
       const user = await User.findOne({ where: { email } });
 
@@ -74,7 +75,7 @@ class UserController {
       }
       const token = generateJwt(user.id, user.email, user.role);
 
-      return response.json({ token });
+      return response.json({ token, user });
     } catch (error) {
       next(ApiError.internal(error));
     }
@@ -95,13 +96,18 @@ class UserController {
   }
 
   async updateUserProfile(request, response, next) {
-    let { name, birthdate, web_site_url, about } = request.body;
+    const { name, birthdate, web_site_url, about } = request.body;
+
+    const { id } = request.params;
 
     const user = decodeUser(request);
-    const email = user.email;
+    const userId = user.id;
 
     const file = request.files;
 
+    if (userId !== parseInt(id)) {
+      next(ApiError.badRequest("Check authentication"));
+    }
     if (file) {
       if (file.photo) {
         let { photo } = request.files;
@@ -115,7 +121,7 @@ class UserController {
           },
           {
             where: {
-              email: email,
+              id: userId,
             },
           }
         );
@@ -133,7 +139,7 @@ class UserController {
           },
           {
             where: {
-              email: email,
+              id: userId,
             },
           }
         );
@@ -147,7 +153,7 @@ class UserController {
         },
         {
           where: {
-            email: email,
+            id: userId,
           },
         }
       );
@@ -159,7 +165,7 @@ class UserController {
         },
         {
           where: {
-            email: email,
+            id: userId,
           },
         }
       );
@@ -171,7 +177,7 @@ class UserController {
         },
         {
           where: {
-            email: email,
+            id: userId,
           },
         }
       );
@@ -183,38 +189,14 @@ class UserController {
         },
         {
           where: {
-            email: email,
+            id: userId,
           },
         }
       );
     }
-    const updateUser = await User.findOne({ where: { email } });
+    const updateUserProfile = await User.findOne({ where: { id: userId } });
 
-    return response.json(updateUser);
-  }
-
-  async getUserInfoByEmail(request, response, next) {
-    const user = decodeUser(request);
-    const email = user.email;
-
-    const userInfo = await User.findOne({
-      where: { email },
-      include: [
-        { model: Following },
-        {
-          model: Twits,
-          include: [
-            { model: User, as: "User" },
-            { model: Likes },
-            { model: Retwit },
-            { model: Favorite_twits },
-            { model: Comments },
-          ],
-        },
-      ],
-    });
-
-    return response.json(userInfo);
+    return response.json(updateUserProfile);
   }
 
   async getAllUsers(request, response, next) {
@@ -254,25 +236,30 @@ class UserController {
 
   async createFollow(request, response, next) {
     try {
-      const user = decodeUser(request);
-      const UserId = user.id;
-
+      const { id } = request.params;
       const { followUserId } = request.body;
-      const follow = await Following.findOne({
-        where: { UserId: UserId, followUserId: followUserId },
+
+      const user = decodeUser(request);
+      const userId = user.id;
+
+      if (userId !== parseInt(id)) {
+        next(ApiError.badRequest(`Check authentication ${id}`));
+      }
+      const followings = await Following.findOne({
+        where: { UserId: userId, followUserId: followUserId },
       });
 
-      if (follow) {
+      if (followings) {
         next(ApiError.badRequest("The following already exists."));
       }
 
-      if (!follow) {
-        const follow = await Following.create({
-          UserId: UserId,
+      if (!followings) {
+        const followings = await Following.create({
+          UserId: userId,
           followUserId: followUserId,
         });
 
-        return response.json(follow);
+        return response.json(followings);
       }
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
@@ -281,24 +268,30 @@ class UserController {
 
   async deleteFollow(request, response, next) {
     try {
-      const user = decodeUser(request);
-      const UserId = user.id;
+      const id = request.params.id;
+      const followUserId = request.params.unfollowedId;
 
-      const { followUserId } = request.body;
+      const user = decodeUser(request);
+      const userId = user.id;
+
+      if (userId !== parseInt(id)) {
+        next(ApiError.badRequest(`Check authentication ${id}`));
+      }
+
       const unFollow = await Following.destroy({
-        where: { followUserId: followUserId, UserId: UserId },
+        where: { followUserId: +followUserId, UserId: userId },
       });
 
       return response.json(unFollow);
     } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
+      next(ApiError.badRequest("Check followUserId"));
     }
   }
 
   async getFollowingUser(request, response, next) {
     try {
       const { id } = request.params;
-      const following = await Following.findAll({
+      const followings = await Following.findAll({
         where: { UserId: id },
         include: [
           {
@@ -320,7 +313,7 @@ class UserController {
         ],
       });
 
-      return response.json(following);
+      return response.json(followings);
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
@@ -329,12 +322,12 @@ class UserController {
   async getFollowersUser(request, response, next) {
     try {
       const { id } = request.params;
-      const following = await Following.findAll({
+      const followings = await Following.findAll({
         where: { followUserId: id },
         include: [{ model: User, as: "User" }],
       });
 
-      return response.json(following);
+      return response.json(followings);
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }

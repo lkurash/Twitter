@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
+
 import { PROFILE_PAGE_USER } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
 import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";

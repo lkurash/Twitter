@@ -1,20 +1,24 @@
 import { useContext, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
+
 import { updateUserProfile } from "../../http/userApi";
-import BirthForm from "./BirthForm";
-import buttonEditPhoto from "../Img/add_photo_icon.png";
-import "../userpage.css";
-import undefinedUserPhoto from "../Img/user_photo.jpeg";
-import ButtonClose from "../buttons/ButtonClose";
 import getUserPhoto from "../../utils/getUserPhoto";
 import { PROFILE_PAGE_USER } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
+import BirthForm from "./BirthForm";
+import ButtonClose from "../buttons/ButtonClose";
+
+import "../userpage.css";
+import buttonEditPhoto from "../Img/add_photo_icon.png";
+import undefinedUserPhoto from "../Img/user_photo.jpeg";
+
 const EditProfileForm = observer(() => {
   const { user } = useContext(Context);
   const navigate = useNavigate();
+  const { id } = useParams();
   const divRef = useRef(null);
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
@@ -50,7 +54,10 @@ const EditProfileForm = observer(() => {
     formData.append("web_site_url", textWebSiteUrl.trim());
     formData.append("about", about.trim());
 
-    await updateUserProfile(formData);
+    await updateUserProfile(id, formData).catch((error) => {
+      console.log(error.response.data.message);
+    });
+
     navigate(PROFILE_PAGE_USER + user.user.id);
   };
   const onClose = () => {

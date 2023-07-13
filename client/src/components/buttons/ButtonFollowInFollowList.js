@@ -1,7 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "../..";
-import { createFollow, deleteFollow, getAllUsers } from "../../http/userApi";
+
+import {
+  createFollowings,
+  deleteFollowings,
+  getAllUsers,
+} from "../../http/userApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonFollowInFollowList = observer(
@@ -12,12 +17,14 @@ const ButtonFollowInFollowList = observer(
     const listFollowingUserIds = [];
 
     const deleteFollowAndGetAllUsers = async (userFollowId) => {
-      await deleteFollow(userFollowId);
+      await deleteFollowings(authUserID, userFollowId).catch((error) =>
+        console.log(error.response.data.message)
+      );
       await getAllUsers().then((users) => user.setAllUsers(users));
     };
 
     const createFollowAndGetAllUsers = async (userFollowId) => {
-      await createFollow(userFollowId).catch((error) => {
+      await createFollowings(authUserID, userFollowId).catch((error) => {
         console.log(error.response.data.message);
       });
       await getAllUsers().then((users) => user.setAllUsers(users));

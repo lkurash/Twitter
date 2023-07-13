@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { checkToken, getUserInfo } from "../http/userApi";
+
+import { checkToken, getUserById } from "../http/userApi";
 import { LOGIN_PAGE_NOT_AUTH } from "./constans";
+import getAuthUserID from "./getAuthUserID";
 
 export default function CheckTokenOnPage(user, navigate, loadingPage) {
   const location = useLocation().pathname;
@@ -17,7 +19,8 @@ export default function CheckTokenOnPage(user, navigate, loadingPage) {
           navigate(LOGIN_PAGE_NOT_AUTH);
         }
         if (user.isAuth) {
-          getUserInfo().then((userInfo) => user.setUser(userInfo));
+          const authUserID = getAuthUserID(user);
+          getUserById(authUserID).then((userInfo) => user.setUser(userInfo));
         }
       })
       .catch((error) => {

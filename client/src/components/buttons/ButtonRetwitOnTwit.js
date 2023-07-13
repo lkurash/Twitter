@@ -8,11 +8,14 @@ import {
   getRetwitsByUser,
   getTwitsByUser,
 } from "../../http/twitsApi";
+import getAuthUserID from "../../utils/getAuthUserID";
+
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
+
 import activeRetwit from "../Img/active_retweet_icon.png";
 import notactiveRetwit from "../Img/notactive_retweet_icon.png";
 import "../userTwitPanel.css";
-import getAuthUserID from "../../utils/getAuthUserID";
+
 
 const ButtonRetwitOnTwit = observer((props) => {
   const { twits } = useContext(Context);
@@ -21,6 +24,7 @@ const ButtonRetwitOnTwit = observer((props) => {
   const { user } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userRetwitTwitId = [];
+  const authUserID = getAuthUserID(user);
 
   const getTwits = () => {
     getAllTwits().then((alltwits) => twits.setTwits(alltwits));
@@ -28,24 +32,22 @@ const ButtonRetwitOnTwit = observer((props) => {
     if (user.isAuth) {
       const authUserID = getAuthUserID(user);
 
-      getTwitsByUser(authUserID).then((twitsById) =>
-        twits.setUserTwits(twitsById)
+      getTwitsByUser(authUserID).then((usersTwits) =>
+        twits.setUserTwits(usersTwits)
       );
       getRetwitsByUser(authUserID).then((retwitsByUser) =>
         retwits.setRetwits(retwitsByUser)
       );
     } else {
-      getTwitsByUser(userPage.id).then((twitsById) =>
-        twits.setUserTwits(twitsById)
+      getTwitsByUser(userPage.id).then((usersTwits) =>
+        twits.setUserTwits(usersTwits)
       );
     }
   };
 
   const createRetwitTwit = async (twit) => {
-    const formData = new FormData();
 
-    formData.append("TwitId", twit.id);
-    await createRetwitByUser(formData);
+    await createRetwitByUser(authUserID, twit.id);
 
     getTwits();
   };

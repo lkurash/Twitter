@@ -1,11 +1,13 @@
 import { observer } from "mobx-react-lite";
-import "./main.css";
 import { useContext } from "react";
 import { Context } from "..";
+
 import Twit from "./Twit";
 import spinner from "../utils/spinner";
 import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import sortTwits from "../utils/sortTwits";
+
+import "./main.css";
 
 const UserTwits = observer(() => {
   const { twits } = useContext(Context);

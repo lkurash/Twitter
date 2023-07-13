@@ -1,12 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import close from "../components/Img/x_icon.png";
-import "../components/forms/loginAndRegistretionForm.css";
+import { Context } from "..";
+
 import { HOME_PAGE, TWITTER_PAGE } from "../utils/constans";
 import SignUpForm from "../components/forms/SignUpForm";
-import { Context } from "..";
-import { getUserInfo, registration } from "../http/userApi";
+import { register } from "../http/userApi";
+
+import close from "../components/Img/x_icon.png";
+import "../components/forms/loginAndRegistretionForm.css";
 
 const SignUpPage = observer(() => {
   const { user } = useContext(Context);
@@ -27,15 +29,14 @@ const SignUpPage = observer(() => {
   };
   const signUp = async () => {
     if (checkUserInfo) {
-      await registration(
+      const newUser = await register(
         registrationUserInfo.userName,
         registrationUserInfo.email,
         registrationUserInfo.password,
         registrationUserInfo.birthdate
       );
-
-      const getNewUserInfo = await getUserInfo();
-      user.setUser(getNewUserInfo);
+      console.log(newUser);
+      user.setUser(newUser);
       user.setAuth(true);
       navigate(HOME_PAGE);
     }
