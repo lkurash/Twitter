@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import { Context } from "..";
 
 import {
-  getFollowersUser,
-  getFollowingsUser,
+  getFollowerUsers,
+  getFollowingUsers,
   getUserById,
   getAllUsers,
 } from "../http/userApi";
@@ -20,10 +20,10 @@ const FollowPageComponent = observer(() => {
 
   useEffect(() => {
     try {
-      getFollowingsUser(id).then((followings) =>
+      getFollowingUsers(id).then((followings) =>
         usersFollow.setuserFollowing(followings)
       );
-      getFollowersUser(id).then((followers) =>
+      getFollowerUsers(id).then((followers) =>
         usersFollow.setuserFollowers(followers)
       );
       getAllUsers().then((users) => user.setAllUsers(users));

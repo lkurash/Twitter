@@ -9,8 +9,8 @@ import {
   getTwitsByUser,
 } from "../http/twitsApi";
 import {
-  getFollowersUser,
-  getFollowingsUser,
+  getFollowerUsers,
+  getFollowingUsers,
   getUserById,
   getAllUsers,
 } from "../http/userApi";
@@ -40,10 +40,10 @@ const UserPageComponent = observer(() => {
       getRetwitsByUser(id).then((retwitsByUser) =>
         retwits.setRetwits(retwitsByUser)
       );
-      getFollowingsUser(id).then((followings) =>
+      getFollowingUsers(id).then((followings) =>
         usersFollow.setuserFollowing(followings)
       );
-      getFollowersUser(id).then((followers) =>
+      getFollowerUsers(id).then((followers) =>
         usersFollow.setuserFollowers(followers)
       );
     } catch (error) {
