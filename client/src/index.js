@@ -16,13 +16,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Context.Provider
     value={{
-      user: new UserStore(),
-      topics: new TopicsStore(),
-      twits: new TwitsStore(),
-      comments: new CommentsStore(),
-      retwits: new RetwitsStore(),
-      favoriteTwits: new FavoriteTwitsStore(),
-      usersFollow: new UsersFollowStore(),
+      usersStore: new UserStore(),
+      topicsStore: new TopicsStore(),
+      twitsStore: new TwitsStore(),
+      commentsStore: new CommentsStore(),
+      retwitsStore: new RetwitsStore(),
+      favoriteTwitsStore: new FavoriteTwitsStore(),
+      usersFollowingsStore: new UsersFollowStore(),
     }}
   >
     <App />

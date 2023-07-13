@@ -11,7 +11,7 @@ import close from "../components/Img/x_icon.png";
 import "../components/forms/loginAndRegistretionForm.css";
 
 const SignUpPage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const navigate = useNavigate();
   const [checkUserInfo, setCheckUserInfo] = useState(false);
   const [registrationUserInfo, setRegistrationUserInfo] = useState({});
@@ -36,8 +36,8 @@ const SignUpPage = observer(() => {
         registrationUserInfo.birthdate
       );
       console.log(newUser);
-      user.setUser(newUser);
-      user.setAuth(true);
+      usersStore.setUser(newUser);
+      usersStore.setAuth(true);
       navigate(HOME_PAGE);
     }
   };

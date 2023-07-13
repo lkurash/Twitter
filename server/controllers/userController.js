@@ -27,7 +27,7 @@ const decodeUser = (request) => {
 };
 
 class UserController {
-  async registration(request, response, next) {
+  async register(request, response, next) {
     try {
       const { name, email, password, role, birthdate } = request.body;
 
@@ -56,7 +56,7 @@ class UserController {
     }
   }
 
-  async login(request, response, next) {
+  async authentication(request, response, next) {
     try {
       const { email, password } = request.body;
 
@@ -234,7 +234,7 @@ class UserController {
     }
   }
 
-  async createFollow(request, response, next) {
+  async createFollowing(request, response, next) {
     try {
       const { id } = request.params;
       const { followUserId } = request.body;
@@ -266,7 +266,7 @@ class UserController {
     }
   }
 
-  async deleteFollow(request, response, next) {
+  async deleteFollowing(request, response, next) {
     try {
       const id = request.params.id;
       const followUserId = request.params.unfollowedId;
@@ -288,7 +288,7 @@ class UserController {
     }
   }
 
-  async getFollowingUser(request, response, next) {
+  async getFollowingUsers(request, response, next) {
     try {
       const { id } = request.params;
       const followings = await Following.findAll({
@@ -319,7 +319,7 @@ class UserController {
     }
   }
 
-  async getFollowersUser(request, response, next) {
+  async getFollowerUsers(request, response, next) {
     try {
       const { id } = request.params;
       const followings = await Following.findAll({

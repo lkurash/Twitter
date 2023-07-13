@@ -9,18 +9,18 @@ import logo from "../Img/logo_icon.png";
 
 const Logo = observer((props) => {
   const navigate = useNavigate();
-  const { user } = useContext(Context);
-  const { twits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
 
   return (
     <div>
-      {user.isAuth ? (
+      {usersStore.isAuth ? (
         <div
           className={props.class}
           onClick={() => {
-            user.setUserPage({});
-            twits.setUserTwits([]);
-            localStorage.setItem("activeButton", '1');
+            usersStore.setUserPage({});
+            twitsStore.setUserTwits([]);
+            localStorage.setItem("activeButton", "1");
 
             navigate(HOME_PAGE);
           }}
@@ -31,8 +31,8 @@ const Logo = observer((props) => {
         <div
           className={props.class}
           onClick={() => {
-            user.setUserPage({});
-            twits.setUserTwits([]);
+            usersStore.setUserPage({});
+            twitsStore.setUserTwits([]);
             navigate(TWITTER_PAGE);
           }}
         >

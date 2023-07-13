@@ -8,10 +8,10 @@ import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import sortTwits from "../utils/sortTwits";
 
 const TwitsForYou = observer(({ showTwitsForYou }) => {
-  const { twits } = useContext(Context);
-  const { retwits } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
 
-  const allTwitsAndUserRetwits = sortTwits(retwits.retwits, twits.twits);
+  const allTwitsAndUserRetwits = sortTwits(retwitsStore.retwits, twitsStore.twits);
 
   if (!showTwitsForYou) return null;
 

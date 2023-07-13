@@ -8,14 +8,16 @@ import useOutsideClick from "../../utils/useOutsideClickFunction";
 import dotMenu from "../Img/more_dots_icon.png";
 
 const ButtonDeleteOnTwit = observer((props) => {
-  const { twits } = useContext(Context);
-  const { user } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const tooltipDeleteTwit = useRef(null);
 
   const deleteTwit = async (twit) => {
     await deleteTwitByUser(twit.id);
-    await getTwitsByUser(user.user.id).then((twitsById) => twits.setUserTwits(twitsById));
+    await getTwitsByUser(usersStore.user.id).then((twitsById) =>
+      twitsStore.setUserTwits(twitsById)
+    );
   };
   const onClose = () => {
     setShowDeleteButton(false);

@@ -7,14 +7,14 @@ import TwitDesc from "./TwitDesc";
 import UserPhoto from "./UserPhoto";
 
 const UserComments = observer(() => {
-  const { comments } = useContext(Context);
+  const { commentsStore } = useContext(Context);
 
-  if (comments.comments.length === 0) return spinner();
+  if (commentsStore.comments.length === 0) return spinner();
 
   return (
     <>
-      {comments.comments ? (
-        comments.comments.map((comment) => (
+      {commentsStore.comments ? (
+        commentsStore.comments.map((comment) => (
           <div className="twit" key={comment.id}>
             <div className="content-block">
               <div className="user-block-twit">

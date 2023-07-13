@@ -7,7 +7,7 @@ import NewMessageComponent from "./NewMessageComponent";
 import arrowLeft from "./Img/arrow_left_icon.png";
 
 const ContentMessagesPage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const navigate = useNavigate();
   const [writeMessage, setWriteMessage] = useState(false);
 
@@ -23,7 +23,7 @@ const ContentMessagesPage = observer(() => {
           </div>
           <div className="page-name-user-name">
             <h2>Messages</h2>
-            <p>@{user.user.user_name}</p>
+            <p>@{usersStore.user.user_name}</p>
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ import buttonEditPhoto from "../Img/add_photo_icon.png";
 import undefinedUserPhoto from "../Img/user_photo.jpeg";
 
 const EditProfileForm = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const navigate = useNavigate();
   const { id } = useParams();
   const divRef = useRef(null);
@@ -38,8 +38,8 @@ const EditProfileForm = observer(() => {
   };
 
   const getUserBackground = () => {
-    if (user.user.background) {
-      return `http://localhost:5500/${user.user.background}`;
+    if (usersStore.user.background) {
+      return `http://localhost:5500/${usersStore.user.background}`;
     }
     return undefinedUserPhoto;
   };
@@ -50,7 +50,7 @@ const EditProfileForm = observer(() => {
     formData.append("photo", photo);
     formData.append("background", background);
     formData.append("name", name);
-    formData.append("birthdate", user.birthDate);
+    formData.append("birthdate", usersStore.birthDate);
     formData.append("web_site_url", textWebSiteUrl.trim());
     formData.append("about", about.trim());
 
@@ -58,7 +58,7 @@ const EditProfileForm = observer(() => {
       console.log(error.response.data.message);
     });
 
-    navigate(PROFILE_PAGE_USER + user.user.id);
+    navigate(PROFILE_PAGE_USER + usersStore.user.id);
   };
   const onClose = () => {
     setActivInputName(false);
@@ -103,7 +103,7 @@ const EditProfileForm = observer(() => {
           </div>
           <div className="edit-profile-form-photo">
             {!photo ? (
-              <img src={getUserPhoto(user.user)} alt="user" />
+              <img src={getUserPhoto(usersStore.user)} alt="user" />
             ) : (
               <img src={URL.createObjectURL(photo)} alt="user" />
             )}
@@ -134,7 +134,7 @@ const EditProfileForm = observer(() => {
           >
             <h4>Name</h4>
             <input
-              value={name || user.user.user_name || ""}
+              value={name || usersStore.user.user_name || ""}
               onChange={(e) => setName(e.target.value.trim())}
             />
           </div>
@@ -153,7 +153,7 @@ const EditProfileForm = observer(() => {
           >
             <h4>About me</h4>
             <textarea
-              value={about || user.user.about || ""}
+              value={about || usersStore.user.about || ""}
               onChange={(e) => setAbout(e.target.value)}
             />
           </div>
@@ -170,7 +170,7 @@ const EditProfileForm = observer(() => {
           >
             <h4>Web site</h4>
             <input
-              value={textWebSiteUrl || user.user.web_site_url || ""}
+              value={textWebSiteUrl || usersStore.user.web_site_url || ""}
               onChange={(e) => setTextWebSiteUrl(e.target.value)}
             />
           </div>

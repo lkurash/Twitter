@@ -14,11 +14,11 @@ import "../components/main.css";
 import "../components/userpage.css";
 
 const MessagesPageComponent = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
 
   useEffect(() => {
     try {
-      getAllUsers().then((users) => user.setAllUsers(users));
+      getAllUsers().then((users) => usersStore.setAllUsers(users));
     } catch (error) {
       console.log(error.response.data.message);
     }

@@ -12,7 +12,7 @@ import spinner from "../utils/spinner";
 import Twit from "./Twit";
 
 const ContentExplorePageAllTwits = observer(() => {
-  const { twits } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const ref = useRef();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,12 +35,12 @@ const ContentExplorePageAllTwits = observer(() => {
               <h2>Explore</h2>
             </div>
           </div>
-          {twits.twits.length === 0 || isLoading ? (
+          {twitsStore.twits.length === 0 || isLoading ? (
             spinner()
           ) : (
             <div className="twits">
-              {twits.twits ? (
-                twits.twits.map((twit) => <Twit twit={twit} key={twit.id} />)
+              {twitsStore.twits ? (
+                twitsStore.twits.map((twit) => <Twit twit={twit} key={twit.id} />)
               ) : (
                 <p className="empty-twits">No twits</p>
               )}

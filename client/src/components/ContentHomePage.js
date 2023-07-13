@@ -8,7 +8,7 @@ import TwitsForYou from "./TwitsForYou";
 import TwitsWhoYouRead from "./TwitsWhoYouReading";
 
 const ContentHomePage = observer(() => {
-  const { twits } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const [showTwitsForYou, setShowTwitsForYou] = useState(true);
   const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -33,8 +33,6 @@ const ContentHomePage = observer(() => {
       setIsLoading(false);
     }, 400);
   }, []);
-
-
   return (
     <main className="main-wrapper">
       <div className="main">
@@ -82,14 +80,14 @@ const ContentHomePage = observer(() => {
               <TwitForm />
             </div>
             <div className="main-line" />
-            {twits.twits.length === 0 || isLoading ? (
+            {twitsStore.twits.length === 0 || isLoading ? (
               spinner()
             ) : (
               <>
                 <TwitsForYou showTwitsForYou={showTwitsForYou} />
                 <TwitsWhoYouRead
                   showTwitsWhoReading={showTwitsWhoReading}
-                  userTwits={twits.userTwits}
+                  userTwits={twitsStore.userTwits}
                 />
               </>
             )}

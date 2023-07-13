@@ -14,15 +14,15 @@ import ContentExplorePageAllTwits from "../components/ContentExplorePageAllTwits
 import "../components/main.css";
 
 const MainComponentExplorePage = observer(() => {
-  const { user } = useContext(Context);
-  const { twits } = useContext(Context);
-  const { topics } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { topicsStore } = useContext(Context);
 
   useEffect(() => {
     try {
-      getAllTopics().then((allTopics) => topics.setTopics(allTopics));
-      getAllUsers().then((users) => user.setAllUsers(users));
-      getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+      getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
+      getAllUsers().then((users) => usersStore.setAllUsers(users));
+      getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -32,10 +32,10 @@ const MainComponentExplorePage = observer(() => {
     <div>
       <div className="page">
         <MenuComponent />
-        {user.isAuth ? <ContentExplorePageAllTwits /> : <ContentExplorePage />}
+        {usersStore.isAuth ? <ContentExplorePageAllTwits /> : <ContentExplorePage />}
         <SidebarContent />
       </div>
-      {!user.isAuth && <FooterComponent />}
+      {!usersStore.isAuth && <FooterComponent />}
     </div>
   );
 });

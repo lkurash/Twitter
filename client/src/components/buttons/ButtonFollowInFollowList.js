@@ -11,27 +11,27 @@ import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonFollowInFollowList = observer(
   ({ profile, userId, userFollowingIds }) => {
-    const { user } = useContext(Context);
-    const { usersFollow } = useContext(Context);
-    const authUserID = getAuthUserID(user);
+    const { usersStore } = useContext(Context);
+    const { usersFollowingsStore } = useContext(Context);
+    const authUserID = getAuthUserID(usersStore);
     const listFollowingUserIds = [];
 
     const deleteFollowAndGetAllUsers = async (userFollowId) => {
       await deleteFollowings(authUserID, userFollowId).catch((error) =>
         console.log(error.response.data.message)
       );
-      await getAllUsers().then((users) => user.setAllUsers(users));
+      await getAllUsers().then((users) => usersStore.setAllUsers(users));
     };
 
     const createFollowAndGetAllUsers = async (userFollowId) => {
       await createFollowings(authUserID, userFollowId).catch((error) => {
         console.log(error.response.data.message);
       });
-      await getAllUsers().then((users) => user.setAllUsers(users));
+      await getAllUsers().then((users) => usersStore.setAllUsers(users));
     };
 
     const createListFollowingUserIds = (userId) => {
-      user.allUsers.forEach((allUser) => {
+      usersStore.allUsers.forEach((allUser) => {
         allUser.Followings.forEach((followUser) => {
           if (authUserID === followUser.UserId) {
             listFollowingUserIds.push(followUser.followUserId);
@@ -49,16 +49,16 @@ const ButtonFollowInFollowList = observer(
             key={profile.id}
             className="follow-page-main-button-following button-following-hover"
             onMouseEnter={() => {
-              usersFollow.setHoverFollowUser(profile.id);
+              usersFollowingsStore.setHoverFollowUser(profile.id);
             }}
-            onMouseLeave={() => usersFollow.setHoverFollowUser({})}
+            onMouseLeave={() => usersFollowingsStore.setHoverFollowUser({})}
             onClick={() => {
               deleteFollowAndGetAllUsers(userId);
-              usersFollow.setUnfollowUser(profile);
+              usersFollowingsStore.setUnfollowUser(profile);
             }}
           >
             <span>
-              {usersFollow.hoverFollowUser === profile.id
+              {usersFollowingsStore.hoverFollowUser === profile.id
                 ? "Unfollow"
                 : "Following"}
             </span>
@@ -69,7 +69,7 @@ const ButtonFollowInFollowList = observer(
             className="follow-page-main-button-following"
             onClick={() => {
               createFollowAndGetAllUsers(userId);
-              usersFollow.setStartFollowUser(profile);
+              usersFollowingsStore.setStartFollowUser(profile);
             }}
           >
             <span>Follow</span>

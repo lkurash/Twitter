@@ -7,13 +7,13 @@ import UserPageComponent from "../pagesComponents/UserPageComponent";
 import CheckTokenOnPage from "../utils/checkTokenOnPage";
 
 const UserPage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
 
-  CheckTokenOnPage(user, navigate, setLoadingPage);
+  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
 
-  return <>{!loadingPage && user.isAuth && <UserPageComponent />}</>;
+  return <>{!loadingPage && usersStore.isAuth && <UserPageComponent />}</>;
 });
 
 export default UserPage;

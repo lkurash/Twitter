@@ -11,13 +11,13 @@ import MainSectionWhoToRead from "./MainSectionWhoToRead";
 import "./sideBar.css";
 
 const SidebarContent = observer(() => {
-  const { user } = useContext(Context);
-  const { topics } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { topicsStore } = useContext(Context);
   const location = useLocation().pathname;
 
   useEffect(() => {
     try {
-      getAllTopics().then((allTopics) => topics.setTopics(allTopics));
+      getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -25,14 +25,15 @@ const SidebarContent = observer(() => {
 
   return (
     <aside className="side-bar">
-      {(user.isAuth || location === "/") && (
+      {(usersStore.isAuth || location === "/") && (
         <>
-          <MainSearchBlock
-            className="main-search-form-home section-background"
-          />
+          <MainSearchBlock className="main-search-form-home section-background" />
           <div className="main-content">
             <MainSectionTrends className="section trends-home section-background" />
-            <MainSectionWhoToRead className="section happen-home section-background" user={user} />
+            <MainSectionWhoToRead
+              className="section happen-home section-background"
+              user={usersStore}
+            />
           </div>
         </>
       )}

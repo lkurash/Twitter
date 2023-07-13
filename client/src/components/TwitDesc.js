@@ -5,8 +5,8 @@ import { Context } from "..";
 import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
 
 const TwitDesc = ({ twit }) => {
-  const { user } = useContext(Context);
-  const { twits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const navigate = useNavigate();
 
   return (
@@ -15,13 +15,13 @@ const TwitDesc = ({ twit }) => {
         <h4
           className="twit-user-name"
           onClick={() => {
-            if (user.isAuth) {
-              user.setUserPage({});
-              twits.setUserTwits([]);
+            if (usersStore.isAuth) {
+              usersStore.setUserPage({});
+              twitsStore.setUserTwits([]);
               navigate(PROFILE_PAGE_USER + twit.User.id);
             } else {
-              user.setUserPage({});
-              twits.setUserTwits([]);
+              usersStore.setUserPage({});
+              twitsStore.setUserTwits([]);
               navigate(TWITTER_USER_PAGE + twit.User.id);
             }
           }}

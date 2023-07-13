@@ -3,15 +3,15 @@ const userController = require("../controllers/userController");
 const authMiddleware = require("../middleware/authMiddleware");
 const router = new Router();
 
-router.post("/registration", userController.registration);
-router.post("/login", userController.login);
+router.post("/registration", userController.register);
+router.post("/login", userController.authentication);
 router.get("/auth", authMiddleware, userController.checkToken);
 router.put("/:id", userController.updateUserProfile);
 router.get("", userController.getAllUsers);
 router.get("/:id", userController.getUserById);
-router.post("/:id/followings", userController.createFollow);
-router.delete("/:id/unfollow/:unfollowedId", userController.deleteFollow);
-router.get("/:id/followings", userController.getFollowingUser);
-router.get("/:id/followers", userController.getFollowersUser);
+router.post("/:id/followings", userController.createFollowing);
+router.delete("/:id/unfollow/:unfollowedId", userController.deleteFollowing);
+router.get("/:id/followings", userController.getFollowingUsers);
+router.get("/:id/followers", userController.getFollowerUsers);
 
 module.exports = router;

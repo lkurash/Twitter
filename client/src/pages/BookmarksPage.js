@@ -7,13 +7,13 @@ import BookmarksPageComponent from "../pagesComponents/BookmarkPageComponent";
 import CheckTokenOnPage from "../utils/checkTokenOnPage";
 
 const BookmarksPage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
 
-  CheckTokenOnPage(user, navigate, setLoadingPage);
+  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
 
-  return <>{!loadingPage && user.isAuth && <BookmarksPageComponent />}</>;
+  return <>{!loadingPage && usersStore.isAuth && <BookmarksPageComponent />}</>;
 });
 
 export default BookmarksPage;

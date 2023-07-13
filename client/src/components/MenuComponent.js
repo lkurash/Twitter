@@ -14,7 +14,7 @@ import hashtag from "./Img/hashtag_icon.png";
 import "./menu.css";
 
 const MenuComponent = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
 
   const checkActiveButton = (id) => {
     const idActiveButton = localStorage.activeButton;
@@ -26,7 +26,7 @@ const MenuComponent = observer(() => {
     }
   };
 
-  const buttonsAuthUser = menuButtonsAuthUser(user);
+  const buttonsAuthUser = menuButtonsAuthUser(usersStore);
 
   const location = useLocation().pathname;
 
@@ -34,7 +34,7 @@ const MenuComponent = observer(() => {
     <aside className="menu">
       <Logo class="logo" />
       <nav className="nav">
-        {!user.user.id ? (
+        {!usersStore.user.id ? (
           <div>
             <ButtonMenu
               type="button"

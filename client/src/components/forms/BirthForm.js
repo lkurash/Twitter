@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 
 const BirthForm = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [userSelectMonth, setUserSelectMonth] = useState("");
   const [userSelectDay, setUserSelectDay] = useState("");
   const [userSelectYear, setUserSelectYear] = useState("");
@@ -64,12 +64,12 @@ const BirthForm = observer(() => {
 
   const checkUserBirthdate = () => {
     if (
-      user.user.birthdate &&
+      usersStore.user.birthdate &&
       !userSelectDay &&
       !userSelectMonth &&
       !userSelectYear
     ) {
-      const userBirthdate = user.user.birthdate.split(" ");
+      const userBirthdate = usersStore.user.birthdate.split(" ");
 
       setUserSelectDay(userBirthdate[0]);
       setUserSelectMonth(userBirthdate[1]);
@@ -79,7 +79,7 @@ const BirthForm = observer(() => {
 
   const createUserBirthdate = () => {
     if (userSelectDay && userSelectMonth && userSelectYear) {
-      user.setBirthDate(
+      usersStore.setBirthDate(
         `${userSelectDay} ${userSelectMonth} ${userSelectYear}`
       );
     }

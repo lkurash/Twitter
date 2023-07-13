@@ -7,12 +7,12 @@ import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import Twit from "./Twit";
 
 const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
-  const { usersFollow } = useContext(Context);
-  const { retwits } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
   const twitsByFollowingUsers = [];
 
   const getTwitsByFollowingUsers = () => {
-    usersFollow.userFollowing.map((followingUser) => {
+    usersFollowingsStore.userFollowing.map((followingUser) => {
       return followingUser.followUser.Twits.forEach((twit) => {
         return twitsByFollowingUsers.push(twit);
       });
@@ -24,7 +24,7 @@ const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
   const userTwitsRetwitsFollowingUserTwits = sortTwits(
     userTwits,
     twitsByFollowingUsers,
-    retwits.retwits
+    retwitsStore.retwits
   );
 
   if (!showTwitsWhoReading) return null;

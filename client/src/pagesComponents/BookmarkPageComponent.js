@@ -11,21 +11,23 @@ import ContentBookmarksPage from "../components/ContentBookmarksPage";
 import getAuthUserID from "../utils/getAuthUserID";
 
 const BookmarksPageComponent = observer(() => {
-  const { twits } = useContext(Context);
-  const { user } = useContext(Context);
-  const { favoriteTwits } = useContext(Context);
-  const { usersFollow } = useContext(Context);
-  const authUserID = getAuthUserID(user);
+  const { twitsStore } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { favoriteTwitsStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
+  const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
     try {
-      getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+      getAllTwits().then((alltwits) => twitsStore
+      .setTwits(alltwits));
       getFavoriteTwits(authUserID).then((favoriteTwitsByUser) =>
-        favoriteTwits.setFavoriteTwits(favoriteTwitsByUser)
+        favoriteTwitsStore
+        .setFavoriteTwits(favoriteTwitsByUser)
       );
-      getAllUsers().then((users) => user.setAllUsers(users));
+      getAllUsers().then((users) => usersStore.setAllUsers(users));
       getFollowingUsers(authUserID).then((followings) =>
-        usersFollow.setuserFollowing(followings)
+        usersFollowingsStore.setuserFollowing(followings)
       );
     } catch (error) {
       console.log(error.response.data.message);

@@ -7,9 +7,9 @@ import UserTwits from "./UserTwits";
 import spinner from "../utils/spinner";
 
 const TwitterNotAuthProfileUser = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
 
-  if (!user.userPage.id) return spinner();
+  if (!usersStore.userPage.id) return spinner();
   return (
     <div className="user-main-content">
       <div className="user-main-content-block">

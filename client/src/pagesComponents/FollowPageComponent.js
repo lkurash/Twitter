@@ -14,20 +14,20 @@ import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
 
 const FollowPageComponent = observer(() => {
-  const { user } = useContext(Context);
-  const { usersFollow } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
 
   useEffect(() => {
     try {
       getFollowingUsers(id).then((followings) =>
-        usersFollow.setuserFollowing(followings)
+        usersFollowingsStore.setuserFollowing(followings)
       );
       getFollowerUsers(id).then((followers) =>
-        usersFollow.setuserFollowers(followers)
+        usersFollowingsStore.setuserFollowers(followers)
       );
-      getAllUsers().then((users) => user.setAllUsers(users));
-      getUserById(id).then((userById) => user.setUserPage(userById));
+      getAllUsers().then((users) => usersStore.setAllUsers(users));
+      getUserById(id).then((userById) => usersStore.setUserPage(userById));
     } catch (error) {
       console.log(error.response.data.message);
     }

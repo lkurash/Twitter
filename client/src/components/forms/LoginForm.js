@@ -13,7 +13,7 @@ import Logo from "../common/Logo";
 import "./loginAndRegistretionForm.css";
 
 const LoginForm = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const navigate = useNavigate();
   const [showFormPassword, setShowFormPassword] = useState(false);
   const [showFormEmail, setShowFormEmail] = useState(true);
@@ -32,8 +32,8 @@ const LoginForm = observer(() => {
       if (email && password) {
         const userProfile = await authentication(email, password);
 
-        user.setUser(userProfile);
-        user.setAuth(true);
+        usersStore.setUser(userProfile);
+        usersStore.setAuth(true);
         navigate(HOME_PAGE);
       }
     } catch (e) {

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Context } from "..";
 
 const NewMessageComponent = observer(({ writeMessage }) => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
 
   if (!writeMessage) return null;
 

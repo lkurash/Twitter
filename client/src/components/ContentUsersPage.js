@@ -18,7 +18,7 @@ const ContentUsersPage = observer(() => {
   const location = useLocation().pathname;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const { id } = useParams();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ContentUsersPage = observer(() => {
     }, 300);
   }, []);
 
-  if (isLoading || !user.userPage.id) {
+  if (isLoading || !usersStore.userPage.id) {
     return loadPageUserInfo();
   }
 
@@ -41,8 +41,8 @@ const ContentUsersPage = observer(() => {
           <img src={arrowLeft} alt="Button return" />
         </div>
         <div className="page-name-user-name">
-          <h2>{user.userPage.user_name}</h2>
-          <p>@{user.userPage.user_name}</p>
+          <h2>{usersStore.userPage.user_name}</h2>
+          <p>@{usersStore.userPage.user_name}</p>
         </div>
       </div>
       {(location === `/profile/${id}` || location === `/editprofile/${id}`) && (

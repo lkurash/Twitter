@@ -19,24 +19,24 @@ import {
 } from "../http/userApi";
 
 const TwitterPageNotAuthUser = observer(() => {
-  const { user } = useContext(Context);
-  const { twits } = useContext(Context);
-  const { retwits } = useContext(Context);
-  const { usersFollow } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
 
   useEffect(() => {
-    getUserById(id).then((userById) => user.setUserPage(userById));
-    getTwitsByUser(id).then((usersTwits) => twits.setUserTwits(usersTwits));
-    getAllTwits().then((allTwits) => twits.setTwits(allTwits));
+    getUserById(id).then((userById) => usersStore.setUserPage(userById));
+    getTwitsByUser(id).then((usersTwits) => twitsStore.setUserTwits(usersTwits));
+    getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
     getRetwitsByUser(id).then((retwitsByUser) =>
-      retwits.setRetwits(retwitsByUser)
+      retwitsStore.setRetwits(retwitsByUser)
     );
     getFollowingUsers(id).then((followings) =>
-      usersFollow.setuserFollowing(followings)
+      usersFollowingsStore.setuserFollowing(followings)
     );
     getFollowerUsers(id).then((followers) =>
-      usersFollow.setuserFollowers(followers)
+      usersFollowingsStore.setuserFollowers(followers)
     );
   });
 

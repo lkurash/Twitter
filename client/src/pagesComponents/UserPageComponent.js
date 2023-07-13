@@ -20,10 +20,10 @@ import ContentUsersPage from "../components/ContentUsersPage";
 import SidebarContent from "../components/SidebarContent";
 
 const UserPageComponent = observer(() => {
-  const { user } = useContext(Context);
-  const { twits } = useContext(Context);
-  const { usersFollow } = useContext(Context);
-  const { retwits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
   const ref = useRef();
   const { id } = useParams();
 
@@ -33,18 +33,18 @@ const UserPageComponent = observer(() => {
 
   useEffect(() => {
     try {
-      getUserById(id).then((userById) => user.setUserPage(userById));
-      getTwitsByUser(id).then((usersTwits) => twits.setUserTwits(usersTwits));
-      getAllUsers().then((users) => user.setAllUsers(users));
-      getAllTwits().then((allTwits) => twits.setTwits(allTwits));
+      getUserById(id).then((userById) => usersStore.setUserPage(userById));
+      getTwitsByUser(id).then((usersTwits) => twitsStore.setUserTwits(usersTwits));
+      getAllUsers().then((users) => usersStore.setAllUsers(users));
+      getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
       getRetwitsByUser(id).then((retwitsByUser) =>
-        retwits.setRetwits(retwitsByUser)
+        retwitsStore.setRetwits(retwitsByUser)
       );
       getFollowingUsers(id).then((followings) =>
-        usersFollow.setuserFollowing(followings)
+        usersFollowingsStore.setuserFollowing(followings)
       );
       getFollowerUsers(id).then((followers) =>
-        usersFollow.setuserFollowers(followers)
+        usersFollowingsStore.setuserFollowers(followers)
       );
     } catch (error) {
       console.log(error.response.data.message);

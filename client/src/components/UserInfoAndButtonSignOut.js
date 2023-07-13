@@ -8,7 +8,7 @@ import getUserPhoto from "../utils/getUserPhoto";
 import dotMenu from "./Img/more_dots_icon.png";
 
 const UserInfoAndButtonSignOut = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [showButtonSignOut, setShowButtonSignOut] = useState(false);
 
   const onClose = () => {
@@ -25,11 +25,11 @@ const UserInfoAndButtonSignOut = observer(() => {
       >
         <div className="button-user-desc">
           <div className="button-user-photo">
-            <img src={getUserPhoto(user.user)} alt="User" />
+            <img src={getUserPhoto(usersStore.user)} alt="User" />
           </div>
           <div className="button-user-name">
-            <span>{user.user.user_name}</span>
-            <p>@{user.user.user_name}</p>
+            <span>{usersStore.user.user_name}</span>
+            <p>@{usersStore.user.user_name}</p>
           </div>
         </div>
         <img

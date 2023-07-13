@@ -7,13 +7,13 @@ import FollowPageComponent from "../pagesComponents/FollowPageComponent";
 import CheckTokenOnPage from "../utils/checkTokenOnPage";
 
 const FollowPage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
 
-  CheckTokenOnPage(user, navigate, setLoadingPage);
+  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
 
-  return <>{!loadingPage && user.isAuth && <FollowPageComponent />}</>;
+  return <>{!loadingPage && usersStore.isAuth && <FollowPageComponent />}</>;
 });
 
 export default FollowPage;

@@ -6,16 +6,16 @@ import spinner from "../utils/spinner";
 import Twit from "./Twit";
 
 const ProfilePageLikes = observer(() => {
-  const { twits } = useContext(Context);
-  const { user } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { usersStore } = useContext(Context);
 
   const userLikesTwits = [];
 
   const getUserLikesTwits = () => {
-    if (twits.twits) {
-      twits.twits.map((twit) => {
+    if (twitsStore.twits) {
+      twitsStore.twits.map((twit) => {
         twit.Likes.forEach((like) => {
-          if (like.UserId === user.userPage.id) {
+          if (like.UserId === usersStore.userPage.id) {
             userLikesTwits.push(twit);
           }
         });
@@ -25,7 +25,7 @@ const ProfilePageLikes = observer(() => {
 
   getUserLikesTwits();
 
-  if (twits.twits.length === 0) return spinner();
+  if (twitsStore.twits.length === 0) return spinner();
 
   return (
     <div className="twits">

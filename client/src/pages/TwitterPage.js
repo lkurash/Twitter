@@ -11,15 +11,15 @@ import { getAllTwits } from "../http/twitsApi";
 import { getAllUsers } from "../http/userApi";
 
 const TwitterPage = observer(() => {
-  const { user } = useContext(Context);
-  const { topics } = useContext(Context);
-  const { twits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { topicsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
 
   useEffect(() => {
     try {
-      getAllTopics().then((allTopics) => topics.setTopics(allTopics));
-      getAllUsers().then((users) => user.setAllUsers(users));
-      getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+      getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
+      getAllUsers().then((users) => usersStore.setAllUsers(users));
+      getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -31,7 +31,7 @@ const TwitterPage = observer(() => {
         <MainContentExplorePageAllTwits />
         <SidebarContent />
       </div>
-      {!user.isAuth && <FooterComponent />}
+      {!usersStore.isAuth && <FooterComponent />}
     </div>
   );
 });

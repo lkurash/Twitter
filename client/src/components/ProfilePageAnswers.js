@@ -7,12 +7,12 @@ import { getCommentsByUser } from "../http/twitsApi";
 import UserComments from "./UserComments";
 
 const ProfilePageAnswers = observer(() => {
-  const { comments } = useContext(Context);
+  const { commentsStore } = useContext(Context);
   const { id } = useParams();
 
   useEffect(() => {
     getCommentsByUser(id).then((commentsByUser) =>
-      comments.setComments(commentsByUser)
+      commentsStore.setComments(commentsByUser)
     );
   });
 
