@@ -5,11 +5,11 @@ import { Context } from "..";
 import Twit from "./Twit";
 
 const TwitsForTrends = observer((props) => {
-  const { twits } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const twitsTrend = [];
 
   const getTwitsTrend = () => {
-    twits.twits.map((twit) => {
+    twitsStore.twits.map((twit) => {
       if (twit.text) {
         if (twit.text.toLowerCase().includes(props.trend.toLowerCase())) {
           twitsTrend.push(twit);

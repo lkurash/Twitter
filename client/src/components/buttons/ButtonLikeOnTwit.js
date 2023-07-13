@@ -17,56 +17,54 @@ import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonLikeOnTwit = observer((props) => {
-  const { twits } = useContext(Context);
-  const { user } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const userPage = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userLikesTwitId = [];
-  const authUserID = getAuthUserID(user);
+  const authUserID = getAuthUserID(usersStore);
 
   const getTwits = () => {
-    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+    getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
 
-    if (user.isAuth) {
-
+    if (usersStore.isAuth) {
       getTwitsByUser(authUserID).then((usersTwits) =>
-        twits.setUserTwits(usersTwits)
+        twitsStore.setUserTwits(usersTwits)
       );
     } else {
       getTwitsByUser(userPage.id).then((usersTwits) =>
-        twits.setUserTwits(usersTwits)
+        twitsStore.setUserTwits(usersTwits)
       );
     }
   };
 
   const createLikeTwit = async (twit) => {
-    
     await createLikeTwitByUser(authUserID, twit.id);
 
     getTwits();
   };
 
   const imgButtonLike = (twit) => {
-    if (twit.id === twits.hoverTwitLike.id) {
+    if (twit.id === twitsStore.hoverTwitLike.id) {
       return hoverLike;
     }
-    if (twit.id === twits.likedTwit.id) {
+    if (twit.id === twitsStore.likedTwit.id) {
       return activeLike;
     }
     return notactiveLike;
   };
 
   const disLikeButtonImg = (twit) => {
-    if (twit.id === twits.dislikeTwit.id) {
+    if (twit.id === twitsStore.dislikeTwit.id) {
       return notactiveLike;
     }
     return activeLike;
   };
 
   const getUserLikesTwitId = () => {
-    twits.twits.map((twit) => {
+    twitsStore.twits.map((twit) => {
       twit.Likes.forEach((like) => {
-        if (like.UserId === user.user.id) {
+        if (like.UserId === usersStore.user.id) {
           userLikesTwitId.push(twit.id);
         }
       });
@@ -92,18 +90,18 @@ const ButtonLikeOnTwit = observer((props) => {
             className="user-twit-panel-button-like"
             key={props.twit.id}
             onClick={() => {
-              if (user.isAuth) {
-                twits.setLikedTwit(props.twit);
-                twits.setDislikeTwit({});
+              if (usersStore.isAuth) {
+                twitsStore.setLikedTwit(props.twit);
+                twitsStore.setDislikeTwit({});
                 createLikeTwit(props.twit);
               } else {
                 setTooltipUserNotAuth(true);
               }
             }}
             onMouseEnter={() => {
-              twits.sethoverTwitLike(props.twit);
+              twitsStore.sethoverTwitLike(props.twit);
             }}
-            onMouseLeave={() => twits.sethoverTwitLike({})}
+            onMouseLeave={() => twitsStore.sethoverTwitLike({})}
           >
             <img
               src={imgButtonLike(props.twit)}
@@ -119,12 +117,12 @@ const ButtonLikeOnTwit = observer((props) => {
             key={props.twit.id}
             className="user-twit-panel-like-img"
             src={disLikeButtonImg(props.twit)}
-            onMouseEnter={() => twits.sethoverTwitLike(props.twit)}
-            onMouseLeave={() => twits.sethoverTwitLike({})}
+            onMouseEnter={() => twitsStore.sethoverTwitLike(props.twit)}
+            onMouseLeave={() => twitsStore.sethoverTwitLike({})}
             onClick={() => {
               createLikeTwit(props.twit);
-              twits.setDislikeTwit(props.twit);
-              twits.setLikedTwit({});
+              twitsStore.setDislikeTwit(props.twit);
+              twitsStore.setLikedTwit({});
             }}
           />
         </div>

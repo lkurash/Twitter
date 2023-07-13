@@ -6,13 +6,13 @@ import spinner from "../utils/spinner";
 import Twit from "./Twit";
 
 const ProfilePageMedia = observer(() => {
-  const { twits } = useContext(Context);
+  const { twitsStore } = useContext(Context);
 
   const userTwitsWithMedia = [];
 
   const getUserTwitsWithMedia = () => {
-    if (twits.userTwits) {
-      twits.userTwits.map((twit) => {
+    if (twitsStore.userTwits) {
+      twitsStore.userTwits.map((twit) => {
         if (twit.img) {
           userTwitsWithMedia.push(twit);
         }
@@ -22,7 +22,7 @@ const ProfilePageMedia = observer(() => {
 
   getUserTwitsWithMedia();
 
-  if (twits.userTwits.length === 0) return spinner();
+  if (twitsStore.userTwits.length === 0) return spinner();
 
   return (
     <div className="twits">

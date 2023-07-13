@@ -11,7 +11,7 @@ import ButtonClose from "../buttons/ButtonClose";
 import "./loginAndRegistretionForm.css";
 
 function SignUpForm({ getRegistrationUserInfo }) {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [activeDivName, setActivedivName] = useState(false);
   const [activeDivEmail, setActivedivEmail] = useState(false);
   const [activeDivPassword, setActivedivPassword] = useState(false);
@@ -100,7 +100,7 @@ function SignUpForm({ getRegistrationUserInfo }) {
                 getRegistrationUserInfo(
                   userName,
                   email,
-                  user.birthDate,
+                  usersStore.birthDate,
                   password
                 )
               }

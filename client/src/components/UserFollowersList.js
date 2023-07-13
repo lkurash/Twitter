@@ -8,23 +8,23 @@ import getAuthUserID from "../utils/getAuthUserID";
 import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
 
 const UserFollowersList = observer(() => {
-  const { user } = useContext(Context);
-  const { usersFollow } = useContext(Context);
-  const { twits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const navigate = useNavigate();
-  const authUserID = getAuthUserID(user);
+  const authUserID = getAuthUserID(usersStore);
 
   return (
     <div>
-      {usersFollow.userFollowers.length > 0 ? (
+      {usersFollowingsStore.userFollowers.length > 0 ? (
         <ul className="follow-page-main-users">
-          {usersFollow.userFollowers.map((profile) => (
+          {usersFollowingsStore.userFollowers.map((profile) => (
             <li key={profile.id} className="follow-page-main-user">
               <div
                 className="follow-page-main-user-info"
                 onClick={() => {
-                  user.setUserPage({});
-                  twits.setUserTwits([]);
+                  usersStore.setUserPage({});
+                  twitsStore.setUserTwits([]);
                   navigate(PROFILE_PAGE_USER + profile.User.id);
                 }}
               >

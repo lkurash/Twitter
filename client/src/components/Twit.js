@@ -3,7 +3,6 @@ import TwitDesc from "./TwitDesc";
 import UserPhoto from "./UserPhoto";
 
 const Twit = ({ twit }) => {
-  console.log(twit);
   return (
     <div>
       <div className="twit">

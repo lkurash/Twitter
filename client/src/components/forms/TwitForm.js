@@ -14,8 +14,8 @@ import imgFile from "../Img/file.png";
 import close from "../Img/x_icon.png";
 
 const TwitForm = observer(({ setShowTwitForm }) => {
-  const { user } = useContext(Context);
-  const { twits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
 
@@ -35,9 +35,9 @@ const TwitForm = observer(({ setShowTwitForm }) => {
       formData.append("text", text);
       formData.append("img", img);
       await createTwitByUser(formData);
-      await getAllTwits().then((alltwits) => twits.setTwits(alltwits));
-      getTwitsByUser(user.user.id).then((usersTwits) =>
-        twits.setUserTwits(usersTwits)
+      await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+      getTwitsByUser(usersStore.user.id).then((usersTwits) =>
+        twitsStore.setUserTwits(usersTwits)
       );
       setText("");
       setImg("");
@@ -59,7 +59,7 @@ const TwitForm = observer(({ setShowTwitForm }) => {
       <div className="user-block-twit">
         <div className="user-info">
           <div className="user-info-photo">
-            <img alt="User" src={getUserPhoto(user.user)} />
+            <img alt="User" src={getUserPhoto(usersStore.user)} />
           </div>
         </div>
         <form className="twit-form">

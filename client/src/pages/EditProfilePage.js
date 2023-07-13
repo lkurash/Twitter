@@ -7,13 +7,13 @@ import EditProfilePageComponent from "../pagesComponents/EditProfilPageComponent
 import CheckTokenOnPage from "../utils/checkTokenOnPage";
 
 const EditProfilePage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
 
-  CheckTokenOnPage(user, navigate, setLoadingPage);
+  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
 
-  return <>{!loadingPage && user.isAuth && <EditProfilePageComponent />}</>;
+  return <>{!loadingPage && usersStore.isAuth && <EditProfilePageComponent />}</>;
 });
 
 export default EditProfilePage;

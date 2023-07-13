@@ -10,12 +10,12 @@ import sortTwits from "../utils/sortTwits";
 import "./main.css";
 
 const UserTwits = observer(() => {
-  const { twits } = useContext(Context);
-  const { retwits } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
 
-  const userTwitsAndRetwits = sortTwits(twits.userTwits, retwits.retwits);
+  const userTwitsAndRetwits = sortTwits(twitsStore.userTwits, retwitsStore.retwits);
 
-  if (twits.userTwits.length === 0) return spinner();
+  if (twitsStore.userTwits.length === 0) return spinner();
 
   return (
     <div className="twits">

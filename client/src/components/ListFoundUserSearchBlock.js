@@ -9,15 +9,15 @@ import useOutsideClick from "../utils/useOutsideClickFunction";
 
 const ListFoundUserSearchBlock = observer(
   ({ userName, showListFoundUsers, onClose }) => {
-    const { user } = useContext(Context);
+    const { usersStore } = useContext(Context);
     const navigate = useNavigate();
     const listUsersRef = useRef(null);
     const usersFound = [];
     const usersName = [];
 
     const getAllUsersName = () => {
-      if (user.allUsers) {
-        user.allUsers.map((profile) => {
+      if (usersStore.allUsers) {
+        usersStore.allUsers.map((profile) => {
           if (profile.user_name) {
             usersName.push(
               profile.user_name[0].toLowerCase() + profile.user_name.slice(1)
@@ -33,7 +33,7 @@ const ListFoundUserSearchBlock = observer(
       if (userName) {
         usersName.forEach((element) => {
           if (element.includes(userName.toLowerCase())) {
-            user.allUsers.map((profile) => {
+            usersStore.allUsers.map((profile) => {
               if (
                 profile.user_name ===
                 element[0].toUpperCase() + element.slice(1)
@@ -61,7 +61,7 @@ const ListFoundUserSearchBlock = observer(
                 key={profile.id}
                 className="main-search-found-list-user"
                 onClick={() => {
-                  if (user.isAuth) {
+                  if (usersStore.isAuth) {
                     navigate(PROFILE_PAGE_USER + profile.id);
                   } else {
                     navigate(TWITTER_USER_PAGE + profile.id);

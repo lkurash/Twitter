@@ -18,7 +18,7 @@ import "./footer.css";
 
 function FooterMobileComponent() {
   const navigate = useNavigate();
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [showTwitForm, setShowTwitForm] = useState(false);
 
   return (
@@ -46,14 +46,14 @@ function FooterMobileComponent() {
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(BOOKMARKS_PAGE + user.user.id)}
+          onClick={() => navigate(BOOKMARKS_PAGE + usersStore.user.id)}
         >
           <img src={bookmark} alt="bookmark" className="button-icon-menu" />
         </div>
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(PROFILE_PAGE_USER + user.user.id)}
+          onClick={() => navigate(PROFILE_PAGE_USER + usersStore.user.id)}
         >
           <img src={profile} alt="profile" className="button-icon-menu" />
         </div>

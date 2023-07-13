@@ -4,9 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { EDIT_PROFILE_PAGE } from "../../utils/constans";
 import getAuthUserID from "../../utils/getAuthUserID";
 
-const ButtonEditProfile = observer(({ user }) => {
+const ButtonEditProfile = observer(({ usersStore }) => {
   const navigate = useNavigate();
-  const authUserID = getAuthUserID(user);
+  const authUserID = getAuthUserID(usersStore);
   const { id } = useParams();
 
   if (authUserID !== +id) return null;

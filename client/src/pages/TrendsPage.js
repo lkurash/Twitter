@@ -17,14 +17,14 @@ import "../App.css";
 import "../components/common/common.css";
 
 const TrendsPage = observer(() => {
-  const { twits } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const { trend } = useParams();
 
   const navigate = useNavigate();
   const location = useLocation().pathname;
 
   useEffect(() => {
-    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+    getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
   });
 
   return (

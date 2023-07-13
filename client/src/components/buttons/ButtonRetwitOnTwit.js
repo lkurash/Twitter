@@ -16,63 +16,61 @@ import activeRetwit from "../Img/active_retweet_icon.png";
 import notactiveRetwit from "../Img/notactive_retweet_icon.png";
 import "../userTwitPanel.css";
 
-
 const ButtonRetwitOnTwit = observer((props) => {
-  const { twits } = useContext(Context);
-  const { retwits } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
   const userPage = useParams();
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userRetwitTwitId = [];
-  const authUserID = getAuthUserID(user);
+  const authUserID = getAuthUserID(usersStore);
 
   const getTwits = () => {
-    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+    getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
 
-    if (user.isAuth) {
-      const authUserID = getAuthUserID(user);
+    if (usersStore.isAuth) {
+      const authUserID = getAuthUserID(usersStore);
 
       getTwitsByUser(authUserID).then((usersTwits) =>
-        twits.setUserTwits(usersTwits)
+        twitsStore.setUserTwits(usersTwits)
       );
       getRetwitsByUser(authUserID).then((retwitsByUser) =>
-        retwits.setRetwits(retwitsByUser)
+        retwitsStore.setRetwits(retwitsByUser)
       );
     } else {
       getTwitsByUser(userPage.id).then((usersTwits) =>
-        twits.setUserTwits(usersTwits)
+        twitsStore.setUserTwits(usersTwits)
       );
     }
   };
 
   const createRetwitTwit = async (twit) => {
-
     await createRetwitByUser(authUserID, twit.id);
 
     getTwits();
   };
 
   const imgButtonRetwit = (twit) => {
-    if (twit.id === retwits.hoverTwitRetwit.id) {
+    if (twit.id === retwitsStore.hoverTwitRetwit.id) {
       return activeRetwit;
     }
-    if (twit.id === retwits.retwitTwit.id) {
+    if (twit.id === retwitsStore.retwitTwit.id) {
       return activeRetwit;
     }
     return notactiveRetwit;
   };
 
   const deleteActiveRetwitButtonImg = (twit) => {
-    if (twit.id === retwits.deleteRetwit.id) {
+    if (twit.id === retwitsStore.deleteRetwit.id) {
       return notactiveRetwit;
     }
     return activeRetwit;
   };
 
   const getUserRetwitTwitId = () => {
-    twits.twits.map((twit) => {
+    twitsStore.twits.map((twit) => {
       twit.Retwits.forEach((retwit) => {
-        if (retwit.UserId === user.user.id) {
+        if (retwit.UserId === usersStore.user.id) {
           userRetwitTwitId.push(twit.id);
         }
       });
@@ -98,17 +96,17 @@ const ButtonRetwitOnTwit = observer((props) => {
             className="user-twit-panel-button-retwit"
             key={props.twit.id}
             onClick={() => {
-              if (user.isAuth) {
-                retwits.setRetwitTwit(props.twit);
+              if (usersStore.isAuth) {
+                retwitsStore.setRetwitTwit(props.twit);
                 createRetwitTwit(props.twit);
               } else {
                 setTooltipUserNotAuth(true);
               }
             }}
             onMouseEnter={() => {
-              retwits.sethoverTwitRetwit(props.twit);
+              retwitsStore.sethoverTwitRetwit(props.twit);
             }}
-            onMouseLeave={() => retwits.sethoverTwitRetwit({})}
+            onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
           >
             <img
               src={imgButtonRetwit(props.twit)}
@@ -122,13 +120,13 @@ const ButtonRetwitOnTwit = observer((props) => {
           className="user-twit-panel-button-retwit"
           key={props.twit.id}
           onMouseEnter={() => {
-            retwits.sethoverTwitRetwit(props.twit);
+            retwitsStore.sethoverTwitRetwit(props.twit);
           }}
-          onMouseLeave={() => retwits.sethoverTwitRetwit({})}
+          onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
           onClick={() => {
-            retwits.setDeleteRetwit(props.twit);
+            retwitsStore.setDeleteRetwit(props.twit);
             createRetwitTwit(props.twit);
-            retwits.setRetwitTwit({});
+            retwitsStore.setRetwitTwit({});
           }}
         >
           <img

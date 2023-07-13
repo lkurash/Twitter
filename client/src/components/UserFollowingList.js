@@ -8,22 +8,22 @@ import getUserPhoto from "../utils/getUserPhoto";
 import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
 
 const UserFollowingList = observer(() => {
-  const { user } = useContext(Context);
-  const { usersFollow } = useContext(Context);
-  const { twits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const navigate = useNavigate();
 
   return (
     <div>
-      {usersFollow.userFollowing.length > 0 ? (
+      {usersFollowingsStore.userFollowing.length > 0 ? (
         <ul className="follow-page-main-users">
-          {usersFollow.userFollowing.map((profile) => (
+          {usersFollowingsStore.userFollowing.map((profile) => (
             <li key={profile.id} className="follow-page-main-user">
               <div
                 className="follow-page-main-user-info"
                 onClick={() => {
-                  user.setUserPage({});
-                  twits.setUserTwits([]);
+                  usersStore.setUserPage({});
+                  twitsStore.setUserTwits([]);
                   navigate(PROFILE_PAGE_USER + profile.followUser.id);
                 }}
               >

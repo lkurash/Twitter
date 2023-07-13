@@ -7,13 +7,13 @@ import HomePageComponent from "../pagesComponents/HomePageComponent";
 import CheckTokenOnPage from "../utils/checkTokenOnPage";
 
 const HomePage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
 
-  CheckTokenOnPage(user, navigate, setLoadingPage);
+  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
 
-  return <>{!loadingPage && user.isAuth && <HomePageComponent />}</>;
+  return <>{!loadingPage && usersStore.isAuth && <HomePageComponent />}</>;
 });
 
 export default HomePage;

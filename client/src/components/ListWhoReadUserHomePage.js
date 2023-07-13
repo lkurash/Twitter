@@ -14,18 +14,18 @@ import getUserPhoto from "../utils/getUserPhoto";
 import spinner from "../utils/spinner";
 
 const ListWhoReadUserHomePage = observer(() => {
-  const { user } = useContext(Context);
-  const { usersFollow } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const authUserID = getAuthUserID(user);
+  const authUserID = getAuthUserID(usersStore);
   const whoReadingList = [];
   const whoNotReadingList = [];
 
   const getUsersAndFollowigs = async () => {
-    await getAllUsers().then((users) => user.setAllUsers(users));
-    await getFollowingUsers(user.user.id).then((followings) =>
-      usersFollow.setuserFollowing(followings)
+    await getAllUsers().then((users) => usersStore.setAllUsers(users));
+    await getFollowingUsers(usersStore.user.id).then((followings) =>
+      usersFollowingsStore.setuserFollowing(followings)
     );
   };
 
@@ -35,8 +35,8 @@ const ListWhoReadUserHomePage = observer(() => {
   };
 
   const chekFollowingsUser = () => {
-    if (user.allUsers) {
-      user.allUsers.forEach((allUser) => {
+    if (usersStore.allUsers) {
+      usersStore.allUsers.forEach((allUser) => {
         whoReadingList.push(authUserID);
         allUser.Followings.forEach((followUser) => {
           if (authUserID === followUser.UserId) {
@@ -48,8 +48,8 @@ const ListWhoReadUserHomePage = observer(() => {
   };
 
   const createNotReadingList = () => {
-    if (user.allUsers) {
-      user.allUsers.forEach((allUser) => {
+    if (usersStore.allUsers) {
+      usersStore.allUsers.forEach((allUser) => {
         if (!whoReadingList.includes(allUser.id)) {
           whoNotReadingList.push(allUser);
         }
@@ -66,7 +66,7 @@ const ListWhoReadUserHomePage = observer(() => {
     }, 400);
   }, []);
 
-  if (isLoading || user.allUsers.length === 0) {
+  if (isLoading || usersStore.allUsers.length === 0) {
     return spinner();
   }
 
@@ -79,7 +79,7 @@ const ListWhoReadUserHomePage = observer(() => {
               <div
                 className="section-read-main-user-info"
                 onClick={() => {
-                  if (user.isAuth) {
+                  if (usersStore.isAuth) {
                     navigate(PROFILE_PAGE_USER + profile.id);
                   } else {
                     navigate(TWITTER_USER_PAGE + profile.id);
@@ -92,11 +92,11 @@ const ListWhoReadUserHomePage = observer(() => {
                   <p className="profile-name">{`@${profile.user_name}`}</p>
                 </div>
               </div>
-              {user.isAuth && (
+              {usersStore.isAuth && (
                 <button
                   className="follow-page-main-button-follow"
                   onClick={() => {
-                    usersFollow.setStartFollowUser(profile);
+                    usersFollowingsStore.setStartFollowUser(profile);
                     createUserFollowings(profile);
                   }}
                 >

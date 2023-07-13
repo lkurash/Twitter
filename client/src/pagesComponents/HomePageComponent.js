@@ -20,12 +20,12 @@ import "../components/main.css";
 import "../components/userpage.css";
 
 const HomePageComponent = observer(() => {
-  const { twits } = useContext(Context);
-  const { user } = useContext(Context);
-  const { retwits } = useContext(Context);
-  const { usersFollow } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
   const ref = useRef();
-  const authUserID = getAuthUserID(user);
+  const authUserID = getAuthUserID(usersStore);
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
@@ -33,17 +33,17 @@ const HomePageComponent = observer(() => {
 
   useEffect(() => {
     getRetwitsByUser(authUserID).then((retwitsByUser) =>
-      retwits.setRetwits(retwitsByUser)
+      retwitsStore.setRetwits(retwitsByUser)
     );
-    getAllUsers().then((users) => user.setAllUsers(users));
+    getAllUsers().then((users) => usersStore.setAllUsers(users));
     getFollowingUsers(authUserID).then((followings) =>
-      usersFollow.setuserFollowing(followings)
+      usersFollowingsStore.setuserFollowing(followings)
     );
     getTwitsByUser(authUserID).then((usersTwits) =>
-      twits.setUserTwits(usersTwits)
+      twitsStore.setUserTwits(usersTwits)
     );
     getAllTwits().then((alltwits) => {
-      twits.setTwits(alltwits);
+      twitsStore.setTwits(alltwits);
     });
   });
 

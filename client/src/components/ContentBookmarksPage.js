@@ -9,12 +9,12 @@ import Twit from "./Twit";
 import arrowLeft from "./Img/arrow_left_icon.png";
 
 const ContentBookmarksPage = observer(() => {
-  const { user } = useContext(Context);
-  const { favoriteTwits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { favoriteTwitsStore } = useContext(Context);
   const navigate = useNavigate();
 
-  if (favoriteTwits.favoriteTwits.length === 0) return spinner();
-console.log(favoriteTwits.favoriteTwits);
+  if (favoriteTwitsStore.favoriteTwits.length === 0) return spinner();
+
   return (
     <div className="user-main-content-block">
       <div className="page-name main-stiky-panel">
@@ -26,12 +26,12 @@ console.log(favoriteTwits.favoriteTwits);
         </div>
         <div className="page-name-user-name">
           <h2>Bookmarks</h2>
-          <p>@{user.user.user_name}</p>
+          <p>@{usersStore.user.user_name}</p>
         </div>
       </div>
       <div className="twits">
-        {favoriteTwits.favoriteTwits ? (
-          favoriteTwits.favoriteTwits.map((bookmark) => (
+        {favoriteTwitsStore.favoriteTwits ? (
+          favoriteTwitsStore.favoriteTwits.map((bookmark) => (
             <Twit twit={bookmark.Twit} key={bookmark.Twit.id} />
           ))
         ) : (

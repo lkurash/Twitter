@@ -10,14 +10,14 @@ import ButtonEmoji from "../buttons/ButtonEmoji";
 import close from "../Img/x_icon.png";
 
 const CommentForm = observer(({ twit }) => {
-  const { user } = useContext(Context);
-  const { comments } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { commentsStore } = useContext(Context);
   const [commentText, setCommentText] = useState("");
-  const authUserID = getAuthUserID(user);
+  const authUserID = getAuthUserID(usersStore);
 
   const createComment = async (twitId) => {
     await createCommentTwitByUser(authUserID, twitId, commentText);
-    comments.setActiveComment({});
+    commentsStore.setActiveComment({});
   };
   const createTwitDate = (createdAt) => {
     const date = new Date(createdAt).toString().split(" ");
@@ -38,7 +38,7 @@ const CommentForm = observer(({ twit }) => {
       <div className="comment-form">
         <div
           className="button-close"
-          onClick={() => comments.setActiveComment({})}
+          onClick={() => commentsStore.setActiveComment({})}
         >
           <img src={close} alt="close-icon" className="close-icon" />
         </div>
@@ -46,7 +46,7 @@ const CommentForm = observer(({ twit }) => {
           <div className="comment-user-info">
             <img alt="User" src={getUserPhoto(twit.User)} />
             <div className="comment-line" />
-            <img src={getUserPhoto(user.user)} alt="User" />
+            <img src={getUserPhoto(usersStore.user)} alt="User" />
           </div>
           <div className="comment-text-info">
             <div className="twit-comment">

@@ -10,12 +10,12 @@ import UserFollowingList from "./UserFollowingList";
 import arrowLeft from "./Img/arrow_left_icon.png";
 
 const ContentFollowPage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const navigate = useNavigate();
   const location = useLocation().pathname;
 
   const getClassNameButton = (page) => {
-    if (location === `${page}${user.userPage.id}`) {
+    if (location === `${page}${usersStore.userPage.id}`) {
       return "follow-page-main-button-onpanel follow-page-active-button-panel";
     } else {
       return "follow-page-main-button-onpanel";
@@ -32,36 +32,35 @@ const ContentFollowPage = observer(() => {
           >
             <img src={arrowLeft} alt="Button return" />
           </div>
-          {user.userPage.user_name && (
+          {usersStore.userPage.user_name && (
             <div className="follow-page-header-user-name">
-              <h2>{user.userPage.user_name}</h2>
-              <p>@{user.userPage.user_name}</p>
+              <h2>{usersStore.userPage.user_name}</h2>
+              <p>@{usersStore.userPage.user_name}</p>
             </div>
           )}
         </div>
 
         <div className="user-main-content-button-panel">
           <button
-            className={getClassNameButton(FOLLOWER_PAGE)}
-            type="button"
-            onClick={() => navigate(FOLLOWER_PAGE + user.userPage.id)}
-          >
-            <span>Followers</span>
-          </button>
-
-          <button
             className={getClassNameButton(FOLLOWING_PAGE)}
             type="button"
-            onClick={() => navigate(FOLLOWING_PAGE + user.userPage.id)}
+            onClick={() => navigate(FOLLOWING_PAGE + usersStore.userPage.id)}
           >
             <span>Following</span>
           </button>
+          <button
+            className={getClassNameButton(FOLLOWER_PAGE)}
+            type="button"
+            onClick={() => navigate(FOLLOWER_PAGE + usersStore.userPage.id)}
+          >
+            <span>Followers</span>
+          </button>
         </div>
       </div>
-      {location === `${FOLLOWING_PAGE}${user.userPage.id}` && (
+      {location === `${FOLLOWING_PAGE}${usersStore.userPage.id}` && (
         <UserFollowingList />
       )}
-      {location === `${FOLLOWER_PAGE}${user.userPage.id}` && (
+      {location === `${FOLLOWER_PAGE}${usersStore.userPage.id}` && (
         <UserFollowersList />
       )}
     </div>

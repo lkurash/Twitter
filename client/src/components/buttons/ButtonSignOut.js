@@ -6,19 +6,19 @@ import { EXPLORE_PAGE } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 function ButtonSignOut({ showButtonSignOut, onClose }) {
-  const { user } = useContext(Context);
-  const { retwits } = useContext(Context);
-  const { favoriteTwits } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
+  const { favoriteTwitsStore } = useContext(Context);
   const tooltipRef = useRef(null);
   const navigate = useNavigate();
 
   const logout = () => {
     localStorage.clear();
-    user.setUser({});
-    user.setUserPage({});
-    retwits.setRetwitTwit({});
-    favoriteTwits.setFavoriteTwits({});
-    user.setAuth(false);
+    usersStore.setUser({});
+    usersStore.setUserPage({});
+    retwitsStore.setRetwitTwit({});
+    favoriteTwitsStore.setFavoriteTwits({});
+    usersStore.setAuth(false);
     navigate(EXPLORE_PAGE);
   };
 

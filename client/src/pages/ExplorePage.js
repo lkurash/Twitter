@@ -10,11 +10,11 @@ import { useNavigate } from "react-router-dom";
 import CheckTokenOnPage from "../utils/checkTokenOnPage";
 
 const ExplorePage = observer(() => {
-  const { user } = useContext(Context);
+  const { usersStore } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
 
-  CheckTokenOnPage(user, navigate, setLoadingPage);
+  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
 
   return <MainComponentExplorePage />;
 });
