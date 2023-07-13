@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { observer } from "mobx-react-lite";
+
 import Logo from "./common/Logo";
+import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
+
 import logo from "./Img/logo_icon.png";
 import searchIcon from "./Img/zoom__icon.png";
-import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 
 const MainSearchBlock = observer((props) => {
   const [userName, setUserName] = useState("");

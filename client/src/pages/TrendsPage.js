@@ -1,18 +1,20 @@
-import "../App.css";
-import "../components/common/common.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import { Context } from "..";
+
 import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
 import FooterComponent from "../components/FooterComponent";
-import { Context } from "..";
 import { getAllTwits } from "../http/twitsApi";
 import TwitsForTrends from "../components/TwitsForTrends";
-import searchIcon from "../components/Img/zoom__icon.png";
-import arrowLeft from "../components/Img/arrow_left_icon.png";
 import ButtonDotMenu from "../components/buttons/ButtonDotMenu";
 import FooterMobileComponent from "../components/FooterMobileComponent";
+
+import searchIcon from "../components/Img/zoom__icon.png";
+import arrowLeft from "../components/Img/arrow_left_icon.png";
+import "../App.css";
+import "../components/common/common.css";
 
 const TrendsPage = observer(() => {
   const { twits } = useContext(Context);

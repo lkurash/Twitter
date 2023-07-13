@@ -2,9 +2,11 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
+
 import spinner from "../utils/spinner";
-import arrowLeft from "./Img/arrow_left_icon.png";
 import Twit from "./Twit";
+
+import arrowLeft from "./Img/arrow_left_icon.png";
 
 const ContentBookmarksPage = observer(() => {
   const { user } = useContext(Context);
@@ -12,7 +14,7 @@ const ContentBookmarksPage = observer(() => {
   const navigate = useNavigate();
 
   if (favoriteTwits.favoriteTwits.length === 0) return spinner();
-
+console.log(favoriteTwits.favoriteTwits);
   return (
     <div className="user-main-content-block">
       <div className="page-name main-stiky-panel">

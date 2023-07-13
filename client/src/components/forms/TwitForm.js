@@ -1,15 +1,17 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
+import { Context } from "../..";
+
 import {
   createTwitByUser,
   getAllTwits,
   getTwitsByUser,
 } from "../../http/twitsApi";
-import { Context } from "../..";
-import imgFile from "../Img/file.png";
-import close from "../Img/x_icon.png";
 import getUserPhoto from "../../utils/getUserPhoto";
 import ButtonEmoji from "../buttons/ButtonEmoji";
+
+import imgFile from "../Img/file.png";
+import close from "../Img/x_icon.png";
 
 const TwitForm = observer(({ setShowTwitForm }) => {
   const { user } = useContext(Context);
@@ -34,8 +36,8 @@ const TwitForm = observer(({ setShowTwitForm }) => {
       formData.append("img", img);
       await createTwitByUser(formData);
       await getAllTwits().then((alltwits) => twits.setTwits(alltwits));
-      getTwitsByUser(user.user.id).then((twitsById) =>
-        twits.setUserTwits(twitsById)
+      getTwitsByUser(user.user.id).then((usersTwits) =>
+        twits.setUserTwits(usersTwits)
       );
       setText("");
       setImg("");

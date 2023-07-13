@@ -1,8 +1,10 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
+
 import { deleteTwitByUser, getTwitsByUser } from "../../http/twitsApi";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
+
 import dotMenu from "../Img/more_dots_icon.png";
 
 const ButtonDeleteOnTwit = observer((props) => {

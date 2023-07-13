@@ -1,7 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { createFollow, getFollowingUser } from "../../http/userApi";
+
+import { createFollowings, getFollowingsUser } from "../../http/userApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonFollowingUsersProfile = observer(({ user, usersFollow }) => {
@@ -21,9 +22,9 @@ const ButtonFollowingUsersProfile = observer(({ user, usersFollow }) => {
 
   const createFollowing = () => {
     setFollowing(true);
-    createFollow(user.userPage.id);
-    getFollowingUser(id).then((allFollowing) =>
-      usersFollow.setuserFollowing(allFollowing)
+    createFollowings(authUserID, user.userPage.id);
+    getFollowingsUser(id).then((followings) =>
+      usersFollow.setuserFollowing(followings)
     );
   };
 

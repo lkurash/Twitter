@@ -1,8 +1,9 @@
 import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
+
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
 import MainSearchBlock from "./MainSearchBlock";
-import { useEffect, useState } from "react";
 import spinner from "../utils/spinner";
 
 const ContentExplorePage = observer(() => {

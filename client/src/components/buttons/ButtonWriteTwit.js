@@ -1,6 +1,8 @@
 import { useState } from "react";
-import tweetIcon from "../Img/feather_icon.png";
+
 import PopUpWriteTwit from "../PopUpWriteTwit";
+
+import tweetIcon from "../Img/feather_icon.png";
 
 const ButtonWriteTwit = () => {
   const [showTwitForm, setShowTwitForm] = useState(false);

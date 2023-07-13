@@ -2,9 +2,10 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
+
 import {
   getFollowersUser,
-  getFollowingUser,
+  getFollowingsUser,
   getUserById,
   getAllUsers,
 } from "../http/userApi";
@@ -19,11 +20,11 @@ const FollowPageComponent = observer(() => {
 
   useEffect(() => {
     try {
-      getFollowingUser(id).then((allFollowing) =>
-        usersFollow.setuserFollowing(allFollowing)
+      getFollowingsUser(id).then((followings) =>
+        usersFollow.setuserFollowing(followings)
       );
-      getFollowersUser(id).then((allFollowers) =>
-        usersFollow.setuserFollowers(allFollowers)
+      getFollowersUser(id).then((followers) =>
+        usersFollow.setuserFollowers(followers)
       );
       getAllUsers().then((users) => user.setAllUsers(users));
       getUserById(id).then((userById) => user.setUserPage(userById));

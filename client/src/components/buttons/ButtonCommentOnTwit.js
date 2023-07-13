@@ -1,12 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
+
+import CommentForm from "../forms/CommentForm";
+import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
+
 import "../userTwitPanel.css";
 import "../comment.css";
 import activeComment from "../Img/active_comment_icon.png";
 import notactiveComment from "../Img/notactive_comment_icon.png";
-import CommentForm from "../forms/CommentForm";
-import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
 const ButtonCommentOnTwit = observer((props) => {
   const { comments } = useContext(Context);

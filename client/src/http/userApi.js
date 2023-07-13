@@ -1,14 +1,7 @@
 import { $authHost, $host } from ".";
 
-export const authorization = async (email, password) => {
-  const response = await $host.post("api/user/login", { email, password });
-
-  localStorage.setItem("token", response.data.token);
-  return response.data.token;
-};
-
-export const registration = async (name, email, password, birthdate) => {
-  const response = await $host.post("api/user/registration", {
+export const register = async (name, email, password, birthdate) => {
+  const response = await $host.post("api/users/registration", {
     name,
     email,
     password,
@@ -16,59 +9,70 @@ export const registration = async (name, email, password, birthdate) => {
   });
 
   localStorage.setItem("token", response.data.token);
-  return response.data.token;
+  return response.data.user;
+};
+
+export const authentication = async (email, password) => {
+  const response = await $host.post("api/users/login", {
+    email,
+    password,
+  });
+
+  localStorage.setItem("token", response.data.token);
+
+  return response.data.user;
 };
 
 export const checkToken = async () => {
-  const response = await $authHost.get("api/user/auth");
+  const response = await $authHost.get("api/users/auth");
 
   localStorage.setItem("token", response.data.token);
 
   return response.data.token;
 };
 
-export const getUserInfo = async (email) => {
-  const userInfo = await $authHost.get("api/user/home", email);
+export const updateUserProfile = async (id, updateUser) => {
+  const userProfile = await $authHost.put(`api/users/${id}`, updateUser);
 
-  return userInfo.data;
+  return userProfile.data.user;
 };
 
-export const updateUserProfile = async (user) => {
-  const userProfile = await $authHost.post("api/user/profile", user);
-
-  return userProfile.data;
-};
 export const getAllUsers = async () => {
-  const users = await $host.get("api/user/allUsers");
+  const users = await $host.get("api/users");
 
   return users.data;
 };
+
 export const getUserById = async (id) => {
-  const userById = await $authHost.get(`api/user/${id}`);
+  const userById = await $authHost.get(`api/users/${id}`);
 
   return userById.data;
 };
-export const createFollow = async (followUserId) => {
-  const following = await $authHost.post("api/user/following", {
+
+export const createFollowings = async (id, followUserId) => {
+  const followings = await $authHost.post(`api/users/${id}/followings`, {
     followUserId,
   });
 
-  return following.data;
+  return followings.data;
 };
-export const deleteFollow = async (followUserId) => {
-  const unFollow = await $authHost.post("api/user/deleteFollowing", {
-    followUserId,
-  });
 
-  return unFollow.data;
-};
-export const getFollowingUser = async (id) => {
-  const allFollowing = await $authHost.get(`api/user/following/${id}`);
+export const deleteFollowings = async (id, followUserId) => {
+  const unFollowings = await $authHost.delete(
+    `api/users/${id}/unfollow/${followUserId}`
+  );
 
-  return allFollowing.data;
+  return unFollowings.data;
 };
+
+export const getFollowingsUser = async (id) => {
+  const followings = await $authHost.get(`api/users/${id}/followings`);
+
+  return followings.data;
+};
+
 export const getFollowersUser = async (id) => {
-  const allFollowers = await $authHost.get(`api/user/followers/${id}`);
+  const followers = await $authHost.get(`api/users/${id}/followers`);
 
-  return allFollowers.data;
+  return followers.data;
 };

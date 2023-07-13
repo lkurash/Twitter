@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
+
 import FooterComponent from "../components/FooterComponent";
 import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
@@ -13,7 +14,7 @@ import {
 } from "../http/twitsApi";
 import {
   getFollowersUser,
-  getFollowingUser,
+  getFollowingsUser,
   getUserById,
 } from "../http/userApi";
 
@@ -26,16 +27,16 @@ const TwitterPageNotAuthUser = observer(() => {
 
   useEffect(() => {
     getUserById(id).then((userById) => user.setUserPage(userById));
-    getTwitsByUser(id).then((twitsById) => twits.setUserTwits(twitsById));
+    getTwitsByUser(id).then((usersTwits) => twits.setUserTwits(usersTwits));
     getAllTwits().then((allTwits) => twits.setTwits(allTwits));
     getRetwitsByUser(id).then((retwitsByUser) =>
       retwits.setRetwits(retwitsByUser)
     );
-    getFollowingUser(id).then((allFollowing) =>
-      usersFollow.setuserFollowing(allFollowing)
+    getFollowingsUser(id).then((followings) =>
+      usersFollow.setuserFollowing(followings)
     );
-    getFollowersUser(id).then((allFollowers) =>
-      usersFollow.setuserFollowers(allFollowers)
+    getFollowersUser(id).then((followers) =>
+      usersFollow.setuserFollowers(followers)
     );
   });
 

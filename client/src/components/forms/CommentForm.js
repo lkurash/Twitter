@@ -1,18 +1,22 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
+
 import { createCommentTwitByUser } from "../../http/twitsApi";
+import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
-import close from "../Img/x_icon.png";
 import ButtonEmoji from "../buttons/ButtonEmoji";
+
+import close from "../Img/x_icon.png";
 
 const CommentForm = observer(({ twit }) => {
   const { user } = useContext(Context);
   const { comments } = useContext(Context);
   const [commentText, setCommentText] = useState("");
+  const authUserID = getAuthUserID(user);
 
-  const createComment = async (TwitId) => {
-    await createCommentTwitByUser(TwitId, commentText);
+  const createComment = async (twitId) => {
+    await createCommentTwitByUser(authUserID, twitId, commentText);
     comments.setActiveComment({});
   };
   const createTwitDate = (createdAt) => {

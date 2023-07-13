@@ -2,10 +2,12 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Context } from "..";
+
 import { getAllTopics } from "../http/topicsApi";
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
+
 import "./sideBar.css";
 
 const SidebarContent = observer(() => {

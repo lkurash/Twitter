@@ -1,8 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
+
 import { getAllTwits, getFavoriteTwits } from "../http/twitsApi";
-import { getAllUsers, getFollowingUser } from "../http/userApi";
+import { getAllUsers, getFollowingsUser } from "../http/userApi";
 import FooterMobileComponent from "../components/FooterMobileComponent";
 import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
@@ -19,12 +20,12 @@ const BookmarksPageComponent = observer(() => {
   useEffect(() => {
     try {
       getAllTwits().then((alltwits) => twits.setTwits(alltwits));
-      getFavoriteTwits().then((favoriteTwitsByUser) =>
+      getFavoriteTwits(authUserID).then((favoriteTwitsByUser) =>
         favoriteTwits.setFavoriteTwits(favoriteTwitsByUser)
       );
       getAllUsers().then((users) => user.setAllUsers(users));
-      getFollowingUser(authUserID).then((allFollowing) =>
-        usersFollow.setuserFollowing(allFollowing)
+      getFollowingsUser(authUserID).then((followings) =>
+        usersFollow.setuserFollowing(followings)
       );
     } catch (error) {
       console.log(error.response.data.message);

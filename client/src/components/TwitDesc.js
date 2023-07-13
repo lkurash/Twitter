@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
+
 import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
 
 const TwitDesc = ({ twit }) => {

@@ -2,15 +2,17 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "..";
-import birthdateIcon from "./Img/birthday_icon.png";
-import webSiteIcon from "./Img/url_web_icon.png";
-import registrationIcon from "./Img/month_icon.png";
-import undefinedUserPhoto from "./Img/user_photo.jpeg";
+
 import { FOLLOWER_PAGE, FOLLOWING_PAGE } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 import ButtonEditProfile from "./buttons/ButtonEditProfile";
 import ButtonFollowingUsersProfile from "./buttons/ButtonFollowingUsersProfile";
+
+import birthdateIcon from "./Img/birthday_icon.png";
+import webSiteIcon from "./Img/url_web_icon.png";
+import registrationIcon from "./Img/month_icon.png";
+import undefinedUserPhoto from "./Img/user_photo.jpeg";
 
 const ProfileUserInfo = observer(() => {
   const { user } = useContext(Context);

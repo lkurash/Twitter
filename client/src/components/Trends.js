@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+
 import { TRENDS_PAGE } from "../utils/constans";
 import ButtonDotMenu from "./buttons/ButtonDotMenu";
 

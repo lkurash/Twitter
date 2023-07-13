@@ -2,7 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
-import { createFollow, getAllUsers, getFollowingUser } from "../http/userApi";
+
+import { createFollowings, getAllUsers, getFollowingsUser } from "../http/userApi";
 import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
 import getUserPhoto from "../utils/getUserPhoto";
@@ -19,36 +20,40 @@ const ListWhoReadUserHomePage = observer(() => {
 
   const getUsersAndFollowigs = async () => {
     await getAllUsers().then((users) => user.setAllUsers(users));
-    await getFollowingUser(user.user.id).then((allFollowing) =>
-      usersFollow.setuserFollowing(allFollowing)
+    await getFollowingsUser(user.user.id).then((followings) =>
+      usersFollow.setuserFollowing(followings)
     );
   };
 
-  const createFollowing = async (profile) => {
-    await createFollow(profile.id);
+  const createUserFollowings = async (profile) => {
+    await createFollowings(authUserID, profile.id);
     getUsersAndFollowigs();
   };
 
-  const chekFollowingUser = () => {
-    user.allUsers.forEach((allUser) => {
-      whoReadingList.push(authUserID);
-      allUser.Followings.forEach((followUser) => {
-        if (authUserID === followUser.UserId) {
-          whoReadingList.push(followUser.followUserId);
-        }
+  const chekFollowingsUser = () => {
+    if (user.allUsers) {
+      user.allUsers.forEach((allUser) => {
+        whoReadingList.push(authUserID);
+        allUser.Followings.forEach((followUser) => {
+          if (authUserID === followUser.UserId) {
+            whoReadingList.push(followUser.followUserId);
+          }
+        });
       });
-    });
+    }
   };
 
   const createNotReadingList = () => {
-    user.allUsers.forEach((allUser) => {
-      if (!whoReadingList.includes(allUser.id)) {
-        whoNotReadingList.push(allUser);
-      }
-    });
+    if (user.allUsers) {
+      user.allUsers.forEach((allUser) => {
+        if (!whoReadingList.includes(allUser.id)) {
+          whoNotReadingList.push(allUser);
+        }
+      });
+    }
   };
 
-  chekFollowingUser();
+  chekFollowingsUser();
   createNotReadingList();
 
   useEffect(() => {
@@ -88,7 +93,7 @@ const ListWhoReadUserHomePage = observer(() => {
                   className="follow-page-main-button-follow"
                   onClick={() => {
                     usersFollow.setStartFollowUser(profile);
-                    createFollowing(profile);
+                    createUserFollowings(profile);
                   }}
                 >
                   <span>Follow</span>

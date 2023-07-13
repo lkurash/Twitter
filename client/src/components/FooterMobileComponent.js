@@ -1,17 +1,20 @@
-import "./footer.css";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "..";
+
 import {
   BOOKMARKS_PAGE,
   HOME_PAGE,
   PROFILE_PAGE_USER,
 } from "../utils/constans";
+
 import home from "./Img/home_icon.png";
 import bookmark from "./Img/bookmark_icon.png";
 import profile from "./Img/profile_icon.png";
 import tweetIcon from "./Img/feather_icon.png";
 import PopUpWriteTwit from "./PopUpWriteTwit";
+
+import "./footer.css";
 
 function FooterMobileComponent() {
   const navigate = useNavigate();

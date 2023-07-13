@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
+
 import spinner from "../utils/spinner";
 import TwitForm from "./forms/TwitForm";
 import TwitsForYou from "./TwitsForYou";
@@ -32,6 +33,7 @@ const ContentHomePage = observer(() => {
       setIsLoading(false);
     }, 400);
   }, []);
+
 
   return (
     <main className="main-wrapper">

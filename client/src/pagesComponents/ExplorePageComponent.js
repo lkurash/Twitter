@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
-import "../components/main.css";
 import { observer } from "mobx-react-lite";
-import ContentExplorePage from "../components/ContentExplorePage";
 import { Context } from "..";
+
+import ContentExplorePage from "../components/ContentExplorePage";
 import { getAllTopics } from "../http/topicsApi";
 import { getAllUsers } from "../http/userApi";
 import { getAllTwits } from "../http/twitsApi";
@@ -10,6 +10,8 @@ import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
 import FooterComponent from "../components/FooterComponent";
 import ContentExplorePageAllTwits from "../components/ContentExplorePageAllTwits";
+
+import "../components/main.css";
 
 const MainComponentExplorePage = observer(() => {
   const { user } = useContext(Context);

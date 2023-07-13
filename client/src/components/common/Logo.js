@@ -2,7 +2,9 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../..";
+
 import { HOME_PAGE, TWITTER_PAGE } from "../../utils/constans";
+
 import logo from "../Img/logo_icon.png";
 
 const Logo = observer((props) => {

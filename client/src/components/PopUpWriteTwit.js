@@ -1,7 +1,9 @@
 import { observer } from "mobx-react-lite";
-import "../App.css";
+
 import TwitForm from "./forms/TwitForm";
+
 import close from "./Img/x_icon.png";
+import "../App.css";
 
 const PopUpWriteTwit = observer(({ showTwitForm, setShowTwitForm }) => {
   if (!showTwitForm) return null;

@@ -1,10 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useLayoutEffect, useRef } from "react";
 import { Context } from "..";
-import "../App.css";
-import "../components/common/common.css";
-import "../components/main.css";
-import "../components/userpage.css";
+
 import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
 import {
@@ -12,10 +9,15 @@ import {
   getRetwitsByUser,
   getTwitsByUser,
 } from "../http/twitsApi";
-import { getAllUsers, getFollowingUser } from "../http/userApi";
+import { getAllUsers, getFollowingsUser } from "../http/userApi";
 import FooterMobileComponent from "../components/FooterMobileComponent";
 import ContentHomePage from "../components/ContentHomePage";
 import getAuthUserID from "../utils/getAuthUserID";
+
+import "../App.css";
+import "../components/common/common.css";
+import "../components/main.css";
+import "../components/userpage.css";
 
 const HomePageComponent = observer(() => {
   const { twits } = useContext(Context);
@@ -34,13 +36,15 @@ const HomePageComponent = observer(() => {
       retwits.setRetwits(retwitsByUser)
     );
     getAllUsers().then((users) => user.setAllUsers(users));
-    getFollowingUser(authUserID).then((allFollowing) =>
-      usersFollow.setuserFollowing(allFollowing)
+    getFollowingsUser(authUserID).then((followings) =>
+      usersFollow.setuserFollowing(followings)
     );
-    getTwitsByUser(authUserID).then((twitsById) =>
-      twits.setUserTwits(twitsById)
+    getTwitsByUser(authUserID).then((usersTwits) =>
+      twits.setUserTwits(usersTwits)
     );
-    getAllTwits().then((alltwits) => twits.setTwits(alltwits));
+    getAllTwits().then((alltwits) => {
+      twits.setTwits(alltwits);
+    });
   });
 
   return (
