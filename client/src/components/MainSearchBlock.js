@@ -7,7 +7,7 @@ import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 import logo from "./Img/logo_icon.png";
 import searchIcon from "./Img/zoom__icon.png";
 
-const MainSearchBlock = observer((props) => {
+const MainSearchBlock = observer(({ classNameForm }) => {
   const [userName, setUserName] = useState("");
   const [showListFoundUsers, setShowListFoundUsers] = useState(false);
   const [activeInput, setActiveInput] = useState(false);
@@ -20,8 +20,12 @@ const MainSearchBlock = observer((props) => {
   return (
     <div className="main-search-block">
       <Logo path={logo} class="mobile-logo" />
-      {activeInput ? (
-        <div className={`${props.className} active-search-input`}>
+      <div
+        className={
+          activeInput ? `${classNameForm} active-search-input` : classNameForm
+        }
+      >
+        <div className="main-search-form">
           <img
             src={searchIcon}
             alt="search_icon"
@@ -32,33 +36,10 @@ const MainSearchBlock = observer((props) => {
               className="main-input"
               placeholder="Search User"
               value={userName}
-              onChange={(e) => {
-                setUserName(e.target.value);
+              onClick={() => {
                 setShowListFoundUsers(true);
+                setActiveInput(true);
               }}
-            />
-          </div>
-          <ListFoundUserSearchBlock
-            userName={userName}
-            showListFoundUsers={showListFoundUsers}
-            onClose={onClose}
-          />
-        </div>
-      ) : (
-        <div className={props.className}>
-          <img
-            src={searchIcon}
-            alt="search_icon"
-            className="main-search-icon"
-          />
-          <div
-            className="main-search-form-input"
-            onClick={() => setActiveInput(true)}
-          >
-            <input
-              className="main-input"
-              placeholder="Search User"
-              value={userName}
               onChange={(e) => {
                 setUserName(e.target.value);
                 setShowListFoundUsers(true);
@@ -66,7 +47,12 @@ const MainSearchBlock = observer((props) => {
             />
           </div>
         </div>
-      )}
+        <ListFoundUserSearchBlock
+          userName={userName}
+          showListFoundUsers={showListFoundUsers}
+          onClose={onClose}
+        />
+      </div>
     </div>
   );
 });

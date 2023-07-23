@@ -8,7 +8,6 @@ import Twit from "./Twit";
 
 const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
   const { usersFollowingsStore } = useContext(Context);
-  const { retwitsStore } = useContext(Context);
   const twitsByFollowingUsers = [];
 
   const getTwitsByFollowingUsers = () => {
@@ -24,7 +23,6 @@ const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
   const userTwitsRetwitsFollowingUserTwits = sortTwits(
     userTwits,
     twitsByFollowingUsers,
-    retwitsStore.retwits
   );
 
   if (!showTwitsWhoReading) return null;
@@ -32,11 +30,11 @@ const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
   return (
     <div className="twits">
       {userTwitsRetwitsFollowingUserTwits.map((twit) => (
-        <div key={twit.Twit ? `retwet-${twit.Twit.id}` : `twit-${twit.id}`}>
+        <div key={twit.id}>
           {twit.retwit && <TooltipRetwitOnTwit retwit={twit} />}
           <Twit
-            key={twit.Twit ? `retwet-${twit.Twit.id}` : `twit-${twit.id}`}
-            twit={twit.Twit ? twit.Twit : twit}
+            key={twit.id}
+            twit={twit}
           />
         </div>
       ))}

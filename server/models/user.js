@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Likes);
       User.hasMany(models.Twits);
       User.hasMany(models.Favorite_twits);
-      User.hasMany(models.Retwit);
       User.hasMany(models.Following);
       User.hasMany(models.Comments);
     }

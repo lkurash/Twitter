@@ -29,10 +29,9 @@ router.get(
   "/user/:userId/comments",
   twitsController.getCommentsByUser
 );
-router.get(
-  "/user/:userId/retwits",
-  twitsController.getRetwitsByUser
-);
+router.put("/twit/:twitId/retwits", twitsController.getCountRetwits);
+router.put("/twit/:twitId/likes", twitsController.getCountLikes);
+router.put("/twit/:twitId/comments", twitsController.getCountComments);
 router.delete("/twit/:twitId", twitsController.deleteTwit);
 
 module.exports = router;

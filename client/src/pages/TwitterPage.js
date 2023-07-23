@@ -3,12 +3,12 @@ import { useContext, useEffect } from "react";
 import { Context } from "..";
 
 import FooterComponent from "../components/FooterComponent";
-import MainContentExplorePageAllTwits from "../components/ContentExplorePageAllTwits";
 import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
 import { getAllTopics } from "../http/topicsApi";
 import { getAllTwits } from "../http/twitsApi";
 import { getAllUsers } from "../http/userApi";
+import ContentExplorePage from "../components/ContentExplorePage";
 
 const TwitterPage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -28,7 +28,7 @@ const TwitterPage = observer(() => {
     <div>
       <div className="page">
         <MenuComponent />
-        <MainContentExplorePageAllTwits />
+        <ContentExplorePage />
         <SidebarContent />
       </div>
       {!usersStore.isAuth && <FooterComponent />}

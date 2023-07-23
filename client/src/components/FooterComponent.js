@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom";
+
+import checkTokenOnPage from "../utils/checkTokenOnPage";
 import { LOGIN_PAGE, SIGNUP_PAGE } from "../utils/constans";
 
 import "./footer.css";
 
-function FooterComponent() {
+const FooterComponent = () => {
   const navigate = useNavigate();
+  const userAuth = checkTokenOnPage();
+
+  if (userAuth) return null;
 
   return (
     <footer className="footer">
@@ -30,5 +35,5 @@ function FooterComponent() {
       </div>
     </footer>
   );
-}
+};
 export default FooterComponent;

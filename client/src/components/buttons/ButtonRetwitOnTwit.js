@@ -5,7 +5,7 @@ import { Context } from "../..";
 import {
   createRetwitByUser,
   getAllTwits,
-  getRetwitsByUser,
+  getCountRetwits,
   getTwitsByUser,
 } from "../../http/twitsApi";
 import getAuthUserID from "../../utils/getAuthUserID";
@@ -16,7 +16,7 @@ import activeRetwit from "../Img/active_retweet_icon.png";
 import notactiveRetwit from "../Img/notactive_retweet_icon.png";
 import "../userTwitPanel.css";
 
-const ButtonRetwitOnTwit = observer((props) => {
+const ButtonRetwitOnTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
   const userPage = useParams();
@@ -29,13 +29,8 @@ const ButtonRetwitOnTwit = observer((props) => {
     getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
 
     if (usersStore.isAuth) {
-      const authUserID = getAuthUserID(usersStore);
-
       getTwitsByUser(authUserID).then((usersTwits) =>
         twitsStore.setUserTwits(usersTwits)
-      );
-      getRetwitsByUser(authUserID).then((retwitsByUser) =>
-        retwitsStore.setRetwits(retwitsByUser)
       );
     } else {
       getTwitsByUser(userPage.id).then((usersTwits) =>
@@ -45,7 +40,15 @@ const ButtonRetwitOnTwit = observer((props) => {
   };
 
   const createRetwitTwit = async (twit) => {
-    await createRetwitByUser(authUserID, twit.id);
+    const formData = new FormData();
+    formData.append("text", twit.text);
+    formData.append("twitUserId", twit.UserId);
+    if (twit.img) {
+      formData.append("img", twit.img);
+    }
+    await createRetwitByUser(authUserID, twit.id, formData);
+
+    await getCountRetwits(twit.id);
 
     getTwits();
   };
@@ -69,11 +72,9 @@ const ButtonRetwitOnTwit = observer((props) => {
 
   const getUserRetwitTwitId = () => {
     twitsStore.twits.map((twit) => {
-      twit.Retwits.forEach((retwit) => {
-        if (retwit.UserId === usersStore.user.id) {
-          userRetwitTwitId.push(twit.id);
-        }
-      });
+      if (twit.retwit && twit.UserId === usersStore.user.id) {
+        userRetwitTwitId.push(twit.twitId);
+      }
     });
   };
 
@@ -85,7 +86,7 @@ const ButtonRetwitOnTwit = observer((props) => {
 
   return (
     <div className="user-twit-panel-retwit">
-      {!userRetwitTwitId.includes(props.twit.id) ? (
+      {!userRetwitTwitId.includes(twit.id) ? (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}
@@ -94,22 +95,22 @@ const ButtonRetwitOnTwit = observer((props) => {
           />
           <div
             className="user-twit-panel-button-retwit"
-            key={props.twit.id}
+            key={twit.id}
             onClick={() => {
               if (usersStore.isAuth) {
-                retwitsStore.setRetwitTwit(props.twit);
-                createRetwitTwit(props.twit);
+                retwitsStore.setRetwitTwit(twit);
+                createRetwitTwit(twit);
               } else {
                 setTooltipUserNotAuth(true);
               }
             }}
             onMouseEnter={() => {
-              retwitsStore.sethoverTwitRetwit(props.twit);
+              retwitsStore.sethoverTwitRetwit(twit);
             }}
             onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
           >
             <img
-              src={imgButtonRetwit(props.twit)}
+              src={imgButtonRetwit(twit)}
               alt="button retwit"
               className="user-twit-panel-retwit-img"
             />
@@ -118,25 +119,25 @@ const ButtonRetwitOnTwit = observer((props) => {
       ) : (
         <div
           className="user-twit-panel-button-retwit"
-          key={props.twit.id}
+          key={twit.id}
           onMouseEnter={() => {
-            retwitsStore.sethoverTwitRetwit(props.twit);
+            retwitsStore.sethoverTwitRetwit(twit);
           }}
           onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
           onClick={() => {
-            retwitsStore.setDeleteRetwit(props.twit);
-            createRetwitTwit(props.twit);
+            retwitsStore.setDeleteRetwit(twit);
+            createRetwitTwit(twit);
             retwitsStore.setRetwitTwit({});
           }}
         >
           <img
-            src={deleteActiveRetwitButtonImg(props.twit)}
+            src={deleteActiveRetwitButtonImg(twit)}
             alt="button retwit"
             className="user-twit-panel-retwit-img"
           />
         </div>
       )}
-      {props.twit.Retwits.length > 0 && <p>{props.twit.Retwits.length}</p>}
+      {twit.countRetwits > 0 && <p>{twit.countRetwits}</p>}
     </div>
   );
 });

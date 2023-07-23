@@ -10,7 +10,7 @@
 ### `npm install`
 
 ## Create database config
-### `cp config/configExample.json config/config.json`
+### `cp config/config.example.json config/config.json`
 
 ## Create database
 ### `npx sequelize-cli db:create`

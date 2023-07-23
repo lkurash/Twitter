@@ -10,7 +10,6 @@ import {
   getAllUsers,
 } from "../http/userApi";
 import ContentFollowPage from "../components/ContentFollowPage";
-import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
 
 const FollowPageComponent = observer(() => {
@@ -34,8 +33,7 @@ const FollowPageComponent = observer(() => {
   });
 
   return (
-    <div className="page">
-      <MenuComponent />
+    <>
       <div className="main-wrapper">
         <main className="main">
           <div className="user-main-content">
@@ -44,7 +42,7 @@ const FollowPageComponent = observer(() => {
         </main>
       </div>
       <SidebarContent />
-    </div>
+    </>
   );
 });
 

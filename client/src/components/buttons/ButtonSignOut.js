@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../..";
 
-import { EXPLORE_PAGE } from "../../utils/constans";
+import { TWITTER_PAGE } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 function ButtonSignOut({ showButtonSignOut, onClose }) {
@@ -19,7 +19,7 @@ function ButtonSignOut({ showButtonSignOut, onClose }) {
     retwitsStore.setRetwitTwit({});
     favoriteTwitsStore.setFavoriteTwits({});
     usersStore.setAuth(false);
-    navigate(EXPLORE_PAGE);
+    navigate(TWITTER_PAGE);
   };
 
   useOutsideClick(tooltipRef, onClose, showButtonSignOut);

@@ -16,13 +16,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
-  Likes.init({
-    like: DataTypes.BOOLEAN,
-    UserId: DataTypes.INTEGER,
-    TwitId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Likes',
-  });
+  Likes.init(
+    {
+      like: DataTypes.BOOLEAN,
+      UserId: DataTypes.INTEGER,
+      TwitId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "Likes",
+    }
+  );
   return Likes;
 };

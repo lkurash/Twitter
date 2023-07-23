@@ -11,6 +11,7 @@ import "../userTwitPanel.css";
 import {
   createLikeTwitByUser,
   getAllTwits,
+  getCountLikes,
   getTwitsByUser,
 } from "../../http/twitsApi";
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -24,15 +25,15 @@ const ButtonLikeOnTwit = observer((props) => {
   const userLikesTwitId = [];
   const authUserID = getAuthUserID(usersStore);
 
-  const getTwits = () => {
-    getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+  const getTwits = async () => {
+    await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
 
     if (usersStore.isAuth) {
-      getTwitsByUser(authUserID).then((usersTwits) =>
+      await getTwitsByUser(authUserID).then((usersTwits) =>
         twitsStore.setUserTwits(usersTwits)
       );
     } else {
-      getTwitsByUser(userPage.id).then((usersTwits) =>
+      await getTwitsByUser(userPage.id).then((usersTwits) =>
         twitsStore.setUserTwits(usersTwits)
       );
     }
@@ -40,6 +41,8 @@ const ButtonLikeOnTwit = observer((props) => {
 
   const createLikeTwit = async (twit) => {
     await createLikeTwitByUser(authUserID, twit.id);
+    console.log(twit.id);
+    await getCountLikes(twit.id);
 
     getTwits();
   };

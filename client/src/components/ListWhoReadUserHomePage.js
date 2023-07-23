@@ -72,7 +72,7 @@ const ListWhoReadUserHomePage = observer(() => {
 
   return (
     <ul className="follow-page-main-users">
-      {whoNotReadingList[0] ? (
+      {usersStore.allUsers ? (
         <>
           {whoNotReadingList.map((profile) => (
             <li className="follow-page-main-user" key={profile.id}>
@@ -105,9 +105,12 @@ const ListWhoReadUserHomePage = observer(() => {
               )}
             </li>
           ))}
+          {whoNotReadingList.length === 0 && (
+            <p className="section-aside-hidden">You are following all users</p>
+          )}
         </>
       ) : (
-        <p className="section-aside-hidden">You are following all users</p>
+        <p className="section-aside-hidden">No users to read</p>
       )}
     </ul>
   );

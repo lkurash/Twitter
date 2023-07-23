@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { observer } from "mobx-react-lite";
-import { useLocation } from "react-router-dom";
 import { Context } from "..";
 
 import { EXPLORE_PAGE } from "../utils/constans";
@@ -12,6 +11,7 @@ import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 
 import hashtag from "./Img/hashtag_icon.png";
 import "./menu.css";
+import checkTokenOnPage from "../utils/checkTokenOnPage";
 
 const MenuComponent = observer(() => {
   const { usersStore } = useContext(Context);
@@ -27,14 +27,13 @@ const MenuComponent = observer(() => {
   };
 
   const buttonsAuthUser = menuButtonsAuthUser(usersStore);
-
-  const location = useLocation().pathname;
+  const userAuth = checkTokenOnPage();
 
   return (
     <aside className="menu">
       <Logo class="logo" />
       <nav className="nav">
-        {!usersStore.user.id ? (
+        {!userAuth ? (
           <div>
             <ButtonMenu
               type="button"
@@ -43,11 +42,7 @@ const MenuComponent = observer(() => {
               buttonName="Explore"
               id="0"
               classNameButtonImg="button-icon-menu"
-              classNameButton={
-                location === "/explore" || location === "/"
-                  ? "active-button-explore"
-                  : "notactive-button-explore"
-              }
+              classNameButton={checkActiveButton("0")}
               nav={EXPLORE_PAGE}
             />
           </div>

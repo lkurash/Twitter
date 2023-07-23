@@ -13,22 +13,41 @@ const UserPhoto = observer(({ twit }) => {
 
   return (
     <div className="user-info">
-      <div
-        className="user-info-photo"
-        onClick={() => {
-          if (usersStore.isAuth) {
-            usersStore.setUserPage({});
-            twitsStore.setUserTwits([]);
-            navigate(PROFILE_PAGE_USER + twit.User.id);
-          } else {
-            usersStore.setUserPage({});
-            twitsStore.setUserTwits([]);
-            navigate(TWITTER_USER_PAGE + twit.User.id);
-          }
-        }}
-      >
-        <img alt="User" src={getUserPhoto(twit.User)} />
-      </div>
+      {twit.retwit ? (
+        <div
+          className="user-info-photo"
+          onClick={() => {
+            if (usersStore.isAuth) {
+              usersStore.setUserPage({});
+              twitsStore.setUserTwits([]);
+              navigate(PROFILE_PAGE_USER + twit.twitUser.id);
+            } else {
+              usersStore.setUserPage({});
+              twitsStore.setUserTwits([]);
+              navigate(TWITTER_USER_PAGE + twit.twitUser.id);
+            }
+          }}
+        >
+          <img alt="User" src={getUserPhoto(twit.twitUser)} />
+        </div>
+      ) : (
+        <div
+          className="user-info-photo"
+          onClick={() => {
+            if (usersStore.isAuth) {
+              usersStore.setUserPage({});
+              twitsStore.setUserTwits([]);
+              navigate(PROFILE_PAGE_USER + twit.user.id);
+            } else {
+              usersStore.setUserPage({});
+              twitsStore.setUserTwits([]);
+              navigate(TWITTER_USER_PAGE + twit.user.id);
+            }
+          }}
+        >
+          <img alt="User" src={getUserPhoto(twit.user)} />
+        </div>
+      )}
     </div>
   );
 });

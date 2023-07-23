@@ -1,22 +1,43 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import { Context } from "..";
+
+import { getAllTopics } from "../http/topicsApi";
+import { getAllUsers } from "../http/userApi";
+import { getAllTwits } from "../http/twitsApi";
+import MenuComponent from "../components/MenuComponent";
+import SidebarContent from "../components/SidebarContent";
+import FooterComponent from "../components/FooterComponent";
+import ContentExplorePageAllTwits from "../components/ContentExplorePageAllTwits";
 
 import "../App.css";
 import "../components/common/common.css";
 
-import MainComponentExplorePage from "../pagesComponents/ExplorePageComponent";
-import { Context } from "..";
-import { useNavigate } from "react-router-dom";
-import CheckTokenOnPage from "../utils/checkTokenOnPage";
-
 const ExplorePage = observer(() => {
   const { usersStore } = useContext(Context);
-  const [loadingPage, setLoadingPage] = useState(true);
-  const navigate = useNavigate();
+  const { twitsStore } = useContext(Context);
+  const { topicsStore } = useContext(Context);
 
-  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
+  useEffect(() => {
+    try {
+      getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
+      getAllUsers().then((users) => usersStore.setAllUsers(users));
+      getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  }, []);
 
-  return <MainComponentExplorePage />;
+  return (
+    <div>
+      <div className="page">
+        <MenuComponent />
+        <ContentExplorePageAllTwits />
+        <SidebarContent />
+      </div>
+      <FooterComponent />
+    </div>
+  );
 });
 
 export default ExplorePage;

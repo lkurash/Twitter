@@ -3,18 +3,21 @@ import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
 import { deleteTwitByUser, getTwitsByUser } from "../../http/twitsApi";
+import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import dotMenu from "../Img/more_dots_icon.png";
 
-const ButtonDeleteOnTwit = observer((props) => {
+const ButtonDeleteTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const tooltipDeleteTwit = useRef(null);
+  const authUserID = getAuthUserID(usersStore);
 
   const deleteTwit = async (twit) => {
     await deleteTwitByUser(twit.id);
+    
     await getTwitsByUser(usersStore.user.id).then((twitsById) =>
       twitsStore.setUserTwits(twitsById)
     );
@@ -24,13 +27,15 @@ const ButtonDeleteOnTwit = observer((props) => {
   };
 
   useOutsideClick(tooltipDeleteTwit, onClose, showDeleteButton);
+  if (authUserID !== twit.UserId) return null;
+
   return (
     <div className="button-dotmenu-twit">
       {showDeleteButton && (
         <div
           ref={tooltipDeleteTwit}
           className="tooltip-delete-twit"
-          onClick={() => deleteTwit(props.twit)}
+          onClick={() => deleteTwit(twit)}
         >
           <button className="button-delete-twit" type="reset">
             <span>Delete Twit</span>
@@ -49,4 +54,4 @@ const ButtonDeleteOnTwit = observer((props) => {
   );
 });
 
-export default ButtonDeleteOnTwit;
+export default ButtonDeleteTwit;

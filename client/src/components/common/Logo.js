@@ -34,6 +34,7 @@ const Logo = observer((props) => {
             usersStore.setUserPage({});
             twitsStore.setUserTwits([]);
             navigate(TWITTER_PAGE);
+            localStorage.setItem("activeButton", "");
           }}
         >
           <img src={logo} alt="logo" className="logo-icon" />

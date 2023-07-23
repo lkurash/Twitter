@@ -4,6 +4,8 @@ import { useLocation } from "react-router-dom";
 import { Context } from "..";
 
 import { getAllTopics } from "../http/topicsApi";
+import checkTokenOnPage from "../utils/checkTokenOnPage";
+import { EXPLORE_PAGE } from "../utils/constans";
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
@@ -15,6 +17,8 @@ const SidebarContent = observer(() => {
   const { topicsStore } = useContext(Context);
   const location = useLocation().pathname;
 
+  const userAuth = checkTokenOnPage();
+
   useEffect(() => {
     try {
       getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
@@ -25,9 +29,9 @@ const SidebarContent = observer(() => {
 
   return (
     <aside className="side-bar">
-      {(usersStore.isAuth || location === "/") && (
+      {(userAuth || location === EXPLORE_PAGE) && (
         <>
-          <MainSearchBlock className="main-search-form-home section-background" />
+          <MainSearchBlock classNameForm="main-search-form-home section-background" />
           <div className="main-content">
             <MainSectionTrends className="section trends-home section-background" />
             <MainSectionWhoToRead
