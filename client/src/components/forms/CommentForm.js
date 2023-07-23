@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import { createCommentTwitByUser } from "../../http/twitsApi";
+import { createCommentTwitByUser, getCountComments } from "../../http/twitsApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
 import ButtonEmoji from "../buttons/ButtonEmoji";
@@ -18,6 +18,7 @@ const CommentForm = observer(({ twit }) => {
   const createComment = async (twitId) => {
     await createCommentTwitByUser(authUserID, twitId, commentText);
     commentsStore.setActiveComment({});
+    await getCountComments(twitId);
   };
   const createTwitDate = (createdAt) => {
     const date = new Date(createdAt).toString().split(" ");
@@ -44,15 +45,15 @@ const CommentForm = observer(({ twit }) => {
         </div>
         <div className="comment-form-info">
           <div className="comment-user-info">
-            <img alt="User" src={getUserPhoto(twit.User)} />
+            <img alt="User" src={getUserPhoto(twit.user)} />
             <div className="comment-line" />
             <img src={getUserPhoto(usersStore.user)} alt="User" />
           </div>
           <div className="comment-text-info">
             <div className="twit-comment">
               <div className="twit-comment-info-user-and-date">
-                <h4>{twit.User.user_name}</h4>
-                <p className="create-date-twit">{`@${twit.User.user_name}`}</p>
+                <h4>{twit.user.user_name}</h4>
+                <p className="create-date-twit">{`@${twit.user.user_name}`}</p>
                 <p className="create-date-twit">
                   {createTwitDate(twit.createdAt)}
                 </p>

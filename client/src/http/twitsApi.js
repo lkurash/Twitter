@@ -26,9 +26,10 @@ export const createLikeTwitByUser = async (userId, twitId) => {
   return usersTwitsLikes.data;
 };
 
-export const createRetwitByUser = async (userId, twitId) => {
+export const createRetwitByUser = async (userId, twitId, twit) => {
   const retwitByUser = await $authHost.post(
-    `api/twits/twit/${twitId}/user/${userId}/retwits`
+    `api/twits/twit/${twitId}/user/${userId}/retwits`,
+    twit
   );
 
   return retwitByUser.data;
@@ -41,6 +42,7 @@ export const createFavoriteTwitByUser = async (userId, twitId) => {
 
   return favoriteTwit.data;
 };
+
 export const createCommentTwitByUser = async (userId, twitId, text) => {
   const comment = await $authHost.post(
     `api/twits/twit/${twitId}/user/${userId}/comments`,
@@ -51,11 +53,13 @@ export const createCommentTwitByUser = async (userId, twitId, text) => {
 
   return comment.data;
 };
+
 export const getCommentsByUser = async (userId) => {
   const comments = await $authHost.get(`api/twits/user/${userId}/comments`);
 
   return comments.data;
 };
+
 export const getFavoriteTwits = async (userId) => {
   const favoriteTwits = await $authHost.get(
     `api/twits/user/${userId}/bookmarks`
@@ -63,13 +67,27 @@ export const getFavoriteTwits = async (userId) => {
 
   return favoriteTwits.data;
 };
-export const getRetwitsByUser = async (userId) => {
-  const retwitsByUser = await $authHost.get(`api/twits/user/${userId}/retwits`);
 
-  return retwitsByUser.data;
+export const getCountRetwits = async (twitId) => {
+  const countRetwits = await $authHost.put(`api/twits/twit/${twitId}/retwits`);
+
+  return countRetwits.data;
 };
+
+export const getCountLikes = async (twitId) => {
+  const countLikes = await $authHost.put(`api/twits/twit/${twitId}/likes`);
+
+  return countLikes.data;
+};
+
+export const getCountComments = async (twitId) => {
+  const countComments = await $authHost.put(`api/twits/twit/${twitId}/comments`);
+
+  return countComments.data;
+};
+
 export const deleteTwitByUser = async (twitId) => {
-  const twit = await $authHost.delete(`api/twits/${twitId}`);
+  const twit = await $authHost.delete(`api/twits/twit/${twitId}`);
 
   return twit.data;
 };

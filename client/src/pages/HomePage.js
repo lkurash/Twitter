@@ -1,19 +1,34 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
+import { useContext, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
+import FooterMobileComponent from "../components/FooterMobileComponent";
+import MenuComponent from "../components/MenuComponent";
 import HomePageComponent from "../pagesComponents/HomePageComponent";
-import CheckTokenOnPage from "../utils/checkTokenOnPage";
+import CreateNewTokenOnPage from "../utils/createNewTokenOnPage";
 
 const HomePage = observer(() => {
   const { usersStore } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
+  const ref = useRef();
 
-  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
+  CreateNewTokenOnPage(usersStore, navigate, setLoadingPage);
 
-  return <>{!loadingPage && usersStore.isAuth && <HomePageComponent />}</>;
+  useLayoutEffect(() => {
+    ref.current.scrollIntoView();
+  });
+
+  return (
+    <div>
+      <div className="page" ref={ref}>
+        <MenuComponent />
+        {!loadingPage && usersStore.isAuth && <HomePageComponent />}
+      </div>
+      <FooterMobileComponent />
+    </div>
+  );
 });
 
 export default HomePage;

@@ -4,8 +4,7 @@ import { Context } from "..";
 
 import { getAllTwits, getFavoriteTwits } from "../http/twitsApi";
 import { getAllUsers, getFollowingUsers } from "../http/userApi";
-import FooterMobileComponent from "../components/FooterMobileComponent";
-import MenuComponent from "../components/MenuComponent";
+
 import SidebarContent from "../components/SidebarContent";
 import ContentBookmarksPage from "../components/ContentBookmarksPage";
 import getAuthUserID from "../utils/getAuthUserID";
@@ -19,11 +18,9 @@ const BookmarksPageComponent = observer(() => {
 
   useEffect(() => {
     try {
-      getAllTwits().then((alltwits) => twitsStore
-      .setTwits(alltwits));
+      getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
       getFavoriteTwits(authUserID).then((favoriteTwitsByUser) =>
-        favoriteTwitsStore
-        .setFavoriteTwits(favoriteTwitsByUser)
+        favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser)
       );
       getAllUsers().then((users) => usersStore.setAllUsers(users));
       getFollowingUsers(authUserID).then((followings) =>
@@ -35,20 +32,16 @@ const BookmarksPageComponent = observer(() => {
   });
 
   return (
-    <div>
-      <div className="page">
-        <MenuComponent />
-        <div className="main-wrapper">
-          <main className="main">
-            <div className="user-main-content">
-              <ContentBookmarksPage />
-            </div>
-          </main>
-        </div>
-        <SidebarContent />
+    <>
+      <div className="main-wrapper">
+        <main className="main">
+          <div className="user-main-content">
+            <ContentBookmarksPage />
+          </div>
+        </main>
       </div>
-      <FooterMobileComponent />
-    </div>
+      <SidebarContent />
+    </>
   );
 });
 

@@ -11,7 +11,6 @@ const Twits = models.Twits;
 const User = models.User;
 const Likes = models.Likes;
 const Comments = models.Comments;
-const Retwit = models.Retwit;
 const Favorite_twits = models.Favorite_twits;
 const Following = models.Following;
 
@@ -216,9 +215,9 @@ class UserController {
             {
               model: Twits,
               include: [
-                { model: User, as: "User" },
+                { model: User, as: "user" },
+                { model: User, as: "twitUser" },
                 { model: Likes },
-                { model: Retwit },
                 { model: Favorite_twits },
                 { model: Comments },
               ],
@@ -301,9 +300,9 @@ class UserController {
               {
                 model: Twits,
                 include: [
-                  { model: User },
+                  { model: User, as: "user" },
+                  { model: User, as: "twitUser" },
                   { model: Likes },
-                  { model: Retwit },
                   { model: Favorite_twits },
                   { model: Comments },
                 ],

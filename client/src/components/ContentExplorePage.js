@@ -19,7 +19,7 @@ const ContentExplorePage = observer(() => {
     <main className="main-wrapper">
       <div className="main">
         <MainSearchBlock
-          className="main-search-form"
+          classNameForm="main-search-form-explore"
         />
         {isLoading ? (
           spinner()

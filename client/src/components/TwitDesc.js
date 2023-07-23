@@ -11,25 +11,47 @@ const TwitDesc = ({ twit }) => {
 
   return (
     <div className="twit-desc">
-      <div className="twit-user-name-block">
-        <h4
-          className="twit-user-name"
-          onClick={() => {
-            if (usersStore.isAuth) {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
-              navigate(PROFILE_PAGE_USER + twit.User.id);
-            } else {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
-              navigate(TWITTER_USER_PAGE + twit.User.id);
-            }
-          }}
-        >
-          {twit.User.user_name}
-        </h4>
-        <p className="profile-name">{`@${twit.User.user_name}`}</p>
-      </div>
+      {twit.retwit ? (
+        <div className="twit-user-name-block">
+          <h4
+            className="twit-user-name"
+            onClick={() => {
+              if (usersStore.isAuth) {
+                usersStore.setUserPage({});
+                twitsStore.setUserTwits([]);
+                navigate(PROFILE_PAGE_USER + twit.twitUser.id);
+              } else {
+                usersStore.setUserPage({});
+                twitsStore.setUserTwits([]);
+                navigate(TWITTER_USER_PAGE + twit.twitUser.id);
+              }
+            }}
+          >
+            {twit.twitUser.user_name}
+          </h4>
+          <p className="profile-name">{`@${twit.twitUser.user_name}`}</p>
+        </div>
+      ) : (
+        <div className="twit-user-name-block">
+          <h4
+            className="twit-user-name"
+            onClick={() => {
+              if (usersStore.isAuth) {
+                usersStore.setUserPage({});
+                twitsStore.setUserTwits([]);
+                navigate(PROFILE_PAGE_USER + twit.user.id);
+              } else {
+                usersStore.setUserPage({});
+                twitsStore.setUserTwits([]);
+                navigate(TWITTER_USER_PAGE + twit.user.id);
+              }
+            }}
+          >
+            {twit.user.user_name}
+          </h4>
+          <p className="profile-name">{`@${twit.user.user_name}`}</p>
+        </div>
+      )}
       <p className="twit-text">{twit.text}</p>
       {twit.img && (
         <div className="wrapper-twit-img">

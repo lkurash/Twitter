@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import EditProfilePageComponent from "../pagesComponents/EditProfilPageComponent";
-import CheckTokenOnPage from "../utils/checkTokenOnPage";
+import CreateNewTokenOnPage from "../utils/createNewTokenOnPage";
 
 const EditProfilePage = observer(() => {
   const { usersStore } = useContext(Context);
   const [loadingPage, setLoadingPage] = useState(true);
   const navigate = useNavigate();
 
-  CheckTokenOnPage(usersStore, navigate, setLoadingPage);
+  CreateNewTokenOnPage(usersStore, navigate, setLoadingPage);
 
   return <>{!loadingPage && usersStore.isAuth && <EditProfilePageComponent />}</>;
 });

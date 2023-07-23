@@ -25,20 +25,16 @@ const MessagesPageComponent = observer(() => {
   });
 
   return (
-    <div>
-      <div className="page">
-        <MenuComponent />
-        <main className="main-wrapper">
-          <div className="main">
-            <div className="user-main-content">
-              <ContentMessagesPage />
-            </div>
+    <>
+      <main className="main-wrapper">
+        <div className="main">
+          <div className="user-main-content">
+            <ContentMessagesPage />
           </div>
-        </main>
-        <SidebarContent />
-      </div>
-      <FooterMobileComponent />
-    </div>
+        </div>
+      </main>
+      <SidebarContent />
+    </>
   );
 });
 

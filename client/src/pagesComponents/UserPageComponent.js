@@ -5,7 +5,6 @@ import { Context } from "..";
 
 import {
   getAllTwits,
-  getRetwitsByUser,
   getTwitsByUser,
 } from "../http/twitsApi";
 import {
@@ -14,8 +13,6 @@ import {
   getUserById,
   getAllUsers,
 } from "../http/userApi";
-import FooterMobileComponent from "../components/FooterMobileComponent";
-import MenuComponent from "../components/MenuComponent";
 import ContentUsersPage from "../components/ContentUsersPage";
 import SidebarContent from "../components/SidebarContent";
 
@@ -23,7 +20,6 @@ const UserPageComponent = observer(() => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
-  const { retwitsStore } = useContext(Context);
   const ref = useRef();
   const { id } = useParams();
 
@@ -34,12 +30,11 @@ const UserPageComponent = observer(() => {
   useEffect(() => {
     try {
       getUserById(id).then((userById) => usersStore.setUserPage(userById));
-      getTwitsByUser(id).then((usersTwits) => twitsStore.setUserTwits(usersTwits));
+      getTwitsByUser(id).then((usersTwits) =>
+        twitsStore.setUserTwits(usersTwits)
+      );
       getAllUsers().then((users) => usersStore.setAllUsers(users));
       getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
-      getRetwitsByUser(id).then((retwitsByUser) =>
-        retwitsStore.setRetwits(retwitsByUser)
-      );
       getFollowingUsers(id).then((followings) =>
         usersFollowingsStore.setuserFollowing(followings)
       );
@@ -52,18 +47,14 @@ const UserPageComponent = observer(() => {
   });
 
   return (
-    <div>
-      <div className="page">
-        <MenuComponent />
-        <div className="main-wrapper" ref={ref}>
-          <main className="main">
-            <ContentUsersPage />
-          </main>
-        </div>
-        <SidebarContent />
+    <>
+      <div className="main-wrapper" ref={ref}>
+        <main className="main">
+          <ContentUsersPage />
+        </main>
       </div>
-      <FooterMobileComponent />
-    </div>
+      <SidebarContent />
+    </>
   );
 });
 
