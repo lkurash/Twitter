@@ -12,9 +12,11 @@ import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 import hashtag from "./Img/hashtag_icon.png";
 import "./menu.css";
 import checkTokenOnPage from "../utils/checkTokenOnPage";
+import { useCookies } from "react-cookie";
 
-const MenuComponent = observer(() => {
+const MenuComponent = observer(({ show }) => {
   const { usersStore } = useContext(Context);
+  const [cookies, setCookie] = useCookies();
 
   const checkActiveButton = (id) => {
     const idActiveButton = localStorage.activeButton;
@@ -28,6 +30,8 @@ const MenuComponent = observer(() => {
 
   const buttonsAuthUser = menuButtonsAuthUser(usersStore);
   const userAuth = checkTokenOnPage();
+
+  if (!show) return null;
 
   return (
     <aside className="menu">

@@ -3,7 +3,10 @@ import { observer } from "mobx-react-lite";
 import EditProfileForm from "../components/forms/EditProfilForm";
 import UserPageComponent from "./UserPageComponent";
 
-const EditProfilePageComponent = observer(() => {
+const EditProfilePageComponent = observer(({isAuth}) => {
+  
+  if (!isAuth) return null;
+
   return (
     <div>
       <UserPageComponent />

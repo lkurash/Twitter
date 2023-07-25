@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";
@@ -12,6 +13,7 @@ const ContentHomePage = observer(() => {
   const [showTwitsForYou, setShowTwitsForYou] = useState(true);
   const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
 
   const setLocalStorageTwitsForYou = (show) => {
     localStorage.setItem("twitsWhoReading", show);
@@ -33,6 +35,7 @@ const ContentHomePage = observer(() => {
       setIsLoading(false);
     }, 400);
   }, []);
+
   return (
     <main className="main-wrapper">
       <div className="main">

@@ -1,4 +1,5 @@
 import { $authHost, $host } from ".";
+const Cookies = require("js-cookie");
 
 export const register = async (name, email, password, birthdate) => {
   const response = await $host.post("api/users/registration", {
@@ -19,14 +20,15 @@ export const authentication = async (email, password) => {
   });
 
   localStorage.setItem("token", response.data.token);
+  Cookies.set("token", response.data.token);
 
   return response.data.user;
 };
 
-export const checkToken = async () => {
+export const refreshToken = async () => {
   const response = await $authHost.get("api/users/auth");
 
-  localStorage.setItem("token", response.data.token);
+  Cookies.set("refreshToken", response.data.token, { expires: 0.1 });
 
   return response.data.token;
 };

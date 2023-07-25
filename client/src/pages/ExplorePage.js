@@ -31,7 +31,7 @@ const ExplorePage = observer(() => {
   return (
     <div>
       <div className="page">
-        <MenuComponent />
+        <MenuComponent show={true} />
         <ContentExplorePageAllTwits />
         <SidebarContent />
       </div>

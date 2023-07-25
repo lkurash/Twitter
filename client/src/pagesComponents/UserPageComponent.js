@@ -16,7 +16,7 @@ import {
 import ContentUsersPage from "../components/ContentUsersPage";
 import SidebarContent from "../components/SidebarContent";
 
-const UserPageComponent = observer(() => {
+const UserPageComponent = observer(({isAuth}) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
@@ -45,6 +45,8 @@ const UserPageComponent = observer(() => {
       console.log(error.response.data.message);
     }
   });
+
+  if (!isAuth) return null;
 
   return (
     <>
