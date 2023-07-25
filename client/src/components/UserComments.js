@@ -10,7 +10,6 @@ const UserComments = observer(() => {
   const { commentsStore } = useContext(Context);
 
   if (commentsStore.comments.length === 0) return spinner();
-  console.log(commentsStore.comments);
 
   return (
     <>

@@ -1,12 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useLayoutEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "..";
 
 import SidebarContent from "../components/SidebarContent";
-import {
-  getAllTwits,
-  getTwitsByUser,
-} from "../http/twitsApi";
+import { getAllTwits, getTwitsByUser } from "../http/twitsApi";
 import { getAllUsers, getFollowingUsers } from "../http/userApi";
 import ContentHomePage from "../components/ContentHomePage";
 import getAuthUserID from "../utils/getAuthUserID";
@@ -16,7 +13,7 @@ import "../components/common/common.css";
 import "../components/main.css";
 import "../components/userpage.css";
 
-const HomePageComponent = observer(() => {
+const HomePageComponent = observer(({ isAuth }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
@@ -34,6 +31,8 @@ const HomePageComponent = observer(() => {
       twitsStore.setTwits(alltwits);
     });
   });
+
+  if (!isAuth) return null;
 
   return (
     <>

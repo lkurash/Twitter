@@ -1,5 +1,7 @@
+const Cookies = require("js-cookie");
+
 const checkTokenOnPage = () => {
-  if (localStorage.getItem("token")) {
+  if (Cookies.get("refreshToken")) {
     return true;
   } else {
     return false;

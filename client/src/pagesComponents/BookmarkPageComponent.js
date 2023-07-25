@@ -9,7 +9,7 @@ import SidebarContent from "../components/SidebarContent";
 import ContentBookmarksPage from "../components/ContentBookmarksPage";
 import getAuthUserID from "../utils/getAuthUserID";
 
-const BookmarksPageComponent = observer(() => {
+const BookmarksPageComponent = observer(({ isAuth }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
@@ -31,6 +31,8 @@ const BookmarksPageComponent = observer(() => {
     }
   });
 
+  if (!isAuth) return null;
+  
   return (
     <>
       <div className="main-wrapper">

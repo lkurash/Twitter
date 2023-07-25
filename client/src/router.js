@@ -1,14 +1,8 @@
-import BookmarksPage from "./pages/BookmarksPage";
-import EditProfilePage from "./pages/EditProfilePage";
-import FollowPage from "./pages/FollowPage";
-import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
-import MessagesPage from "./pages/MessagesPage";
 import SignUpPage from "./pages/SignUpPage";
 import TrendsPage from "./pages/TrendsPage";
 import TwitterPageNotAuthUser from "./pages/TwitterNotAuthUserPage";
 import ExplorePage from "./pages/ExplorePage";
-import UserPage from "./pages/UserPage";
 import {
   BOOKMARKS_PAGE,
   EDIT_PROFILE_PAGE,
@@ -29,47 +23,48 @@ import {
   TWITTER_USER_PAGE,
 } from "./utils/constans";
 import TwitterPage from "./pages/TwitterPage";
+import AuthPage from "./pages/AuthPage";
 
 export const authRoutes = [
   {
     path: HOME_PAGE,
-    Component: HomePage,
+    Component: AuthPage,
   },
   {
     path: `${BOOKMARKS_PAGE}:id`,
-    Component: BookmarksPage,
+    Component: AuthPage,
   },
   {
     path: `${PROFILE_PAGE_USER}:id`,
-    Component: UserPage,
+    Component: AuthPage,
   },
   {
     path: `${PROFILE_PAGE_USER_ANSWERS}:id`,
-    Component: UserPage,
+    Component: AuthPage,
   },
   {
     path: `${PROFILE_PAGE_USER_LIKES}:id`,
-    Component: UserPage,
+    Component: AuthPage,
   },
   {
     path: `${PROFILE_PAGE_USER_MEDIA}:id`,
-    Component: UserPage,
+    Component: AuthPage,
   },
   {
     path: `${EDIT_PROFILE_PAGE}:id`,
-    Component: EditProfilePage,
+    Component: AuthPage,
   },
   {
     path: `${FOLLOWING_PAGE}:id`,
-    Component: FollowPage,
+    Component: AuthPage,
   },
   {
     path: `${FOLLOWER_PAGE}:id`,
-    Component: FollowPage,
+    Component: AuthPage,
   },
   {
     path: `${MESSAGE_PAGE}:id`,
-    Component: MessagesPage,
+    Component: AuthPage,
   },
 ];
 

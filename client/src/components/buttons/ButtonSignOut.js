@@ -4,6 +4,7 @@ import { Context } from "../..";
 
 import { TWITTER_PAGE } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
+const Cookies = require("js-cookie");
 
 function ButtonSignOut({ showButtonSignOut, onClose }) {
   const { usersStore } = useContext(Context);
@@ -13,7 +14,8 @@ function ButtonSignOut({ showButtonSignOut, onClose }) {
   const navigate = useNavigate();
 
   const logout = () => {
-    localStorage.clear();
+    Cookies.remove("refreshToken");
+    Cookies.remove("token");
     usersStore.setUser({});
     usersStore.setUserPage({});
     retwitsStore.setRetwitTwit({});

@@ -31,7 +31,7 @@ const LoginForm = observer(() => {
     try {
       if (email && password) {
         const userProfile = await authentication(email, password);
-
+        
         usersStore.setUser(userProfile);
         usersStore.setAuth(true);
         navigate(HOME_PAGE);

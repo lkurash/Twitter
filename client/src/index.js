@@ -1,6 +1,8 @@
 import { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { CookiesProvider } from "react-cookie";
+
 import reportWebVitals from "./reportWebVitals";
 import CommentsStore from "./store/CommentsStore";
 import FavoriteTwitsStore from "./store/FavoriteTwitsStore";
@@ -25,7 +27,9 @@ root.render(
       usersFollowingsStore: new UsersFollowStore(),
     }}
   >
-    <App />
+    <CookiesProvider>
+      <App />
+    </CookiesProvider>
   </Context.Provider>
 );
 

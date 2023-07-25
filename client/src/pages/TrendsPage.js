@@ -30,7 +30,7 @@ const TrendsPage = observer(() => {
   return (
     <div>
       <div className="page">
-        <MenuComponent />
+        <MenuComponent show={true}/>
         <main className="main-wrapper">
           <div className="main">
             <div className="page-trands-search-block">

@@ -2,6 +2,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ApiError = require("../error/ApiError");
 const SECRET_KEY = "super_secret_key22";
+const SECRET_KEY_ACCESS_TOKEN = "super_secret_key22";
+const SECRET_KEY_REFRESH_TOKEN = "super_secret_key";
 const uuid = require("uuid");
 const path = require("path");
 const { profile } = require("console");
@@ -14,8 +16,22 @@ const Comments = models.Comments;
 const Favorite_twits = models.Favorite_twits;
 const Following = models.Following;
 
-const generateJwt = (id, email, role) => {
-  return jwt.sign({ id, email, role }, SECRET_KEY, { expiresIn: "24h" });
+// const generateJwt = (id, email, password, role) => {
+//   return jwt.sign({ id, email, role }, SECRET_KEY, { expiresIn: "24h" });
+// };
+
+const genereteAccessToken = (id, email) => {
+  const accessToken = jwt.sign({ id, email }, SECRET_KEY, {
+    expiresIn: "2h",
+  });
+  return accessToken;
+};
+
+const genereteRefreshToken = (email) => {
+  const refreshToken = jwt.sign({ email }, SECRET_KEY, {
+    expiresIn: "1h",
+  });
+  return refreshToken;
 };
 
 const decodeUser = (request) => {
@@ -47,9 +63,21 @@ class UserController {
         birthdate,
         role,
       });
-      const token = generateJwt(user.id, user.email, user.role);
+      const token = genereteAccessToken(
+        user.id,
+        user.email,
+        user.password,
+        user.role
+      );
 
-      return response.json({ token, user });
+      // response.cookie("accessToken", token, {
+      //   httpOnly: true,
+      //   sameSite: "None",
+      //   secure: true,
+      //   maxAge: 24 * 60 * 60 * 1000,
+      // });
+
+      return response.json({ user });
     } catch (error) {
       next(ApiError.internal(error.message));
     }
@@ -72,7 +100,7 @@ class UserController {
       if (!comparePassword) {
         next(ApiError.badRequest("Incorrect password"));
       }
-      const token = generateJwt(user.id, user.email, user.role);
+      const token = genereteAccessToken(user.id, user.email);
 
       return response.json({ token, user });
     } catch (error) {
@@ -82,11 +110,14 @@ class UserController {
 
   async checkToken(request, response, next) {
     try {
-      const token = generateJwt(
-        request.user.id,
-        request.user.email,
-        request.user.role
-      );
+      const token = genereteRefreshToken(request.user.email);
+
+      response.cookie("jwt", token, {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
 
       return response.json({ token });
     } catch (error) {

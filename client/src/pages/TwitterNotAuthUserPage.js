@@ -38,7 +38,7 @@ const TwitterPageNotAuthUser = observer(() => {
   return (
     <div>
       <div className="page">
-        <MenuComponent />
+        <MenuComponent show={true} />
         <div className="main-wrapper">
           <main className="main">
             <TwitterNotAuthProfileUser />
