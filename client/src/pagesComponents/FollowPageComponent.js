@@ -12,7 +12,7 @@ import {
 import ContentFollowPage from "../components/ContentFollowPage";
 import SidebarContent from "../components/SidebarContent";
 
-const FollowPageComponent = observer(({isAuth}) => {
+const FollowPageComponent = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
@@ -31,8 +31,8 @@ const FollowPageComponent = observer(({isAuth}) => {
       console.log(error.response.data.message);
     }
   });
-  
-  if (!isAuth) return null;
+
+  if (loadingPage) return null;
 
   return (
     <>

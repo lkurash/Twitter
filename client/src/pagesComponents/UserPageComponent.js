@@ -3,10 +3,7 @@ import { useContext, useEffect, useLayoutEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
 
-import {
-  getAllTwits,
-  getTwitsByUser,
-} from "../http/twitsApi";
+import { getAllTwits, getTwitsByUser } from "../http/twitsApi";
 import {
   getFollowerUsers,
   getFollowingUsers,
@@ -15,20 +12,18 @@ import {
 } from "../http/userApi";
 import ContentUsersPage from "../components/ContentUsersPage";
 import SidebarContent from "../components/SidebarContent";
+import getAuthUserID from "../utils/getAuthUserID";
 
-const UserPageComponent = observer(({isAuth}) => {
+const UserPageComponent = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
-  const ref = useRef();
   const { id } = useParams();
-
-  useLayoutEffect(() => {
-    ref.current.scrollIntoView();
-  }, []);
+  const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
     try {
+      getUserById(authUserID).then((userInfo) => usersStore.setUser(userInfo));
       getUserById(id).then((userById) => usersStore.setUserPage(userById));
       getTwitsByUser(id).then((usersTwits) =>
         twitsStore.setUserTwits(usersTwits)
@@ -46,11 +41,11 @@ const UserPageComponent = observer(({isAuth}) => {
     }
   });
 
-  if (!isAuth) return null;
+  if (loadingPage) return null;
 
   return (
     <>
-      <div className="main-wrapper" ref={ref}>
+      <div className="main-wrapper">
         <main className="main">
           <ContentUsersPage />
         </main>

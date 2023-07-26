@@ -3,21 +3,23 @@ import { useContext, useEffect } from "react";
 import { Context } from "..";
 
 import { getAllTwits, getFavoriteTwits } from "../http/twitsApi";
-import { getAllUsers, getFollowingUsers } from "../http/userApi";
+import { getAllUsers, getFollowingUsers, getUserById } from "../http/userApi";
 
 import SidebarContent from "../components/SidebarContent";
 import ContentBookmarksPage from "../components/ContentBookmarksPage";
 import getAuthUserID from "../utils/getAuthUserID";
 
-const BookmarksPageComponent = observer(({ isAuth }) => {
+const BookmarksPageComponent = observer(({ loadingPage }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
+  console.log(usersStore.isAuth);
 
   useEffect(() => {
     try {
+      getUserById(authUserID).then((userInfo) => usersStore.setUser(userInfo));
       getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
       getFavoriteTwits(authUserID).then((favoriteTwitsByUser) =>
         favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser)
@@ -31,8 +33,8 @@ const BookmarksPageComponent = observer(({ isAuth }) => {
     }
   });
 
-  if (!isAuth) return null;
-  
+  if (loadingPage) return null;
+
   return (
     <>
       <div className="main-wrapper">

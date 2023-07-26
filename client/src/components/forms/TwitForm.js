@@ -13,7 +13,7 @@ import ButtonEmoji from "../buttons/ButtonEmoji";
 import imgFile from "../Img/file.png";
 import close from "../Img/x_icon.png";
 
-const TwitForm = observer(({ setShowTwitForm }) => {
+const TwitForm = observer(({ setShowTwitForm, showTwitForm }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const [text, setText] = useState("");
@@ -66,6 +66,7 @@ const TwitForm = observer(({ setShowTwitForm }) => {
           <div className="twit-form-input">
             <textarea
               value={text}
+              autoFocus={showTwitForm}
               className="twit-form-input-text"
               onChange={(e) => setText(e.target.value)}
               placeholder="What's happening?"

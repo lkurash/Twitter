@@ -7,10 +7,7 @@ import FooterComponent from "../components/FooterComponent";
 import MenuComponent from "../components/MenuComponent";
 import SidebarContent from "../components/SidebarContent";
 import TwitterNotAuthProfileUser from "../components/TwitterNotAuthProfileUser";
-import {
-  getAllTwits,
-  getTwitsByUser,
-} from "../http/twitsApi";
+import { getAllTwits, getTwitsByUser } from "../http/twitsApi";
 import {
   getFollowerUsers,
   getFollowingUsers,
@@ -25,7 +22,9 @@ const TwitterPageNotAuthUser = observer(() => {
 
   useEffect(() => {
     getUserById(id).then((userById) => usersStore.setUserPage(userById));
-    getTwitsByUser(id).then((usersTwits) => twitsStore.setUserTwits(usersTwits));
+    getTwitsByUser(id).then((usersTwits) =>
+      twitsStore.setUserTwits(usersTwits)
+    );
     getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
     getFollowingUsers(id).then((followings) =>
       usersFollowingsStore.setuserFollowing(followings)
@@ -38,7 +37,7 @@ const TwitterPageNotAuthUser = observer(() => {
   return (
     <div>
       <div className="page">
-        <MenuComponent show={true} />
+        <MenuComponent />
         <div className="main-wrapper">
           <main className="main">
             <TwitterNotAuthProfileUser />

@@ -27,7 +27,7 @@ const TwitterPage = observer(() => {
   return (
     <div>
       <div className="page">
-        <MenuComponent show={true} />
+        <MenuComponent />
         <ContentExplorePage />
         <SidebarContent />
       </div>

@@ -21,20 +21,16 @@ const ButtonBookmarkOnTwit = observer((props) => {
   const { twitsStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
-  const userPage = useParams();
+  const { id } = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userBookmarksTwitId = [];
   const authUserID = getAuthUserID(usersStore);
 
-  const getTwits = () => {
-    getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+  const getTwits = async () => {
+    await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
 
-    if (usersStore.isAuth) {
-      getTwitsByUser(authUserID).then((usersTwits) =>
-        twitsStore.setUserTwits(usersTwits)
-      );
-    } else {
-      getTwitsByUser(userPage.id).then((usersTwits) =>
+    if (id) {
+      await getTwitsByUser(id).then((usersTwits) =>
         twitsStore.setUserTwits(usersTwits)
       );
     }

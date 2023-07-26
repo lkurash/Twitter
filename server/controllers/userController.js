@@ -16,13 +16,9 @@ const Comments = models.Comments;
 const Favorite_twits = models.Favorite_twits;
 const Following = models.Following;
 
-// const generateJwt = (id, email, password, role) => {
-//   return jwt.sign({ id, email, role }, SECRET_KEY, { expiresIn: "24h" });
-// };
-
 const genereteAccessToken = (id, email) => {
   const accessToken = jwt.sign({ id, email }, SECRET_KEY, {
-    expiresIn: "2h",
+    expiresIn: "24h",
   });
   return accessToken;
 };
@@ -69,15 +65,9 @@ class UserController {
         user.password,
         user.role
       );
+      
+      return response.json({ token, user });
 
-      // response.cookie("accessToken", token, {
-      //   httpOnly: true,
-      //   sameSite: "None",
-      //   secure: true,
-      //   maxAge: 24 * 60 * 60 * 1000,
-      // });
-
-      return response.json({ user });
     } catch (error) {
       next(ApiError.internal(error.message));
     }

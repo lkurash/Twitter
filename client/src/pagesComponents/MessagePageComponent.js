@@ -11,7 +11,7 @@ import "../components/common/common.css";
 import "../components/main.css";
 import "../components/userpage.css";
 
-const MessagesPageComponent = observer(({isAuth}) => {
+const MessagesPageComponent = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const MessagesPageComponent = observer(({isAuth}) => {
     }
   });
 
-  if (!isAuth) return null;
+  if (loadingPage) return null;
 
   return (
     <>
