@@ -9,7 +9,8 @@ export const register = async (name, email, password, birthdate) => {
     birthdate,
   });
 
-  localStorage.setItem("token", response.data.token);
+  Cookies.set("token", response.data.token);
+
   return response.data.user;
 };
 
@@ -19,8 +20,7 @@ export const authentication = async (email, password) => {
     password,
   });
 
-  localStorage.setItem("token", response.data.token);
-  Cookies.set("token", response.data.token);
+  Cookies.set("token", response.data.token, { expires: 1 });
 
   return response.data.user;
 };
@@ -28,7 +28,7 @@ export const authentication = async (email, password) => {
 export const refreshToken = async () => {
   const response = await $authHost.get("api/users/auth");
 
-  Cookies.set("refreshToken", response.data.token, { expires: 0.1 });
+  Cookies.set("refreshToken", response.data.token, { expires: 1 / 24 });
 
   return response.data.token;
 };

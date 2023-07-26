@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";

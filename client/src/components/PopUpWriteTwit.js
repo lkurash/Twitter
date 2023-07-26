@@ -15,7 +15,10 @@ const PopUpWriteTwit = observer(({ showTwitForm, setShowTwitForm }) => {
           <img src={close} alt="close-icon" className="close-icon" />
         </div>
         <div className="twit-page-twit-form">
-          <TwitForm setShowTwitForm={setShowTwitForm} />
+          <TwitForm
+            setShowTwitForm={setShowTwitForm}
+            showTwitForm={showTwitForm}
+          />
         </div>
       </div>
     </div>

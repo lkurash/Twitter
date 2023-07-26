@@ -4,7 +4,7 @@ import { Context } from "..";
 
 import SidebarContent from "../components/SidebarContent";
 import { getAllTwits, getTwitsByUser } from "../http/twitsApi";
-import { getAllUsers, getFollowingUsers } from "../http/userApi";
+import { getAllUsers, getFollowingUsers, getUserById } from "../http/userApi";
 import ContentHomePage from "../components/ContentHomePage";
 import getAuthUserID from "../utils/getAuthUserID";
 
@@ -13,13 +13,14 @@ import "../components/common/common.css";
 import "../components/main.css";
 import "../components/userpage.css";
 
-const HomePageComponent = observer(({ isAuth }) => {
+const HomePageComponent = observer(({ loadingPage }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
+    getUserById(authUserID).then((userInfo) => usersStore.setUser(userInfo));
     getAllUsers().then((users) => usersStore.setAllUsers(users));
     getFollowingUsers(authUserID).then((followings) =>
       usersFollowingsStore.setuserFollowing(followings)
@@ -32,7 +33,7 @@ const HomePageComponent = observer(({ isAuth }) => {
     });
   });
 
-  if (!isAuth) return null;
+  if (loadingPage) return null;
 
   return (
     <>

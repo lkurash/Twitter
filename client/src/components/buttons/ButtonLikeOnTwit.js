@@ -20,20 +20,16 @@ import getAuthUserID from "../../utils/getAuthUserID";
 const ButtonLikeOnTwit = observer((props) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
-  const userPage = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userLikesTwitId = [];
+  const { id } = useParams();
   const authUserID = getAuthUserID(usersStore);
 
   const getTwits = async () => {
     await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
 
-    if (usersStore.isAuth) {
-      await getTwitsByUser(authUserID).then((usersTwits) =>
-        twitsStore.setUserTwits(usersTwits)
-      );
-    } else {
-      await getTwitsByUser(userPage.id).then((usersTwits) =>
+    if (id) {
+      await getTwitsByUser(id).then((usersTwits) =>
         twitsStore.setUserTwits(usersTwits)
       );
     }
@@ -47,7 +43,7 @@ const ButtonLikeOnTwit = observer((props) => {
     getTwits();
   };
 
-  const imgButtonLike = (twit) => {
+  const hoverAndActiveButtonLike = (twit) => {
     if (twit.id === twitsStore.hoverTwitLike.id) {
       return hoverLike;
     }
@@ -107,7 +103,7 @@ const ButtonLikeOnTwit = observer((props) => {
             onMouseLeave={() => twitsStore.sethoverTwitLike({})}
           >
             <img
-              src={imgButtonLike(props.twit)}
+              src={hoverAndActiveButtonLike(props.twit)}
               alt="Like"
               className="user-twit-panel-like-img"
             />

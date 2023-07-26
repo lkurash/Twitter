@@ -11,8 +11,10 @@ import {
   MESSAGE_PAGE,
   PROFILE_PAGE_USER,
 } from "./constans";
+import getAuthUserID from "./getAuthUserID";
 
 export const menuButtonsAuthUser = (user) => {
+  const authUserID = getAuthUserID();
   const buttons = [
     {
       id: "1",
@@ -48,7 +50,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Message",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Message",
-      nav: MESSAGE_PAGE + user.user.id,
+      nav: MESSAGE_PAGE + authUserID,
     },
     {
       id: "5",
@@ -57,7 +59,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Bookmarks",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Bookmarks",
-      nav: BOOKMARKS_PAGE + user.user.id,
+      nav: BOOKMARKS_PAGE + authUserID,
     },
     {
       id: "6",
@@ -66,7 +68,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Profile",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Profile",
-      nav: PROFILE_PAGE_USER + user.user.id,
+      nav: PROFILE_PAGE_USER + authUserID,
     },
   ];
 

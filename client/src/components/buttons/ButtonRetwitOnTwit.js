@@ -19,21 +19,16 @@ import "../userTwitPanel.css";
 const ButtonRetwitOnTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
-  const userPage = useParams();
   const { usersStore } = useContext(Context);
+  const { id } = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const userRetwitTwitId = [];
   const authUserID = getAuthUserID(usersStore);
 
-  const getTwits = () => {
-    getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
-
-    if (usersStore.isAuth) {
-      getTwitsByUser(authUserID).then((usersTwits) =>
-        twitsStore.setUserTwits(usersTwits)
-      );
-    } else {
-      getTwitsByUser(userPage.id).then((usersTwits) =>
+  const getTwits = async () => {
+    await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+    if (id) {
+      await getTwitsByUser(id).then((usersTwits) =>
         twitsStore.setUserTwits(usersTwits)
       );
     }
@@ -53,7 +48,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
     getTwits();
   };
 
-  const imgButtonRetwit = (twit) => {
+  const hoverAndActiveButtonRetwit = (twit) => {
     if (twit.id === retwitsStore.hoverTwitRetwit.id) {
       return activeRetwit;
     }
@@ -110,7 +105,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
             onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
           >
             <img
-              src={imgButtonRetwit(twit)}
+              src={hoverAndActiveButtonRetwit(twit)}
               alt="button retwit"
               className="user-twit-panel-retwit-img"
             />

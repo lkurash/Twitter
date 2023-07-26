@@ -12,6 +12,7 @@ import ContentExplorePageAllTwits from "../components/ContentExplorePageAllTwits
 
 import "../App.css";
 import "../components/common/common.css";
+import checkTokenOnPage from "../utils/checkTokenOnPage";
 
 const ExplorePage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -23,6 +24,7 @@ const ExplorePage = observer(() => {
       getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
       getAllUsers().then((users) => usersStore.setAllUsers(users));
       getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+      usersStore.setAuth(checkTokenOnPage());
     } catch (error) {
       console.log(error.response.data.message);
     }
@@ -31,7 +33,7 @@ const ExplorePage = observer(() => {
   return (
     <div>
       <div className="page">
-        <MenuComponent show={true} />
+        <MenuComponent userAuth={usersStore.isAuth} />
         <ContentExplorePageAllTwits />
         <SidebarContent />
       </div>
