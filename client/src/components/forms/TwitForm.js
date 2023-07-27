@@ -30,17 +30,19 @@ const TwitForm = observer(({ setShowTwitForm, showTwitForm }) => {
 
   const createTwits = async () => {
     try {
-      const formData = new FormData();
+      if (text.length > 0) {
+        const formData = new FormData();
 
-      formData.append("text", text);
-      formData.append("img", img);
-      await createTwitByUser(formData);
-      await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
-      getTwitsByUser(usersStore.user.id).then((usersTwits) =>
-        twitsStore.setUserTwits(usersTwits)
-      );
-      setText("");
-      setImg("");
+        formData.append("text", text);
+        formData.append("img", img);
+        await createTwitByUser(formData);
+        await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+        getTwitsByUser(usersStore.user.id).then((usersTwits) =>
+          twitsStore.setUserTwits(usersTwits)
+        );
+        setText("");
+        setImg("");
+      }
     } catch (error) {
       console.log(error.response.data.message);
     }

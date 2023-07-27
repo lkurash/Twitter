@@ -37,7 +37,6 @@ const ButtonLikeOnTwit = observer((props) => {
 
   const createLikeTwit = async (twit) => {
     await createLikeTwitByUser(authUserID, twit.id);
-    console.log(twit.id);
     await getCountLikes(twit.id);
 
     getTwits();

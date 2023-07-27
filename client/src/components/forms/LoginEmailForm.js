@@ -31,6 +31,7 @@ const LoginEmailForm = ({
             <input
               id="input-login"
               min={1}
+              autoFocus
               className="input-form"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -42,8 +43,10 @@ const LoginEmailForm = ({
           className="login-form-button"
           type="button"
           onClick={() => {
-            setShowFormEmail(false);
-            showPasswordForm();
+            if (email) {
+              setShowFormEmail(false);
+              showPasswordForm();
+            }
           }}
         >
           <span>Next</span>

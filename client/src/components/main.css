@@ -31,6 +31,7 @@
   height: 42px;
   margin-left: 17px;
   border-radius: 50px;
+  border: 1px solid rgb(0, 0, 0);
   background-color: rgb(128 128 128 / 34.7%);
 }
 
@@ -39,6 +40,7 @@
   height: 100%;
   margin-left: 17px;
   border-radius: 50px;
+  border: 1px solid rgb(0, 0, 0);
 }
 
 .main-search-form {
