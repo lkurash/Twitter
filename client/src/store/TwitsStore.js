@@ -38,7 +38,7 @@ class TwitsStore {
   setDislikeTwit(twit) {
     this._dislikeTwit = twit;
   }
-  
+
   setTwitsWhoReading(bool) {
     this._twitsWhoReading = bool;
   }

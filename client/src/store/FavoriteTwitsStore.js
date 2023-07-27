@@ -9,9 +9,9 @@ class FavoriteTwitsStore {
     makeAutoObservable(this);
   }
 
-  setFavoriteTwits(twit) {
-    if (twit.length !== 0) {
-      this._favoriteTwits = twit;
+  setFavoriteTwits(twits) {
+    if (twits.length !== 0) {
+      this._favoriteTwits = twits;
     } else {
       this._favoriteTwits = false;
     }

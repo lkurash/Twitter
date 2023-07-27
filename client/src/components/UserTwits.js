@@ -12,7 +12,6 @@ const UserTwits = observer(() => {
   const { twitsStore } = useContext(Context);
 
   if (twitsStore.userTwits.length === 0) return spinner();
-  console.log(twitsStore.userTwits);
 
   return (
     <div className="twits">
