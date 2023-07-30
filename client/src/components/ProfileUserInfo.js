@@ -102,7 +102,7 @@ const ProfileUserInfo = observer(() => {
           {usersStore.userPage.web_site_url && (
             <div className="profile-panel-info-user-web-site">
               <img src={webSiteIcon} className="info-icon" alt="Info" />
-              <a href={`https://${usersStore.userPage.web_site_url}`}>
+              <a className="link" href={`https://${usersStore.userPage.web_site_url}`}>
                 {usersStore.userPage.web_site_url}
               </a>
             </div>

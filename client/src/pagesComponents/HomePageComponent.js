@@ -12,6 +12,7 @@ import "../App.css";
 import "../components/common/common.css";
 import "../components/main.css";
 import "../components/userpage.css";
+import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 const HomePageComponent = observer(({ loadingPage }) => {
   const { twitsStore } = useContext(Context);
@@ -31,9 +32,8 @@ const HomePageComponent = observer(({ loadingPage }) => {
     getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);
     });
+    usersStore.setAuth(getFlagIsAuth());
   });
-
-  if (loadingPage) return null;
 
   return (
     <>

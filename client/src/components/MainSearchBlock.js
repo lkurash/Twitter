@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import Logo from "./common/Logo";
@@ -6,8 +6,11 @@ import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 
 import logo from "./Img/logo_icon.png";
 import searchIcon from "./Img/zoom__icon.png";
+import { getSearchUsers } from "../http/userApi";
+import { Context } from "..";
 
 const MainSearchBlock = observer(({ classNameForm }) => {
+  const { usersStore } = useContext(Context);
   const [userName, setUserName] = useState("");
   const [showListFoundUsers, setShowListFoundUsers] = useState(false);
   const [activeInput, setActiveInput] = useState(false);
@@ -15,6 +18,14 @@ const MainSearchBlock = observer(({ classNameForm }) => {
   const onClose = () => {
     setShowListFoundUsers(false);
     setActiveInput(false);
+  };
+
+  const searchUsers = (name) => {
+    setTimeout(() => {
+      getSearchUsers(name).then((users) => {
+        usersStore.setFoundUsers(users);
+      });
+    }, 500);
   };
 
   return (
@@ -37,10 +48,14 @@ const MainSearchBlock = observer(({ classNameForm }) => {
               placeholder="Search User"
               value={userName}
               onClick={() => {
-                setShowListFoundUsers(true);
                 setActiveInput(true);
               }}
               onChange={(e) => {
+                if (e.target.value.length > 0) {
+                  searchUsers(e.target.value);
+                }else{
+                  searchUsers(null);
+                }
                 setUserName(e.target.value);
                 setShowListFoundUsers(true);
               }}

@@ -10,19 +10,19 @@ import "../App.css";
 import "../components/common/common.css";
 import "../components/main.css";
 import "../components/userpage.css";
+import getFlagIsAuth from "../utils/getFlagIsAuth";
 
-const MessagesPageComponent = observer(({ loadingPage }) => {
+const MessagesPageComponent = observer(() => {
   const { usersStore } = useContext(Context);
 
   useEffect(() => {
     try {
       getAllUsers().then((users) => usersStore.setAllUsers(users));
+      usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);
     }
   });
-
-  if (loadingPage) return null;
 
   return (
     <>

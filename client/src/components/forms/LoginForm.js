@@ -31,10 +31,10 @@ const LoginForm = observer(() => {
     try {
       if (email && password) {
         const userProfile = await authentication(email, password);
-        
+
         usersStore.setUser(userProfile);
         usersStore.setAuth(true);
-        navigate(HOME_PAGE);
+        return navigate(HOME_PAGE);
       }
     } catch (e) {
       alert(e.response.data.message);

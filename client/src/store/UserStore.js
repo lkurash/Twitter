@@ -7,6 +7,7 @@ class UserStore {
     this._birthDate = "";
     this._allUsers = [];
     this._userPage = [];
+    this._foundUsers = [];
     makeAutoObservable(this);
   }
 
@@ -21,7 +22,7 @@ class UserStore {
   setAllUsers(users) {
     if (users.length !== 0) {
       this._allUsers = users;
-    }else{
+    } else {
       this._allUsers = false;
     }
   }
@@ -32,6 +33,14 @@ class UserStore {
 
   setBirthDate(birthDate) {
     this._birthDate = birthDate;
+  }
+
+  setFoundUsers(users) {
+    if (users.length !== 0) {
+      this._foundUsers = users;
+    } else {
+      this._foundUsers = false;
+    }
   }
 
   get isAuth() {
@@ -52,6 +61,9 @@ class UserStore {
 
   get birthDate() {
     return this._birthDate;
+  }
+  get foundUsers() {
+    return this._foundUsers;
   }
 }
 export default UserStore;

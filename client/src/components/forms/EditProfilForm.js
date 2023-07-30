@@ -28,7 +28,6 @@ const EditProfileForm = observer(() => {
   const [activInputName, setActivInputName] = useState(false);
   const [activInputAbout, setActivInputAbout] = useState(false);
   const [activInputSite, setActivInputSite] = useState(false);
-  console.log(usersStore.user);
 
   const selectedFilePhoto = (e) => {
     setPhoto(e.target.files[0]);

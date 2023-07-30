@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useLayoutEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
 
@@ -13,6 +13,7 @@ import {
 import ContentUsersPage from "../components/ContentUsersPage";
 import SidebarContent from "../components/SidebarContent";
 import getAuthUserID from "../utils/getAuthUserID";
+import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 const UserPageComponent = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
@@ -36,12 +37,11 @@ const UserPageComponent = observer(({ loadingPage }) => {
       getFollowerUsers(id).then((followers) =>
         usersFollowingsStore.setuserFollowers(followers)
       );
+      usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);
     }
   });
-
-  if (loadingPage) return null;
 
   return (
     <>

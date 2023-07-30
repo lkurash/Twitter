@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";
@@ -9,31 +10,33 @@ import TwitsWhoYouRead from "./TwitsWhoYouReading";
 
 const ContentHomePage = observer(() => {
   const { twitsStore } = useContext(Context);
+  const [cookies, setCookie] = useCookies();
+
   const [showTwitsForYou, setShowTwitsForYou] = useState(true);
   const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-
-  const setLocalStorageTwitsForYou = (show) => {
-    localStorage.setItem("twitsWhoReading", show);
+  const setCookieTwitsForYou = (show) => {
+    setCookie("twitsWhoReading", show);
   };
 
-  const checkLocalStorageTwitsForYou = () => {
-    if (localStorage.getItem("twitsWhoReading") === "true") {
+  const checkCookieTwitsForYou = () => {
+
+    if (cookies.twitsWhoReading === "true") {
       setShowTwitsForYou(false);
-      setShowTwitsWhoReading(true);
+      return setShowTwitsWhoReading(true);
     } else {
       setShowTwitsForYou(true);
-      setShowTwitsWhoReading(false);
+      return setShowTwitsWhoReading(false);
     }
   };
 
   useEffect(() => {
-    checkLocalStorageTwitsForYou();
+    checkCookieTwitsForYou();
     setTimeout(() => {
       setIsLoading(false);
     }, 400);
-  }, []);
+  });
 
   return (
     <main className="main-wrapper">
@@ -52,28 +55,38 @@ const ContentHomePage = observer(() => {
                     type="button"
                     className="user-main-content-foryou-button-panel"
                     onClick={() => {
-                      setLocalStorageTwitsForYou(false);
-                      checkLocalStorageTwitsForYou();
+                      setCookieTwitsForYou(false);
+                      checkCookieTwitsForYou();
                     }}
                   >
                     <span>For you</span>
                   </button>
-                  {showTwitsForYou && <div className="active-button-panel" />}
+                  <div
+                    className={
+                      showTwitsForYou
+                        ? "active-button-panel-main"
+                        : "button-panel-main"
+                    }
+                  />
                 </div>
                 <div className="wrapper-button">
                   <button
                     type="button"
                     className="user-main-content-reading-button-panel"
                     onClick={() => {
-                      setLocalStorageTwitsForYou(true);
-                      checkLocalStorageTwitsForYou();
+                      setCookieTwitsForYou(true);
+                      checkCookieTwitsForYou();
                     }}
                   >
                     <span> You are reading</span>
                   </button>
-                  {showTwitsWhoReading && (
-                    <div className="active-button-panel" />
-                  )}
+                  <div
+                    className={
+                      showTwitsWhoReading
+                        ? "active-button-panel-main"
+                        : "button-panel-main"
+                    }
+                  />
                 </div>
               </div>
             </div>

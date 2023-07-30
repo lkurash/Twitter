@@ -5,10 +5,11 @@ import profile from "../components/Img/profile_icon.png";
 import home from "../components/Img/home_icon.png";
 import message from "../components/Img/message_icon.png";
 import {
+  AUTHEXPLORE_PAGE,
   BOOKMARKS_PAGE,
-  EXPLORE_PAGE,
   HOME_PAGE,
   MESSAGE_PAGE,
+  NOTIFICATIONS_PAGE,
   PROFILE_PAGE_USER,
 } from "./constans";
 import getAuthUserID from "./getAuthUserID";
@@ -33,7 +34,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Explore",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Explore",
-      nav: EXPLORE_PAGE,
+      nav: AUTHEXPLORE_PAGE,
     },
     {
       id: "3",
@@ -42,6 +43,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "settings icon",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Notifications",
+      nav: NOTIFICATIONS_PAGE,
     },
     {
       id: "4",

@@ -8,55 +8,20 @@ import getUserPhoto from "../utils/getUserPhoto";
 import useOutsideClick from "../utils/useOutsideClickFunction";
 
 const ListFoundUserSearchBlock = observer(
-  ({ userName, showListFoundUsers, onClose }) => {
+  ({ showListFoundUsers, onClose, loadListUsers }) => {
     const { usersStore } = useContext(Context);
     const navigate = useNavigate();
     const listUsersRef = useRef(null);
-    const usersFound = [];
-    const usersName = [];
-
-    const getAllUsersName = () => {
-      if (usersStore.allUsers) {
-        usersStore.allUsers.map((profile) => {
-          if (profile.user_name) {
-            usersName.push(
-              profile.user_name[0].toLowerCase() + profile.user_name.slice(1)
-            );
-          }
-        });
-      }
-    };
-
-    getAllUsersName();
-
-    const getUsersFound = () => {
-      if (userName) {
-        usersName.forEach((element) => {
-          if (element.includes(userName.toLowerCase())) {
-            usersStore.allUsers.map((profile) => {
-              if (
-                profile.user_name ===
-                element[0].toUpperCase() + element.slice(1)
-              ) {
-                return usersFound.push(profile);
-              }
-            });
-          }
-        });
-      }
-    };
-
-    getUsersFound();
 
     useOutsideClick(listUsersRef, onClose, showListFoundUsers);
 
-    if (!showListFoundUsers || userName.length === 0) return null;
+    if (!showListFoundUsers) return null;
 
     return (
       <div className="main-search-wrapper-found-users" ref={listUsersRef}>
-        {usersFound.length !== 0 ? (
+        {usersStore.foundUsers ? (
           <ul className="main-search-list-found-users">
-            {usersFound.map((profile) => (
+            {usersStore.foundUsers.map((profile) => (
               <li
                 key={profile.id}
                 className="main-search-found-list-user"

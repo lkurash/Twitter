@@ -1,11 +1,16 @@
 import { observer } from "mobx-react-lite";
-import { BrowserRouter } from "react-router-dom";
-import AppRouter from "./AppRouter";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const App = observer(() => (
-  <BrowserRouter>
-    <AppRouter />
-  </BrowserRouter>
-));
+import { authenticationRoutes, authRoutes, publicRoutes } from "./router";
+
+const App = observer(() => {
+  const router = createBrowserRouter([
+    authRoutes,
+    publicRoutes,
+    authenticationRoutes,
+  ]);
+
+  return <RouterProvider router={router}></RouterProvider>;
+});
 
 export default App;

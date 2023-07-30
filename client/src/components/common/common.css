@@ -69,6 +69,9 @@
 }
 
 .button-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   border: 0.1px solid white;
   background-color: #1d9bf0;
@@ -82,9 +85,13 @@
 }
 
 .button-singup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   width: 85px;
   height: 36px;
+  color: #000;
   border-radius: 30px;
   border: 0.1px solid white;
   background-color: white;

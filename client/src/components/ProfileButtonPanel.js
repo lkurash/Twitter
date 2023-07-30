@@ -1,68 +1,60 @@
 import { observer } from "mobx-react-lite";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-
-import {
-  PROFILE_PAGE_USER,
-  PROFILE_PAGE_USER_ANSWERS,
-  PROFILE_PAGE_USER_LIKES,
-  PROFILE_PAGE_USER_MEDIA,
-} from "../utils/constans";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 
 const ProfileButtonPanel = observer(() => {
-  const location = useLocation().pathname;
-  const navigate = useNavigate();
   const { id } = useParams();
+   const location = useLocation().pathname;
 
   return (
     <>
       <div className="user-main-content-button-panel">
         <div className="wrapper-button">
-          <button
-            className="user-main-content-twits-button-onpanel"
-            type="button"
-            onClick={() => navigate(PROFILE_PAGE_USER + id)}
+          <NavLink
+            className={({ isActive, isPending }) =>
+              isActive && location ===`/auth/profile/${id}`
+                ? `user-main-content-twits-button-onpanel active-button-panel`
+                : `user-main-content-twits-button-onpanel`
+            }
+            to={`/auth/profile/${id}`}
           >
-            <span>Twits</span>
-          </button>
-          {location === `/profile/${id}` && (
-            <div className="active-button-panel" />
-          )}
+            Twits
+          </NavLink>
         </div>
         <div className="wrapper-button">
-          <button
-            className="user-main-content-answers-button-onpanel"
-            type="button"
-            onClick={() => navigate(PROFILE_PAGE_USER_ANSWERS + id)}
+          <NavLink
+            to={`/auth/profile/${id}/answers`}
+            className={({ isActive }) =>
+              isActive
+                ? `user-main-content-answers-button-onpanel active-button-panel`
+                : `user-main-content-answers-button-onpanel`
+            }
           >
-            <span>Answers</span>
-          </button>
-          {location === `/profile/answers/${id}` && (
-            <div className="active-button-panel" />
-          )}
+            Answers
+          </NavLink>
         </div>
         <div className="wrapper-button">
-          <button
-            className="user-main-content-media-button-onpanel"
-            type="button"
-            onClick={() => navigate(PROFILE_PAGE_USER_MEDIA + id)}
+          <NavLink
+            to={`/auth/profile/${id}/media`}
+            className={({ isActive }) =>
+              isActive
+                ? `user-main-content-media-button-onpanel active-button-panel`
+                : `user-main-content-media-button-onpanel`
+            }
           >
-            <span>Media</span>
-          </button>
-          {location === `/profile/media/${id}` && (
-            <div className="active-button-panel" />
-          )}
+            Media
+          </NavLink>
         </div>
         <div className="wrapper-button">
-          <button
-            className="user-main-content-likes-button-onpanel"
-            type="button"
-            onClick={() => navigate(PROFILE_PAGE_USER_LIKES + id)}
+          <NavLink
+            to={`/auth/profile/${id}/likes`}
+            className={({ isActive }) =>
+              isActive
+                ? `user-main-content-likes-button-onpanel active-button-panel`
+                : `user-main-content-likes-button-onpanel`
+            }
           >
             <span>Likes</span>
-          </button>
-          {location === `/profile/likes/${id}` && (
-            <div className="active-button-panel" />
-          )}
+          </NavLink>
         </div>
       </div>
       <div className="main-line" />
