@@ -11,8 +11,9 @@ import {
 } from "../http/userApi";
 import ContentFollowPage from "../components/ContentFollowPage";
 import SidebarContent from "../components/SidebarContent";
+import getFlagIsAuth from "../utils/getFlagIsAuth";
 
-const FollowPageComponent = observer(({ loadingPage }) => {
+const FollowPageComponent = observer(() => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
@@ -27,12 +28,11 @@ const FollowPageComponent = observer(({ loadingPage }) => {
       );
       getAllUsers().then((users) => usersStore.setAllUsers(users));
       getUserById(id).then((userById) => usersStore.setUserPage(userById));
+      usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);
     }
   });
-
-  if (loadingPage) return null;
 
   return (
     <>

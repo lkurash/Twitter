@@ -5,9 +5,10 @@ const router = new Router();
 
 router.post("/registration", userController.register);
 router.post("/login", userController.authentication);
-router.get("/auth", authMiddleware, userController.checkToken);
+router.get("/auth", authMiddleware, userController.createRefreshToken);
 router.put("/:id", userController.updateUserProfile);
 router.get("", userController.getAllUsers);
+router.get("/user/:name", userController.getSearchUsers);
 router.get("/:id", userController.getUserById);
 router.post("/:id/followings", userController.createFollowing);
 router.delete("/:id/unfollow/:unfollowedId", userController.deleteFollowing);

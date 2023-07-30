@@ -3,9 +3,6 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
 
-import FooterComponent from "../components/FooterComponent";
-import MenuComponent from "../components/MenuComponent";
-import SidebarContent from "../components/SidebarContent";
 import TwitterNotAuthProfileUser from "../components/TwitterNotAuthProfileUser";
 import { getAllTwits, getTwitsByUser } from "../http/twitsApi";
 import {
@@ -35,17 +32,10 @@ const TwitterPageNotAuthUser = observer(() => {
   });
 
   return (
-    <div>
-      <div className="page">
-        <MenuComponent />
-        <div className="main-wrapper">
-          <main className="main">
-            <TwitterNotAuthProfileUser />
-          </main>
-        </div>
-        <SidebarContent />
-      </div>
-      <FooterComponent />
+    <div className="main-wrapper">
+      <main className="main">
+        <TwitterNotAuthProfileUser />
+      </main>
     </div>
   );
 });

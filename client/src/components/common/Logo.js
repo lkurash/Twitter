@@ -20,7 +20,6 @@ const Logo = observer((props) => {
           onClick={() => {
             usersStore.setUserPage({});
             twitsStore.setUserTwits([]);
-            localStorage.setItem("activeButton", "1");
 
             navigate(HOME_PAGE);
           }}
@@ -34,7 +33,6 @@ const Logo = observer((props) => {
             usersStore.setUserPage({});
             twitsStore.setUserTwits([]);
             navigate(TWITTER_PAGE);
-            localStorage.setItem("activeButton", "");
           }}
         >
           <img src={logo} alt="logo" className="logo-icon" />

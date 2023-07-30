@@ -4,20 +4,20 @@ import { useLocation } from "react-router-dom";
 import { Context } from "..";
 
 import { getAllTopics } from "../http/topicsApi";
-import checkTokenOnPage from "../utils/checkTokenOnPage";
 import { EXPLORE_PAGE } from "../utils/constans";
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
 
 import "./sideBar.css";
+import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 const SidebarContent = observer(() => {
   const { usersStore } = useContext(Context);
   const { topicsStore } = useContext(Context);
   const location = useLocation().pathname;
 
-  const userAuth = checkTokenOnPage();
+  const userAuth = getFlagIsAuth();
 
   useEffect(() => {
     try {

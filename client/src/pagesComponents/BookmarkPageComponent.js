@@ -8,14 +8,14 @@ import { getAllUsers, getFollowingUsers, getUserById } from "../http/userApi";
 import SidebarContent from "../components/SidebarContent";
 import ContentBookmarksPage from "../components/ContentBookmarksPage";
 import getAuthUserID from "../utils/getAuthUserID";
+import getFlagIsAuth from "../utils/getFlagIsAuth";
 
-const BookmarksPageComponent = observer(({ loadingPage }) => {
+const BookmarksPageComponent = observer(() => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
-  console.log(usersStore.isAuth);
 
   useEffect(() => {
     try {
@@ -28,12 +28,11 @@ const BookmarksPageComponent = observer(({ loadingPage }) => {
       getFollowingUsers(authUserID).then((followings) =>
         usersFollowingsStore.setuserFollowing(followings)
       );
+      usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);
     }
   });
-
-  if (loadingPage) return null;
 
   return (
     <>

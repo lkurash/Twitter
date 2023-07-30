@@ -1,13 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import checkTokenOnPage from "../utils/checkTokenOnPage";
 import { LOGIN_PAGE, SIGNUP_PAGE } from "../utils/constans";
 
 import "./footer.css";
+import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 const FooterComponent = () => {
-  const navigate = useNavigate();
-  const userAuth = checkTokenOnPage();
+  const userAuth = getFlagIsAuth();
 
   if (userAuth) return null;
 
@@ -18,20 +17,12 @@ const FooterComponent = () => {
         <p>People on Twitter are the first to know.</p>
       </div>
       <div className="footer-buttons">
-        <button
-          className="button-login"
-          type="button"
-          onClick={() => navigate(LOGIN_PAGE)}
-        >
-          Log in{" "}
-        </button>
-        <button
-          className="button-singup"
-          type="button"
-          onClick={() => navigate(SIGNUP_PAGE)}
-        >
+        <NavLink className="button-login" to={LOGIN_PAGE}>
+          Log in
+        </NavLink>
+        <NavLink className="button-singup" to={SIGNUP_PAGE}>
           Sing up
-        </button>
+        </NavLink>
       </div>
     </footer>
   );

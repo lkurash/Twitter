@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { useCookies } from "react-cookie";
-import { useLocation, useNavigate } from "react-router-dom";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
 import { Context } from "..";
 import FooterMobileComponent from "../components/FooterMobileComponent";
 import MenuComponent from "../components/MenuComponent";
@@ -18,7 +18,6 @@ import FollowPageComponent from "../pagesComponents/FollowPageComponent";
 import HomePageComponent from "../pagesComponents/HomePageComponent";
 import MessagesPageComponent from "../pagesComponents/MessagePageComponent";
 import UserPageComponent from "../pagesComponents/UserPageComponent";
-import checkTokenOnPage from "../utils/checkTokenOnPage";
 import {
   BOOKMARKS_PAGE,
   EDIT_PROFILE_PAGE,
@@ -42,28 +41,28 @@ const AuthPage = observer(() => {
   const locationWithoutId = useLocation().pathname.slice(0, -1);
   const location = useLocation().pathname;
 
-  useEffect(() => {
-    refreshToken()
-      .finally(() => {
-        setLoadingPage(false);
-        usersStore.setAuth(checkTokenOnPage());
-      })
-      .catch((error) => {
-        navigate(LOGIN_PAGE_NOT_AUTH);
-        console.log(error.response.data.message);
-        removeCookie("token");
-      });
-  });
+  // useEffect(() => {
+  //   refreshToken()
+  //     .finally(() => {
+  //       setLoadingPage(false);
+  //       usersStore.setAuth(checkTokenOnPage());
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.response.data.message);
+  //       removeCookie("token");
+  //       return redirect(LOGIN_PAGE_NOT_AUTH);
+  //     });
+  // });
 
-  useLayoutEffect(() => {
-    ref.current.scrollIntoView();
-  });
+  // useLayoutEffect(() => {
+  //   ref.current.scrollIntoView();
+  // });
 
   return (
     <div>
-      <div className="page" ref={ref}>
+      <div className="page">
         <MenuComponent userAuth={usersStore.isAuth} />
-        {location === HOME_PAGE && usersStore.isAuth && (
+        {/* {location === HOME_PAGE && usersStore.isAuth && (
           <HomePageComponent loadingPage={loadingPage} />
         )}
         {locationWithoutId === BOOKMARKS_PAGE && usersStore.isAuth && (
@@ -86,7 +85,7 @@ const AuthPage = observer(() => {
         )}
         {locationWithoutId === MESSAGE_PAGE && usersStore.isAuth && (
           <MessagesPageComponent loadingPage={loadingPage} />
-        )}
+        )} */}
       </div>
       <FooterMobileComponent />
     </div>

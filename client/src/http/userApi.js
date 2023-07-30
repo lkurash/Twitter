@@ -25,7 +25,7 @@ export const authentication = async (email, password) => {
   return response.data.user;
 };
 
-export const refreshToken = async () => {
+export const createRefreshToken = async () => {
   const response = await $authHost.get("api/users/auth");
 
   Cookies.set("refreshToken", response.data.token, { expires: 1 / 24 });
@@ -41,6 +41,12 @@ export const updateUserProfile = async (id, updateUser) => {
 
 export const getAllUsers = async () => {
   const users = await $host.get("api/users");
+
+  return users.data;
+};
+
+export const getSearchUsers = async (name) => {
+  const users = await $authHost.get(`api/users/user/${name}`);
 
   return users.data;
 };

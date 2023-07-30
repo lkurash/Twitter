@@ -258,8 +258,6 @@
   min-width: 350px;
   height: max-content;
   margin: 0 auto;
-  /* display: flex;
-  justify-content: space-between; */
 }
 
 .user-main-content-button-panel {
@@ -268,45 +266,70 @@
 }
 
 .wrapper-button {
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 50px;
 }
 
 .user-main-content-reading-button-panel,
-.user-main-content-foryou-button-panel,
-.user-main-content-likes-button-onpanel,
-.user-main-content-media-button-onpanel,
-.user-main-content-answers-button-onpanel,
-.user-main-content-twits-button-onpanel {
+.user-main-content-foryou-button-panel {
+  margin: 0 auto;
   width: 100%;
   height: 50px;
   color: aliceblue;
   font-size: 15px;
   font-weight: bold;
   border: none;
-  background-color: #0000003d;
   cursor: pointer;
+  background-color: #0000003d;
+}
+
+.user-main-content-likes-button-onpanel,
+.user-main-content-media-button-onpanel,
+.user-main-content-answers-button-onpanel,
+.user-main-content-twits-button-onpanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 50px;
+  color: aliceblue;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-bottom: 3px solid rgba(1, 1, 1, 0);
+  border-radius: 1px;
 }
 
 .user-main-content-button-panel button:active {
   border: none;
 }
 
-.user-main-content-likes-button-onpanel:hover,
-.user-main-content-media-button-onpanel:hover,
-.user-main-content-answers-button-onpanel:hover,
-.user-main-content-twits-button-onpanel:hover {
+.wrapper-button:hover {
   background-color: rgb(128 128 128 / 20.6%);
 }
 
 .active-button-panel {
+  border-bottom: 3px solid rgb(16 144 230);
+}
+
+.button-panel-main{
+  height: 3px;
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.active-button-panel-main {
   height: 3px;
   width: 50%;
   margin: 0 auto;
   border-radius: 5px;
   background-color: rgb(16 144 230);
-  /* border-bottom: 2px solid rgb(16 144 230); */
 }
 
 .user-block-twit {

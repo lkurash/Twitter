@@ -1,14 +1,16 @@
 const bcrypt = require("bcrypt");
+const Sequelize = require("sequelize");
 const jwt = require("jsonwebtoken");
-const ApiError = require("../error/ApiError");
+const uuid = require("uuid");
+const path = require("path");
+
 const SECRET_KEY = "super_secret_key22";
 const SECRET_KEY_ACCESS_TOKEN = "super_secret_key22";
 const SECRET_KEY_REFRESH_TOKEN = "super_secret_key";
-const uuid = require("uuid");
-const path = require("path");
-const { profile } = require("console");
-const { where } = require("sequelize");
+
+const ApiError = require("../error/ApiError");
 const models = require("../models/index");
+
 const Twits = models.Twits;
 const User = models.User;
 const Likes = models.Likes;
@@ -65,9 +67,8 @@ class UserController {
         user.password,
         user.role
       );
-      
-      return response.json({ token, user });
 
+      return response.json({ token, user });
     } catch (error) {
       next(ApiError.internal(error.message));
     }
@@ -98,7 +99,7 @@ class UserController {
     }
   }
 
-  async checkToken(request, response, next) {
+  async createRefreshToken(request, response, next) {
     try {
       const token = genereteRefreshToken(request.user.email);
 
@@ -220,9 +221,22 @@ class UserController {
   }
 
   async getAllUsers(request, response, next) {
-    const user = await User.findAll({ include: [{ model: Following }] });
+    const users = await User.findAll({ include: [{ model: Following }] });
 
-    return response.json(user);
+    return response.json(users);
+  }
+
+  async getSearchUsers(request, response, next) {
+    const Op = Sequelize.Op;
+    const { name } = request.params;
+
+    const users = await User.findAll({
+      where: {
+        user_name: { [Op.substring]: name },
+      },
+    });
+
+    return response.json(users);
   }
 
   async getUserById(request, response, next) {

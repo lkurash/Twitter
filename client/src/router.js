@@ -4,6 +4,7 @@ import TrendsPage from "./pages/TrendsPage";
 import TwitterPageNotAuthUser from "./pages/TwitterNotAuthUserPage";
 import ExplorePage from "./pages/ExplorePage";
 import {
+  AUTHEXPLORE_PAGE,
   BOOKMARKS_PAGE,
   EDIT_PROFILE_PAGE,
   EXPLORE_PAGE,
@@ -11,90 +12,129 @@ import {
   FOLLOWING_PAGE,
   HOME_PAGE,
   LOGIN_PAGE,
-  LOGIN_PAGE_NOT_AUTH,
   MESSAGE_PAGE,
+  NOTIFICATIONS_PAGE,
   PROFILE_PAGE_USER,
   PROFILE_PAGE_USER_ANSWERS,
   PROFILE_PAGE_USER_LIKES,
   PROFILE_PAGE_USER_MEDIA,
+  PROFILE_PAGE_USER_TWITS,
   SIGNUP_PAGE,
   TRENDS_PAGE,
   TWITTER_PAGE,
   TWITTER_USER_PAGE,
 } from "./utils/constans";
 import TwitterPage from "./pages/TwitterPage";
-import AuthPage from "./pages/AuthPage";
+import HomePageComponent from "./pagesComponents/HomePageComponent";
+import BookmarksPageComponent from "./pagesComponents/BookmarkPageComponent";
+import UserPageComponent from "./pagesComponents/UserPageComponent";
+import EditProfilePageComponent from "./pagesComponents/EditProfilPageComponent";
+import FollowPageComponent from "./pagesComponents/FollowPageComponent";
+import MessagesPageComponent from "./pagesComponents/MessagePageComponent";
+import WrapperTwitterPage from "./pages/WrapperTwitterPage";
+import authorization from "./utils/authorization";
+import ProfilePageLikes from "./components/ProfilePageLikes";
+import ProfilePageMedia from "./components/ProfilePageMedia";
+import ProfilePageAnswers from "./components/ProfilePageAnswers";
+import UserTwits from "./components/UserTwits";
 
-export const authRoutes = [
-  {
-    path: HOME_PAGE,
-    Component: AuthPage,
-  },
-  {
-    path: `${BOOKMARKS_PAGE}:id`,
-    Component: AuthPage,
-  },
-  {
-    path: `${PROFILE_PAGE_USER}:id`,
-    Component: AuthPage,
-  },
-  {
-    path: `${PROFILE_PAGE_USER_ANSWERS}:id`,
-    Component: AuthPage,
-  },
-  {
-    path: `${PROFILE_PAGE_USER_LIKES}:id`,
-    Component: AuthPage,
-  },
-  {
-    path: `${PROFILE_PAGE_USER_MEDIA}:id`,
-    Component: AuthPage,
-  },
-  {
-    path: `${EDIT_PROFILE_PAGE}:id`,
-    Component: AuthPage,
-  },
-  {
-    path: `${FOLLOWING_PAGE}:id`,
-    Component: AuthPage,
-  },
-  {
-    path: `${FOLLOWER_PAGE}:id`,
-    Component: AuthPage,
-  },
-  {
-    path: `${MESSAGE_PAGE}:id`,
-    Component: AuthPage,
-  },
-];
+export const authRoutes = {
+  path: HOME_PAGE,
+  element: <WrapperTwitterPage />,
+  loader: authorization,
+  children: [
+    {
+      path: "",
+      element: <HomePageComponent />,
+    },
+    {
+      path: `${BOOKMARKS_PAGE}:id`,
+      element: <BookmarksPageComponent />,
+    },
+    {
+      path: `${PROFILE_PAGE_USER}:id`,
+      element: <UserPageComponent />,
+      children: [
+        {
+          path: "",
+          // path: `${PROFILE_PAGE_USER_TWITS}`,
+          element: <UserTwits />,
+        },
+        {
+          path: `${PROFILE_PAGE_USER_ANSWERS}`,
+          element: <ProfilePageAnswers />,
+        },
+        {
+          path: `${PROFILE_PAGE_USER_LIKES}`,
+          element: <ProfilePageLikes />,
+        },
+        {
+          path: `${PROFILE_PAGE_USER_MEDIA}`,
+          element: <ProfilePageMedia />,
+        },
+      ],
+    },
+    {
+      path: `${EDIT_PROFILE_PAGE}:id`,
+      element: <EditProfilePageComponent />,
+    },
+    {
+      path: `${FOLLOWING_PAGE}:id`,
+      element: <FollowPageComponent />,
+    },
+    {
+      path: `${FOLLOWER_PAGE}:id`,
+      element: <FollowPageComponent />,
+    },
+    {
+      path: `${MESSAGE_PAGE}:id`,
+      element: <MessagesPageComponent />,
+    },
+    {
+      path: `${NOTIFICATIONS_PAGE}`,
+      // element: <UserPageComponent />,
+    },
+    {
+      path: `${AUTHEXPLORE_PAGE}`,
+      element: <ExplorePage />,
+    },
+  ],
+};
 
-export const publicRoutes = [
-  {
-    path: TWITTER_PAGE,
-    Component: TwitterPage,
-  },
-  {
-    path: EXPLORE_PAGE,
-    Component: ExplorePage,
-  },
-  {
-    path: LOGIN_PAGE,
-    Component: LoginPage,
-  },
-  {
-    path: LOGIN_PAGE_NOT_AUTH,
-    Component: LoginPage,
-  },
-  {
-    path: SIGNUP_PAGE,
-    Component: SignUpPage,
-  },
-  {
-    path: `${TRENDS_PAGE}:trend`,
-    Component: TrendsPage,
-  },
-  {
-    path: `${TWITTER_USER_PAGE}:id`,
-    Component: TwitterPageNotAuthUser,
-  },
-];
+export const publicRoutes = {
+  path: TWITTER_PAGE,
+  element: <WrapperTwitterPage />,
+  children: [
+    {
+      path: "",
+      element: <TwitterPage />,
+    },
+    {
+      path: EXPLORE_PAGE,
+      element: <ExplorePage />,
+    },
+    {
+      path: `${TRENDS_PAGE}:trend`,
+      element: <TrendsPage />,
+    },
+    {
+      path: `${TWITTER_USER_PAGE}:id`,
+      element: <TwitterPageNotAuthUser />,
+    },
+  ],
+};
+
+export const authenticationRoutes = {
+  path: "/authentication",
+  // element: '',
+  children: [
+    {
+      path: LOGIN_PAGE,
+      element: <LoginPage />,
+    },
+    {
+      path: SIGNUP_PAGE,
+      element: <SignUpPage />,
+    },
+  ],
+};
