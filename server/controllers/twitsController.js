@@ -43,11 +43,22 @@ class TwitsController {
         let fileName = uuid.v4() + ".jpg";
 
         img.mv(path.resolve(__dirname, "..", "static", fileName));
-        const twit = await Twits.create({ text, img: fileName, UserId });
+        const newTwit = await Twits.create({ text, img: fileName, UserId });
 
-        return response.json(twit);
+        const twit = await Twits.findOne({
+          include: [
+            { model: User, as: "user" },
+            { model: User, as: "twitUser" },
+            { model: Likes },
+            { model: Favorite_twits },
+            { model: Comments },
+          ],
+          where: { id: newTwit.id },
+        });
+
+        return response.json([twit]);
       } else {
-         const newTwit = await Twits.create({ text, UserId });
+        const newTwit = await Twits.create({ text, UserId });
 
         const twit = await Twits.findOne({
           include: [

@@ -36,7 +36,11 @@ const TwitForm = observer(({ setShowTwitForm, showTwitForm }) => {
         formData.append("text", text);
         formData.append("img", img);
         await createTwitByUser(formData).then((twit) => {
-          twitsStore.setTwits(twit.concat(twitsStore.twits));
+          if (twitsStore.twits) {
+            twitsStore.setTwits(twit.concat(twitsStore.twits));
+          }else{
+            twitsStore.setTwits(twit);
+          }
           twitsStore.setTwitsWhoReading(
             twit.concat(twitsStore.twitsWhoReading)
           );
