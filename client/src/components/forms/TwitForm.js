@@ -35,11 +35,12 @@ const TwitForm = observer(({ setShowTwitForm, showTwitForm }) => {
 
         formData.append("text", text);
         formData.append("img", img);
-        await createTwitByUser(formData);
-        await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
-        getTwitsByUser(usersStore.user.id).then((usersTwits) =>
-          twitsStore.setUserTwits(usersTwits)
-        );
+        await createTwitByUser(formData).then((twit) => {
+          twitsStore.setTwits(twit.concat(twitsStore.twits));
+          twitsStore.setTwitsWhoReading(
+            twit.concat(twitsStore.twitsWhoReading)
+          );
+        });
         setText("");
         setImg("");
       }

@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { $authHost, $host } from ".";
 
 export const createTwitByUser = async (twit) => {
@@ -6,16 +7,26 @@ export const createTwitByUser = async (twit) => {
   return newTwit.data;
 };
 
-export const getAllTwits = async () => {
-  const alltwits = await $host.get("api/twits");
+export const getAllTwits = async (limit, list) => {
+  const alltwits = await $host.get(`api/twits/`, { params: { limit, list } });
 
   return alltwits.data;
 };
 
-export const getTwitsByUser = async (userId) => {
-  const usersTwits = await $authHost.get(`api/twits/user/${userId}`);
+export const getTwitsByUser = async (userId, limit, list) => {
+  const usersTwits = await $authHost.get(`api/twits/user/${userId}`, {
+    params: { limit, list },
+  });
 
   return usersTwits.data;
+};
+
+export const getTwitsByFollowingsUsers = async (userId, limit, list) => {
+  const twits = await $authHost.get(`api/twits/following/user/${userId}`, {
+    params: { limit, list },
+  });
+
+  return twits.data;
 };
 
 export const createLikeTwitByUser = async (userId, twitId) => {
@@ -81,7 +92,9 @@ export const getCountLikes = async (twitId) => {
 };
 
 export const getCountComments = async (twitId) => {
-  const countComments = await $authHost.put(`api/twits/twit/${twitId}/comments`);
+  const countComments = await $authHost.put(
+    `api/twits/twit/${twitId}/comments`
+  );
 
   return countComments.data;
 };

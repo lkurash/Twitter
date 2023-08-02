@@ -3,7 +3,7 @@ import { makeAutoObservable } from "mobx";
 class TwitsStore {
   constructor() {
     this._twits = [];
-    this._twitsWhoReading = false;
+    this._twitsWhoReading = [];
     this._userTwits = [];
     this._likedTwit = {};
     this._hoverTwitLike = {};
@@ -39,8 +39,8 @@ class TwitsStore {
     this._dislikeTwit = twit;
   }
 
-  setTwitsWhoReading(bool) {
-    this._twitsWhoReading = bool;
+  setTwitsWhoReading(twits) {
+    this._twitsWhoReading = twits;
   }
 
   get twits() {

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { Fragment, useContext } from "react";
 import { Context } from "..";
 
 import Twit from "./Twit";
@@ -7,6 +7,8 @@ import spinner from "../utils/spinner";
 import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 
 import "./main.css";
+import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
+import getMoreUserTwits from "../utils/getMoreUserTwits";
 
 const UserTwits = observer(() => {
   const { twitsStore } = useContext(Context);
@@ -18,13 +20,16 @@ const UserTwits = observer(() => {
       {twitsStore.userTwits ? (
         <>
           {twitsStore.userTwits.map((twit) => (
-            <div key={twit.id}>
+            <Fragment key={twit.id}>
               {twit.retwit && (
                 <TooltipRetwitOnTwit retwit={twit} key={`tooltip-${twit.id}`} />
               )}
               <Twit twit={twit} key={twit.id} />
-            </div>
+            </Fragment>
           ))}
+          {twitsStore.userTwits.length >= 7 && (
+            <ButtonShowMoreTwits getMoreTwits={getMoreUserTwits} />
+          )}
         </>
       ) : (
         <p className="empty-twits">No twits</p>

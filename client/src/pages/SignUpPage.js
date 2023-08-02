@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "..";
 
-import { HOME_PAGE, TWITTER_PAGE } from "../utils/constans";
+import { HOME_PAGE } from "../utils/constans";
 import SignUpForm from "../components/forms/SignUpForm";
 import { register } from "../http/userApi";
 
-import close from "../components/Img/x_icon.png";
 import "../components/forms/loginAndRegistretionForm.css";
 
 const SignUpPage = observer(() => {
@@ -43,52 +42,36 @@ const SignUpPage = observer(() => {
   };
 
   return (
-    <div>
+    <>
       {!checkUserInfo ? (
         <SignUpForm getRegistrationUserInfo={getRegistrationUserInfo} />
       ) : (
-        <div className="body">
-          <div className="form-wrapper wrapper-border">
-            <header className="login-form-header">
-              <div
-                className="button-close"
-                onClick={() => navigate(TWITTER_PAGE)}
-              >
-                <img src={close} alt="close-icon" className="close-icon" />
-              </div>
-            </header>
-            <main className="signup-form-main">
-              <h2>Create your account</h2>
-              <div className="signup-form-input">
-                <label className="signup-user-info">Name</label>
-                <label className="signup-user-name">
-                  {registrationUserInfo.userName}
-                </label>
-              </div>
-              <div className="signup-form-input">
-                <label className="signup-user-info">Email</label>
-                <label className="signup-user-email">
-                  {registrationUserInfo.email}
-                </label>
-              </div>
-              <div className="signup-form-input">
-                <label className="signup-user-info">Date of birth</label>
-                <label className="signup-user-birthdate">
-                  {registrationUserInfo.birthdate}
-                </label>
-              </div>
-              <button
-                className="signup-form-button"
-                type="submit"
-                onClick={signUp}
-              >
-                <span>Sign up</span>
-              </button>
-            </main>
+        <main className="signup-form-main">
+          <h2>Create your account</h2>
+          <div className="signup-form-input">
+            <label className="signup-user-info">Name</label>
+            <label className="signup-user-name">
+              {registrationUserInfo.userName}
+            </label>
           </div>
-        </div>
+          <div className="signup-form-input">
+            <label className="signup-user-info">Email</label>
+            <label className="signup-user-email">
+              {registrationUserInfo.email}
+            </label>
+          </div>
+          <div className="signup-form-input">
+            <label className="signup-user-info">Date of birth</label>
+            <label className="signup-user-birthdate">
+              {registrationUserInfo.birthdate}
+            </label>
+          </div>
+          <button className="signup-form-button" type="submit" onClick={signUp}>
+            <span>Sign up</span>
+          </button>
+        </main>
       )}
-    </div>
+    </>
   );
 });
 

@@ -21,7 +21,6 @@ const ContentHomePage = observer(() => {
   };
 
   const checkCookieTwitsForYou = () => {
-
     if (cookies.twitsWhoReading === "true") {
       setShowTwitsForYou(false);
       return setShowTwitsWhoReading(true);
@@ -32,10 +31,10 @@ const ContentHomePage = observer(() => {
   };
 
   useEffect(() => {
-    checkCookieTwitsForYou();
     setTimeout(() => {
       setIsLoading(false);
     }, 400);
+    checkCookieTwitsForYou();
   });
 
   return (

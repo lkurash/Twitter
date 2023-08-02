@@ -49,30 +49,33 @@ const LoginForm = observer(() => {
   };
 
   return (
-    <div className="body">
-      <div className="form-wrapper wrapper-border">
-        <header className="login-form-header">
-          <ButtonClose nav={location === "/auth/login" ? EXPLORE_PAGE : -1} />
-          <Logo class="logo-icon-form" />
-        </header>
-        <LoginEmailForm
-          email={email}
-          setEmail={setEmail}
-          showPasswordForm={showPasswordForm}
-          showFormEmail={showFormEmail}
-          setShowFormEmail={setShowFormEmail}
-        />
+    <>
+      <LoginEmailForm
+        email={email}
+        setEmail={setEmail}
+        showPasswordForm={showPasswordForm}
+        showFormEmail={showFormEmail}
+        setShowFormEmail={setShowFormEmail}
+      />
 
-        <LoginPasswordForm
-          email={email}
-          password={password}
-          showFormPassword={showFormPassword}
-          setPassword={setPassword}
-          signInKeyDown={signInKeyDown}
-          signIn={signIn}
-        />
-      </div>
-    </div>
+      <LoginPasswordForm
+        email={email}
+        password={password}
+        showFormPassword={showFormPassword}
+        setPassword={setPassword}
+        signInKeyDown={signInKeyDown}
+        signIn={signIn}
+      />
+    </>
+    // <div className="body">
+    //   <div className="form-wrapper wrapper-border">
+    //     <header className="login-form-header">
+    //       <ButtonClose nav={location === "/auth/login" ? EXPLORE_PAGE : -1} />
+    //       <Logo class="logo-icon-form" />
+    //     </header>
+
+    //   </div>
+    // </div>
   );
 });
 

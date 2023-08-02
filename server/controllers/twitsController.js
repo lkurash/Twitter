@@ -1,9 +1,11 @@
-const ApiError = require("../error/ApiError");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Sequelize = require("sequelize");
 const uuid = require("uuid");
 const path = require("path");
+
 const models = require("../models/index");
+const ApiError = require("../error/ApiError");
 const Twits = models.Twits;
 const User = models.User;
 const Likes = models.Likes;
@@ -45,9 +47,20 @@ class TwitsController {
 
         return response.json(twit);
       } else {
-        const twit = await Twits.create({ text, UserId });
+         const newTwit = await Twits.create({ text, UserId });
 
-        return response.json(twit);
+        const twit = await Twits.findOne({
+          include: [
+            { model: User, as: "user" },
+            { model: User, as: "twitUser" },
+            { model: Likes },
+            { model: Favorite_twits },
+            { model: Comments },
+          ],
+          where: { id: newTwit.id },
+        });
+
+        return response.json([twit]);
       }
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
@@ -57,6 +70,11 @@ class TwitsController {
   async getTwitsByUser(request, response, next) {
     try {
       const { userId } = request.params;
+      let { limit, list } = request.query;
+      limit = limit || 7;
+      list = list || 1;
+      let offset = list * limit - limit;
+
       const twits = await Twits.findAll({
         order: [["id", "DESC"]],
         include: [
@@ -67,6 +85,51 @@ class TwitsController {
           { model: Comments },
         ],
         where: { UserId: userId },
+        limit: limit,
+        offset: offset,
+      });
+
+      return response.json(twits);
+    } catch (error) {
+      next(ApiError.badRequest("Check user.id"));
+    }
+  }
+
+  async getTwitsByFollowingUsers(request, response, next) {
+    try {
+      const Op = Sequelize.Op;
+      const { userId } = request.params;
+      let { limit, list } = request.query;
+      limit = limit || 7;
+      list = list || 1;
+      let offset = list * limit - limit;
+
+      const followingUserId = await Following.findAll({
+        attributes: ["followUserId"],
+        where: { UserId: userId },
+        raw: true,
+      });
+
+      const ids = [userId];
+
+      if (followingUserId) {
+        followingUserId.map((item) => {
+          return ids.push(item.followUserId);
+        });
+      }
+
+      const twits = await Twits.findAll({
+        order: [["id", "DESC"]],
+        where: { UserId: { [Op.in]: ids } },
+        include: [
+          { model: User, as: "user" },
+          { model: User, as: "twitUser" },
+          { model: Likes },
+          { model: Favorite_twits },
+          { model: Comments },
+        ],
+        limit: limit,
+        offset: offset,
       });
 
       return response.json(twits);
@@ -76,6 +139,11 @@ class TwitsController {
   }
 
   async gelAllTwits(request, response) {
+    let { limit, list } = request.query;
+    limit = limit || 7;
+    list = list || 1;
+    let offset = list * limit - limit;
+
     const twits = await Twits.findAll({
       order: [["id", "DESC"]],
       include: [
@@ -85,6 +153,8 @@ class TwitsController {
         { model: Favorite_twits },
         { model: Comments },
       ],
+      limit: limit,
+      offset: offset,
     });
 
     return response.json(twits);
