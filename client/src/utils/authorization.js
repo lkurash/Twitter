@@ -1,6 +1,5 @@
 import { redirect } from "react-router-dom";
 import { createRefreshToken } from "../http/userApi";
-import { LOGIN_PAGE } from "./constans";
 
 const authorization = async () => {
   const token = await createRefreshToken().catch((error) => {
@@ -9,7 +8,7 @@ const authorization = async () => {
   if (token) {
     return "null";
   } else {
-    return redirect(LOGIN_PAGE);
+    return redirect("/authentication/redirect");
   }
 };
 export default authorization;

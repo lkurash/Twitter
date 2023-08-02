@@ -5,7 +5,7 @@ import UserPhoto from "./UserPhoto";
 
 const Twit = ({ twit }) => {
   return (
-    <div>
+    <>
       <div className="twit">
         {/* <div className="content-block"> */}
         <div className="user-block-twit">
@@ -13,11 +13,10 @@ const Twit = ({ twit }) => {
           <TwitDesc twit={twit} />
           <ButtonDeleteTwit twit={twit} key={`button-${twit.id}`} />
         </div>
-        {/* </div> */}
         <TwitActions twit={twit} />
       </div>
       <div className="main-line" />
-    </div>
+    </>
   );
 };
 export default Twit;

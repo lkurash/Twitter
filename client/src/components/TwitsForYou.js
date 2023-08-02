@@ -1,10 +1,12 @@
 import { observer } from "mobx-react-lite";
 import "./main.css";
-import { useContext } from "react";
+import { Fragment, useContext } from "react";
 import { Context } from "..";
 
 import Twit from "./Twit";
 import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
+import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
+import getMoreAllTwits from "../utils/getMoreAllTwits";
 
 const TwitsForYou = observer(({ showTwitsForYou }) => {
   const { twitsStore } = useContext(Context);
@@ -16,11 +18,14 @@ const TwitsForYou = observer(({ showTwitsForYou }) => {
       {twitsStore.twits ? (
         <>
           {twitsStore.twits.map((twit) => (
-            <div key={twit.id}>
+            <Fragment key={twit.id}>
               {twit.retwit && <TooltipRetwitOnTwit retwit={twit} />}
               <Twit key={twit.id} twit={twit} />
-            </div>
+            </Fragment>
           ))}
+          {twitsStore.twits.length >= 7 && (
+            <ButtonShowMoreTwits getMoreTwits={getMoreAllTwits} />
+          )}
         </>
       ) : (
         <p className="empty-twits">No twits</p>

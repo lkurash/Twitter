@@ -19,8 +19,6 @@ const Logo = observer((props) => {
           className={props.class}
           onClick={() => {
             usersStore.setUserPage({});
-            twitsStore.setUserTwits([]);
-
             navigate(HOME_PAGE);
           }}
         >

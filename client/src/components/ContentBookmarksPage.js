@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
@@ -12,8 +12,16 @@ const ContentBookmarksPage = observer(() => {
   const { usersStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (favoriteTwitsStore.favoriteTwits.length === 0) return spinner();
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+  });
+
+  if (isLoading || favoriteTwitsStore.favoriteTwits.length === 0)
+    return spinner();
 
   return (
     <div className="user-main-content-block">

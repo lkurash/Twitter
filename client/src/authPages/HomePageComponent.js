@@ -3,7 +3,11 @@ import { useContext, useEffect } from "react";
 import { Context } from "..";
 
 import SidebarContent from "../components/SidebarContent";
-import { getAllTwits, getTwitsByUser } from "../http/twitsApi";
+import {
+  getAllTwits,
+  getTwitsByFollowingsUsers,
+  getTwitsByUser,
+} from "../http/twitsApi";
 import { getAllUsers, getFollowingUsers, getUserById } from "../http/userApi";
 import ContentHomePage from "../components/ContentHomePage";
 import getAuthUserID from "../utils/getAuthUserID";
@@ -26,12 +30,16 @@ const HomePageComponent = observer(({ loadingPage }) => {
     getFollowingUsers(authUserID).then((followings) =>
       usersFollowingsStore.setuserFollowing(followings)
     );
-    getTwitsByUser(authUserID).then((usersTwits) =>
-      twitsStore.setUserTwits(usersTwits)
-    );
+    getTwitsByUser(authUserID).then((usersTwits) => {
+      twitsStore.setUserTwits(usersTwits);
+    });
     getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);
     });
+
+    getTwitsByFollowingsUsers(authUserID).then((twits) =>
+      twitsStore.setTwitsWhoReading(twits)
+    );
     usersStore.setAuth(getFlagIsAuth());
   });
 

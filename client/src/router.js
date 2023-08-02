@@ -18,25 +18,25 @@ import {
   PROFILE_PAGE_USER_ANSWERS,
   PROFILE_PAGE_USER_LIKES,
   PROFILE_PAGE_USER_MEDIA,
-  PROFILE_PAGE_USER_TWITS,
   SIGNUP_PAGE,
   TRENDS_PAGE,
   TWITTER_PAGE,
   TWITTER_USER_PAGE,
 } from "./utils/constans";
 import TwitterPage from "./pages/TwitterPage";
-import HomePageComponent from "./pagesComponents/HomePageComponent";
-import BookmarksPageComponent from "./pagesComponents/BookmarkPageComponent";
-import UserPageComponent from "./pagesComponents/UserPageComponent";
-import EditProfilePageComponent from "./pagesComponents/EditProfilPageComponent";
-import FollowPageComponent from "./pagesComponents/FollowPageComponent";
-import MessagesPageComponent from "./pagesComponents/MessagePageComponent";
+import HomePageComponent from "./authPages/HomePageComponent";
+import BookmarksPageComponent from "./authPages/BookmarkPageComponent";
+import UserPageComponent from "./authPages/UserPageComponent";
+import EditProfilePageComponent from "./authPages/EditProfilPageComponent";
+import FollowPageComponent from "./authPages/FollowPageComponent";
+import MessagesPageComponent from "./authPages/MessagePageComponent";
 import WrapperTwitterPage from "./pages/WrapperTwitterPage";
 import authorization from "./utils/authorization";
 import ProfilePageLikes from "./components/ProfilePageLikes";
 import ProfilePageMedia from "./components/ProfilePageMedia";
 import ProfilePageAnswers from "./components/ProfilePageAnswers";
 import UserTwits from "./components/UserTwits";
+import WrapperLoginAndSignUpPage from "./pages/WrapperLoginAndSignUpPage";
 
 export const authRoutes = {
   path: HOME_PAGE,
@@ -57,7 +57,6 @@ export const authRoutes = {
       children: [
         {
           path: "",
-          // path: `${PROFILE_PAGE_USER_TWITS}`,
           element: <UserTwits />,
         },
         {
@@ -126,8 +125,12 @@ export const publicRoutes = {
 
 export const authenticationRoutes = {
   path: "/authentication",
-  // element: '',
+  element: <WrapperLoginAndSignUpPage />,
   children: [
+    {
+      path: "/authentication/redirect",
+      element: <LoginPage />,
+    },
     {
       path: LOGIN_PAGE,
       element: <LoginPage />,
