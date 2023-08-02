@@ -2,7 +2,13 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
-import { deleteTwitByUser, getAllTwits, getCountLikes, getCountRetwits, getTwitsByUser } from "../../http/twitsApi";
+import {
+  deleteTwitByUser,
+  getAllTwits,
+  getCountLikes,
+  getCountRetwits,
+  getTwitsByFollowingsUsers,
+} from "../../http/twitsApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
@@ -22,8 +28,8 @@ const ButtonDeleteTwit = observer(({ twit }) => {
       await getCountRetwits(twit.twitId);
     }
 
-    await getTwitsByUser(usersStore.user.id).then((twitsById) =>
-      twitsStore.setUserTwits(twitsById)
+    await getTwitsByFollowingsUsers(authUserID).then((twits) =>
+      twitsStore.setTwitsWhoReading(twits)
     );
     await getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);

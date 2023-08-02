@@ -7,8 +7,10 @@ import {
   useState,
 } from "react";
 import { Context } from "..";
+import getMoreAllTwits from "../utils/getMoreAllTwits";
 
 import spinner from "../utils/spinner";
+import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import Twit from "./Twit";
 
 const ContentExplorePageAllTwits = observer(() => {
@@ -40,9 +42,14 @@ const ContentExplorePageAllTwits = observer(() => {
           ) : (
             <div className="twits">
               {twitsStore.twits ? (
-                twitsStore.twits.map((twit) => (
-                  <Twit twit={twit} key={twit.id} />
-                ))
+                <>
+                  {twitsStore.twits.map((twit) => (
+                    <Twit twit={twit} key={twit.id} />
+                  ))}
+                  {twitsStore.twits.length >= 7 && (
+                    <ButtonShowMoreTwits getMoreTwits={getMoreAllTwits} />
+                  )}
+                </>
               ) : (
                 <p className="empty-twits">No twits</p>
               )}
