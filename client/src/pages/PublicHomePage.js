@@ -9,7 +9,7 @@ import { getAllUsers } from "../http/userApi";
 import SidebarContent from "../components/SidebarContent";
 import ContentExplorePage from "../components/ContentExplorePage";
 
-const TwitterPage = observer(({ children }) => {
+const PublicHomePage = observer(({ children }) => {
   const { usersStore } = useContext(Context);
   const { topicsStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
@@ -30,4 +30,4 @@ const TwitterPage = observer(({ children }) => {
     </>
   );
 });
-export default TwitterPage;
+export default PublicHomePage;

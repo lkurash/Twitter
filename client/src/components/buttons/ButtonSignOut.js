@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../..";
 
-import { TWITTER_PAGE } from "../../utils/constans";
+import { ROOT_PAGE_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 const Cookies = require("js-cookie");
 
@@ -21,7 +21,7 @@ function ButtonSignOut({ showButtonSignOut, onClose }) {
     retwitsStore.setRetwitTwit({});
     favoriteTwitsStore.setFavoriteTwits({});
     usersStore.setAuth(false);
-    navigate(TWITTER_PAGE);
+    navigate(ROOT_PAGE_PATH);
   };
 
   useOutsideClick(tooltipRef, onClose, showButtonSignOut);

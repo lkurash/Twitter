@@ -1,9 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
 import ButtonClose from "../components/buttons/ButtonClose";
 import Logo from "../components/common/Logo";
-import { EXPLORE_PAGE } from "../utils/constans";
+import { EXPLORE_PAGE_PATH } from "../utils/constans";
 
-export default function WrapperLoginAndSignUpPage() {
+export default function LayoutLoginAndSignUpPage() {
   const location = useLocation().pathname;
 
   return (
@@ -11,7 +11,9 @@ export default function WrapperLoginAndSignUpPage() {
       <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
           <ButtonClose
-            nav={location === "/authentication/redirect" ? EXPLORE_PAGE : -1}
+            nav={
+              location === "/authentication/redirect" ? EXPLORE_PAGE_PATH : -1
+            }
           />
           <Logo class="logo-icon-form" />
         </header>

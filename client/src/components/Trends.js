@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { TRENDS_PAGE } from "../utils/constans";
+import { TRENDS_PAGE_PATH } from "../utils/constans";
 import ButtonDotMenu from "./buttons/ButtonDotMenu";
 
 function Trends({ topic }) {
@@ -10,7 +10,7 @@ function Trends({ topic }) {
     <div className="main-trends-item">
       <div
         className="trends-item"
-        onClick={() => navigate(TRENDS_PAGE + topic.title)}
+        onClick={() => navigate(TRENDS_PAGE_PATH + topic.title)}
       >
         <p className="trends-item-title">{topic.trend}</p>
         <h4 className="trends-item-body">{topic.title}</h4>

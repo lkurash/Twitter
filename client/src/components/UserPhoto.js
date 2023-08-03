@@ -3,7 +3,10 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
+import {
+  PROFILE_PAGE_USER_PATH,
+  TWITTER_USER_PAGE_PATH,
+} from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 
 const UserPhoto = observer(({ twit }) => {
@@ -13,41 +16,22 @@ const UserPhoto = observer(({ twit }) => {
 
   return (
     <div className="user-info">
-      {twit.retwit ? (
-        <div
-          className="user-info-photo"
-          onClick={() => {
-            if (usersStore.isAuth) {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
-              navigate(PROFILE_PAGE_USER + twit.twitUser.id);
-            } else {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
-              navigate(TWITTER_USER_PAGE + twit.twitUser.id);
-            }
-          }}
-        >
-          <img alt="User" src={getUserPhoto(twit.twitUser)} />
-        </div>
-      ) : (
-        <div
-          className="user-info-photo"
-          onClick={() => {
-            if (usersStore.isAuth) {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
-              navigate(PROFILE_PAGE_USER + twit.user.id);
-            } else {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
-              navigate(TWITTER_USER_PAGE + twit.user.id);
-            }
-          }}
-        >
-          <img alt="User" src={getUserPhoto(twit.user)} />
-        </div>
-      )}
+      <div
+        className="user-info-photo"
+        onClick={() => {
+          if (usersStore.isAuth) {
+            usersStore.setUserPage({});
+            twitsStore.setUserTwits([]);
+            navigate(PROFILE_PAGE_USER_PATH + twit.user.id);
+          } else {
+            usersStore.setUserPage({});
+            twitsStore.setUserTwits([]);
+            navigate(TWITTER_USER_PAGE_PATH + twit.user.id);
+          }
+        }}
+      >
+        <img alt="User" src={getUserPhoto(twit.user)} />
+      </div>
     </div>
   );
 });

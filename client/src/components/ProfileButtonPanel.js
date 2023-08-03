@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const ProfileButtonPanel = observer(() => {
   const { id } = useParams();
-   const location = useLocation().pathname;
 
   return (
     <>
@@ -11,18 +10,19 @@ const ProfileButtonPanel = observer(() => {
         <div className="wrapper-button">
           <NavLink
             className={({ isActive, isPending }) =>
-              isActive && location ===`/auth/profile/${id}`
+              isActive
                 ? `user-main-content-twits-button-onpanel active-button-panel`
                 : `user-main-content-twits-button-onpanel`
             }
-            to={`/auth/profile/${id}`}
+            to={`/home/profile/${id}`}
+            end
           >
             Twits
           </NavLink>
         </div>
         <div className="wrapper-button">
           <NavLink
-            to={`/auth/profile/${id}/answers`}
+            to={`/home/profile/${id}/answers`}
             className={({ isActive }) =>
               isActive
                 ? `user-main-content-answers-button-onpanel active-button-panel`
@@ -34,7 +34,7 @@ const ProfileButtonPanel = observer(() => {
         </div>
         <div className="wrapper-button">
           <NavLink
-            to={`/auth/profile/${id}/media`}
+            to={`/home/profile/${id}/media`}
             className={({ isActive }) =>
               isActive
                 ? `user-main-content-media-button-onpanel active-button-panel`
@@ -46,7 +46,7 @@ const ProfileButtonPanel = observer(() => {
         </div>
         <div className="wrapper-button">
           <NavLink
-            to={`/auth/profile/${id}/likes`}
+            to={`/home/profile/${id}/likes`}
             className={({ isActive }) =>
               isActive
                 ? `user-main-content-likes-button-onpanel active-button-panel`

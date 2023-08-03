@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import { PROFILE_PAGE_USER } from "../utils/constans";
+import { PROFILE_PAGE_USER_PATH } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
 import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
 
@@ -25,7 +25,7 @@ const UserFollowersList = observer(() => {
                 onClick={() => {
                   usersStore.setUserPage({});
                   twitsStore.setUserTwits([]);
-                  navigate(PROFILE_PAGE_USER + profile.User.id);
+                  navigate(PROFILE_PAGE_USER_PATH + profile.User.id);
                 }}
               >
                 <img
