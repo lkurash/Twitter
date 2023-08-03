@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { SIGNUP_PAGE } from "../../utils/constans";
+import { SIGNUP_PAGE_PATH } from "../../utils/constans";
 
 const LoginPasswordForm = ({
   email,
@@ -51,7 +51,7 @@ const LoginPasswordForm = ({
         <button
           type="button"
           className="login-form-button-singup"
-          onClick={() => navigate(SIGNUP_PAGE)}
+          onClick={() => navigate(SIGNUP_PAGE_PATH)}
         >
           Sign up
         </button>

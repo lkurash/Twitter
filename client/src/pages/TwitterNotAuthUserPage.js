@@ -11,7 +11,7 @@ import {
   getUserById,
 } from "../http/userApi";
 
-const TwitterPageNotAuthUser = observer(() => {
+const PublicHomePageNotAuthUser = observer(() => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
@@ -40,4 +40,4 @@ const TwitterPageNotAuthUser = observer(() => {
   );
 });
 
-export default TwitterPageNotAuthUser;
+export default PublicHomePageNotAuthUser;

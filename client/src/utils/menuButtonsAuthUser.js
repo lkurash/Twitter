@@ -5,12 +5,12 @@ import profile from "../components/Img/profile_icon.png";
 import home from "../components/Img/home_icon.png";
 import message from "../components/Img/message_icon.png";
 import {
-  AUTHEXPLORE_PAGE,
-  BOOKMARKS_PAGE,
-  HOME_PAGE,
-  MESSAGE_PAGE,
-  NOTIFICATIONS_PAGE,
-  PROFILE_PAGE_USER,
+  AUTHEXPLORE_PAGE_PATH,
+  BOOKMARKS_PAGE_PATH,
+  HOME_PAGE_PATH,
+  MESSAGE_PAGE_PATH,
+  NOTIFICATIONS_PAGE_PATH,
+  PROFILE_PAGE_USER_PATH,
 } from "./constans";
 import getAuthUserID from "./getAuthUserID";
 
@@ -24,7 +24,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Home",
       classNameButtonImg: "home-icon",
       buttonName: "Home",
-      nav: HOME_PAGE,
+      nav: HOME_PAGE_PATH,
     },
 
     {
@@ -34,7 +34,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Explore",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Explore",
-      nav: AUTHEXPLORE_PAGE,
+      nav: AUTHEXPLORE_PAGE_PATH,
     },
     {
       id: "3",
@@ -43,7 +43,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "settings icon",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Notifications",
-      nav: NOTIFICATIONS_PAGE,
+      nav: NOTIFICATIONS_PAGE_PATH,
     },
     {
       id: "4",
@@ -52,7 +52,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Message",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Message",
-      nav: MESSAGE_PAGE + authUserID,
+      nav: MESSAGE_PAGE_PATH + authUserID,
     },
     {
       id: "5",
@@ -61,7 +61,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Bookmarks",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Bookmarks",
-      nav: BOOKMARKS_PAGE + authUserID,
+      nav: BOOKMARKS_PAGE_PATH,
     },
     {
       id: "6",
@@ -70,7 +70,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Profile",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Profile",
-      nav: PROFILE_PAGE_USER + authUserID,
+      nav: PROFILE_PAGE_USER_PATH + authUserID,
     },
   ];
 

@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
 import ProfileButtonPanel from "./ProfileButtonPanel";
 import ProfileUserInfo from "./ProfileUserInfo";
-import { HOME_PAGE } from "../utils/constans";
+import { HOME_PAGE_PATH } from "../utils/constans";
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
 
 import arrowLeft from "./Img/arrow_left_icon.png";
@@ -29,7 +29,7 @@ const ContentUsersPage = observer(() => {
       <div className="page-name main-stiky-panel">
         <div
           className="main-search-block-button-return"
-          onClick={() => navigate(HOME_PAGE)}
+          onClick={() => navigate(HOME_PAGE_PATH)}
         >
           <img src={arrowLeft} alt="Button return" />
         </div>

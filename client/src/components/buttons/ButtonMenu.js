@@ -11,16 +11,15 @@ const ButtonMenu = ({
 }) => {
   return (
     <NavLink
-      className={({ isActive, isPending }) =>
-        isPending
-          ? `menu-button ${classNameButton} active-menu-button`
-          : isActive
+      className={({ isActive }) =>
+        isActive
           ? `menu-button ${classNameButton} active-menu-button`
           : `menu-button ${classNameButton} notactive`
       }
       type="button"
       to={nav}
       id={id}
+      end
     >
       <img src={img} alt={alt} className={classNameButtonImg} />
       <span className="menu-button-name">{buttonName}</span>

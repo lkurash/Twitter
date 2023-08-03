@@ -4,7 +4,7 @@ import FooterComponent from "../components/FooterComponent";
 import MenuComponent from "../components/MenuComponent";
 
 
-export default function WrapperTwitterPage() {
+export default function AppLayout() {
   return (
     <div>
       <div className="page">

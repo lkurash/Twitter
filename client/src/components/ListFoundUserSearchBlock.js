@@ -3,7 +3,10 @@ import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import { PROFILE_PAGE_USER, TWITTER_USER_PAGE } from "../utils/constans";
+import {
+  PROFILE_PAGE_USER_PATH,
+  TWITTER_USER_PAGE_PATH,
+} from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 import useOutsideClick from "../utils/useOutsideClickFunction";
 
@@ -27,9 +30,9 @@ const ListFoundUserSearchBlock = observer(
                 className="main-search-found-list-user"
                 onClick={() => {
                   if (usersStore.isAuth) {
-                    navigate(PROFILE_PAGE_USER + profile.id);
+                    navigate(PROFILE_PAGE_USER_PATH + profile.id);
                   } else {
-                    navigate(TWITTER_USER_PAGE + profile.id);
+                    navigate(TWITTER_USER_PAGE_PATH + profile.id);
                   }
                 }}
               >

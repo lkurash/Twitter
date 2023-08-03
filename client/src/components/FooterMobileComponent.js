@@ -3,9 +3,9 @@ import { useContext, useState } from "react";
 import { Context } from "..";
 
 import {
-  BOOKMARKS_PAGE,
-  HOME_PAGE,
-  PROFILE_PAGE_USER,
+  BOOKMARKS_PAGE_PATH,
+  HOME_PAGE_PATH,
+  PROFILE_PAGE_USER_PATH,
 } from "../utils/constans";
 
 import home from "./Img/home_icon.png";
@@ -39,21 +39,21 @@ function FooterMobileComponent() {
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(HOME_PAGE)}
+          onClick={() => navigate(HOME_PAGE_PATH)}
         >
           <img src={home} alt="home" className="button-icon-menu" />
         </div>
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(BOOKMARKS_PAGE + usersStore.user.id)}
+          onClick={() => navigate(BOOKMARKS_PAGE_PATH)}
         >
           <img src={bookmark} alt="bookmark" className="button-icon-menu" />
         </div>
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(PROFILE_PAGE_USER + usersStore.user.id)}
+          onClick={() => navigate(PROFILE_PAGE_USER_PATH + usersStore.user.id)}
         >
           <img src={profile} alt="profile" className="button-icon-menu" />
         </div>

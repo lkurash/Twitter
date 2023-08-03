@@ -1,58 +1,115 @@
+import AppLayout from "./pages/AppLayout";
+import LayoutLoginAndSignUpPage from "./pages/LayoutLoginAndSignUpPage";
+import authenticate from "./utils/authenticate";
+
+import PublicHomePage from "./pages/PublicHomePage";
+import TrendsPage from "./pages/TrendsPage";
+import PublicHomePageNotAuthUser from "./pages/TwitterNotAuthUserPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import TrendsPage from "./pages/TrendsPage";
-import TwitterPageNotAuthUser from "./pages/TwitterNotAuthUserPage";
-import ExplorePage from "./pages/ExplorePage";
-import {
-  AUTHEXPLORE_PAGE,
-  BOOKMARKS_PAGE,
-  EDIT_PROFILE_PAGE,
-  EXPLORE_PAGE,
-  FOLLOWER_PAGE,
-  FOLLOWING_PAGE,
-  HOME_PAGE,
-  LOGIN_PAGE,
-  MESSAGE_PAGE,
-  NOTIFICATIONS_PAGE,
-  PROFILE_PAGE_USER,
-  PROFILE_PAGE_USER_ANSWERS,
-  PROFILE_PAGE_USER_LIKES,
-  PROFILE_PAGE_USER_MEDIA,
-  SIGNUP_PAGE,
-  TRENDS_PAGE,
-  TWITTER_PAGE,
-  TWITTER_USER_PAGE,
-} from "./utils/constans";
-import TwitterPage from "./pages/TwitterPage";
+
 import HomePageComponent from "./authPages/HomePageComponent";
+import ExplorePage from "./pages/ExplorePage";
+import MessagesPageComponent from "./authPages/MessagePageComponent";
 import BookmarksPageComponent from "./authPages/BookmarkPageComponent";
 import UserPageComponent from "./authPages/UserPageComponent";
 import EditProfilePageComponent from "./authPages/EditProfilPageComponent";
 import FollowPageComponent from "./authPages/FollowPageComponent";
-import MessagesPageComponent from "./authPages/MessagePageComponent";
-import WrapperTwitterPage from "./pages/WrapperTwitterPage";
-import authorization from "./utils/authorization";
 import ProfilePageLikes from "./components/ProfilePageLikes";
 import ProfilePageMedia from "./components/ProfilePageMedia";
 import ProfilePageAnswers from "./components/ProfilePageAnswers";
 import UserTwits from "./components/UserTwits";
-import WrapperLoginAndSignUpPage from "./pages/WrapperLoginAndSignUpPage";
 
-export const authRoutes = {
-  path: HOME_PAGE,
-  element: <WrapperTwitterPage />,
-  loader: authorization,
+import {
+  AUTHEXPLORE_PAGE_PATH,
+  BOOKMARKS_PAGE_PATH,
+  EDIT_PROFILE_PAGE_PATH,
+  EXPLORE_PAGE_PATH,
+  FOLLOWER_PAGE_PATH,
+  FOLLOWING_PAGE_PATH,
+  HOME_PAGE_PATH,
+  LOGIN_PAGE_PATH,
+  MESSAGE_PAGE_PATH,
+  NOTIFICATIONS_PAGE_PATH,
+  PROFILE_PAGE_USER_PATH,
+  PROFILE_PAGE_USER_ANSWERS_PATH,
+  PROFILE_PAGE_USER_LIKES_PATH,
+  PROFILE_PAGE_USER_MEDIA_PATH,
+  SIGNUP_PAGE_PATH,
+  TRENDS_PAGE_PATH,
+  ROOT_PAGE_PATH,
+  TWITTER_USER_PAGE_PATH,
+} from "./utils/constans";
+
+export const publicRoutes = {
+  path: ROOT_PAGE_PATH,
+  element: <AppLayout />,
+  children: [
+    {
+      path: "",
+      element: <PublicHomePage />,
+    },
+    {
+      path: EXPLORE_PAGE_PATH,
+      element: <ExplorePage />,
+    },
+    {
+      path: `${TRENDS_PAGE_PATH}:trend`,
+      element: <TrendsPage />,
+    },
+    {
+      path: `${TWITTER_USER_PAGE_PATH}:id`,
+      element: <PublicHomePageNotAuthUser />,
+    },
+  ],
+};
+
+export const authorizationRoutes = {
+  path: "/authentication",
+  element: <LayoutLoginAndSignUpPage />,
+  children: [
+    {
+      path: "/authentication/redirect",
+      element: <LoginPage />,
+    },
+    {
+      path: LOGIN_PAGE_PATH,
+      element: <LoginPage />,
+    },
+    {
+      path: SIGNUP_PAGE_PATH,
+      element: <SignUpPage />,
+    },
+  ],
+};
+
+export const privateRoutes = {
+  path: HOME_PAGE_PATH,
+  element: <AppLayout />,
+  loader: authenticate,
   children: [
     {
       path: "",
       element: <HomePageComponent />,
     },
     {
-      path: `${BOOKMARKS_PAGE}:id`,
+      path: `${AUTHEXPLORE_PAGE_PATH}`,
+      element: <ExplorePage />,
+    },
+    {
+      path: `${NOTIFICATIONS_PAGE_PATH}`,
+      // element: <UserPageComponent />,
+    },
+    {
+      path: `${MESSAGE_PAGE_PATH}:id`,
+      element: <MessagesPageComponent />,
+    },
+    {
+      path: `${BOOKMARKS_PAGE_PATH}`,
       element: <BookmarksPageComponent />,
     },
     {
-      path: `${PROFILE_PAGE_USER}:id`,
+      path: `${PROFILE_PAGE_USER_PATH}:id`,
       element: <UserPageComponent />,
       children: [
         {
@@ -60,84 +117,30 @@ export const authRoutes = {
           element: <UserTwits />,
         },
         {
-          path: `${PROFILE_PAGE_USER_ANSWERS}`,
+          path: `${PROFILE_PAGE_USER_ANSWERS_PATH}`,
           element: <ProfilePageAnswers />,
         },
         {
-          path: `${PROFILE_PAGE_USER_LIKES}`,
+          path: `${PROFILE_PAGE_USER_LIKES_PATH}`,
           element: <ProfilePageLikes />,
         },
         {
-          path: `${PROFILE_PAGE_USER_MEDIA}`,
+          path: `${PROFILE_PAGE_USER_MEDIA_PATH}`,
           element: <ProfilePageMedia />,
         },
       ],
     },
     {
-      path: `${EDIT_PROFILE_PAGE}:id`,
+      path: `${EDIT_PROFILE_PAGE_PATH}:id`,
       element: <EditProfilePageComponent />,
     },
     {
-      path: `${FOLLOWING_PAGE}:id`,
+      path: `${FOLLOWING_PAGE_PATH}:id`,
       element: <FollowPageComponent />,
     },
     {
-      path: `${FOLLOWER_PAGE}:id`,
+      path: `${FOLLOWER_PAGE_PATH}:id`,
       element: <FollowPageComponent />,
-    },
-    {
-      path: `${MESSAGE_PAGE}:id`,
-      element: <MessagesPageComponent />,
-    },
-    {
-      path: `${NOTIFICATIONS_PAGE}`,
-      // element: <UserPageComponent />,
-    },
-    {
-      path: `${AUTHEXPLORE_PAGE}`,
-      element: <ExplorePage />,
-    },
-  ],
-};
-
-export const publicRoutes = {
-  path: TWITTER_PAGE,
-  element: <WrapperTwitterPage />,
-  children: [
-    {
-      path: "",
-      element: <TwitterPage />,
-    },
-    {
-      path: EXPLORE_PAGE,
-      element: <ExplorePage />,
-    },
-    {
-      path: `${TRENDS_PAGE}:trend`,
-      element: <TrendsPage />,
-    },
-    {
-      path: `${TWITTER_USER_PAGE}:id`,
-      element: <TwitterPageNotAuthUser />,
-    },
-  ],
-};
-
-export const authenticationRoutes = {
-  path: "/authentication",
-  element: <WrapperLoginAndSignUpPage />,
-  children: [
-    {
-      path: "/authentication/redirect",
-      element: <LoginPage />,
-    },
-    {
-      path: LOGIN_PAGE,
-      element: <LoginPage />,
-    },
-    {
-      path: SIGNUP_PAGE,
-      element: <SignUpPage />,
     },
   ],
 };

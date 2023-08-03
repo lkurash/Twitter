@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 // import { checkToken, getUserById } from "../http/userApi";
-import { LOGIN_PAGE_NOT_AUTH } from "./constans";
+
 import getAuthUserID from "./getAuthUserID";
 
 export default function CreateNewTokenOnPage(user, navigate, loadingPage) {
@@ -22,7 +22,7 @@ export default function CreateNewTokenOnPage(user, navigate, loadingPage) {
   //     .finally(() => {
   //       loadingPage(false);
   //       if (!user.isAuth && location !== "/explore") {
-  //         navigate(LOGIN_PAGE_NOT_AUTH);
+  //         navigate(LOGIN_PAGE_PATH_NOT_AUTH);
   //       }
   //       if (user.isAuth) {
   //         const authUserID = getAuthUserID(user);

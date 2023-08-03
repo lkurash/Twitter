@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "..";
 
-import { FOLLOWER_PAGE, FOLLOWING_PAGE } from "../utils/constans";
+import { FOLLOWER_PAGE_PATH, FOLLOWING_PAGE_PATH } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 import ButtonEditProfile from "./buttons/ButtonEditProfile";
@@ -72,7 +72,7 @@ const ProfileUserInfo = observer(() => {
           <p
             onClick={() => {
               if (usersStore.isAuth) {
-                navigate(FOLLOWING_PAGE + id);
+                navigate(FOLLOWING_PAGE_PATH + id);
               } else {
                 setTooltipUserNotAuth(true);
               }
@@ -84,7 +84,7 @@ const ProfileUserInfo = observer(() => {
             className="profile-panel-count-followers"
             onClick={() => {
               if (usersStore.isAuth) {
-                navigate(FOLLOWER_PAGE + id);
+                navigate(FOLLOWER_PAGE_PATH + id);
               } else {
                 setTooltipUserNotAuth(true);
               }
@@ -102,7 +102,10 @@ const ProfileUserInfo = observer(() => {
           {usersStore.userPage.web_site_url && (
             <div className="profile-panel-info-user-web-site">
               <img src={webSiteIcon} className="info-icon" alt="Info" />
-              <a className="link" href={`https://${usersStore.userPage.web_site_url}`}>
+              <a
+                className="link"
+                href={`https://${usersStore.userPage.web_site_url}`}
+              >
                 {usersStore.userPage.web_site_url}
               </a>
             </div>

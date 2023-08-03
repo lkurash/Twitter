@@ -11,7 +11,7 @@ import "./menu.css";
 import Logo from "./common/Logo";
 import hashtag from "../components/Img/hashtag_icon.png";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
-import { EXPLORE_PAGE } from "../utils/constans";
+import { EXPLORE_PAGE_PATH } from "../utils/constans";
 
 const MenuComponent = observer(() => {
   const { usersStore } = useContext(Context);
@@ -47,7 +47,7 @@ const MenuComponent = observer(() => {
               buttonName="Explore"
               id="0"
               classNameButtonImg="button-icon-menu"
-              nav={EXPLORE_PAGE}
+              nav={EXPLORE_PAGE_PATH}
             />
           </div>
         )}

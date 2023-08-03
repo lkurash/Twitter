@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import { EXPLORE_PAGE, HOME_PAGE } from "../../utils/constans";
+import { EXPLORE_PAGE_PATH, HOME_PAGE_PATH } from "../../utils/constans";
 import { authentication } from "../../http/userApi";
 import ButtonClose from "../buttons/ButtonClose";
 import LoginPasswordForm from "./LoginPasswordForm";
@@ -34,7 +34,7 @@ const LoginForm = observer(() => {
 
         usersStore.setUser(userProfile);
         usersStore.setAuth(true);
-        return navigate(HOME_PAGE);
+        return navigate(HOME_PAGE_PATH);
       }
     } catch (e) {
       alert(e.response.data.message);
@@ -70,7 +70,7 @@ const LoginForm = observer(() => {
     // <div className="body">
     //   <div className="form-wrapper wrapper-border">
     //     <header className="login-form-header">
-    //       <ButtonClose nav={location === "/auth/login" ? EXPLORE_PAGE : -1} />
+    //       <ButtonClose nav={location === "/auth/login" ? EXPLORE_PAGE_PATH : -1} />
     //       <Logo class="logo-icon-form" />
     //     </header>
 

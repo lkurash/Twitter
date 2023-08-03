@@ -1,23 +1,31 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { LOGIN_PAGE, SIGNUP_PAGE } from "../../utils/constans";
+import { LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import bookmarkImg from "../Img/tooltip_bookmark_heart_icon.png";
 import likeImg from "../Img/active_like.png";
 import retwitImg from "../Img/tooltip_retweet_icon.png";
 import commentImg from "../Img/tooltip_comment_icon.png";
-import logo from "../Img/logo_icon.png"
+import logo from "../Img/logo_icon.png";
 import close from "../Img/x_icon.png";
 
-function TooltipUserNotAuth({tooltipUserNotAuth, onCloseTooltip, bookmark, like, retwit, comment, follow}) {
+function TooltipUserNotAuth({
+  tooltipUserNotAuth,
+  onCloseTooltip,
+  bookmark,
+  like,
+  retwit,
+  comment,
+  follow,
+}) {
   const tooltipRef = useRef(null);
   const navigate = useNavigate();
 
   useOutsideClick(tooltipRef, onCloseTooltip, tooltipUserNotAuth);
 
-  if(!tooltipUserNotAuth) return null;
+  if (!tooltipUserNotAuth) return null;
   return (
     <div className="wrapper-tooltip-notauth-user">
       <div ref={tooltipRef} className="tooltip-notauth-user wrapper-border">
@@ -97,14 +105,14 @@ function TooltipUserNotAuth({tooltipUserNotAuth, onCloseTooltip, bookmark, like,
         <button
           className="tooltip-notauth-user-button-login"
           type="button"
-          onClick={() => navigate(LOGIN_PAGE)}
+          onClick={() => navigate(LOGIN_PAGE_PATH)}
         >
           <span>Log in</span>
         </button>
         <button
           className="tooltip-notauth-user-button-signup"
           type="button"
-          onClick={() => navigate(SIGNUP_PAGE)}
+          onClick={() => navigate(SIGNUP_PAGE_PATH)}
         >
           <span>Sign up</span>
         </button>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "..";
 
-import { HOME_PAGE } from "../utils/constans";
+import { HOME_PAGE_PATH } from "../utils/constans";
 import SignUpForm from "../components/forms/SignUpForm";
 import { register } from "../http/userApi";
 
@@ -37,7 +37,7 @@ const SignUpPage = observer(() => {
       console.log(newUser);
       usersStore.setUser(newUser);
       usersStore.setAuth(true);
-      navigate(HOME_PAGE);
+      navigate(HOME_PAGE_PATH);
     }
   };
 
