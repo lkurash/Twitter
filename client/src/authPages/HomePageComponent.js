@@ -34,7 +34,9 @@ const HomePageComponent = observer(({ loadingPage }) => {
     twitsApi.getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);
     });
-
+    twitsApi
+      .getTwitsIdWithUsersLike(authUserID)
+      .then((ids) => twitsStore.setTwitsIdWithUsersLike(ids));
     twitsApi
       .getTwitsByFollowingsUsers(authUserID)
       .then((twits) => twitsStore.setTwitsWhoReading(twits));
