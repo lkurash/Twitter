@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
 
-import { getCommentsByUser } from "../http/twitsApi";
+import twitsApi from "../http/twitsApi";
 import UserComments from "./UserComments";
 
 const ProfilePageAnswers = observer(() => {
@@ -11,9 +11,9 @@ const ProfilePageAnswers = observer(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    getCommentsByUser(id).then((commentsByUser) =>
-      commentsStore.setComments(commentsByUser)
-    );
+    twitsApi
+      .getCommentsByUser(id)
+      .then((commentsByUser) => commentsStore.setComments(commentsByUser));
   });
 
   return (

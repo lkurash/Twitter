@@ -3,11 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import {
-  createFollowings,
-  getAllUsers,
-  getFollowingUsers,
-} from "../http/userApi";
+import userApi from "../http/userApi";
 import {
   PROFILE_PAGE_USER_PATH,
   TWITTER_USER_PAGE_PATH,
@@ -26,14 +22,14 @@ const ListWhoReadUserHomePage = observer(() => {
   const whoNotReadingList = [];
 
   const getUsersAndFollowigs = async () => {
-    await getAllUsers().then((users) => usersStore.setAllUsers(users));
-    await getFollowingUsers(usersStore.user.id).then((followings) =>
-      usersFollowingsStore.setuserFollowing(followings)
-    );
+    await userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+    await userApi
+      .getFollowingUsers(usersStore.user.id)
+      .then((followings) => usersFollowingsStore.setuserFollowing(followings));
   };
 
   const createUserFollowings = async (profile) => {
-    await createFollowings(authUserID, profile.id);
+    await userApi.createFollowings(authUserID, profile.id);
     getUsersAndFollowigs();
   };
 

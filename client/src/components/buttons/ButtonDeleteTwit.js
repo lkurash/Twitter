@@ -2,13 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
-import {
-  deleteTwitByUser,
-  getAllTwits,
-  getCountLikes,
-  getCountRetwits,
-  getTwitsByFollowingsUsers,
-} from "../../http/twitsApi";
+import twitsApi from "../../http/twitsApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
@@ -22,16 +16,16 @@ const ButtonDeleteTwit = observer(({ twit }) => {
   const authUserID = getAuthUserID(usersStore);
 
   const deleteTwit = async (twit) => {
-    await deleteTwitByUser(twit.id);
+    await twitsApi.deleteTwitByUser(twit.id);
     if (twit.twitId) {
-      await getCountLikes(twit.twitId);
-      await getCountRetwits(twit.twitId);
+      await twitsApi.getCountLikes(twit.twitId);
+      await twitsApi.getCountRetwits(twit.twitId);
     }
 
-    await getTwitsByFollowingsUsers(authUserID).then((twits) =>
-      twitsStore.setTwitsWhoReading(twits)
-    );
-    await getAllTwits().then((alltwits) => {
+    await twitsApi
+      .getTwitsByFollowingsUsers(authUserID)
+      .then((twits) => twitsStore.setTwitsWhoReading(twits));
+    await twitsApi.getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);
     });
   };

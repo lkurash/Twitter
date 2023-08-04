@@ -3,8 +3,8 @@ import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
 import { getAllTopics } from "../http/topicsApi";
-import { getAllUsers } from "../http/userApi";
-import { getAllTwits } from "../http/twitsApi";
+import userApi from "../http/userApi";
+import twitsApi from "../http/twitsApi";
 
 import SidebarContent from "../components/SidebarContent";
 import ContentExplorePageAllTwits from "../components/ContentExplorePageAllTwits";
@@ -21,8 +21,8 @@ const ExplorePage = observer(() => {
   useEffect(() => {
     try {
       getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
-      getAllUsers().then((users) => usersStore.setAllUsers(users));
-      getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+      twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

@@ -186,8 +186,18 @@ class TwitsController {
         const disLike = await Likes.destroy({
           where: { TwitId: twitId, UserId: userId },
         });
+        const twit = await Twits.findOne({
+          include: [
+            { model: User, as: "user" },
+            { model: User, as: "twitUser" },
+            { model: Likes },
+            { model: Favorite_twits },
+            { model: Comments },
+          ],
+          where: { id: disLike.TwitId },
+        });
 
-        response.json(checkLike);
+        response.json([twit]);
       }
       if (!checkLike) {
         const like = await Likes.create({
@@ -196,7 +206,18 @@ class TwitsController {
           like: true,
         });
 
-        return response.json(like);
+        const twit = await Twits.findOne({
+          include: [
+            { model: User, as: "user" },
+            { model: User, as: "twitUser" },
+            { model: Likes },
+            { model: Favorite_twits },
+            { model: Comments },
+          ],
+          where: { id: like.TwitId },
+        });
+
+        return response.json([twit]);
       }
     } catch (error) {
       next(ApiError.badRequest("Check user.id or twit.id"));

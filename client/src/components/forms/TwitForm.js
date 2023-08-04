@@ -2,11 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import {
-  createTwitByUser,
-  getAllTwits,
-  getTwitsByUser,
-} from "../../http/twitsApi";
+import twitsApi from "../../http/twitsApi";
 import getUserPhoto from "../../utils/getUserPhoto";
 import ButtonEmoji from "../buttons/ButtonEmoji";
 
@@ -35,10 +31,10 @@ const TwitForm = observer(({ setShowTwitForm, showTwitForm }) => {
 
         formData.append("text", text);
         formData.append("img", img);
-        await createTwitByUser(formData).then((twit) => {
+        await twitsApi.createTwitByUser(formData).then((twit) => {
           if (twitsStore.twits) {
             twitsStore.setTwits(twit.concat(twitsStore.twits));
-          }else{
+          } else {
             twitsStore.setTwits(twit);
           }
           twitsStore.setTwitsWhoReading(

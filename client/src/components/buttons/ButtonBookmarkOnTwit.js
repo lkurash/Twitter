@@ -3,11 +3,7 @@ import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
-import {
-  createFavoriteTwitByUser,
-  getAllTwits,
-  getTwitsByUser,
-} from "../../http/twitsApi";
+import twitsApi from "../../http/twitsApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -27,17 +23,19 @@ const ButtonBookmarkOnTwit = observer((props) => {
   const authUserID = getAuthUserID(usersStore);
 
   const getTwits = async () => {
-    await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+    await twitsApi
+      .getAllTwits()
+      .then((alltwits) => twitsStore.setTwits(alltwits));
 
     if (id) {
-      await getTwitsByUser(id).then((usersTwits) =>
-        twitsStore.setUserTwits(usersTwits)
-      );
+      await twitsApi
+        .getTwitsByUser(id)
+        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
     }
   };
 
   const createFavoriteTwits = async (twit) => {
-    await createFavoriteTwitByUser(authUserID, twit.id);
+    await twitsApi.createFavoriteTwitByUser(authUserID, twit.id);
 
     getTwits();
   };

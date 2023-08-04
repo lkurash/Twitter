@@ -4,21 +4,19 @@ import { SIGNUP_PAGE_PATH } from "../../utils/constans";
 const LoginEmailForm = ({
   email,
   setEmail,
-  showPasswordForm,
-  showFormEmail,
-  setShowFormEmail,
+  showPasswordField,
+  setEmailFieldVisible,
 }) => {
   const navigate = useNavigate();
 
   const nextKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      setShowFormEmail(false);
-      showPasswordForm();
+      setEmailFieldVisible(false);
+      showPasswordField();
     }
   };
 
-  if (!showFormEmail) return null;
   return (
     <main className="login-form-main">
       <div className="login-form-title">
@@ -44,8 +42,8 @@ const LoginEmailForm = ({
           type="button"
           onClick={() => {
             if (email) {
-              setShowFormEmail(false);
-              showPasswordForm();
+              setEmailFieldVisible(false);
+              showPasswordField();
             }
           }}
         >

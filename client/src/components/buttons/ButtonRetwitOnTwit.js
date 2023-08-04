@@ -2,12 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
-import {
-  createRetwitByUser,
-  getAllTwits,
-  getCountRetwits,
-  getTwitsByUser,
-} from "../../http/twitsApi";
+import twitsApi from "../../http/twitsApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -26,11 +21,13 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
   const authUserID = getAuthUserID(usersStore);
 
   const getTwits = async () => {
-    await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+    await twitsApi
+      .getAllTwits()
+      .then((alltwits) => twitsStore.setTwits(alltwits));
     if (id) {
-      await getTwitsByUser(id).then((usersTwits) =>
-        twitsStore.setUserTwits(usersTwits)
-      );
+      await twitsApi
+        .getTwitsByUser(id)
+        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
     }
   };
 
@@ -41,9 +38,9 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
     if (twit.img) {
       formData.append("img", twit.img);
     }
-    await createRetwitByUser(authUserID, twit.id, formData);
+    await twitsApi.createRetwitByUser(authUserID, twit.id, formData);
 
-    await getCountRetwits(twit.id);
+    await twitsApi.getCountRetwits(twit.id);
 
     getTwits();
   };

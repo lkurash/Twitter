@@ -5,9 +5,10 @@ import { Context } from "..";
 
 import { HOME_PAGE_PATH } from "../utils/constans";
 import SignUpForm from "../components/forms/SignUpForm";
-import { register } from "../http/userApi";
+import userApi from "../http/userApi";
 
 import "../components/forms/loginAndRegistretionForm.css";
+import LocalAuthClient from "../store/LocalAuthClient";
 
 const SignUpPage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -28,15 +29,18 @@ const SignUpPage = observer(() => {
   };
   const signUp = async () => {
     if (checkUserInfo) {
-      const newUser = await register(
+      const registerResult = await userApi.register(
         registrationUserInfo.userName,
         registrationUserInfo.email,
         registrationUserInfo.password,
         registrationUserInfo.birthdate
       );
-      console.log(newUser);
-      usersStore.setUser(newUser);
+
+      usersStore.setUser(registerResult.user);
       usersStore.setAuth(true);
+
+      LocalAuthClient.setAccessToken(registerResult.token);
+
       navigate(HOME_PAGE_PATH);
     }
   };

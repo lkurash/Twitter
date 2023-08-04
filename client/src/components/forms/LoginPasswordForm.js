@@ -6,13 +6,16 @@ const LoginPasswordForm = ({
   email,
   password,
   setPassword,
-  signInKeyDown,
   signIn,
-  showFormPassword,
 }) => {
   const navigate = useNavigate();
 
-  if (!showFormPassword) return null;
+  const signInKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      signIn();
+    }
+  };
 
   return (
     <main className="password-form-main">

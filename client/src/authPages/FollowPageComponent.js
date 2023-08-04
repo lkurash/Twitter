@@ -3,12 +3,7 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
 
-import {
-  getFollowerUsers,
-  getFollowingUsers,
-  getUserById,
-  getAllUsers,
-} from "../http/userApi";
+import userApi from "../http/userApi";
 import ContentFollowPage from "../components/ContentFollowPage";
 import SidebarContent from "../components/SidebarContent";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
@@ -20,14 +15,16 @@ const FollowPageComponent = observer(() => {
 
   useEffect(() => {
     try {
-      getFollowingUsers(id).then((followings) =>
+      userApi.getFollowingUsers(id).then((followings) =>
         usersFollowingsStore.setuserFollowing(followings)
       );
-      getFollowerUsers(id).then((followers) =>
-        usersFollowingsStore.setuserFollowers(followers)
-      );
-      getAllUsers().then((users) => usersStore.setAllUsers(users));
-      getUserById(id).then((userById) => usersStore.setUserPage(userById));
+      userApi
+        .getFollowerUsers(id)
+        .then((followers) => usersFollowingsStore.setuserFollowers(followers));
+      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+      userApi
+        .getUserById(id)
+        .then((userById) => usersStore.setUserPage(userById));
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

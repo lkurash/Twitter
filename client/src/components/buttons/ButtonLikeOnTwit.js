@@ -8,16 +8,11 @@ import notactiveLike from "../Img/notactive_like.png";
 import hoverLike from "../Img/hover_like.png";
 import "../userTwitPanel.css";
 
-import {
-  createLikeTwitByUser,
-  getAllTwits,
-  getCountLikes,
-  getTwitsByUser,
-} from "../../http/twitsApi";
+import twitsApi from "../../http/twitsApi";
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
 
-const ButtonLikeOnTwit = observer((props) => {
+const ButtonLikeOnTwit = observer(({twit}) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
@@ -26,18 +21,20 @@ const ButtonLikeOnTwit = observer((props) => {
   const authUserID = getAuthUserID(usersStore);
 
   const getTwits = async () => {
-    await getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+    await twitsApi
+      .getAllTwits()
+      .then((alltwits) => twitsStore.setTwits(alltwits));
 
     if (id) {
-      await getTwitsByUser(id).then((usersTwits) =>
-        twitsStore.setUserTwits(usersTwits)
-      );
+      await twitsApi
+        .getTwitsByUser(id)
+        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
     }
   };
 
   const createLikeTwit = async (twit) => {
-    await createLikeTwitByUser(authUserID, twit.id);
-    await getCountLikes(twit.id);
+    await twitsApi.createLikeTwitByUser(authUserID, twit.id).then((twit)=>console.log(twit))
+    await twitsApi.getCountLikes(twit.id);
 
     getTwits();
   };
@@ -77,7 +74,7 @@ const ButtonLikeOnTwit = observer((props) => {
 
   return (
     <div className="user-twit-panel-like">
-      {!userLikesTwitId.includes(props.twit.id) ? (
+      {!userLikesTwitId.includes(twit.id) ? (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}
@@ -86,23 +83,23 @@ const ButtonLikeOnTwit = observer((props) => {
           />
           <div
             className="user-twit-panel-button-like"
-            key={props.twit.id}
+            key={twit.id}
             onClick={() => {
               if (usersStore.isAuth) {
-                twitsStore.setLikedTwit(props.twit);
+                twitsStore.setLikedTwit(twit);
                 twitsStore.setDislikeTwit({});
-                createLikeTwit(props.twit);
+                createLikeTwit(twit);
               } else {
                 setTooltipUserNotAuth(true);
               }
             }}
             onMouseEnter={() => {
-              twitsStore.sethoverTwitLike(props.twit);
+              twitsStore.sethoverTwitLike(twit);
             }}
             onMouseLeave={() => twitsStore.sethoverTwitLike({})}
           >
             <img
-              src={hoverAndActiveButtonLike(props.twit)}
+              src={hoverAndActiveButtonLike(twit)}
               alt="Like"
               className="user-twit-panel-like-img"
             />
@@ -112,21 +109,21 @@ const ButtonLikeOnTwit = observer((props) => {
         <div className="user-twit-panel-button-like">
           <img
             alt="Like"
-            key={props.twit.id}
+            key={twit.id}
             className="user-twit-panel-like-img"
-            src={disLikeButtonImg(props.twit)}
-            onMouseEnter={() => twitsStore.sethoverTwitLike(props.twit)}
+            src={disLikeButtonImg(twit)}
+            onMouseEnter={() => twitsStore.sethoverTwitLike(twit)}
             onMouseLeave={() => twitsStore.sethoverTwitLike({})}
             onClick={() => {
-              createLikeTwit(props.twit);
-              twitsStore.setDislikeTwit(props.twit);
+              createLikeTwit(twit);
+              twitsStore.setDislikeTwit(twit);
               twitsStore.setLikedTwit({});
             }}
           />
         </div>
       )}
       <p className="user-twit-panel-count-like">
-        {props.twit.Likes.length > 0 && props.twit.Likes.length}
+        {twit.countLikes > 0 && twit.countLikes}
       </p>
     </div>
   );

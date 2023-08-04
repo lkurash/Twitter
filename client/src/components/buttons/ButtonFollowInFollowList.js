@@ -2,11 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "../..";
 
-import {
-  createFollowings,
-  deleteFollowings,
-  getAllUsers,
-} from "../../http/userApi";
+import userApi from "../../http/userApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonFollowInFollowList = observer(
@@ -17,17 +13,23 @@ const ButtonFollowInFollowList = observer(
     const listFollowingUserIds = [];
 
     const deleteFollowAndGetAllUsers = async (userFollowId) => {
-      await deleteFollowings(authUserID, userFollowId).catch((error) =>
-        console.log(error.response.data.message)
-      );
-      await getAllUsers().then((users) => usersStore.setAllUsers(users));
+      await userApi
+        .deleteFollowings(authUserID, userFollowId)
+        .catch((error) => console.log(error.response.data.message));
+      await userApi
+        .getAllUsers()
+        .then((users) => usersStore.setAllUsers(users));
     };
 
     const createFollowAndGetAllUsers = async (userFollowId) => {
-      await createFollowings(authUserID, userFollowId).catch((error) => {
-        console.log(error.response.data.message);
-      });
-      await getAllUsers().then((users) => usersStore.setAllUsers(users));
+      await userApi
+        .createFollowings(authUserID, userFollowId)
+        .catch((error) => {
+          console.log(error.response.data.message);
+        });
+      await userApi
+        .getAllUsers()
+        .then((users) => usersStore.setAllUsers(users));
     };
 
     const createListFollowingUserIds = (userId) => {

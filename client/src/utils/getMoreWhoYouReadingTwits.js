@@ -1,4 +1,4 @@
-import { getTwitsByFollowingsUsers } from "../http/twitsApi";
+import twitsApi from "../http/twitsApi";
 import getAuthUserID from "./getAuthUserID";
 
 export default async function getMoreWhoYouReadingTwits(
@@ -11,16 +11,16 @@ export default async function getMoreWhoYouReadingTwits(
   if (showMoreTwits) {
     const authUserID = getAuthUserID();
 
-    await getTwitsByFollowingsUsers(authUserID, 7, itemListTwits).then(
-      (twits) => {
-        twitsStore.setTwitsWhoReading(
-          twitsStore.twitsWhoReading.concat(twits)
-        );
+    await twitsApi
+      .getTwitsByFollowingsUsers(authUserID, 7, itemListTwits)
+      .then((twits) => {
+        twitsStore.setTwitsWhoReading(twitsStore.twitsWhoReading.concat(twits));
+
         setShowMoreTwits(false);
+
         if (twits.length < 7) {
           setShowButton(false);
         }
-      }
-    );
+      });
   }
 }
