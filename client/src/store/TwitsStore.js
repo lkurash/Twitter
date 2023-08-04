@@ -37,6 +37,22 @@ class TwitsStore {
     });
   }
 
+  addRetwitTwit(retwit) {
+    this._twits.map((twit) => {
+      if (twit.id === retwit.id) {
+        twit.countRetwits = retwit.countRetwits;
+      }
+      return this._twits;
+    });
+  }
+
+  deleteRetwit(retwit) {
+    let twit = this._twits.findIndex(
+      (twit) => twit.twitId === retwit.id && twit.retwit === true
+    );
+    return this._twits.splice(twit, 1);
+  }
+
   setLikedTwit(twit) {
     this._likedTwit = twit;
   }

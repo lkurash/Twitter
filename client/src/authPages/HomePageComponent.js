@@ -15,8 +15,9 @@ import "../components/userpage.css";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 const HomePageComponent = observer(({ loadingPage }) => {
-  const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
 
@@ -24,22 +25,33 @@ const HomePageComponent = observer(({ loadingPage }) => {
     userApi
       .getUserById(authUserID)
       .then((userInfo) => usersStore.setUser(userInfo));
+
     userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+
     userApi
       .getFollowingUsers(authUserID)
       .then((followings) => usersFollowingsStore.setuserFollowing(followings));
+
     twitsApi.getTwitsByUser(authUserID).then((usersTwits) => {
       twitsStore.setUserTwits(usersTwits);
     });
+
     twitsApi.getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);
     });
+
     twitsApi
       .getTwitsIdWithUsersLike(authUserID)
       .then((ids) => twitsStore.setTwitsIdWithUsersLike(ids));
+
+    twitsApi
+      .getUserRetwits(authUserID)
+      .then((retwits) => retwitsStore.setUserRetwits(retwits));
+
     twitsApi
       .getTwitsByFollowingsUsers(authUserID)
       .then((twits) => twitsStore.setTwitsWhoReading(twits));
+
     usersStore.setAuth(getFlagIsAuth());
   });
 

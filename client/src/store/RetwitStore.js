@@ -6,6 +6,7 @@ class RetwitsStore {
     this._hoverTwitRetwit = {};
     this._deleteRetwit = {};
     this._retwitTwit = {};
+    this._userRetwits = [];
     makeAutoObservable(this);
   }
 
@@ -25,6 +26,10 @@ class RetwitsStore {
     this._hoverTwitRetwit = twit;
   }
 
+  setUserRetwits(retwit) {
+    this._userRetwits = retwit;
+  }
+
   get retwits() {
     return this._retwits;
   }
@@ -39,6 +44,10 @@ class RetwitsStore {
 
   get retwitTwit() {
     return this._retwitTwit;
+  }
+
+  get userRetwits() {
+    return this._userRetwits;
   }
 }
 export default RetwitsStore;

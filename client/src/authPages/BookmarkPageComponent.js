@@ -13,6 +13,7 @@ import getFlagIsAuth from "../utils/getFlagIsAuth";
 const BookmarksPageComponent = observer(() => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
@@ -22,18 +23,31 @@ const BookmarksPageComponent = observer(() => {
       userApi
         .getUserById(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
+
       twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+
       twitsApi
         .getFavoriteTwits(authUserID)
         .then((favoriteTwitsByUser) =>
           favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser)
         );
+
       userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+
       userApi
         .getFollowingUsers(authUserID)
         .then((followings) =>
           usersFollowingsStore.setuserFollowing(followings)
         );
+
+      twitsApi
+        .getTwitsIdWithUsersLike(authUserID)
+        .then((ids) => twitsStore.setTwitsIdWithUsersLike(ids));
+
+      twitsApi
+        .getUserRetwits(authUserID)
+        .then((retwits) => retwitsStore.setUserRetwits(retwits));
+
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

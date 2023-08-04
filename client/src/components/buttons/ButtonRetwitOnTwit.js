@@ -15,21 +15,8 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
-  const { id } = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
-  const userRetwitTwitId = [];
   const authUserID = getAuthUserID(usersStore);
-
-  const getTwits = async () => {
-    await twitsApi
-      .getAllTwits()
-      .then((alltwits) => twitsStore.setTwits(alltwits));
-    if (id) {
-      await twitsApi
-        .getTwitsByUser(id)
-        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
-    }
-  };
 
   const createRetwitTwit = async (twit) => {
     const formData = new FormData();
@@ -38,11 +25,19 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
     if (twit.img) {
       formData.append("img", twit.img);
     }
-    await twitsApi.createRetwitByUser(authUserID, twit.id, formData);
+    await twitsApi
+      .createRetwitByUser(authUserID, twit.id, formData)
+      .then((retwit) => {
+        if (retwit) {
+          twitsStore.setTwits(retwit.concat(twitsStore.twits));
+        }else{
+          twitsStore.deleteRetwit(twit)
+        }
+      });
 
-    await twitsApi.getCountRetwits(twit.id);
-
-    getTwits();
+    await twitsApi
+      .getCountRetwits(twit.id)
+      .then((retwit) => twitsStore.addRetwitTwit(retwit));
   };
 
   const hoverAndActiveButtonRetwit = (twit) => {
@@ -62,23 +57,13 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
     return activeRetwit;
   };
 
-  const getUserRetwitTwitId = () => {
-    twitsStore.twits.map((twit) => {
-      if (twit.retwit && twit.UserId === usersStore.user.id) {
-        userRetwitTwitId.push(twit.twitId);
-      }
-    });
-  };
-
   const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);
   };
 
-  getUserRetwitTwitId();
-
   return (
     <div className="user-twit-panel-retwit">
-      {!userRetwitTwitId.includes(twit.id) ? (
+      {!retwitsStore.userRetwits.includes(twit.id) ? (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}
