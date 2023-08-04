@@ -327,11 +327,11 @@ class TwitsController {
       });
 
       if (checkRetwit) {
-        await Twits.destroy({
+        const retwit = await Twits.destroy({
           where: { twitId: twitId, UserId: userId, retwit: true },
         });
 
-        response.json(checkRetwit);
+        response.json(null);
       }
       if (!checkRetwit) {
         const retwit = await Twits.create({
@@ -343,7 +343,18 @@ class TwitsController {
           twitUserId: twitUserId,
         });
 
-        return response.json(retwit);
+        const twit = await Twits.findOne({
+          include: [
+            { model: User, as: "user" },
+            { model: User, as: "twitUser" },
+            { model: Likes },
+            { model: Favorite_twits },
+            { model: Comments },
+          ],
+          where: { id: retwit.id },
+        });
+
+        return response.json([twit]);
       }
     } catch (error) {
       next(ApiError.badRequest("Check userId or twit.id"));
@@ -445,11 +456,35 @@ class TwitsController {
           }
         );
 
-        return response.json(countRetwits);
+        const twit = await Twits.findOne({
+          where: { id: twitId, retwit: false },
+        });
+
+        return response.json(twit);
       }
     } catch (error) {
       next(ApiError.badRequest("Check twit.id"));
     }
+  }
+
+  async getUserRetwits(request, response, next) {
+    const { userId } = request.params;
+
+    const retwitsId = await Twits.findAll({
+      attributes: ["twitId"],
+      where: { UserId: userId, retwit: true },
+      raw: true,
+    });
+
+    const ids = [];
+    console.log(retwitsId);
+
+    if (retwitsId) {
+      retwitsId.map((item) => {
+        return ids.push(item.twitId);
+      });
+    }
+    return response.json(ids);
   }
 
   async deleteTwit(request, response, next) {

@@ -112,6 +112,12 @@ class TwitsApi {
 
     return twitsIds.data;
   }
+
+  async getUserRetwits(userId) {
+    const twitsIds = await $authHost.get(`api/twits/retwits/user/${userId}`);
+
+    return twitsIds.data;
+  }
 }
 const twitsApi = new TwitsApi();
 
