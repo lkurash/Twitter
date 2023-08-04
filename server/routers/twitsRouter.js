@@ -28,6 +28,7 @@ router.put("/twit/:twitId/likes", twitsController.getCountLikes);
 router.put("/twit/:twitId/comments", twitsController.getCountComments);
 router.delete("/twit/:twitId", twitsController.deleteTwit);
 
+router.get("/likes/user/:userId", twitsController.getTwitsWithUsersLike);
 router.get("/following/user/:userId", twitsController.getTwitsByFollowingUsers);
 
 module.exports = router;

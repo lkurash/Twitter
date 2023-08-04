@@ -106,6 +106,12 @@ class TwitsApi {
 
     return twit.data;
   }
+
+  async getTwitsIdWithUsersLike(userId) {
+    const twitsIds = await $authHost.get(`api/twits/likes/user/${userId}`);
+
+    return twitsIds.data;
+  }
 }
 const twitsApi = new TwitsApi();
 

@@ -8,6 +8,7 @@ class TwitsStore {
     this._likedTwit = {};
     this._hoverTwitLike = {};
     this._dislikeTwit = {};
+    this._twitsIdWithUsersLike = [];
     makeAutoObservable(this);
   }
 
@@ -27,6 +28,15 @@ class TwitsStore {
     }
   }
 
+  addTwitLike(twitLike) {
+    this._twits.map((twit) => {
+      if (twit.id === twitLike.id) {
+        twit.countLikes = twitLike.countLikes;
+      }
+      return this._twits;
+    });
+  }
+
   setLikedTwit(twit) {
     this._likedTwit = twit;
   }
@@ -41,6 +51,10 @@ class TwitsStore {
 
   setTwitsWhoReading(twits) {
     this._twitsWhoReading = twits;
+  }
+
+  setTwitsIdWithUsersLike(ids) {
+    this._twitsIdWithUsersLike = ids;
   }
 
   get twits() {
@@ -65,6 +79,10 @@ class TwitsStore {
 
   get twitsWhoReading() {
     return this._twitsWhoReading;
+  }
+
+  get twitsIdWithUsersLike() {
+    return this._twitsIdWithUsersLike;
   }
 }
 export default TwitsStore;
