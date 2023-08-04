@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
 
-import { getAllTwits, getFavoriteTwits } from "../http/twitsApi";
-import { getAllUsers, getFollowingUsers, getUserById } from "../http/userApi";
+import twitsApi from "../http/twitsApi";
+import userApi from "../http/userApi";
 
 import SidebarContent from "../components/SidebarContent";
 import ContentBookmarksPage from "../components/ContentBookmarksPage";
@@ -19,15 +19,21 @@ const BookmarksPageComponent = observer(() => {
 
   useEffect(() => {
     try {
-      getUserById(authUserID).then((userInfo) => usersStore.setUser(userInfo));
-      getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
-      getFavoriteTwits(authUserID).then((favoriteTwitsByUser) =>
-        favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser)
-      );
-      getAllUsers().then((users) => usersStore.setAllUsers(users));
-      getFollowingUsers(authUserID).then((followings) =>
-        usersFollowingsStore.setuserFollowing(followings)
-      );
+      userApi
+        .getUserById(authUserID)
+        .then((userInfo) => usersStore.setUser(userInfo));
+      twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+      twitsApi
+        .getFavoriteTwits(authUserID)
+        .then((favoriteTwitsByUser) =>
+          favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser)
+        );
+      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+      userApi
+        .getFollowingUsers(authUserID)
+        .then((followings) =>
+          usersFollowingsStore.setuserFollowing(followings)
+        );
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

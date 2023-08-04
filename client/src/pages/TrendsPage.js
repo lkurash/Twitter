@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
 import SidebarContent from "../components/SidebarContent";
-import { getAllTwits } from "../http/twitsApi";
+import twitsApi from "../http/twitsApi";
 import TwitsForTrends from "../components/TwitsForTrends";
 import ButtonDotMenu from "../components/buttons/ButtonDotMenu";
 
@@ -20,7 +20,7 @@ const TrendsPage = observer(() => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+    twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
   });
 
   return (

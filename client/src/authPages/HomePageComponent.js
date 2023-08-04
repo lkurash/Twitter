@@ -3,12 +3,8 @@ import { useContext, useEffect } from "react";
 import { Context } from "..";
 
 import SidebarContent from "../components/SidebarContent";
-import {
-  getAllTwits,
-  getTwitsByFollowingsUsers,
-  getTwitsByUser,
-} from "../http/twitsApi";
-import { getAllUsers, getFollowingUsers, getUserById } from "../http/userApi";
+import twitsApi from "../http/twitsApi";
+import userApi from "../http/userApi";
 import ContentHomePage from "../components/ContentHomePage";
 import getAuthUserID from "../utils/getAuthUserID";
 
@@ -25,21 +21,23 @@ const HomePageComponent = observer(({ loadingPage }) => {
   const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
-    getUserById(authUserID).then((userInfo) => usersStore.setUser(userInfo));
-    getAllUsers().then((users) => usersStore.setAllUsers(users));
-    getFollowingUsers(authUserID).then((followings) =>
-      usersFollowingsStore.setuserFollowing(followings)
-    );
-    getTwitsByUser(authUserID).then((usersTwits) => {
+    userApi
+      .getUserById(authUserID)
+      .then((userInfo) => usersStore.setUser(userInfo));
+    userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+    userApi
+      .getFollowingUsers(authUserID)
+      .then((followings) => usersFollowingsStore.setuserFollowing(followings));
+    twitsApi.getTwitsByUser(authUserID).then((usersTwits) => {
       twitsStore.setUserTwits(usersTwits);
     });
-    getAllTwits().then((alltwits) => {
+    twitsApi.getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);
     });
 
-    getTwitsByFollowingsUsers(authUserID).then((twits) =>
-      twitsStore.setTwitsWhoReading(twits)
-    );
+    twitsApi
+      .getTwitsByFollowingsUsers(authUserID)
+      .then((twits) => twitsStore.setTwitsWhoReading(twits));
     usersStore.setAuth(getFlagIsAuth());
   });
 

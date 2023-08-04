@@ -1,86 +1,85 @@
 import { $authHost, $host } from ".";
-const Cookies = require("js-cookie");
 
-export const register = async (name, email, password, birthdate) => {
-  const response = await $host.post("api/users/registration", {
-    name,
-    email,
-    password,
-    birthdate,
-  });
+class UserApi {
+  async register(name, email, password, birthdate) {
+    const response = await $host.post("api/users/registration", {
+      name,
+      email,
+      password,
+      birthdate,
+    });
 
-  Cookies.set("token", response.data.token);
+    return response.data;
+  }
 
-  return response.data.user;
-};
+  async authentication(email, password) {
+    const response = await $host.post("api/users/login", {
+      email,
+      password,
+    });
 
-export const authentication = async (email, password) => {
-  const response = await $host.post("api/users/login", {
-    email,
-    password,
-  });
+    return response.data;
+  }
 
-  Cookies.set("token", response.data.token, { expires: 1 });
+  async createRefreshToken() {
+    const response = await $authHost.get("api/users/auth");
 
-  return response.data.user;
-};
+    return response.data;
+  }
 
-export const createRefreshToken = async () => {
-  const response = await $authHost.get("api/users/auth");
+  async updateUserProfile(id, updateUser) {
+    const userProfile = await $authHost.put(`api/users/${id}`, updateUser);
 
-  Cookies.set("refreshToken", response.data.token, { expires: 1 / 24 });
+    return userProfile.data.user;
+  }
 
-  return response.data.token;
-};
+  async getAllUsers() {
+    const users = await $host.get("api/users");
 
-export const updateUserProfile = async (id, updateUser) => {
-  const userProfile = await $authHost.put(`api/users/${id}`, updateUser);
+    return users.data;
+  }
 
-  return userProfile.data.user;
-};
+  async getSearchUsers(name) {
+    const users = await $authHost.get(`api/users/user/${name}`);
 
-export const getAllUsers = async () => {
-  const users = await $host.get("api/users");
+    return users.data;
+  }
 
-  return users.data;
-};
+  async getUserById(id) {
+    const userById = await $authHost.get(`api/users/${id}`);
 
-export const getSearchUsers = async (name) => {
-  const users = await $authHost.get(`api/users/user/${name}`);
+    return userById.data;
+  }
 
-  return users.data;
-};
+  async createFollowings(id, followUserId) {
+    const followings = await $authHost.post(`api/users/${id}/followings`, {
+      followUserId,
+    });
 
-export const getUserById = async (id) => {
-  const userById = await $authHost.get(`api/users/${id}`);
+    return followings.data;
+  }
 
-  return userById.data;
-};
+  async deleteFollowings(id, followUserId) {
+    const unFollowings = await $authHost.delete(
+      `api/users/${id}/unfollow/${followUserId}`
+    );
 
-export const createFollowings = async (id, followUserId) => {
-  const followings = await $authHost.post(`api/users/${id}/followings`, {
-    followUserId,
-  });
+    return unFollowings.data;
+  }
 
-  return followings.data;
-};
+  async getFollowingUsers(id) {
+    const followings = await $authHost.get(`api/users/${id}/followings`);
 
-export const deleteFollowings = async (id, followUserId) => {
-  const unFollowings = await $authHost.delete(
-    `api/users/${id}/unfollow/${followUserId}`
-  );
+    return followings.data;
+  }
 
-  return unFollowings.data;
-};
+  async getFollowerUsers(id) {
+    const followers = await $authHost.get(`api/users/${id}/followers`);
 
-export const getFollowingUsers = async (id) => {
-  const followings = await $authHost.get(`api/users/${id}/followings`);
+    return followers.data;
+  }
+}
 
-  return followings.data;
-};
+const userApi = new UserApi();
 
-export const getFollowerUsers = async (id) => {
-  const followers = await $authHost.get(`api/users/${id}/followers`);
-
-  return followers.data;
-};
+export default userApi;

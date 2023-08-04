@@ -3,8 +3,8 @@ import { useContext, useEffect } from "react";
 import { Context } from "..";
 
 import { getAllTopics } from "../http/topicsApi";
-import { getAllTwits } from "../http/twitsApi";
-import { getAllUsers } from "../http/userApi";
+import twitsApi from "../http/twitsApi";
+import userApi from "../http/userApi";
 
 import SidebarContent from "../components/SidebarContent";
 import ContentExplorePage from "../components/ContentExplorePage";
@@ -17,8 +17,8 @@ const PublicHomePage = observer(({ children }) => {
   useEffect(() => {
     try {
       getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
-      getAllUsers().then((users) => usersStore.setAllUsers(users));
-      getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+      twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
     } catch (error) {
       console.log(error.response.data.message);
     }

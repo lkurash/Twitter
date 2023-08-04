@@ -6,7 +6,7 @@ import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 
 import logo from "./Img/logo_icon.png";
 import searchIcon from "./Img/zoom__icon.png";
-import { getSearchUsers } from "../http/userApi";
+import userApi from "../http/userApi";
 import { Context } from "..";
 
 const MainSearchBlock = observer(({ classNameForm }) => {
@@ -22,7 +22,7 @@ const MainSearchBlock = observer(({ classNameForm }) => {
 
   const searchUsers = (name) => {
     setTimeout(() => {
-      getSearchUsers(name).then((users) => {
+      userApi.getSearchUsers(name).then((users) => {
         usersStore.setFoundUsers(users);
       });
     }, 500);
@@ -53,7 +53,7 @@ const MainSearchBlock = observer(({ classNameForm }) => {
               onChange={(e) => {
                 if (e.target.value.length > 0) {
                   searchUsers(e.target.value);
-                }else{
+                } else {
                   searchUsers(null);
                 }
                 setUserName(e.target.value);

@@ -1,4 +1,4 @@
-import { getTwitsByUser } from "../http/twitsApi";
+import twitsApi from "../http/twitsApi";
 
 export default async function getMoreUserTwits(
   showMoreTwits,
@@ -9,13 +9,16 @@ export default async function getMoreUserTwits(
   userId
 ) {
   if (showMoreTwits) {
-    console.log(userId);
-    await getTwitsByUser(userId, 7, itemListTwits).then((usersTwits) => {
-      twitsStore.setUserTwits(twitsStore.userTwits.concat(usersTwits));
-      setShowMoreTwits(false);
-      if (usersTwits.length < 7) {
-        setShowButton(false);
-      }
-    });
+    await twitsApi
+      .getTwitsByUser(userId, 7, itemListTwits)
+      .then((usersTwits) => {
+        twitsStore.setUserTwits(twitsStore.userTwits.concat(usersTwits));
+        
+        setShowMoreTwits(false);
+
+        if (usersTwits.length < 7) {
+          setShowButton(false);
+        }
+      });
   }
 }
