@@ -107,7 +107,7 @@ class TwitsApi {
     return twit.data;
   }
 
-  async getTwitsIdWithUsersLike(userId) {
+  async getTwitsWithUsersLike(userId) {
     const twitsIds = await $authHost.get(`api/twits/likes/user/${userId}`);
 
     return twitsIds.data;

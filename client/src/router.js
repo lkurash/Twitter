@@ -3,8 +3,8 @@ import LayoutLoginAndSignUpPage from "./pages/LayoutLoginAndSignUpPage";
 import authenticate from "./utils/authenticate";
 
 import PublicHomePage from "./pages/PublicHomePage";
+import PublicProfilePageUser from "./pages/PublicProfilePageUser";
 import TrendsPage from "./pages/TrendsPage";
-import PublicHomePageNotAuthUser from "./pages/TwitterNotAuthUserPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 
@@ -40,6 +40,7 @@ import {
   ROOT_PAGE_PATH,
   TWITTER_USER_PAGE_PATH,
 } from "./utils/constans";
+import redirectLoader from "./utils/redirectLoader";
 
 export const publicRoutes = {
   path: ROOT_PAGE_PATH,
@@ -48,6 +49,7 @@ export const publicRoutes = {
     {
       path: "",
       element: <PublicHomePage />,
+      loader: redirectLoader,
     },
     {
       path: EXPLORE_PAGE_PATH,
@@ -59,7 +61,7 @@ export const publicRoutes = {
     },
     {
       path: `${TWITTER_USER_PAGE_PATH}:id`,
-      element: <PublicHomePageNotAuthUser />,
+      element: <PublicProfilePageUser />,
     },
   ],
 };
@@ -67,6 +69,7 @@ export const publicRoutes = {
 export const authorizationRoutes = {
   path: "/authentication",
   element: <LayoutLoginAndSignUpPage />,
+  loader: redirectLoader,
   children: [
     {
       path: "/authentication/redirect",

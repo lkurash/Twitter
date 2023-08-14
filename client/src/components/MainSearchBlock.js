@@ -1,3 +1,4 @@
+import { Context } from "..";
 import { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 
@@ -7,7 +8,6 @@ import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 import logo from "./Img/logo_icon.png";
 import searchIcon from "./Img/zoom__icon.png";
 import userApi from "../http/userApi";
-import { Context } from "..";
 
 const MainSearchBlock = observer(({ classNameForm }) => {
   const { usersStore } = useContext(Context);
@@ -49,6 +49,9 @@ const MainSearchBlock = observer(({ classNameForm }) => {
               value={userName}
               onClick={() => {
                 setActiveInput(true);
+                if (userName) {
+                  setShowListFoundUsers(true);
+                }
               }}
               onChange={(e) => {
                 if (e.target.value.length > 0) {
@@ -62,11 +65,13 @@ const MainSearchBlock = observer(({ classNameForm }) => {
             />
           </div>
         </div>
-        <ListFoundUserSearchBlock
-          userName={userName}
-          showListFoundUsers={showListFoundUsers}
-          onClose={onClose}
-        />
+        {showListFoundUsers && (
+          <ListFoundUserSearchBlock
+            userName={userName}
+            showListFoundUsers={showListFoundUsers}
+            onClose={onClose}
+          />
+        )}
       </div>
     </div>
   );

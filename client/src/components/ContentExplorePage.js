@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
 import MainSearchBlock from "./MainSearchBlock";
+
 import spinner from "../utils/spinner";
 
 const ContentExplorePage = observer(() => {
@@ -18,9 +19,7 @@ const ContentExplorePage = observer(() => {
   return (
     <main className="main-wrapper">
       <div className="main">
-        <MainSearchBlock
-          classNameForm="main-search-form-explore"
-        />
+        <MainSearchBlock classNameForm="main-search-form-explore" />
         {isLoading ? (
           spinner()
         ) : (

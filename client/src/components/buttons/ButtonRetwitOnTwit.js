@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Context } from "../..";
 import twitsApi from "../../http/twitsApi";
 import getAuthUserID from "../../utils/getAuthUserID";
@@ -30,14 +29,16 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
       .then((retwit) => {
         if (retwit) {
           twitsStore.setTwits(retwit.concat(twitsStore.twits));
-        }else{
-          twitsStore.deleteRetwit(twit)
+        } else {
+          twitsStore.deleteRetwit(twit);
         }
       });
 
-    await twitsApi
-      .getCountRetwits(twit.id)
-      .then((retwit) => twitsStore.addRetwitTwit(retwit));
+    await twitsApi.getCountRetwits(twit.id).then((retwit) => {
+      if (retwit) {
+        twitsStore.addRetwitTwit(retwit);
+      }
+    });
   };
 
   const hoverAndActiveButtonRetwit = (twit) => {
@@ -63,7 +64,28 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
 
   return (
     <div className="user-twit-panel-retwit">
-      {!retwitsStore.userRetwits.includes(twit.id) ? (
+      {retwitsStore.userRetwits.includes(twit.id) ||
+      (twit.retwit && twit.UserId === authUserID) ? (
+        <div
+          className="user-twit-panel-button-retwit"
+          key={twit.id}
+          onMouseEnter={() => {
+            retwitsStore.sethoverTwitRetwit(twit);
+          }}
+          onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
+          onClick={() => {
+            retwitsStore.setDeleteRetwit(twit);
+            createRetwitTwit(twit);
+            retwitsStore.setRetwitTwit({});
+          }}
+        >
+          <img
+            src={deleteActiveRetwitButtonImg(twit)}
+            alt="button retwit"
+            className="user-twit-panel-retwit-img"
+          />
+        </div>
+      ) : (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}
@@ -93,28 +115,11 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
             />
           </div>
         </>
-      ) : (
-        <div
-          className="user-twit-panel-button-retwit"
-          key={twit.id}
-          onMouseEnter={() => {
-            retwitsStore.sethoverTwitRetwit(twit);
-          }}
-          onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
-          onClick={() => {
-            retwitsStore.setDeleteRetwit(twit);
-            createRetwitTwit(twit);
-            retwitsStore.setRetwitTwit({});
-          }}
-        >
-          <img
-            src={deleteActiveRetwitButtonImg(twit)}
-            alt="button retwit"
-            className="user-twit-panel-retwit-img"
-          />
-        </div>
       )}
       {twit.countRetwits > 0 && <p>{twit.countRetwits}</p>}
+      {twit.originalTwit && twit.originalTwit.countRetwits > 0 && (
+        <p>{twit.originalTwit.countRetwits}</p>
+      )}
     </div>
   );
 });

@@ -18,8 +18,6 @@ const ListFoundUserSearchBlock = observer(
 
     useOutsideClick(listUsersRef, onClose, showListFoundUsers);
 
-    if (!showListFoundUsers) return null;
-
     return (
       <div className="main-search-wrapper-found-users" ref={listUsersRef}>
         {usersStore.foundUsers ? (

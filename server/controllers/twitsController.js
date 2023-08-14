@@ -159,6 +159,7 @@ class TwitsController {
       order: [["id", "DESC"]],
       include: [
         { model: User, as: "user" },
+        { model: Twits, as: "originalTwit" },
         { model: User, as: "twitUser" },
         { model: Likes },
         { model: Favorite_twits },
@@ -171,38 +172,6 @@ class TwitsController {
     return response.json(twits);
   }
 
-  async createLikeTwitByUser(request, response, next) {
-    try {
-      const { twitId } = request.params;
-      const { userId } = request.params;
-
-      checkUsersAuth(request, userId, next);
-
-      const checkLike = await Likes.findOne({
-        where: { TwitId: twitId, UserId: userId },
-      });
-
-      if (checkLike) {
-        const disLike = await Likes.destroy({
-          where: { TwitId: twitId, UserId: userId },
-        });
-
-        response.json(disLike);
-      }
-      if (!checkLike) {
-        const like = await Likes.create({
-          UserId: userId,
-          TwitId: twitId,
-          like: true,
-        });
-
-        return response.json(like);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id or twit.id"));
-    }
-  }
-
   async getTwitsWithUsersLike(request, response, next) {
     const { userId } = request.params;
 
@@ -210,6 +179,23 @@ class TwitsController {
       attributes: ["TwitId"],
       where: { UserId: userId, like: true },
       raw: true,
+    });
+
+    const twits = await Likes.findAll({
+      where: { UserId: userId, like: true },
+      order: [["id", "DESC"]],
+      include: [
+        {
+          model: Twits,
+          include: [
+            { model: User, as: "user" },
+            { model: User, as: "twitUser" },
+            { model: Likes },
+            { model: Favorite_twits },
+            { model: Comments },
+          ],
+        },
+      ],
     });
 
     const ids = [];
@@ -220,68 +206,7 @@ class TwitsController {
       });
     }
 
-    return response.json(ids);
-  }
-
-  async getCountLikes(request, response, next) {
-    try {
-      const { twitId } = request.params;
-
-      if (twitId) {
-        const count = await Likes.count({
-          where: { TwitId: twitId },
-        });
-
-        const countLikes = await Twits.update(
-          {
-            countLikes: +count,
-          },
-          {
-            where: { id: twitId },
-          }
-        );
-
-        const twit = await Twits.findOne({
-          where: { id: twitId },
-        });
-
-        return response.json(twit);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check twit.id"));
-    }
-  }
-
-  async createFavoriteTwitByUser(request, response, next) {
-    try {
-      const { twitId } = request.params;
-      const { userId } = request.params;
-
-      checkUsersAuth(request, userId, next);
-
-      const checkFavoriteTwits = await Favorite_twits.findOne({
-        where: { TwitId: twitId, UserId: userId },
-      });
-
-      if (checkFavoriteTwits) {
-        const deleteFavoriteTwit = await Favorite_twits.destroy({
-          where: { TwitId: twitId, UserId: userId },
-        });
-
-        response.json(checkFavoriteTwits);
-      }
-      if (!checkFavoriteTwits) {
-        const favoriteTwit = await Favorite_twits.create({
-          UserId: userId,
-          TwitId: twitId,
-          bookmark: true,
-        });
-
-        return response.json(favoriteTwit);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id or twit.id"));
-    }
+    return response.json({ ids, twits });
   }
 
   async getFavoriteTwitByUser(request, response, next) {
@@ -309,55 +234,6 @@ class TwitsController {
       return response.json(favoriteTwits);
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
-    }
-  }
-
-  async createRetwitByUser(request, response, next) {
-    try {
-      const { twitId } = request.params;
-      const { userId } = request.params;
-      const { twitUserId } = request.body;
-      const { text } = request.body;
-      const { img } = request.body;
-
-      checkUsersAuth(request, userId, next);
-
-      const checkRetwit = await Twits.findOne({
-        where: { twitId: twitId, UserId: userId, retwit: true },
-      });
-
-      if (checkRetwit) {
-        const retwit = await Twits.destroy({
-          where: { twitId: twitId, UserId: userId, retwit: true },
-        });
-
-        response.json(null);
-      }
-      if (!checkRetwit) {
-        const retwit = await Twits.create({
-          UserId: userId,
-          twitId: twitId,
-          text,
-          img,
-          retwit: true,
-          twitUserId: twitUserId,
-        });
-
-        const twit = await Twits.findOne({
-          include: [
-            { model: User, as: "user" },
-            { model: User, as: "twitUser" },
-            { model: Likes },
-            { model: Favorite_twits },
-            { model: Comments },
-          ],
-          where: { id: retwit.id },
-        });
-
-        return response.json([twit]);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check userId or twit.id"));
     }
   }
 
@@ -438,35 +314,6 @@ class TwitsController {
     }
   }
 
-  async getCountRetwits(request, response, next) {
-    try {
-      const { twitId } = request.params;
-
-      if (twitId) {
-        const count = await Twits.count({
-          where: { twitId: twitId, retwit: true },
-        });
-
-        const countRetwits = await Twits.update(
-          {
-            countRetwits: +count,
-          },
-          {
-            where: { id: twitId, retwit: false },
-          }
-        );
-
-        const twit = await Twits.findOne({
-          where: { id: twitId, retwit: false },
-        });
-
-        return response.json(twit);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check twit.id"));
-    }
-  }
-
   async getUserRetwits(request, response, next) {
     const { userId } = request.params;
 
@@ -477,7 +324,6 @@ class TwitsController {
     });
 
     const ids = [];
-    console.log(retwitsId);
 
     if (retwitsId) {
       retwitsId.map((item) => {
@@ -493,26 +339,17 @@ class TwitsController {
       const twit = await Twits.findOne({
         where: { id: twitId },
       });
-      const like = await Likes.findAll({ where: { TwitId: twitId } });
-      const bookmark = await Favorite_twits.findAll({
-        where: { TwitId: twitId },
-      });
-      const comment = await Comments.findAll({ where: { TwitId: twitId } });
 
       if (twit) {
         await Twits.destroy({
           where: { id: twitId },
         });
 
-        if (like) {
-          await Likes.destroy({ where: { TwitId: twitId } });
-        }
-        if (comment) {
-          await Comments.destroy({ where: { TwitId: twitId } });
-        }
-        if (bookmark) {
-          await Favorite_twits.destroy({ where: { TwitId: twitId } });
-        }
+        await Likes.destroy({ where: { TwitId: twitId } });
+
+        await Comments.destroy({ where: { TwitId: twitId } });
+
+        await Favorite_twits.destroy({ where: { TwitId: twitId } });
 
         return response.json(twit);
       }

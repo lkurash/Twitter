@@ -3,11 +3,12 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "..";
 
-import TwitterNotAuthProfileUser from "../components/TwitterNotAuthProfileUser";
 import twitsApi from "../http/twitsApi";
 import userApi from "../http/userApi";
 
-const PublicHomePageNotAuthUser = observer(() => {
+import PublicProfileUser from "../components/PublicProfileUser";
+
+const PublicProfilePageUser = observer(() => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
@@ -32,10 +33,10 @@ const PublicHomePageNotAuthUser = observer(() => {
   return (
     <div className="main-wrapper">
       <main className="main">
-        <TwitterNotAuthProfileUser />
+        <PublicProfileUser />
       </main>
     </div>
   );
 });
 
-export default PublicHomePageNotAuthUser;
+export default PublicProfilePageUser;

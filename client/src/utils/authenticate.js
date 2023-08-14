@@ -10,9 +10,10 @@ const authenticate = async () => {
       console.log(error.response.data.message);
     });
   if (token) {
-    return "null";
+    return null;
   } else {
     return redirect("/authentication/redirect");
   }
 };
+
 export default authenticate;

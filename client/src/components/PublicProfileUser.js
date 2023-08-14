@@ -6,7 +6,7 @@ import ProfileUserInfo from "./ProfileUserInfo";
 import UserTwits from "./UserTwits";
 import spinner from "../utils/spinner";
 
-const TwitterNotAuthProfileUser = observer(() => {
+const PublicProfileUser = observer(() => {
   const { usersStore } = useContext(Context);
 
   if (!usersStore.userPage.id) return spinner();
@@ -23,4 +23,4 @@ const TwitterNotAuthProfileUser = observer(() => {
   );
 });
 
-export default TwitterNotAuthProfileUser;
+export default PublicProfileUser;

@@ -5,6 +5,7 @@ import { Context } from "..";
 
 import { getAllTopics } from "../http/topicsApi";
 import { EXPLORE_PAGE_PATH } from "../utils/constans";
+
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";

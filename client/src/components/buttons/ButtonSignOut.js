@@ -16,6 +16,7 @@ function ButtonSignOut({ showButtonSignOut, onClose }) {
   const logout = () => {
     Cookies.remove("refreshToken");
     Cookies.remove("token");
+    Cookies.remove("twitsWhoReading");
     usersStore.setUser({});
     usersStore.setUserPage({});
     retwitsStore.setRetwitTwit({});
