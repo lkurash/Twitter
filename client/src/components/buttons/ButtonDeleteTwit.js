@@ -11,7 +11,7 @@ import dotMenu from "../Img/more_dots_icon.png";
 const ButtonDeleteTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
-  const [showDeleteButton, setShowDeleteButton] = useState(false);
+  const [deleteButtonVisible, setDeleteButtonVisible] = useState(false);
   const tooltipDeleteTwit = useRef(null);
   const authUserID = getAuthUserID(usersStore);
 
@@ -30,15 +30,14 @@ const ButtonDeleteTwit = observer(({ twit }) => {
     });
   };
   const onClose = () => {
-    setShowDeleteButton(false);
+    setDeleteButtonVisible(false);
   };
 
-  useOutsideClick(tooltipDeleteTwit, onClose, showDeleteButton);
-  if (authUserID !== twit.UserId) return null;
+  useOutsideClick(tooltipDeleteTwit, onClose, deleteButtonVisible);
 
   return (
     <div className="button-dotmenu-twit">
-      {showDeleteButton && (
+      {deleteButtonVisible && (
         <div
           ref={tooltipDeleteTwit}
           className="tooltip-delete-twit"
@@ -52,7 +51,7 @@ const ButtonDeleteTwit = observer(({ twit }) => {
       <div
         className="dotmenu"
         onClick={() => {
-          setShowDeleteButton(true);
+          setDeleteButtonVisible(true);
         }}
       >
         <img src={dotMenu} alt="dot menu" className="dotmenu-icon" />

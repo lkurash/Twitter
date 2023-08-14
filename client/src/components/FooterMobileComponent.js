@@ -19,21 +19,23 @@ import "./footer.css";
 function FooterMobileComponent() {
   const navigate = useNavigate();
   const { usersStore } = useContext(Context);
-  const [showTwitForm, setShowTwitForm] = useState(false);
+  const [twitFormVisible, setTwitFormVisible] = useState(false);
 
   return (
     <footer className="footer-mobile">
       <div
         className="footer-mobile-tweet-button"
         type="button"
-        onClick={() => setShowTwitForm(true)}
+        onClick={() => setTwitFormVisible(true)}
       >
         <img src={tweetIcon} alt="tweet" className="button-icon-menu" />
       </div>
-      <PopUpWriteTwit
-        showTwitForm={showTwitForm}
-        setShowTwitForm={setShowTwitForm}
-      />
+      {twitFormVisible && (
+        <PopUpWriteTwit
+          twitFormVisible={twitFormVisible}
+          setTwitFormVisible={setTwitFormVisible}
+        />
+      )}
 
       <div className="footer-buttons-mobile">
         <div

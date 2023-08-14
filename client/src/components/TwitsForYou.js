@@ -10,10 +10,8 @@ import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 
 import "./main.css";
 
-const TwitsForYou = observer(({ showTwitsForYou }) => {
+const TwitsForYou = observer(() => {
   const { twitsStore } = useContext(Context);
-
-  if (!showTwitsForYou) return null;
 
   return (
     <div className="twits">

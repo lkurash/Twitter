@@ -3,12 +3,8 @@ import { NavLink } from "react-router-dom";
 import { LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "../utils/constans";
 
 import "./footer.css";
-import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 const FooterComponent = () => {
-  const userAuth = getFlagIsAuth();
-
-  if (userAuth) return null;
 
   return (
     <footer className="footer">

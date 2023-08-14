@@ -5,21 +5,23 @@ import PopUpWriteTwit from "../PopUpWriteTwit";
 import tweetIcon from "../Img/feather_icon.png";
 
 const ButtonWriteTwit = () => {
-  const [showTwitForm, setShowTwitForm] = useState(false);
+  const [twitFormVisible, setTwitFormVisible] = useState(false);
   return (
     <>
       <button
         type="button"
         className="button-twit"
-        onClick={() => setShowTwitForm(true)}
+        onClick={() => setTwitFormVisible(true)}
       >
         <span>Tweet</span>
         <img src={tweetIcon} alt="Tweet" className="tweet-icon" />
       </button>
-      <PopUpWriteTwit
-        showTwitForm={showTwitForm}
-        setShowTwitForm={setShowTwitForm}
-      />
+      {twitFormVisible && (
+        <PopUpWriteTwit
+          twitFormVisible={twitFormVisible}
+          setTwitFormVisible={setTwitFormVisible}
+        />
+      )}
     </>
   );
 };
