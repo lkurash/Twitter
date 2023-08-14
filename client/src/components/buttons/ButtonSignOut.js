@@ -6,7 +6,7 @@ import { ROOT_PAGE_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 const Cookies = require("js-cookie");
 
-function ButtonSignOut({ showButtonSignOut, onClose }) {
+function ButtonSignOut({ buttonSignOutVisible, onClose }) {
   const { usersStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
@@ -25,9 +25,7 @@ function ButtonSignOut({ showButtonSignOut, onClose }) {
     navigate(ROOT_PAGE_PATH);
   };
 
-  useOutsideClick(tooltipRef, onClose, showButtonSignOut);
-
-  if (!showButtonSignOut) return null;
+  useOutsideClick(tooltipRef, onClose, buttonSignOutVisible);
 
   return (
     <div ref={tooltipRef} className="tooltip">

@@ -9,19 +9,24 @@ import dotMenu from "./Img/more_dots_icon.png";
 
 const UserInfoAndButtonSignOut = observer(() => {
   const { usersStore } = useContext(Context);
-  const [showButtonSignOut, setShowButtonSignOut] = useState(false);
+  const [buttonSignOutVisible, setButtonSignOutVisible] = useState(false);
 
   const onClose = () => {
-    setShowButtonSignOut(false);
+    setButtonSignOutVisible(false);
   };
 
   return (
     <div className="user-block-menu">
-      <ButtonSignOut showButtonSignOut={showButtonSignOut} onClose={onClose} />
+      {buttonSignOutVisible && (
+        <ButtonSignOut
+          buttonSignOutVisible={buttonSignOutVisible}
+          onClose={onClose}
+        />
+      )}
 
       <button
         className="button-user"
-        onClick={() => setShowButtonSignOut((v) => !v)}
+        onClick={() => setButtonSignOutVisible((v) => !v)}
       >
         <div className="button-user-desc">
           <div className="button-user-photo">

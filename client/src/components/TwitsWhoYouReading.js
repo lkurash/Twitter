@@ -8,10 +8,8 @@ import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import Twit from "./Twit";
 
-const TwitsWhoYouRead = observer(({ showTwitsWhoReading, userTwits }) => {
+const TwitsWhoYouRead = observer(({ userTwits }) => {
   const { twitsStore } = useContext(Context);
-
-  if (!showTwitsWhoReading) return null;
 
   return (
     <div className="twits">

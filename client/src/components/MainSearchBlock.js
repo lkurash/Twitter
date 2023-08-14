@@ -12,11 +12,12 @@ import userApi from "../http/userApi";
 const MainSearchBlock = observer(({ classNameForm }) => {
   const { usersStore } = useContext(Context);
   const [userName, setUserName] = useState("");
-  const [showListFoundUsers, setShowListFoundUsers] = useState(false);
+  const [listFoundUsersVisible, setListFoundUsersVisible] =
+    useState(false);
   const [activeInput, setActiveInput] = useState(false);
 
   const onClose = () => {
-    setShowListFoundUsers(false);
+    setListFoundUsersVisible(false);
     setActiveInput(false);
   };
 
@@ -50,7 +51,7 @@ const MainSearchBlock = observer(({ classNameForm }) => {
               onClick={() => {
                 setActiveInput(true);
                 if (userName) {
-                  setShowListFoundUsers(true);
+                  setListFoundUsersVisible(true);
                 }
               }}
               onChange={(e) => {
@@ -60,15 +61,15 @@ const MainSearchBlock = observer(({ classNameForm }) => {
                   searchUsers(null);
                 }
                 setUserName(e.target.value);
-                setShowListFoundUsers(true);
+                setListFoundUsersVisible(true);
               }}
             />
           </div>
         </div>
-        {showListFoundUsers && (
+        {listFoundUsersVisible && (
           <ListFoundUserSearchBlock
             userName={userName}
-            showListFoundUsers={showListFoundUsers}
+            listFoundUsersVisible={listFoundUsersVisible}
             onClose={onClose}
           />
         )}

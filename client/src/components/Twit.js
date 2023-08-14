@@ -1,9 +1,11 @@
+import getAuthUserID from "../utils/getAuthUserID";
 import ButtonDeleteTwit from "./buttons/ButtonDeleteTwit";
 import TwitActions from "./TwitActions";
 import TwitDesc from "./TwitDesc";
 import UserPhoto from "./UserPhoto";
 
 const Twit = ({ twit }) => {
+  const authUserID = getAuthUserID();
   
   return (
     <>
@@ -12,7 +14,9 @@ const Twit = ({ twit }) => {
         <div className="user-block-twit">
           <UserPhoto twit={twit} />
           <TwitDesc twit={twit} />
-          <ButtonDeleteTwit twit={twit} key={`button-${twit.id}`} />
+          {authUserID === twit.UserId && (
+            <ButtonDeleteTwit twit={twit} key={`button-${twit.id}`} />
+          )}
         </div>
         <TwitActions twit={twit} />
       </div>

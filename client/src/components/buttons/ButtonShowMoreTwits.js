@@ -10,7 +10,7 @@ const ButtonShowMoreTwits = observer(({ getMoreTwits }) => {
 
   const [showMoreTwits, setShowMoreTwits] = useState(false);
   const [itemListTwits, setItemListTwits] = useState(1);
-  const [showButton, setShowButton] = useState(true);
+  const [buttonMoreTwitsVisible, setButtonMoreTwitsVisible] = useState(true);
 
   useEffect(() => {
     getMoreTwits(
@@ -18,12 +18,12 @@ const ButtonShowMoreTwits = observer(({ getMoreTwits }) => {
       itemListTwits,
       twitsStore,
       setShowMoreTwits,
-      setShowButton,
+      setButtonMoreTwitsVisible,
       id
     );
   }, [itemListTwits]);
 
-  if (!showButton) return null;
+  if (!buttonMoreTwitsVisible) return false;
 
   return (
     <button

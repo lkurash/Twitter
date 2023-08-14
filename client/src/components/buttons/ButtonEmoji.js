@@ -4,10 +4,10 @@ import Emoji from "../common/Emoji";
 import imgEmoji from "../Img/emoji_icon.png";
 
 const ButtonEmoji = ({ addEmojiInTwitText }) => {
-  const [showEmoji, setshowEmoji] = useState(false);
+  const [emojiVisible, setEmojiVisible] = useState(false);
 
   const onClosePopUpEmoji = () => {
-    setshowEmoji(false);
+    setEmojiVisible(false);
   };
 
   return (
@@ -17,14 +17,16 @@ const ButtonEmoji = ({ addEmojiInTwitText }) => {
           src={imgEmoji}
           alt="Emoji"
           className="twit-form-emoji"
-          onClick={() => setshowEmoji(true)}
+          onClick={() => setEmojiVisible(true)}
         />
       </label>
-      <Emoji
-        showEmoji={showEmoji}
-        addEmojiInTwitText={addEmojiInTwitText}
-        onClosePopUpEmoji={onClosePopUpEmoji}
-      />
+      {emojiVisible && (
+        <Emoji
+          emojiVisible={emojiVisible}
+          addEmojiInTwitText={addEmojiInTwitText}
+          onClosePopUpEmoji={onClosePopUpEmoji}
+        />
+      )}
     </>
   );
 };

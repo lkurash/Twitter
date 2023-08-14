@@ -11,12 +11,12 @@ import getUserPhoto from "../utils/getUserPhoto";
 import useOutsideClick from "../utils/useOutsideClickFunction";
 
 const ListFoundUserSearchBlock = observer(
-  ({ showListFoundUsers, onClose, loadListUsers }) => {
+  ({ listFoundUsersVisible, onClose, loadListUsers }) => {
     const { usersStore } = useContext(Context);
     const navigate = useNavigate();
     const listUsersRef = useRef(null);
 
-    useOutsideClick(listUsersRef, onClose, showListFoundUsers);
+    useOutsideClick(listUsersRef, onClose, listFoundUsersVisible);
 
     return (
       <div className="main-search-wrapper-found-users" ref={listUsersRef}>

@@ -14,12 +14,15 @@ import birthdateIcon from "./Img/birthday_icon.png";
 import webSiteIcon from "./Img/url_web_icon.png";
 import registrationIcon from "./Img/month_icon.png";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const ProfileUserInfo = observer(() => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
+
   const navigate = useNavigate();
   const { id } = useParams();
+  const authUserID = getAuthUserID();
 
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
@@ -52,11 +55,15 @@ const ProfileUserInfo = observer(() => {
 
           {usersStore.isAuth && (
             <>
-              <ButtonEditProfile usersStore={usersStore} />
-              <ButtonFollowingUsersProfile
-                user={usersStore}
-                usersFollow={usersFollowingsStore}
-              />
+              {authUserID === +id && (
+                <ButtonEditProfile usersStore={usersStore} />
+              )}
+              {authUserID !== +id && (
+                <ButtonFollowingUsersProfile
+                  user={usersStore}
+                  usersFollow={usersFollowingsStore}
+                />
+              )}
             </>
           )}
         </div>

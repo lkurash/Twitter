@@ -30,8 +30,6 @@ const ButtonFollowingUsersProfile = observer(({ user, usersFollow }) => {
 
   checkFollowingUser();
 
-  if (authUserID === +id) return null;
-
   return (
     <>
       {following || followingUser.length > 0 ? (

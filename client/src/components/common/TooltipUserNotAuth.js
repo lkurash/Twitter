@@ -25,7 +25,7 @@ function TooltipUserNotAuth({
 
   useOutsideClick(tooltipRef, onCloseTooltip, tooltipUserNotAuth);
 
-  if (!tooltipUserNotAuth) return null;
+  if (!tooltipUserNotAuth) return false;
   return (
     <div className="wrapper-tooltip-notauth-user">
       <div ref={tooltipRef} className="tooltip-notauth-user wrapper-border">

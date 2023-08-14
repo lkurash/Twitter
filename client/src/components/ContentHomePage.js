@@ -13,8 +13,8 @@ const ContentHomePage = observer(() => {
   const { twitsStore } = useContext(Context);
   const [cookies, setCookie] = useCookies(["twitsWhoReading"]);
 
-  const [showTwitsForYou, setShowTwitsForYou] = useState("true");
-  const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
+  const [twitsForYouVisible, setTwitsForYouVisible] = useState("true");
+  const [twitsWhoReadingVisible, setTwitsWhoReadingVisible] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const setCookieTwitsForYou = (show) => {
@@ -23,19 +23,19 @@ const ContentHomePage = observer(() => {
 
   const checkCookieTwitsForYou = () => {
     if (cookies.twitsWhoReading === "true") {
-      setShowTwitsForYou(false);
-      return setShowTwitsWhoReading(true);
+      setTwitsForYouVisible(false);
+      return setTwitsWhoReadingVisible(true);
     } else {
-      setShowTwitsForYou(true);
-      return setShowTwitsWhoReading(false);
+      setTwitsForYouVisible(true);
+      return setTwitsWhoReadingVisible(false);
     }
   };
 
   useEffect(() => {
+    checkCookieTwitsForYou();
     setTimeout(() => {
       setIsLoading(false);
     }, 400);
-    checkCookieTwitsForYou();
   }, [cookies.twitsWhoReading]);
 
   return (
@@ -62,7 +62,7 @@ const ContentHomePage = observer(() => {
                   </button>
                   <div
                     className={
-                      showTwitsForYou
+                      twitsForYouVisible
                         ? "active-button-panel-main"
                         : "button-panel-main"
                     }
@@ -80,7 +80,7 @@ const ContentHomePage = observer(() => {
                   </button>
                   <div
                     className={
-                      showTwitsWhoReading
+                      twitsWhoReadingVisible
                         ? "active-button-panel-main"
                         : "button-panel-main"
                     }
@@ -97,11 +97,11 @@ const ContentHomePage = observer(() => {
               spinner()
             ) : (
               <>
-                <TwitsForYou showTwitsForYou={showTwitsForYou} />
-                <TwitsWhoYouRead
-                  showTwitsWhoReading={showTwitsWhoReading}
-                  userTwits={twitsStore.userTwits}
-                />
+                {twitsForYouVisible && <TwitsForYou />}
+
+                {twitsWhoReadingVisible && (
+                  <TwitsWhoYouRead userTwits={twitsStore.userTwits} />
+                )}
               </>
             )}
           </div>

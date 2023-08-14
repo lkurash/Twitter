@@ -3,12 +3,11 @@ import { useRef } from "react";
 
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
-const Emoji = ({ showEmoji, addEmojiInTwitText, onClosePopUpEmoji }) => {
+const Emoji = ({ emojiVisible, addEmojiInTwitText, onClosePopUpEmoji }) => {
   const popUpRef = useRef(null);
 
-  useOutsideClick(popUpRef, onClosePopUpEmoji, showEmoji);
+  useOutsideClick(popUpRef, onClosePopUpEmoji, emojiVisible);
 
-  if (!showEmoji) return null;
   return (
     <div className="popup-emoji" id="emoji" ref={popUpRef}>
       <EmojiPicker
