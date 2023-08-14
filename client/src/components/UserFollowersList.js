@@ -5,6 +5,8 @@ import { Context } from "..";
 
 import { PROFILE_PAGE_USER_PATH } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
+import getUserPhoto from "../utils/getUserPhoto";
+
 import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
 
 const UserFollowersList = observer(() => {
@@ -28,10 +30,7 @@ const UserFollowersList = observer(() => {
                   navigate(PROFILE_PAGE_USER_PATH + profile.User.id);
                 }}
               >
-                <img
-                  src={`http://localhost:5500/${profile.User.photo}`}
-                  alt="User"
-                />
+                <img src={getUserPhoto(profile.User)} alt="User" />
                 <p className="follow-page-main-user-name">
                   {profile.User.user_name}
                 </p>

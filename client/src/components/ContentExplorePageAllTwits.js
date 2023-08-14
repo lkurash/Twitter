@@ -7,9 +7,10 @@ import {
   useState,
 } from "react";
 import { Context } from "..";
-import getMoreAllTwits from "../utils/getMoreAllTwits";
 
+import getMoreAllTwits from "../utils/getMoreAllTwits";
 import spinner from "../utils/spinner";
+
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import Twit from "./Twit";
 

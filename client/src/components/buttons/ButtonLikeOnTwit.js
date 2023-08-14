@@ -22,11 +22,11 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
     await twitsApi.createLikeTwitByUser(authUserID, twit.id);
     await twitsApi
       .getCountLikes(twit.id)
-      .then((twit) => twitsStore.addTwitLike(twit));
+      .then((twit) => twitsStore.addLikeTwit(twit));
 
     await twitsApi
-      .getTwitsIdWithUsersLike(authUserID)
-      .then((ids) => twitsStore.setTwitsIdWithUsersLike(ids));
+      .getTwitsWithUsersLike(authUserID)
+      .then((data) => twitsStore.setTwitsIdWithUsersLike(data.ids));
   };
 
   const hoverAndActiveButtonLike = (twit) => {

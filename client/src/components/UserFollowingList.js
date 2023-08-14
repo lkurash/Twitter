@@ -5,6 +5,7 @@ import { Context } from "..";
 
 import { PROFILE_PAGE_USER_PATH } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
+
 import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
 
 const UserFollowingList = observer(() => {

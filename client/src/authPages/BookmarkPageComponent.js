@@ -41,8 +41,8 @@ const BookmarksPageComponent = observer(() => {
         );
 
       twitsApi
-        .getTwitsIdWithUsersLike(authUserID)
-        .then((ids) => twitsStore.setTwitsIdWithUsersLike(ids));
+        .getTwitsWithUsersLike(authUserID)
+        .then((data) => twitsStore.setTwitsIdWithUsersLike(data.ids));
 
       twitsApi
         .getUserRetwits(authUserID)

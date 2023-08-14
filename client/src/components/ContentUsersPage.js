@@ -2,10 +2,12 @@ import { observer } from "mobx-react-lite";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
-import ProfileButtonPanel from "./ProfileButtonPanel";
-import ProfileUserInfo from "./ProfileUserInfo";
+
 import { HOME_PAGE_PATH } from "../utils/constans";
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
+
+import ProfileButtonPanel from "./ProfileButtonPanel";
+import ProfileUserInfo from "./ProfileUserInfo";
 
 import arrowLeft from "./Img/arrow_left_icon.png";
 

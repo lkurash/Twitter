@@ -4,15 +4,16 @@ import { useCookies } from "react-cookie";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";
+
 import TwitForm from "./forms/TwitForm";
 import TwitsForYou from "./TwitsForYou";
 import TwitsWhoYouRead from "./TwitsWhoYouReading";
 
 const ContentHomePage = observer(() => {
   const { twitsStore } = useContext(Context);
-  const [cookies, setCookie] = useCookies();
+  const [cookies, setCookie] = useCookies(["twitsWhoReading"]);
 
-  const [showTwitsForYou, setShowTwitsForYou] = useState(true);
+  const [showTwitsForYou, setShowTwitsForYou] = useState("true");
   const [showTwitsWhoReading, setShowTwitsWhoReading] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,7 +36,7 @@ const ContentHomePage = observer(() => {
       setIsLoading(false);
     }, 400);
     checkCookieTwitsForYou();
-  });
+  }, [cookies.twitsWhoReading]);
 
   return (
     <main className="main-wrapper">
@@ -55,7 +56,6 @@ const ContentHomePage = observer(() => {
                     className="user-main-content-foryou-button-panel"
                     onClick={() => {
                       setCookieTwitsForYou(false);
-                      checkCookieTwitsForYou();
                     }}
                   >
                     <span>For you</span>
@@ -74,7 +74,6 @@ const ContentHomePage = observer(() => {
                     className="user-main-content-reading-button-panel"
                     onClick={() => {
                       setCookieTwitsForYou(true);
-                      checkCookieTwitsForYou();
                     }}
                   >
                     <span> You are reading</span>

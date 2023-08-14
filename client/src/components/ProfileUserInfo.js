@@ -5,6 +5,7 @@ import { Context } from "..";
 
 import { FOLLOWER_PAGE_PATH, FOLLOWING_PAGE_PATH } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
+
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 import ButtonEditProfile from "./buttons/ButtonEditProfile";
 import ButtonFollowingUsersProfile from "./buttons/ButtonFollowingUsersProfile";

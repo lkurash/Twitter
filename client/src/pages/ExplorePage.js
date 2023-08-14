@@ -12,11 +12,13 @@ import ContentExplorePageAllTwits from "../components/ContentExplorePageAllTwits
 import "../App.css";
 import "../components/common/common.css";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const ExplorePage = observer(() => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { topicsStore } = useContext(Context);
+  const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
     try {
@@ -24,6 +26,11 @@ const ExplorePage = observer(() => {
       userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
       twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
       usersStore.setAuth(getFlagIsAuth());
+      if (authUserID) {
+        userApi
+          .getUserById(authUserID)
+          .then((userInfo) => usersStore.setUser(userInfo));
+      }
     } catch (error) {
       console.log(error.response.data.message);
     }

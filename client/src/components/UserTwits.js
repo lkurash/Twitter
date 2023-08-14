@@ -2,13 +2,14 @@ import { observer } from "mobx-react-lite";
 import { Fragment, useContext } from "react";
 import { Context } from "..";
 
-import Twit from "./Twit";
 import spinner from "../utils/spinner";
+import getMoreUserTwits from "../utils/getMoreUserTwits";
+
+import Twit from "./Twit";
 import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
+import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 
 import "./main.css";
-import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
-import getMoreUserTwits from "../utils/getMoreUserTwits";
 
 const UserTwits = observer(() => {
   const { twitsStore } = useContext(Context);

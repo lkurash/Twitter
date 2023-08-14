@@ -7,32 +7,17 @@ import Twit from "./Twit";
 
 const ProfilePageLikes = observer(() => {
   const { twitsStore } = useContext(Context);
-  const { usersStore } = useContext(Context);
-
-  const userLikesTwits = [];
-
-  const getUserLikesTwits = () => {
-    if (twitsStore.twits) {
-      twitsStore.twits.map((twit) => {
-        twit.Likes.forEach((like) => {
-          if (like.UserId === usersStore.userPage.id) {
-            userLikesTwits.push(twit);
-          }
-        });
-      });
-    }
-  };
-
-  getUserLikesTwits();
 
   if (twitsStore.twits.length === 0) return spinner();
 
   return (
     <div className="twits">
-      {userLikesTwits.map((twit) => (
-        <Twit twit={twit} key={twit.id} />
+      {twitsStore.twitsWithUsersLike.map((like) => (
+        <Twit twit={like.Twit} key={like.Twit.id} />
       ))}
-      {userLikesTwits.length === 0 && <p className="empty-twits">No twits</p>}
+      {twitsStore.twitsWithUsersLike.length === 0 && (
+        <p className="empty-twits">No twits</p>
+      )}
     </div>
   );
 });

@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import { FOLLOWER_PAGE_PATH, FOLLOWING_PAGE_PATH } from "../utils/constans";
+
 import UserFollowersList from "./UserFollowersList";
 import UserFollowingList from "./UserFollowingList";
 

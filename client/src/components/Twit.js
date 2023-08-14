@@ -4,6 +4,7 @@ import TwitDesc from "./TwitDesc";
 import UserPhoto from "./UserPhoto";
 
 const Twit = ({ twit }) => {
+  
   return (
     <>
       <div className="twit">

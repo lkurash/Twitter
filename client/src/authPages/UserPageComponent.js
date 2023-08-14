@@ -47,13 +47,16 @@ const UserPageComponent = observer(({ loadingPage }) => {
         .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
       twitsApi
-        .getTwitsIdWithUsersLike(authUserID)
-        .then((ids) => twitsStore.setTwitsIdWithUsersLike(ids));
+        .getTwitsWithUsersLike(authUserID)
+        .then((data) => {
+          twitsStore.setTwitsIdWithUsersLike(data.ids);
+          twitsStore.setTwitsWithUsersLike(data.twits);
+        });
 
       twitsApi
         .getUserRetwits(authUserID)
         .then((retwits) => retwitsStore.setUserRetwits(retwits));
-        
+
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

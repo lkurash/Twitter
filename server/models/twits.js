@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Twits.hasMany(models.Favorite_twits);
       Twits.belongsTo(models.User, { as: "user", foreignKey: "UserId" });
+      Twits.belongsTo(models.Twits, { as: "originalTwit", foreignKey: "twitId" });
       Twits.belongsTo(models.User, {
         as: "twitUser",
         foreignKey: "twitUserId",
