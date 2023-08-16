@@ -2,21 +2,23 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
 
-import { getAllTopics } from "../http/topicsApi";
 import twitsApi from "../http/twitsApi";
 import userApi from "../http/userApi";
 
 import SidebarContent from "../components/SidebarContent";
 import ContentExplorePage from "../components/ContentExplorePage";
+import trendsApi from "../http/trendsApi";
 
 const PublicHomePage = observer(({ children }) => {
   const { usersStore } = useContext(Context);
-  const { topicsStore } = useContext(Context);
+  const { trendsStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
 
   useEffect(() => {
     try {
-      getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
+      trendsApi
+        .getAllTrends()
+        .then((allTrends) => trendsStore.setTrends(allTrends));
       userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
       twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
     } catch (error) {

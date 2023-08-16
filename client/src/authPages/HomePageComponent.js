@@ -13,11 +13,13 @@ import "../components/common/common.css";
 import "../components/main.css";
 import "../components/userpage.css";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
+import trendsApi from "../http/trendsApi";
 
 const HomePageComponent = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
+  const { trendsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
 
@@ -51,6 +53,9 @@ const HomePageComponent = observer(({ loadingPage }) => {
     twitsApi
       .getTwitsByFollowingsUsers(authUserID)
       .then((twits) => twitsStore.setTwitsWhoReading(twits));
+    trendsApi
+      .getAllTrends()
+      .then((allTrends) => trendsStore.setTrends(allTrends));
 
     usersStore.setAuth(getFlagIsAuth());
   });

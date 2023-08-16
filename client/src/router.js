@@ -39,6 +39,7 @@ import {
   TRENDS_PAGE_PATH,
   ROOT_PAGE_PATH,
   TWITTER_USER_PAGE_PATH,
+  AUTHTRENDS_PAGE_PATH,
 } from "./utils/constans";
 import redirectLoader from "./utils/redirectLoader";
 
@@ -144,6 +145,10 @@ export const privateRoutes = {
     {
       path: `${FOLLOWER_PAGE_PATH}:id`,
       element: <FollowPageComponent />,
+    },
+    {
+      path: `${AUTHTRENDS_PAGE_PATH}:trend`,
+      element: <TrendsPage />,
     },
   ],
 };

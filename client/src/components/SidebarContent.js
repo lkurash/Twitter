@@ -3,7 +3,6 @@ import { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Context } from "..";
 
-import { getAllTopics } from "../http/topicsApi";
 import { EXPLORE_PAGE_PATH } from "../utils/constans";
 
 import MainSearchBlock from "./MainSearchBlock";
@@ -12,17 +11,20 @@ import MainSectionWhoToRead from "./MainSectionWhoToRead";
 
 import "./sideBar.css";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
+import trendsApi from "../http/trendsApi";
 
 const SidebarContent = observer(() => {
   const { usersStore } = useContext(Context);
-  const { topicsStore } = useContext(Context);
+  const { trendsStore } = useContext(Context);
   const location = useLocation().pathname;
 
   const userAuth = getFlagIsAuth();
 
   useEffect(() => {
     try {
-      getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
+      trendsApi
+        .getAllTrends()
+        .then((allTrends) => trendsStore.setTrends(allTrends));
     } catch (error) {
       console.log(error.response.data.message);
     }

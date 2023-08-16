@@ -17,3 +17,4 @@ export const PROFILE_PAGE_USER_MEDIA_PATH = "/home/profile/:id/media";
 export const FOLLOWING_PAGE_PATH = "/home/profile/following/";
 export const FOLLOWER_PAGE_PATH = "/home/profile/followers/";
 export const EDIT_PROFILE_PAGE_PATH = "/home/editprofile/";
+export const AUTHTRENDS_PAGE_PATH = "/home/trends/";
