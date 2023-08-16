@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
-import { getAllTopics } from "../http/topicsApi";
+import trendsApi from "../http/trendsApi";
 import userApi from "../http/userApi";
 import twitsApi from "../http/twitsApi";
 
@@ -17,12 +17,14 @@ import getAuthUserID from "../utils/getAuthUserID";
 const ExplorePage = observer(() => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
-  const { topicsStore } = useContext(Context);
+  const { trendsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
     try {
-      getAllTopics().then((allTopics) => topicsStore.setTopics(allTopics));
+      trendsApi
+        .getAllTrends()
+        .then((allTrends) => trendsStore.setTrends(allTrends));
       userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
       twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
       usersStore.setAuth(getFlagIsAuth());

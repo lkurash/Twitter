@@ -4,24 +4,12 @@ import { Context } from "..";
 
 import Twit from "./Twit";
 
-const TwitsForTrends = observer((props) => {
-  const { twitsStore } = useContext(Context);
-  const twitsTrend = [];
-
-  const getTwitsTrend = () => {
-    twitsStore.twits.map((twit) => {
-      if (twit.text) {
-        if (twit.text.toLowerCase().includes(props.trend.toLowerCase())) {
-          twitsTrend.push(twit);
-        }
-      }
-    });
-  };
-
-  getTwitsTrend();
+const TwitsForTrends = observer(({ trend }) => {
+  const { trendsStore } = useContext(Context);
+  
   return (
     <div className="twits">
-      {twitsTrend.map((twit) => (
+      {trendsStore.trensTwits.map((twit) => (
         <Twit twit={twit} key={twit.id} />
       ))}
     </div>

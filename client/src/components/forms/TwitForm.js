@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
+import trendsApi from "../../http/trendsApi";
 
 import twitsApi from "../../http/twitsApi";
 import getUserPhoto from "../../utils/getUserPhoto";
@@ -41,6 +42,9 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
             twit.concat(twitsStore.twitsWhoReading)
           );
         });
+
+        await trendsApi.createTrends(formData);
+
         setText("");
         setImg("");
       }
