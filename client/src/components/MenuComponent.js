@@ -23,7 +23,7 @@ const MenuComponent = observer(() => {
     <aside className="menu">
       <Logo class="logo" />
       <nav className="nav">
-        {getFlagIsAuth() ? (
+        {usersStore.isAuth || getFlagIsAuth() ? (
           <div>
             {buttonsAuthUser.map((button) => (
               <ButtonMenu

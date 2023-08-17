@@ -2,18 +2,18 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
 
-import twitsApi from "../http/twitsApi";
-import userApi from "../http/userApi";
-
 import SidebarContent from "../components/SidebarContent";
 import ContentBookmarksPage from "../components/ContentBookmarksPage";
 import getAuthUserID from "../utils/getAuthUserID";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
+import getInfoAuthPage from "../utils/getInfoAuthPage";
+import userApi from "../http/userApi";
 
 const BookmarksPageComponent = observer(() => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
+  const { trendsStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
@@ -24,29 +24,21 @@ const BookmarksPageComponent = observer(() => {
         .getUserById(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
 
-      twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
-
-      twitsApi
-        .getFavoriteTwits(authUserID)
-        .then((favoriteTwitsByUser) =>
-          favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser)
-        );
-
-      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
-
       userApi
         .getFollowingUsers(authUserID)
         .then((followings) =>
           usersFollowingsStore.setuserFollowing(followings)
         );
 
-      twitsApi
-        .getTwitsWithUsersLike(authUserID)
-        .then((data) => twitsStore.setTwitsIdWithUsersLike(data.ids));
-
-      twitsApi
-        .getUserRetwits(authUserID)
-        .then((retwits) => retwitsStore.setUserRetwits(retwits));
+      getInfoAuthPage(
+        authUserID,
+        usersStore,
+        usersFollowingsStore,
+        twitsStore,
+        retwitsStore,
+        favoriteTwitsStore,
+        trendsStore
+      );
 
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {

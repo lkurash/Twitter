@@ -67,6 +67,7 @@ const EditProfileForm = observer(() => {
   };
 
   useOutsideClick(divRef, onClose);
+
   return (
     <div className="edit-profile-form wrapper-border">
       <header className="edit-profile-form-header">
@@ -176,7 +177,7 @@ const EditProfileForm = observer(() => {
           </div>
         </div>
         <div className="signup-birth-form">
-          <BirthForm />
+          <BirthForm user={usersStore.user}/>
         </div>
       </main>
     </div>

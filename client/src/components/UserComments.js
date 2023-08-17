@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";
@@ -8,8 +8,15 @@ import UserPhoto from "./UserPhoto";
 
 const UserComments = observer(() => {
   const { commentsStore } = useContext(Context);
+  const [loadingPage, setIsLoadingPage] = useState(true);
 
-  if (commentsStore.comments.length === 0) return spinner();
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoadingPage(false);
+    }, 250);
+  }, []);
+
+  if (commentsStore.comments.length === 0 || loadingPage) return spinner();
 
   return (
     <>

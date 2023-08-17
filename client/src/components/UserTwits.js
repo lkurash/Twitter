@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";
@@ -13,8 +13,15 @@ import "./main.css";
 
 const UserTwits = observer(() => {
   const { twitsStore } = useContext(Context);
+  const [loadingPage, setIsLoadingPage] = useState(true);
 
-  if (twitsStore.userTwits.length === 0) return spinner();
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoadingPage(false);
+    }, 250);
+  }, []);
+
+  if (twitsStore.userTwits.length === 0 || loadingPage) return spinner();
 
   return (
     <div className="twits">

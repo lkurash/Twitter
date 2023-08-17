@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
@@ -16,14 +16,22 @@ import ButtonShowMoreTrendsTwits from "../components/buttons/ButtonShowMoreTrend
 import getAuthUserID from "../utils/getAuthUserID";
 import userApi from "../http/userApi";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
+import spinner from "../utils/spinner";
+import getInfoAuthPage from "../utils/getInfoAuthPage";
 
 const TrendsPage = observer(() => {
   const { usersStore } = useContext(Context);
+  const { favoriteTwitsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
   const { trendsStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
   const { trend } = useParams();
   const authUserID = getAuthUserID(usersStore);
 
   const navigate = useNavigate();
+
+  const [isLoadingTrends, setIsLoadingTrends] = useState(true);
 
   useEffect(() => {
     trendsApi
@@ -34,9 +42,24 @@ const TrendsPage = observer(() => {
       userApi
         .getUserById(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
+
+      getInfoAuthPage(
+        authUserID,
+        usersStore,
+        usersFollowingsStore,
+        twitsStore,
+        retwitsStore,
+        favoriteTwitsStore
+      );
     }
-    
+
     usersStore.setAuth(getFlagIsAuth());
+
+    setIsLoadingTrends(true);
+
+    setTimeout(() => {
+      setIsLoadingTrends(false);
+    }, 300);
   }, [trend]);
 
   return (
@@ -67,11 +90,17 @@ const TrendsPage = observer(() => {
               <ButtonDotMenu />
             </div>
           </div>
-          <div className="user-main-content">
-            <TwitsForTrends trend={trend} />
-          </div>
-          {trendsStore.trensTwits.length >= 7 && (
-            <ButtonShowMoreTrendsTwits trend={trend} />
+          {!isLoadingTrends ? (
+            <>
+              <div className="user-main-content">
+                <TwitsForTrends trend={trend} />
+              </div>
+              {trendsStore.trensTwits.length >= 7 && (
+                <ButtonShowMoreTrendsTwits trend={trend} />
+              )}
+            </>
+          ) : (
+            spinner()
           )}
         </div>
       </main>

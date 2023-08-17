@@ -132,11 +132,11 @@ export const privateRoutes = {
           path: `${PROFILE_PAGE_USER_MEDIA_PATH}`,
           element: <ProfilePageMedia />,
         },
+        {
+          path: `${EDIT_PROFILE_PAGE_PATH}`,
+          element: [<UserTwits key={'twits'}/>, <EditProfilePageComponent key={'form'}/>],
+        },
       ],
-    },
-    {
-      path: `${EDIT_PROFILE_PAGE_PATH}:id`,
-      element: <EditProfilePageComponent />,
     },
     {
       path: `${FOLLOWING_PAGE_PATH}:id`,

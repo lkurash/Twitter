@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { redirect } from "react-router-dom";
 import userApi from "../http/userApi";
 import LocalAuthClient from "../store/LocalAuthClient";
@@ -12,6 +13,7 @@ const authenticate = async () => {
   if (token) {
     return null;
   } else {
+    Cookies.remove("twitsWhoReading");
     return redirect("/authentication/redirect");
   }
 };

@@ -9,10 +9,12 @@ import ContentUsersPage from "../components/ContentUsersPage";
 import SidebarContent from "../components/SidebarContent";
 import getAuthUserID from "../utils/getAuthUserID";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
+import getInfoAuthPage from "../utils/getInfoAuthPage";
 
 const UserPageComponent = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
+  const { favoriteTwitsStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
@@ -21,20 +23,16 @@ const UserPageComponent = observer(({ loadingPage }) => {
   useEffect(() => {
     try {
       userApi
-        .getUserById(authUserID)
-        .then((userInfo) => usersStore.setUser(userInfo));
-
-      userApi
         .getUserById(id)
         .then((userById) => usersStore.setUserPage(userById));
+
+      userApi
+        .getUserById(authUserID)
+        .then((userInfo) => usersStore.setUser(userInfo));
 
       twitsApi
         .getTwitsByUser(id)
         .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
-
-      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
-
-      twitsApi.getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
 
       userApi
         .getFollowingUsers(id)
@@ -46,16 +44,14 @@ const UserPageComponent = observer(({ loadingPage }) => {
         .getFollowerUsers(id)
         .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
-      twitsApi
-        .getTwitsWithUsersLike(authUserID)
-        .then((data) => {
-          twitsStore.setTwitsIdWithUsersLike(data.ids);
-          twitsStore.setTwitsWithUsersLike(data.twits);
-        });
-
-      twitsApi
-        .getUserRetwits(authUserID)
-        .then((retwits) => retwitsStore.setUserRetwits(retwits));
+      getInfoAuthPage(
+        authUserID,
+        usersStore,
+        usersFollowingsStore,
+        twitsStore,
+        retwitsStore,
+        favoriteTwitsStore
+      );
 
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
