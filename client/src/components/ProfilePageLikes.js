@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";
@@ -7,8 +7,15 @@ import Twit from "./Twit";
 
 const ProfilePageLikes = observer(() => {
   const { twitsStore } = useContext(Context);
+  const [loadingPage, setIsLoadingPage] = useState(true);
 
-  if (twitsStore.twits.length === 0) return spinner();
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoadingPage(false);
+    }, 250);
+  }, []);
+
+  if (twitsStore.twits.length === 0 || loadingPage) return spinner();
 
   return (
     <div className="twits">

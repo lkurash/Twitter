@@ -212,6 +212,7 @@ class TwitsController {
   async getFavoriteTwitByUser(request, response, next) {
     try {
       const { userId } = request.params;
+      const ids = [];
 
       checkUsersAuth(request, userId, next);
 
@@ -231,60 +232,23 @@ class TwitsController {
         ],
       });
 
-      return response.json(favoriteTwits);
+      const twitIds = await Favorite_twits.findAll({
+        attributes: ["TwitId"],
+        where: { UserId: userId },
+        raw: true,
+      });
+
+      if (twitIds) {
+        twitIds.map((item) => {
+          return ids.push(item.TwitId);
+        });
+      }
+
+      return response.json({favoriteTwits, ids});
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
   }
-
-  async createCommentByUser(request, response, next) {
-    try {
-      const { twitId } = request.params;
-      const { userId } = request.params;
-
-      checkUsersAuth(request, userId, next);
-
-      const { text } = request.body;
-
-      if (text) {
-        const comment = await Comments.create({
-          UserId: userId,
-          TwitId: twitId,
-          text,
-        });
-
-        return response.json(comment);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id or twit.id"));
-    }
-  }
-
-  async getCountComments(request, response, next) {
-    try {
-      const { twitId } = request.params;
-
-      if (twitId) {
-        const count = await Comments.count({
-          where: { TwitId: twitId },
-        });
-
-        const countComments = await Twits.update(
-          {
-            countComments: +count,
-          },
-          {
-            where: { id: twitId },
-          }
-        );
-
-        return response.json(countComments);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check twit.id"));
-    }
-  }
-
   async getCommentsByUser(request, response, next) {
     try {
       const { userId } = request.params;

@@ -15,7 +15,6 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
-  const userLikesTwitId = [];
   const authUserID = getAuthUserID(usersStore);
 
   const createLikeTwit = async (twit) => {
@@ -45,18 +44,6 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
     }
     return activeLike;
   };
-
-  const getUserLikesTwitId = () => {
-    twitsStore.twits.map((twit) => {
-      twit.Likes.forEach((like) => {
-        if (like.UserId === usersStore.user.id) {
-          userLikesTwitId.push(twit.id);
-        }
-      });
-    });
-  };
-
-  getUserLikesTwitId();
 
   const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);

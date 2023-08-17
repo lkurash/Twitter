@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 
-const BirthForm = observer(() => {
+const BirthForm = observer(({user}) => {
   const { usersStore } = useContext(Context);
   const [userSelectMonth, setUserSelectMonth] = useState("");
   const [userSelectDay, setUserSelectDay] = useState("");
@@ -64,7 +64,7 @@ const BirthForm = observer(() => {
 
   const checkUserBirthdate = () => {
     if (
-      usersStore.user.birthdate &&
+      user.birthdate &&
       !userSelectDay &&
       !userSelectMonth &&
       !userSelectYear
@@ -76,6 +76,8 @@ const BirthForm = observer(() => {
       setUserSelectYear(userBirthdate[2]);
     }
   };
+
+  // console.log(usersStore.user);
 
   const createUserBirthdate = () => {
     if (userSelectDay && userSelectMonth && userSelectYear) {

@@ -13,38 +13,26 @@ import activeBookmark from "../Img/active_bookmark_icon.png";
 import notactiveBookmark from "../Img/notactive_bookmark_icon.png";
 import hoverBookmark from "../Img/hover_bookmark.png";
 
-const ButtonBookmarkOnTwit = observer((props) => {
-  const { twitsStore } = useContext(Context);
+const ButtonBookmarkOnTwit = observer(({ twit }) => {
   const { favoriteTwitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
-  const { id } = useParams();
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
-  const userBookmarksTwitId = [];
   const authUserID = getAuthUserID(usersStore);
 
-  const getTwits = async () => {
-    await twitsApi
-      .getAllTwits()
-      .then((alltwits) => twitsStore.setTwits(alltwits));
-
-    if (id) {
-      await twitsApi
-        .getTwitsByUser(id)
-        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
-    }
-  };
 
   const createFavoriteTwits = async (twit) => {
     await twitsApi.createFavoriteTwitByUser(authUserID, twit.id);
-
-    getTwits();
+    await twitsApi.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
+      favoriteTwitsStore.setFavoriteTwitsIds(favoriteTwitsByUser.ids);
+    });
   };
 
   const hoverAndActiveButtonBookmark = (twit) => {
+
     if (twit.id === favoriteTwitsStore.hoverTwitBookmark.id) {
       return hoverBookmark;
     }
-    if (twit.id === favoriteTwitsStore.setNewTwitBookmark.id) {
+    else if (twit.id === favoriteTwitsStore.newTwitBookmark.id) {
       return activeBookmark;
     }
     return notactiveBookmark;
@@ -57,25 +45,13 @@ const ButtonBookmarkOnTwit = observer((props) => {
     return activeBookmark;
   };
 
-  const getUserBookmarksTwitId = () => {
-    twitsStore.twits.map((twit) => {
-      twit.Favorite_twits.forEach((bookmark) => {
-        if (bookmark.UserId === usersStore.user.id) {
-          userBookmarksTwitId.push(twit.id);
-        }
-      });
-    });
-  };
-
-  getUserBookmarksTwitId();
-
   const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);
   };
 
   return (
     <div className="user-twit-panel-bookmark">
-      {!userBookmarksTwitId.includes(props.twit.id) ? (
+      {!favoriteTwitsStore.favoriteTwitsIds.includes(twit.id) ? (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}
@@ -84,22 +60,22 @@ const ButtonBookmarkOnTwit = observer((props) => {
           />
           <div
             className="user-twit-panel-button-bookmark"
-            key={props.twit.id}
+            key={twit.id}
             onClick={() => {
               if (usersStore.isAuth) {
-                favoriteTwitsStore.setNewTwitBookmark(props.twit);
-                createFavoriteTwits(props.twit);
+                favoriteTwitsStore.setNewTwitBookmark(twit);
+                createFavoriteTwits(twit);
               } else {
                 setTooltipUserNotAuth(true);
               }
             }}
             onMouseEnter={() => {
-              favoriteTwitsStore.setHoverTwitBookmark(props.twit);
+              favoriteTwitsStore.setHoverTwitBookmark(twit);
             }}
             onMouseLeave={() => favoriteTwitsStore.setHoverTwitBookmark({})}
           >
             <img
-              src={hoverAndActiveButtonBookmark(props.twit)}
+              src={hoverAndActiveButtonBookmark(twit)}
               alt="Bookmark"
               className="user-twit-panel-bookmark-img"
             />
@@ -108,19 +84,19 @@ const ButtonBookmarkOnTwit = observer((props) => {
       ) : (
         <div
           className="user-twit-panel-button-bookmark"
-          key={props.twit.id}
+          key={twit.id}
           onClick={() => {
-            favoriteTwitsStore.setNotActiveFavoriteTwit(props.twit);
+            favoriteTwitsStore.setNotActiveFavoriteTwit(twit);
             favoriteTwitsStore.setNewTwitBookmark({});
-            createFavoriteTwits(props.twit);
+            createFavoriteTwits(twit);
           }}
           onMouseEnter={() => {
-            favoriteTwitsStore.setHoverTwitBookmark(props.twit);
+            favoriteTwitsStore.setHoverTwitBookmark(twit);
           }}
           onMouseLeave={() => favoriteTwitsStore.setHoverTwitBookmark({})}
         >
           <img
-            src={notActiveButtonBookmark(props.twit)}
+            src={notActiveButtonBookmark(twit)}
             alt="Bookmark"
             className="user-twit-panel-bookmark-img"
           />

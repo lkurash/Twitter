@@ -11,7 +11,7 @@ import ProfileUserInfo from "./ProfileUserInfo";
 
 import arrowLeft from "./Img/arrow_left_icon.png";
 
-const ContentUsersPage = observer(() => {
+const ContentUsersPage = observer(({editProfilePage}) => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const { usersStore } = useContext(Context);

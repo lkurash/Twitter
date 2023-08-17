@@ -15,16 +15,22 @@ const FollowPageComponent = observer(() => {
 
   useEffect(() => {
     try {
-      userApi.getFollowingUsers(id).then((followings) =>
-        usersFollowingsStore.setuserFollowing(followings)
-      );
+      userApi
+        .getFollowingUsers(id)
+        .then((followings) =>
+          usersFollowingsStore.setuserFollowing(followings)
+        );
+
       userApi
         .getFollowerUsers(id)
         .then((followers) => usersFollowingsStore.setuserFollowers(followers));
-      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+
       userApi
         .getUserById(id)
         .then((userById) => usersStore.setUserPage(userById));
+
+      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);
