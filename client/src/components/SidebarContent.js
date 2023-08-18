@@ -11,24 +11,12 @@ import MainSectionWhoToRead from "./MainSectionWhoToRead";
 
 import "./sideBar.css";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
-import trendsApi from "../http/trendsApi";
 
 const SidebarContent = observer(() => {
   const { usersStore } = useContext(Context);
-  const { trendsStore } = useContext(Context);
   const location = useLocation().pathname;
 
   const userAuth = getFlagIsAuth();
-
-  useEffect(() => {
-    try {
-      trendsApi
-        .getAllTrends()
-        .then((allTrends) => trendsStore.setTrends(allTrends));
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
-  });
 
   return (
     <aside className="side-bar">

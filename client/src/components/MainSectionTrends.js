@@ -1,12 +1,19 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "..";
+import trendsApi from "../http/trendsApi";
 
 import loadSectionTrends from "./loadComponents/loadSectionTrends";
 import Trends from "./Trends";
 
 const MainSectionTrends = observer((props) => {
   const { trendsStore } = useContext(Context);
+
+  useEffect(()=>{
+    trendsApi
+      .getAllTrends()
+      .then((allTrends) => trendsStore.setTrends(allTrends));
+  },[])
 
   if (trendsStore.trends.length === 0) {
     return loadSectionTrends();

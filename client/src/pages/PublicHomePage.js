@@ -16,9 +16,9 @@ const PublicHomePage = observer(({ children }) => {
 
   useEffect(() => {
     try {
-      trendsApi
-        .getAllTrends()
-        .then((allTrends) => trendsStore.setTrends(allTrends));
+      // trendsApi
+      //   .getAllTrends()
+      //   .then((allTrends) => trendsStore.setTrends(allTrends));
       userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
       twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
     } catch (error) {
