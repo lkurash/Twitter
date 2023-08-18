@@ -21,7 +21,10 @@ const TwitsWhoYouRead = observer(({ userTwits }) => {
           </Fragment>
         ))}
         {twitsStore.twitsWhoReading.length >= 7 && (
-          <ButtonShowMoreTwits getMoreTwits={getMoreWhoYouReadingTwits} />
+          <ButtonShowMoreTwits
+            getMoreTwits={getMoreWhoYouReadingTwits}
+            store={twitsStore}
+          />
         )}
       </>
       {twitsStore.twitsWhoReading.length === 0 && (

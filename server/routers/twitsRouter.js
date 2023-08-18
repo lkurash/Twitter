@@ -11,5 +11,6 @@ router.delete("/twit/:twitId", twitsController.deleteTwit);
 router.get("/likes/user/:userId", twitsController.getTwitsWithUsersLike);
 router.get("/retwits/user/:userId", twitsController.getUserRetwits);
 router.get("/following/user/:userId", twitsController.getTwitsByFollowingUsers);
+router.get("/user/:userId/media", twitsController.getUserTwitsWithMedia);
 
 module.exports = router;

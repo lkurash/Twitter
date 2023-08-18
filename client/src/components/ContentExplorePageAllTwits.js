@@ -48,7 +48,10 @@ const ContentExplorePageAllTwits = observer(() => {
                     <Twit twit={twit} key={twit.id} />
                   ))}
                   {twitsStore.twits.length >= 7 && (
-                    <ButtonShowMoreTwits getMoreTwits={getMoreAllTwits} />
+                    <ButtonShowMoreTwits
+                      getMoreTwits={getMoreAllTwits}
+                      store={twitsStore}
+                    />
                   )}
                 </>
               ) : (

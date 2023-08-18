@@ -7,6 +7,8 @@ import spinner from "../utils/spinner";
 import Twit from "./Twit";
 
 import arrowLeft from "./Img/arrow_left_icon.png";
+import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
+import getMoreFavoriteTwits from "../utils/getMoreFavoriteTwits";
 
 const ContentBookmarksPage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -46,6 +48,12 @@ const ContentBookmarksPage = observer(() => {
           <p className="empty-twits">No twits</p>
         )}
       </div>
+      {favoriteTwitsStore.favoriteTwits.length >= 7 && (
+        <ButtonShowMoreTwits
+          getMoreTwits={getMoreFavoriteTwits}
+          store={favoriteTwitsStore}
+        />
+      )}
     </div>
   );
 });

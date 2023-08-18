@@ -174,6 +174,11 @@ class TwitsController {
 
   async getTwitsWithUsersLike(request, response, next) {
     const { userId } = request.params;
+    let { limit, list } = request.query;
+
+    limit = limit || 7;
+    list = list || 1;
+    let offset = list * limit - limit;
 
     const twitIds = await Likes.findAll({
       attributes: ["TwitId"],
@@ -196,6 +201,8 @@ class TwitsController {
           ],
         },
       ],
+      limit: limit,
+      offset: offset,
     });
 
     const ids = [];
@@ -212,6 +219,12 @@ class TwitsController {
   async getFavoriteTwitByUser(request, response, next) {
     try {
       const { userId } = request.params;
+      let { limit, list } = request.query;
+
+      limit = limit || 7;
+      list = list || 1;
+      let offset = list * limit - limit;
+
       const ids = [];
 
       checkUsersAuth(request, userId, next);
@@ -230,6 +243,8 @@ class TwitsController {
             ],
           },
         ],
+        limit: limit,
+        offset: offset,
       });
 
       const twitIds = await Favorite_twits.findAll({
@@ -244,7 +259,7 @@ class TwitsController {
         });
       }
 
-      return response.json({favoriteTwits, ids});
+      return response.json({ favoriteTwits, ids });
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
@@ -252,6 +267,12 @@ class TwitsController {
   async getCommentsByUser(request, response, next) {
     try {
       const { userId } = request.params;
+      let { limit, list } = request.query;
+
+      limit = limit || 4;
+      list = list || 1;
+      let offset = list * limit - limit;
+
       const coments = await Comments.findAll({
         where: { UserId: userId },
         include: [
@@ -270,6 +291,8 @@ class TwitsController {
             as: "user",
           },
         ],
+        limit: limit,
+        offset: offset,
       });
 
       return response.json(coments);
@@ -319,6 +342,37 @@ class TwitsController {
       }
     } catch (error) {
       next(ApiError.badRequest("Check twit.id"));
+    }
+  }
+
+  async getUserTwitsWithMedia(request, response, next) {
+    try {
+      const Op = Sequelize.Op;
+      const { userId } = request.params;
+
+      let { limit, list } = request.query;
+      limit = limit || 4;
+      list = list || 1;
+      let offset = list * limit - limit;
+
+      const twits = await Twits.findAll({
+        order: [["id", "DESC"]],
+        where: { [Op.and]: [{ UserId: userId, img: { [Op.ne]: null } }] },
+        include: [
+          { model: User, as: "user" },
+          { model: User, as: "twitUser" },
+          { model: Likes },
+          { model: Favorite_twits },
+          { model: Comments },
+        ],
+
+        limit: limit,
+        offset: offset,
+      });
+
+      return response.json(twits);
+    } catch (error) {
+      next(ApiError.badRequest("Check user.id"));
     }
   }
 }
