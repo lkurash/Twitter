@@ -6,6 +6,7 @@ class UserStore {
     this._user = [];
     this._birthDate = "";
     this._allUsers = [];
+    this._usersWhoToReadUsers = [];
     this._userPage = [];
     this._foundUsers = [];
     makeAutoObservable(this);
@@ -43,6 +44,10 @@ class UserStore {
     }
   }
 
+  setUsersWhoToReadUsers(users) {
+    this._usersWhoToReadUsers = users;
+  }
+
   get isAuth() {
     return this._auth;
   }
@@ -64,6 +69,10 @@ class UserStore {
   }
   get foundUsers() {
     return this._foundUsers;
+  }
+
+  get usersWhoToReadUsers() {
+    return this._usersWhoToReadUsers;
   }
 }
 export default UserStore;

@@ -78,6 +78,12 @@ class UserApi {
 
     return followers.data;
   }
+
+  async getWhoNotReadingUsers(id) {
+    const followers = await $authHost.get(`api/users/${id}/nofollowings`);
+
+    return followers.data;
+  }
 }
 
 const userApi = new UserApi();

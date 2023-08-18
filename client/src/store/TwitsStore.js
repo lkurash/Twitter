@@ -54,8 +54,6 @@ class TwitsStore {
   }
 
   deleteRetwit(retwit) {
-    console.log(this._twits);
-    console.log(retwit.id);
     let twit = this._twits.findIndex(
       (twit) =>
         (twit.twitId === retwit.id && twit.retwit === true) ||

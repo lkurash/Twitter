@@ -64,7 +64,7 @@ const BirthForm = observer(({user}) => {
 
   const checkUserBirthdate = () => {
     if (
-      user.birthdate &&
+      user &&
       !userSelectDay &&
       !userSelectMonth &&
       !userSelectYear
