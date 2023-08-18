@@ -4,7 +4,7 @@ class UsersFollowStore {
   constructor() {
     this._userFollowing = [];
     this._userFollowers = [];
-    this._unfollowUser = [];
+    this._unfollowUsersIds = [];
     this._hoverFollowUser = [];
     this._startFollowUser = [];
     makeAutoObservable(this);
@@ -18,8 +18,8 @@ class UsersFollowStore {
     this._userFollowers = followers;
   }
 
-  setUnfollowUser(follower) {
-    this._unfollowUser = follower;
+  setUnfollowUsersIds(id) {
+    this._unfollowUsersIds = id;
   }
 
   setStartFollowUser(user) {
@@ -30,6 +30,12 @@ class UsersFollowStore {
     this._hoverFollowUser = user;
   }
 
+  deleteIdInUnfollowListIds(id) {
+    let unFollowId = this._unfollowUsersIds.indexOf(id);
+
+    return this._unfollowUsersIds.splice(unFollowId, 1);
+  }
+
   get userFollowing() {
     return this._userFollowing;
   }
@@ -38,8 +44,8 @@ class UsersFollowStore {
     return this._userFollowers;
   }
 
-  get unfollowUser() {
-    return this._unfollowUser;
+  get unfollowUsersIds() {
+    return this._unfollowUsersIds;
   }
 
   get startFollowUser() {

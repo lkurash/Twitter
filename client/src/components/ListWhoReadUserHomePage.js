@@ -12,52 +12,20 @@ import getAuthUserID from "../utils/getAuthUserID";
 import getUserPhoto from "../utils/getUserPhoto";
 import spinner from "../utils/spinner";
 
-const ListWhoReadUserHomePage = observer(() => {
+const ListWhoReadUserHomePage = observer(({users}) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const authUserID = getAuthUserID(usersStore);
-  const whoReadingList = [];
-  const whoNotReadingList = [];
-
-  const getUsersAndFollowigs = async () => {
-    await userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
-    await userApi
-      .getFollowingUsers(usersStore.user.id)
-      .then((followings) => usersFollowingsStore.setuserFollowing(followings));
-  };
+  const authUserID = getAuthUserID();
 
   const createUserFollowings = async (profile) => {
     await userApi.createFollowings(authUserID, profile.id);
-    getUsersAndFollowigs();
-  };
 
-  const chekFollowingsUser = () => {
-    if (usersStore.allUsers) {
-      usersStore.allUsers.forEach((allUser) => {
-        whoReadingList.push(authUserID);
-        allUser.Followings.forEach((followUser) => {
-          if (authUserID === followUser.UserId) {
-            whoReadingList.push(followUser.followUserId);
-          }
-        });
-      });
-    }
+    await userApi
+      .getWhoNotReadingUsers(authUserID)
+      .then((users) => usersStore.setUsersWhoNotReading(users));
   };
-
-  const createNotReadingList = () => {
-    if (usersStore.allUsers) {
-      usersStore.allUsers.forEach((allUser) => {
-        if (!whoReadingList.includes(allUser.id)) {
-          whoNotReadingList.push(allUser);
-        }
-      });
-    }
-  };
-
-  chekFollowingsUser();
-  createNotReadingList();
 
   useEffect(() => {
     setTimeout(() => {
@@ -73,7 +41,7 @@ const ListWhoReadUserHomePage = observer(() => {
     <ul className="follow-page-main-users">
       {usersStore.allUsers ? (
         <>
-          {whoNotReadingList.map((profile) => (
+          {users.map((profile) => (
             <li className="follow-page-main-user" key={profile.id}>
               <div
                 className="section-read-main-user-info"
@@ -104,7 +72,7 @@ const ListWhoReadUserHomePage = observer(() => {
               )}
             </li>
           ))}
-          {whoNotReadingList.length === 0 && (
+          {users.length === 0 && (
             <p className="section-aside-hidden">You are following all users</p>
           )}
         </>

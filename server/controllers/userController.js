@@ -221,7 +221,12 @@ class UserController {
   }
 
   async getAllUsers(request, response, next) {
-    const users = await User.findAll({ include: [{ model: Following }] });
+    let { limit } = request.query;
+    limit = limit || 5;
+    const users = await User.findAll({
+      include: [{ model: Following }],
+      limit: limit,
+    });
 
     return response.json(users);
   }
@@ -365,6 +370,38 @@ class UserController {
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
+  }
+
+  async getWhoNotReadingUsers(request, response, next) {
+    const Op = Sequelize.Op;
+    const { id } = request.params;
+    let { limit } = request.query;
+    limit = limit || 5;
+
+    const followingUserId = await Following.findAll({
+      attributes: ["followUserId"],
+      where: { UserId: id },
+      raw: true,
+    });
+
+    const ids = [id];
+
+    if (followingUserId) {
+      followingUserId.map((item) => {
+        return ids.push(item.followUserId);
+      });
+    }
+
+    const whoNotReadingList = await User.findAll({
+      where: { id: { [Op.notIn]: ids } },
+      include: [
+        {
+          model: Following,
+        },
+      ],
+      limit: limit,
+    });
+    return response.json(whoNotReadingList);
   }
 }
 

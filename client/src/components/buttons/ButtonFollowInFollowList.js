@@ -10,7 +10,6 @@ const ButtonFollowInFollowList = observer(
     const { usersStore } = useContext(Context);
     const { usersFollowingsStore } = useContext(Context);
     const authUserID = getAuthUserID(usersStore);
-    const listFollowingUserIds = [];
 
     const deleteFollowAndGetAllUsers = async (userFollowId) => {
       await userApi
@@ -32,21 +31,9 @@ const ButtonFollowInFollowList = observer(
         .then((users) => usersStore.setAllUsers(users));
     };
 
-    const createListFollowingUserIds = (userId) => {
-      usersStore.allUsers.forEach((allUser) => {
-        allUser.Followings.forEach((followUser) => {
-          if (authUserID === followUser.UserId) {
-            listFollowingUserIds.push(followUser.followUserId);
-          }
-        });
-      });
-    };
-
-    createListFollowingUserIds();
-
     return (
       <>
-        {listFollowingUserIds.includes(userId) ? (
+        {!usersFollowingsStore.unfollowUsersIds.includes(profile.id) ? (
           <button
             key={profile.id}
             className="follow-page-main-button-following button-following-hover"
@@ -56,7 +43,9 @@ const ButtonFollowInFollowList = observer(
             onMouseLeave={() => usersFollowingsStore.setHoverFollowUser({})}
             onClick={() => {
               deleteFollowAndGetAllUsers(userId);
-              usersFollowingsStore.setUnfollowUser(profile);
+              usersFollowingsStore.setUnfollowUsersIds(
+                usersFollowingsStore.unfollowUsersIds.concat(profile.id)
+              );
             }}
           >
             <span>
@@ -70,6 +59,7 @@ const ButtonFollowInFollowList = observer(
             type="submit"
             className="follow-page-main-button-following"
             onClick={() => {
+              usersFollowingsStore.deleteIdInUnfollowListIds(profile.id);
               createFollowAndGetAllUsers(userId);
               usersFollowingsStore.setStartFollowUser(profile);
             }}

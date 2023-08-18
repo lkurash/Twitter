@@ -56,7 +56,7 @@ const HomePageComponent = observer(({ loadingPage }) => {
       usersFollowingsStore,
       twitsStore,
       retwitsStore,
-      favoriteTwitsStore,
+      favoriteTwitsStore
     );
 
     usersStore.setAuth(getFlagIsAuth());
