@@ -65,15 +65,20 @@ class TwitsApi {
     return comment.data;
   }
 
-  async getCommentsByUser(userId) {
-    const comments = await $authHost.get(`api/twits/user/${userId}/comments`);
+  async getCommentsByUser(userId, limit, list) {
+    const comments = await $authHost.get(`api/twits/user/${userId}/comments`, {
+      params: { limit, list },
+    });
 
     return comments.data;
   }
 
-  async getFavoriteTwits(userId) {
+  async getFavoriteTwits(userId, limit, list) {
     const favoriteTwits = await $authHost.get(
-      `api/twits/user/${userId}/bookmarks`
+      `api/twits/user/${userId}/bookmarks`,
+      {
+        params: { limit, list },
+      }
     );
 
     return favoriteTwits.data;
@@ -107,8 +112,10 @@ class TwitsApi {
     return twit.data;
   }
 
-  async getTwitsWithUsersLike(userId) {
-    const twitsIds = await $authHost.get(`api/twits/likes/user/${userId}`);
+  async getTwitsWithUsersLike(userId, limit, list) {
+    const twitsIds = await $authHost.get(`api/twits/likes/user/${userId}`, {
+      params: { limit, list },
+    });
 
     return twitsIds.data;
   }
@@ -117,6 +124,14 @@ class TwitsApi {
     const twitsIds = await $authHost.get(`api/twits/retwits/user/${userId}`);
 
     return twitsIds.data;
+  }
+
+  async getUserTwitsWithMedia(userId, limit, list) {
+    const twits = await $authHost.get(`api/twits/user/${userId}/media`, {
+      params: { limit, list },
+    });
+
+    return twits.data;
   }
 }
 const twitsApi = new TwitsApi();

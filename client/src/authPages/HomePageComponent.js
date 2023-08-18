@@ -21,7 +21,7 @@ const HomePageComponent = observer(({ loadingPage }) => {
   const { twitsStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
-  const authUserID = getAuthUserID(usersStore);
+  const authUserID = getAuthUserID();
 
   useEffect(() => {
     userApi

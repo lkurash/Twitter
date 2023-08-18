@@ -10,6 +10,7 @@ class TwitsStore {
     this._dislikeTwit = {};
     this._twitsIdWithUsersLike = [];
     this._twitsWithUsersLike = [];
+    this._userTwitsWithMedia = [];
     makeAutoObservable(this);
   }
 
@@ -41,7 +42,7 @@ class TwitsStore {
         twit.countLikes = twitLike.countLikes;
       }
     });
-    return [this._twits, this._twitsWhoReading]
+    return [this._twits, this._twitsWhoReading];
   }
 
   addRetwitTwit(retwit) {
@@ -86,6 +87,10 @@ class TwitsStore {
     this._twitsWithUsersLike = twits;
   }
 
+  setUserTwitsWithMedia(twits) {
+    this._userTwitsWithMedia = twits;
+  }
+
   get twits() {
     return this._twits;
   }
@@ -116,6 +121,9 @@ class TwitsStore {
 
   get twitsWithUsersLike() {
     return this._twitsWithUsersLike;
+  }
+  get userTwitsWithMedia() {
+    return this._userTwitsWithMedia;
   }
 }
 export default TwitsStore;

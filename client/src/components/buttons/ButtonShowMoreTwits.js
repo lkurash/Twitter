@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Context } from "../..";
 
 const { observer } = require("mobx-react-lite");
 
-const ButtonShowMoreTwits = observer(({ getMoreTwits }) => {
-  const { twitsStore } = useContext(Context);
+const ButtonShowMoreTwits = observer(({ getMoreTwits, store }) => {
   const { id } = useParams();
 
   const [showMoreTwits, setShowMoreTwits] = useState(false);
@@ -16,7 +14,7 @@ const ButtonShowMoreTwits = observer(({ getMoreTwits }) => {
     getMoreTwits(
       showMoreTwits,
       itemListTwits,
-      twitsStore,
+      store,
       setShowMoreTwits,
       setButtonMoreTwitsVisible,
       id

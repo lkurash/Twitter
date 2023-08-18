@@ -36,7 +36,10 @@ const UserTwits = observer(() => {
             </Fragment>
           ))}
           {twitsStore.userTwits.length >= 7 && (
-            <ButtonShowMoreTwits getMoreTwits={getMoreUserTwits} />
+            <ButtonShowMoreTwits
+              getMoreTwits={getMoreUserTwits}
+              store={twitsStore}
+            />
           )}
         </>
       ) : (

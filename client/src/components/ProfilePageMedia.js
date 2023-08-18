@@ -1,29 +1,23 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Context } from "..";
+import twitsApi from "../http/twitsApi";
+import getMoreTwitsWithMedia from "../utils/getMoreTwitsWithMedia";
 
 import spinner from "../utils/spinner";
+import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import Twit from "./Twit";
 
 const ProfilePageMedia = observer(() => {
   const { twitsStore } = useContext(Context);
   const [loadingPage, setIsLoadingPage] = useState(true);
-
-  const userTwitsWithMedia = [];
-
-  const getUserTwitsWithMedia = () => {
-    if (twitsStore.userTwits) {
-      twitsStore.userTwits.map((twit) => {
-        if (twit.img) {
-          userTwitsWithMedia.push(twit);
-        }
-      });
-    }
-  };
-
-  getUserTwitsWithMedia();
+  const { id } = useParams();
 
   useEffect(() => {
+    twitsApi.getUserTwitsWithMedia(id).then((twits) => {
+      twitsStore.setUserTwitsWithMedia(twits);
+    });
     setTimeout(() => {
       setIsLoadingPage(false);
     }, 250);
@@ -33,10 +27,16 @@ const ProfilePageMedia = observer(() => {
 
   return (
     <div className="twits">
-      {userTwitsWithMedia.map((twit) => (
+      {twitsStore.userTwitsWithMedia.map((twit) => (
         <Twit twit={twit} key={twit.id} />
       ))}
-      {userTwitsWithMedia.length === 0 && (
+      {twitsStore.userTwitsWithMedia.length >= 4 && (
+        <ButtonShowMoreTwits
+          getMoreTwits={getMoreTwitsWithMedia}
+          store={twitsStore}
+        />
+      )}
+      {twitsStore.userTwitsWithMedia.length === 0 && (
         <p className="empty-twits">No twits</p>
       )}
     </div>
