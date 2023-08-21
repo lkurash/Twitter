@@ -30,7 +30,9 @@ const ProfilePageLikes = observer(() => {
           store={twitsStore}
         />
       )}
-      {twitsStore.twits.length === 0 && <p className="empty-twits">No twits</p>}
+      {twitsStore.twitsWithUsersLike.length === 0 && (
+        <p className="empty-twits">No twits</p>
+      )}
     </div>
   );
 });

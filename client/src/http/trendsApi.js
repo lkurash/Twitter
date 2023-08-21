@@ -1,8 +1,10 @@
 import { $host } from ".";
 
 class Trends {
-  async getAllTrends() {
-    const trends = await $host.get("api/twitter/trends");
+  async getAllTrends(userId, limit) {
+    const trends = await $host.get("api/twitter/trends", {
+      params: { userId, limit },
+    });
 
     return trends.data;
   }
@@ -19,6 +21,15 @@ class Trends {
     });
 
     return twits.data;
+  }
+
+  async;
+  async createNotInterestingTrend(trendId, userId) {
+    const trend = await $host.put(
+      `api/twitter//trends/trend/${trendId}/user/${userId}`
+    );
+
+    return trend.data;
   }
 }
 const trendsApi = new Trends();

@@ -26,7 +26,7 @@ class TrendsController {
               text: { [Op.substring]: word },
             },
           });
-          
+
           const checkTrends = await models.Topics.findOne({
             where: { title: word },
           });
@@ -46,23 +46,55 @@ class TrendsController {
         }
       });
       return response.json(words);
-
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
   }
 
   async getlAllTrends(request, response) {
-    let { limit } = request.query;
+    const Op = Sequelize.Op;
+    let { limit, userId } = request.query;
 
     limit = limit || 4;
 
-    const topic = await models.Topics.findAll({
-      limit: limit,
-      order: [["count_twits", "DESC"]],
-    });
+    if (userId) {
 
-    return response.json(topic);
+      const notInterestingTrends = await models.Topics.findAll({
+        attributes: ["id"],
+        order: [["count_twits", "DESC"]],
+        where: {
+          notinteresting_for_users: { [Op.substring]: userId },
+        },
+      });
+
+      const idsNotInterestingTrends = [];
+
+      if (notInterestingTrends) {
+        notInterestingTrends.map((item) => {
+          
+          return idsNotInterestingTrends.push(item.id);
+        });
+      }
+
+      const trends = await models.Topics.findAll({
+        limit: limit,
+        order: [["count_twits", "DESC"]],
+        where: {
+          id: { [Op.notIn]: idsNotInterestingTrends },
+        },
+      });
+
+      return response.json(trends);
+
+    } else {
+
+      const trends = await models.Topics.findAll({
+        limit: limit,
+        order: [["count_twits", "DESC"]],
+      });
+
+      return response.json(trends);
+    }
   }
 
   async getTrendsTwits(request, response) {
@@ -92,6 +124,43 @@ class TrendsController {
     });
 
     return response.json(trends);
+  }
+  async createNotInterestingTrend(request, response) {
+    const Op = Sequelize.Op;
+    const { userId, trendId } = request.params;
+
+    const trend = await models.Topics.findOne({ where: { id: trendId } });
+
+    if (trend) {
+      const idsUsers = await models.Topics.findAll({
+        where: { id: trendId },
+        attributes: ["notinteresting_for_users"],
+      });
+
+      const ids = [];
+
+      if (idsUsers) {
+        idsUsers.map((item) => {
+          if (item.notinteresting_for_users !== null) {
+            return ids.push(item.notinteresting_for_users);
+          }
+        });
+      }
+
+      if (!ids.includes(userId)) {
+        ids.push(userId);
+
+        const trend = await models.Topics.update(
+          {
+            notinteresting_for_users: ids.toString(),
+          },
+          {
+            where: { id: trendId },
+          }
+        );
+      }
+      return response.json(trend);
+    }
   }
 }
 

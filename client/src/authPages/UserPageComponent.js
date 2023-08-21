@@ -18,7 +18,7 @@ const UserPageComponent = observer(({ loadingPage }) => {
   const { retwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
-  const authUserID = getAuthUserID(usersStore);
+  const authUserID = getAuthUserID();
 
   useEffect(() => {
     try {

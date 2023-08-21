@@ -5,5 +5,6 @@ const router = new Router();
 router.post("/trends", trendsController.createTrends);
 router.get("/trends", trendsController.getlAllTrends);
 router.get("/trends/:trend", trendsController.getTrendsTwits);
+router.put("/trends/trend/:trendId/user/:userId", trendsController.createNotInterestingTrend);
 
 module.exports = router;

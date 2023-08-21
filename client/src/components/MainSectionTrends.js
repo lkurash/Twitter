@@ -2,16 +2,18 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
 import trendsApi from "../http/trendsApi";
+import getAuthUserID from "../utils/getAuthUserID";
 
 import loadSectionTrends from "./loadComponents/loadSectionTrends";
 import Trends from "./Trends";
 
 const MainSectionTrends = observer((props) => {
   const { trendsStore } = useContext(Context);
+  const authUserID = getAuthUserID();
 
   useEffect(()=>{
     trendsApi
-      .getAllTrends()
+      .getAllTrends(authUserID)
       .then((allTrends) => trendsStore.setTrends(allTrends));
   },[])
 
