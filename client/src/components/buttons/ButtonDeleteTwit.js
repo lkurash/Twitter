@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
+import trendsApi from "../../http/trendsApi";
 import twitsApi from "../../http/twitsApi";
 import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
@@ -28,6 +29,8 @@ const ButtonDeleteTwit = observer(({ twit }) => {
     await twitsApi.getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);
     });
+
+    await trendsApi.getCountTrends(twit)
   };
   const onClose = () => {
     setDeleteButtonVisible(false);
