@@ -12,9 +12,15 @@ const MainSectionTrends = observer((props) => {
   const authUserID = getAuthUserID();
 
   useEffect(()=>{
-    trendsApi
-      .getAllTrends(authUserID)
-      .then((allTrends) => trendsStore.setTrends(allTrends));
+    if (authUserID) {
+      trendsApi
+        .getAllTrends(authUserID)
+        .then((allTrends) => trendsStore.setTrends(allTrends));
+    }else{
+      trendsApi
+        .getAllTrends()
+        .then((allTrends) => trendsStore.setTrends(allTrends));
+    }
   },[])
 
   if (trendsStore.trends.length === 0) {

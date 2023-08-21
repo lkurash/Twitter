@@ -24,7 +24,7 @@ const ListWhoReadUserHomePage = observer(({users}) => {
 
     await userApi
       .getWhoNotReadingUsers(authUserID)
-      .then((users) => usersStore.setUsersWhoNotReading(users));
+      .then((users) => usersStore.setUsersWhoToReadUsers(users));
   };
 
   useEffect(() => {
