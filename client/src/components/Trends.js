@@ -5,7 +5,7 @@ import { Context } from "..";
 
 import { AUTHTRENDS_PAGE_PATH, TRENDS_PAGE_PATH } from "../utils/constans";
 
-import ButtonDotMenu from "./buttons/ButtonDotMenu";
+import ButtonOnTrend from "./buttons/ButtonOnTrend";
 
 const Trends = observer(({ topic }) => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Trends = observer(({ topic }) => {
         <h4 className="trends-item-body">{topic.title}</h4>
         <p className="trends-item-footer">{topic.count_twits} posts</p>
       </div>
-      <ButtonDotMenu class="main-dotmenu" />
+      <ButtonOnTrend trend={topic}/>
     </div>
   );
 });
