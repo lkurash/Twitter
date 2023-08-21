@@ -58,7 +58,6 @@ class TrendsController {
     limit = limit || 4;
 
     if (userId) {
-
       const notInterestingTrends = await models.Topics.findAll({
         attributes: ["id"],
         order: [["count_twits", "DESC"]],
@@ -71,7 +70,6 @@ class TrendsController {
 
       if (notInterestingTrends) {
         notInterestingTrends.map((item) => {
-          
           return idsNotInterestingTrends.push(item.id);
         });
       }
@@ -85,9 +83,7 @@ class TrendsController {
       });
 
       return response.json(trends);
-
     } else {
-
       const trends = await models.Topics.findAll({
         limit: limit,
         order: [["count_twits", "DESC"]],
@@ -125,6 +121,7 @@ class TrendsController {
 
     return response.json(trends);
   }
+
   async createNotInterestingTrend(request, response) {
     const Op = Sequelize.Op;
     const { userId, trendId } = request.params;
@@ -161,6 +158,40 @@ class TrendsController {
       }
       return response.json(trend);
     }
+  }
+
+  async getCountTrends(request, response) {
+    const Op = Sequelize.Op;
+    const { text } = request.body;
+
+    const words = text.split(" ");
+
+    words.forEach(async (word) => {
+      if (word.length >= 4) {
+        const countTwits = await Twits.count({
+          where: {
+            text: { [Op.substring]: word },
+          },
+        });
+
+        const checkTrends = await models.Topics.findOne({
+          where: { title: word },
+        });
+
+        if (checkTrends) {
+          if (countTwits === 0) {
+            await models.Topics.destroy({ where: { title: word } });
+          } else {
+            await models.Topics.update(
+              { count_twits: countTwits },
+              { where: { title: word } }
+            );
+          }
+        }
+      }
+    });
+
+    return response.json(text);
   }
 }
 

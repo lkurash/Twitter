@@ -23,13 +23,18 @@ class Trends {
     return twits.data;
   }
 
-  async;
   async createNotInterestingTrend(trendId, userId) {
     const trend = await $host.put(
       `api/twitter//trends/trend/${trendId}/user/${userId}`
     );
 
     return trend.data;
+  }
+
+  async getCountTrends(text) {
+    const trends = await $host.put("api/twitter/trends/countTrends", text);
+
+    return trends.data;
   }
 }
 const trendsApi = new Trends();
