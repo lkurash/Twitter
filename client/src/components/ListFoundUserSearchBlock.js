@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import {
-  PROFILE_PAGE_USER_PATH,
-  TWITTER_USER_PAGE_PATH,
+  PROFILE_PAGE_USERS_PATH,
+  PUBLIC_USERS_PAGE_PATH,
 } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 import useOutsideClick from "../utils/useOutsideClickFunction";
@@ -28,9 +28,9 @@ const ListFoundUserSearchBlock = observer(
                 className="main-search-found-list-user"
                 onClick={() => {
                   if (usersStore.isAuth) {
-                    navigate(PROFILE_PAGE_USER_PATH + profile.id);
+                    navigate(PROFILE_PAGE_USERS_PATH + profile.id);
                   } else {
-                    navigate(TWITTER_USER_PAGE_PATH + profile.id);
+                    navigate(PUBLIC_USERS_PAGE_PATH + profile.id);
                   }
                 }}
               >

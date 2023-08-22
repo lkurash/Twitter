@@ -5,7 +5,7 @@ import { Context } from "../..";
 
 import userApi from "../../http/userApi";
 import getUserPhoto from "../../utils/getUserPhoto";
-import { PROFILE_PAGE_USER_PATH } from "../../utils/constans";
+import { PROFILE_PAGE_USERS_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import BirthForm from "./BirthForm";
@@ -58,7 +58,7 @@ const EditProfileForm = observer(() => {
       console.log(error.response.data.message);
     });
 
-    navigate(PROFILE_PAGE_USER_PATH + usersStore.user.id);
+    navigate(PROFILE_PAGE_USERS_PATH + usersStore.user.id);
   };
   const onClose = () => {
     setActivInputName(false);
@@ -177,7 +177,7 @@ const EditProfileForm = observer(() => {
           </div>
         </div>
         <div className="signup-birth-form">
-          <BirthForm user={usersStore.user}/>
+          <BirthForm user={usersStore.user} />
         </div>
       </main>
     </div>

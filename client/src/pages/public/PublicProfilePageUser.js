@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Context } from "..";
+import { Context } from "../..";
 
-import twitsApi from "../http/twitsApi";
-import userApi from "../http/userApi";
+import twitsApi from "../../http/twitsApi";
+import userApi from "../../http/userApi";
 
-import PublicProfileUser from "../components/PublicProfileUser";
+import PublicProfileUser from "../../components/PublicProfileUser";
 
 const PublicProfilePageUser = observer(() => {
   const { usersStore } = useContext(Context);

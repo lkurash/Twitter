@@ -5,14 +5,14 @@ import { Context } from "..";
 
 import userApi from "../http/userApi";
 import {
-  PROFILE_PAGE_USER_PATH,
-  TWITTER_USER_PAGE_PATH,
+  PROFILE_PAGE_USERS_PATH,
+  PUBLIC_USERS_PAGE_PATH,
 } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
 import getUserPhoto from "../utils/getUserPhoto";
 import spinner from "../utils/spinner";
 
-const ListWhoReadUserHomePage = observer(({users}) => {
+const ListWhoReadUserHomePage = observer(({ users }) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const navigate = useNavigate();
@@ -47,9 +47,9 @@ const ListWhoReadUserHomePage = observer(({users}) => {
                 className="section-read-main-user-info"
                 onClick={() => {
                   if (usersStore.isAuth) {
-                    navigate(PROFILE_PAGE_USER_PATH + profile.id);
+                    navigate(PROFILE_PAGE_USERS_PATH + profile.id);
                   } else {
-                    navigate(TWITTER_USER_PAGE_PATH + profile.id);
+                    navigate(PUBLIC_USERS_PAGE_PATH + profile.id);
                   }
                 }}
               >

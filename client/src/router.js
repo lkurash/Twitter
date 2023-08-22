@@ -1,20 +1,22 @@
-import AppLayout from "./pages/AppLayout";
-import LayoutLoginAndSignUpPage from "./pages/LayoutLoginAndSignUpPage";
 import authenticate from "./utils/authenticate";
+import redirectLoader from "./utils/redirectLoader";
 
-import PublicHomePage from "./pages/PublicHomePage";
-import PublicProfilePageUser from "./pages/PublicProfilePageUser";
-import TrendsPage from "./pages/TrendsPage";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
+import AppLayout from "./pages/public/AppLayout";
+import LayoutLoginAndSignUpPage from "./pages/public/LayoutLoginAndSignUpPage";
+import PublicHomePage from "./pages/public/PublicHomePage";
+import ExplorePage from "./pages/public/ExplorePage";
+import PublicProfilePageUser from "./pages/public/PublicProfilePageUser";
+import TrendsPage from "./pages/public/TrendsPage";
+import LoginPage from "./pages/public/LoginPage";
+import SignUpPage from "./pages/public/SignUpPage";
 
-import HomePageComponent from "./authPages/HomePageComponent";
-import ExplorePage from "./pages/ExplorePage";
-import MessagesPageComponent from "./authPages/MessagePageComponent";
-import BookmarksPageComponent from "./authPages/BookmarkPageComponent";
-import UserPageComponent from "./authPages/UserPageComponent";
-import EditProfilePageComponent from "./authPages/EditProfilPageComponent";
-import FollowPageComponent from "./authPages/FollowPageComponent";
+import HomePageComponent from "./pages/private/HomePageComponent";
+import MessagesPageComponent from "./pages/private/MessagePageComponent";
+import BookmarksPageComponent from "./pages/private/BookmarkPageComponent";
+import UserPageComponent from "./pages/private/UserPageComponent";
+import EditProfilePageComponent from "./pages/private/EditProfilPageComponent";
+import FollowPageComponent from "./pages/private/FollowPageComponent";
+
 import ProfilePageLikes from "./components/ProfilePageLikes";
 import ProfilePageMedia from "./components/ProfilePageMedia";
 import ProfilePageAnswers from "./components/ProfilePageAnswers";
@@ -27,7 +29,6 @@ import {
   EXPLORE_PAGE_PATH,
   FOLLOWER_PAGE_PATH,
   FOLLOWING_PAGE_PATH,
-  HOME_PAGE_PATH,
   LOGIN_PAGE_PATH,
   MESSAGE_PAGE_PATH,
   NOTIFICATIONS_PAGE_PATH,
@@ -36,19 +37,24 @@ import {
   PROFILE_PAGE_USER_LIKES_PATH,
   PROFILE_PAGE_USER_MEDIA_PATH,
   SIGNUP_PAGE_PATH,
-  TRENDS_PAGE_PATH,
   ROOT_PAGE_PATH,
-  TWITTER_USER_PAGE_PATH,
-  AUTHTRENDS_PAGE_PATH,
+  LOGIN_REDIRECT_PAGE_PATH,
+  ROOT_PRIVATE_PAGE_PATH,
+  PUBLIC_HOME_PAGE_PATH,
+  PRIVATE_HOME_PAGE_PATH,
+  AUTH_PAGE_PATH,
+  TREND_PAGE_PATH,
+  PUBLIC_USER_PAGE_PATH,
+  PROFILE_PAGE_USER_TWITS_PATH,
+  AUTHTREND_PAGE_PATH,
 } from "./utils/constans";
-import redirectLoader from "./utils/redirectLoader";
 
 export const publicRoutes = {
   path: ROOT_PAGE_PATH,
   element: <AppLayout />,
   children: [
     {
-      path: "",
+      path: PUBLIC_HOME_PAGE_PATH,
       element: <PublicHomePage />,
       loader: redirectLoader,
     },
@@ -57,23 +63,23 @@ export const publicRoutes = {
       element: <ExplorePage />,
     },
     {
-      path: `${TRENDS_PAGE_PATH}:trend`,
+      path: TREND_PAGE_PATH,
       element: <TrendsPage />,
     },
     {
-      path: `${TWITTER_USER_PAGE_PATH}:id`,
+      path: PUBLIC_USER_PAGE_PATH,
       element: <PublicProfilePageUser />,
     },
   ],
 };
 
 export const authorizationRoutes = {
-  path: "/authentication",
+  path: AUTH_PAGE_PATH,
   element: <LayoutLoginAndSignUpPage />,
   loader: redirectLoader,
   children: [
     {
-      path: "/authentication/redirect",
+      path: LOGIN_REDIRECT_PAGE_PATH,
       element: <LoginPage />,
     },
     {
@@ -88,66 +94,65 @@ export const authorizationRoutes = {
 };
 
 export const privateRoutes = {
-  path: HOME_PAGE_PATH,
+  path: ROOT_PRIVATE_PAGE_PATH,
   element: <AppLayout />,
   loader: authenticate,
   children: [
     {
-      path: "",
+      path: PRIVATE_HOME_PAGE_PATH,
       element: <HomePageComponent />,
     },
     {
-      path: `${AUTHEXPLORE_PAGE_PATH}`,
+      path: AUTHEXPLORE_PAGE_PATH,
       element: <ExplorePage />,
     },
     {
-      path: `${NOTIFICATIONS_PAGE_PATH}`,
-      // element: <UserPageComponent />,
+      path: NOTIFICATIONS_PAGE_PATH,
     },
     {
-      path: `${MESSAGE_PAGE_PATH}:id`,
+      path: MESSAGE_PAGE_PATH,
       element: <MessagesPageComponent />,
     },
     {
-      path: `${BOOKMARKS_PAGE_PATH}`,
+      path: BOOKMARKS_PAGE_PATH,
       element: <BookmarksPageComponent />,
     },
     {
-      path: `${PROFILE_PAGE_USER_PATH}:id`,
+      path: PROFILE_PAGE_USER_PATH,
       element: <UserPageComponent />,
       children: [
         {
-          path: "",
+          path: PROFILE_PAGE_USER_TWITS_PATH,
           element: <UserTwits />,
         },
         {
-          path: `${PROFILE_PAGE_USER_ANSWERS_PATH}`,
+          path: PROFILE_PAGE_USER_ANSWERS_PATH,
           element: <ProfilePageAnswers />,
         },
         {
-          path: `${PROFILE_PAGE_USER_LIKES_PATH}`,
+          path: PROFILE_PAGE_USER_LIKES_PATH,
           element: <ProfilePageLikes />,
         },
         {
-          path: `${PROFILE_PAGE_USER_MEDIA_PATH}`,
+          path: PROFILE_PAGE_USER_MEDIA_PATH,
           element: <ProfilePageMedia />,
         },
         {
-          path: `${EDIT_PROFILE_PAGE_PATH}`,
-          element: [<UserTwits key={'twits'}/>, <EditProfilePageComponent key={'form'}/>],
+          path: EDIT_PROFILE_PAGE_PATH,
+          element: <EditProfilePageComponent />,
         },
       ],
     },
     {
-      path: `${FOLLOWING_PAGE_PATH}:id`,
+      path: FOLLOWING_PAGE_PATH,
       element: <FollowPageComponent />,
     },
     {
-      path: `${FOLLOWER_PAGE_PATH}:id`,
+      path: FOLLOWER_PAGE_PATH,
       element: <FollowPageComponent />,
     },
     {
-      path: `${AUTHTRENDS_PAGE_PATH}:trend`,
+      path: AUTHTREND_PAGE_PATH,
       element: <TrendsPage />,
     },
   ],

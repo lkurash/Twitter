@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../..";
 
-import { HOME_PAGE_PATH, ROOT_PAGE_PATH } from "../../utils/constans";
+import { PRIVATE_HOME_PAGE_PATH, ROOT_PAGE_PATH } from "../../utils/constans";
 
 import logo from "../Img/logo_icon.png";
 
@@ -19,7 +19,7 @@ const Logo = observer((props) => {
           className={props.class}
           onClick={() => {
             usersStore.setUserPage({});
-            navigate(HOME_PAGE_PATH);
+            navigate(PRIVATE_HOME_PAGE_PATH);
           }}
         >
           <img src={logo} alt="logo" className="logo-icon" />

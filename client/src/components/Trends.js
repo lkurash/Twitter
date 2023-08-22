@@ -27,7 +27,7 @@ const Trends = observer(({ topic }) => {
         <h4 className="trends-item-body">{topic.title}</h4>
         <p className="trends-item-footer">{topic.count_twits} posts</p>
       </div>
-      <ButtonOnTrend trend={topic}/>
+      <ButtonOnTrend trend={topic} />
     </div>
   );
 });

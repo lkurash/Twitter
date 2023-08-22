@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import { HOME_PAGE_PATH } from "../../utils/constans";
+import { PRIVATE_HOME_PAGE_PATH } from "../../utils/constans";
 import userApi from "../../http/userApi";
 import LoginPasswordForm from "./LoginPasswordForm";
 import LoginEmailForm from "./LoginEmailForm";
@@ -38,7 +38,7 @@ const LoginForm = observer(() => {
 
         LocalAuthClient.setAccessToken(authenticationResult.token);
 
-        return navigate(HOME_PAGE_PATH);
+        return navigate(PRIVATE_HOME_PAGE_PATH);
       }
     } catch (e) {
       alert(e.response.data.message);

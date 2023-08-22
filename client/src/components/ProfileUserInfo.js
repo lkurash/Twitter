@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "..";
 
-import { FOLLOWER_PAGE_PATH, FOLLOWING_PAGE_PATH } from "../utils/constans";
+import { FOLLOWERS_PAGE_PATH, FOLLOWINGS_PAGE_PATH } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
@@ -80,7 +80,7 @@ const ProfileUserInfo = observer(() => {
           <p
             onClick={() => {
               if (usersStore.isAuth) {
-                navigate(FOLLOWING_PAGE_PATH + id);
+                navigate(FOLLOWINGS_PAGE_PATH + id);
               } else {
                 setTooltipUserNotAuth(true);
               }
@@ -92,7 +92,7 @@ const ProfileUserInfo = observer(() => {
             className="profile-panel-count-followers"
             onClick={() => {
               if (usersStore.isAuth) {
-                navigate(FOLLOWER_PAGE_PATH + id);
+                navigate(FOLLOWERS_PAGE_PATH + id);
               } else {
                 setTooltipUserNotAuth(true);
               }

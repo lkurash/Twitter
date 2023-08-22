@@ -1,16 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
-import { Context } from "..";
+import { Context } from "../..";
 
-import userApi from "../http/userApi";
-import SidebarContent from "../components/SidebarContent";
-import ContentMessagesPage from "../components/ContentMessagesPage";
+import userApi from "../../http/userApi";
+import SidebarContent from "../../components/SidebarContent";
+import ContentMessagesPage from "../../components/ContentMessagesPage";
 
-import "../App.css";
-import "../components/common/common.css";
-import "../components/main.css";
-import "../components/userpage.css";
-import getFlagIsAuth from "../utils/getFlagIsAuth";
+import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 const MessagesPageComponent = observer(() => {
   const { usersStore } = useContext(Context);

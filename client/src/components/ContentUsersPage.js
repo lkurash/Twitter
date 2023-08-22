@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
-import { HOME_PAGE_PATH } from "../utils/constans";
+import { PRIVATE_HOME_PAGE_PATH } from "../utils/constans";
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
 
 import ProfileButtonPanel from "./ProfileButtonPanel";
@@ -31,7 +31,7 @@ const ContentUsersPage = observer(({editProfilePage}) => {
       <div className="page-name main-stiky-panel">
         <div
           className="main-search-block-button-return"
-          onClick={() => navigate(HOME_PAGE_PATH)}
+          onClick={() => navigate(PRIVATE_HOME_PAGE_PATH)}
         >
           <img src={arrowLeft} alt="Button return" />
         </div>
