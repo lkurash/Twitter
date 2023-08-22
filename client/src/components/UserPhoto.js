@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import {
-  PROFILE_PAGE_USER_PATH,
-  TWITTER_USER_PAGE_PATH,
+  PROFILE_PAGE_USERS_PATH,
+  PUBLIC_USERS_PAGE_PATH,
 } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 
@@ -23,11 +23,11 @@ const UserPhoto = observer(({ twit }) => {
             if (usersStore.isAuth) {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(PROFILE_PAGE_USER_PATH + twit.twitUser.id);
+              navigate(PROFILE_PAGE_USERS_PATH + twit.twitUser.id);
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(TWITTER_USER_PAGE_PATH + twit.twitUser.id);
+              navigate(PUBLIC_USERS_PAGE_PATH + twit.twitUser.id);
             }
           }}
         >
@@ -40,11 +40,11 @@ const UserPhoto = observer(({ twit }) => {
             if (usersStore.isAuth) {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(PROFILE_PAGE_USER_PATH + twit.user.id);
+              navigate(PROFILE_PAGE_USERS_PATH + twit.user.id);
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(TWITTER_USER_PAGE_PATH + twit.user.id);
+              navigate(PUBLIC_USERS_PAGE_PATH + twit.user.id);
             }
           }}
         >

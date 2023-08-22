@@ -1,14 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { Context } from "..";
+import { Context } from "../..";
 
-import { HOME_PAGE_PATH } from "../utils/constans";
-import SignUpForm from "../components/forms/SignUpForm";
-import userApi from "../http/userApi";
+import { PRIVATE_HOME_PAGE_PATH } from "../../utils/constans";
+import SignUpForm from "../../components/forms/SignUpForm";
+import userApi from "../../http/userApi";
 
-import "../components/forms/loginAndRegistretionForm.css";
-import LocalAuthClient from "../store/LocalAuthClient";
+import "../../components/forms/loginAndRegistretionForm.css";
+import LocalAuthClient from "../../store/LocalAuthClient";
 
 const SignUpPage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -41,7 +41,7 @@ const SignUpPage = observer(() => {
 
       LocalAuthClient.setAccessToken(registerResult.token);
 
-      navigate(HOME_PAGE_PATH);
+      navigate(PRIVATE_HOME_PAGE_PATH);
     }
   };
 

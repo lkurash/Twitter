@@ -1,19 +1,21 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
-import { Context } from "..";
+import { Context } from "../..";
 
-import SidebarContent from "../components/SidebarContent";
-import ContentHomePage from "../components/ContentHomePage";
-import getAuthUserID from "../utils/getAuthUserID";
+import SidebarContent from "../../components/SidebarContent";
+import ContentHomePage from "../../components/ContentHomePage";
 
-import "../App.css";
-import "../components/common/common.css";
-import "../components/main.css";
-import "../components/userpage.css";
-import getFlagIsAuth from "../utils/getFlagIsAuth";
-import getInfoAuthPage from "../utils/getInfoAuthPage";
-import twitsApi from "../http/twitsApi";
-import userApi from "../http/userApi";
+import getAuthUserID from "../../utils/getAuthUserID";
+import getFlagIsAuth from "../../utils/getFlagIsAuth";
+import getInfoAuthPage from "../../utils/getInfoAuthPage";
+import twitsApi from "../../http/twitsApi";
+import userApi from "../../http/userApi";
+
+import "../../../src/App.css";
+import "../../components/common/common.css";
+import "../../components/main.css";
+import "../../components/userpage.css";
+
 
 const HomePageComponent = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);

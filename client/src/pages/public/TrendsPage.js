@@ -1,23 +1,24 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Context } from "..";
+import { Context } from "../..";
 
-import SidebarContent from "../components/SidebarContent";
-import TwitsForTrends from "../components/TwitsForTrends";
-import ButtonDotMenu from "../components/buttons/ButtonDotMenu";
+import trendsApi from "../../http/trendsApi";
+import userApi from "../../http/userApi";
 
-import searchIcon from "../components/Img/zoom__icon.png";
-import arrowLeft from "../components/Img/arrow_left_icon.png";
-import "../App.css";
-import "../components/common/common.css";
-import trendsApi from "../http/trendsApi";
-import ButtonShowMoreTrendsTwits from "../components/buttons/ButtonShowMoreTrendsTwits";
-import getAuthUserID from "../utils/getAuthUserID";
-import userApi from "../http/userApi";
-import getFlagIsAuth from "../utils/getFlagIsAuth";
-import spinner from "../utils/spinner";
-import getInfoAuthPage from "../utils/getInfoAuthPage";
+
+import getAuthUserID from "../../utils/getAuthUserID";
+import getFlagIsAuth from "../../utils/getFlagIsAuth";
+import spinner from "../../utils/spinner";
+import getInfoAuthPage from "../../utils/getInfoAuthPage";
+
+import SidebarContent from "../../components/SidebarContent";
+import TwitsForTrends from "../../components/TwitsForTrends";
+import ButtonDotMenu from "../../components/buttons/ButtonDotMenu";
+import ButtonShowMoreTrendsTwits from "../../components/buttons/ButtonShowMoreTrendsTwits";
+
+import searchIcon from "../../components/Img/zoom__icon.png";
+import arrowLeft from "../../components/Img/arrow_left_icon.png";
 
 const TrendsPage = observer(() => {
   const { usersStore } = useContext(Context);

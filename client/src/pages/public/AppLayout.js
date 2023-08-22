@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
-import FooterComponent from "../components/FooterComponent";
+import FooterComponent from "../../components/FooterComponent";
 
-import MenuComponent from "../components/MenuComponent";
-import getFlagIsAuth from "../utils/getFlagIsAuth";
+import MenuComponent from "../../components/MenuComponent";
+import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 
 export default function AppLayout() {

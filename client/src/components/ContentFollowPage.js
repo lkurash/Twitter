@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import { FOLLOWER_PAGE_PATH, FOLLOWING_PAGE_PATH } from "../utils/constans";
+import { FOLLOWERS_PAGE_PATH, FOLLOWINGS_PAGE_PATH } from "../utils/constans";
 
 import UserFollowersList from "./UserFollowersList";
 import UserFollowingList from "./UserFollowingList";
@@ -43,29 +43,29 @@ const ContentFollowPage = observer(() => {
 
         <div className="user-main-content-button-panel">
           <button
-            className={getClassNameButton(FOLLOWING_PAGE_PATH)}
+            className={getClassNameButton(FOLLOWINGS_PAGE_PATH)}
             type="button"
             onClick={() =>
-              navigate(FOLLOWING_PAGE_PATH + usersStore.userPage.id)
+              navigate(FOLLOWINGS_PAGE_PATH + usersStore.userPage.id)
             }
           >
             <span>Following</span>
           </button>
           <button
-            className={getClassNameButton(FOLLOWER_PAGE_PATH)}
+            className={getClassNameButton(FOLLOWERS_PAGE_PATH)}
             type="button"
             onClick={() =>
-              navigate(FOLLOWER_PAGE_PATH + usersStore.userPage.id)
+              navigate(FOLLOWERS_PAGE_PATH + usersStore.userPage.id)
             }
           >
             <span>Followers</span>
           </button>
         </div>
       </div>
-      {location === `${FOLLOWING_PAGE_PATH}${usersStore.userPage.id}` && (
+      {location === `${FOLLOWINGS_PAGE_PATH}${usersStore.userPage.id}` && (
         <UserFollowingList />
       )}
-      {location === `${FOLLOWER_PAGE_PATH}${usersStore.userPage.id}` && (
+      {location === `${FOLLOWERS_PAGE_PATH}${usersStore.userPage.id}` && (
         <UserFollowersList />
       )}
     </div>
