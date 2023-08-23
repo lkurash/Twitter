@@ -4,13 +4,14 @@ import redirectLoader from "./utils/redirectLoader";
 import AppLayout from "./pages/public/AppLayout";
 import LayoutLoginAndSignUpPage from "./pages/public/LayoutLoginAndSignUpPage";
 import PublicHomePage from "./pages/public/PublicHomePage";
-import ExplorePage from "./pages/public/ExplorePage";
+import PublicExplorePage from "./pages/public/PublicExplorePage";
 import PublicProfilePageUser from "./pages/public/PublicProfilePageUser";
 import TrendsPage from "./pages/public/TrendsPage";
 import LoginPage from "./pages/public/LoginPage";
 import SignUpPage from "./pages/public/SignUpPage";
 
 import HomePageComponent from "./pages/private/HomePageComponent";
+import PrivateExplorePage from "./pages/private/PrivateExplorePage";
 import MessagesPageComponent from "./pages/private/MessagePageComponent";
 import BookmarksPageComponent from "./pages/private/BookmarkPageComponent";
 import UserPageComponent from "./pages/private/UserPageComponent";
@@ -60,7 +61,7 @@ export const publicRoutes = {
     },
     {
       path: EXPLORE_PAGE_PATH,
-      element: <ExplorePage />,
+      element: <PublicExplorePage />,
     },
     {
       path: TREND_PAGE_PATH,
@@ -104,7 +105,7 @@ export const privateRoutes = {
     },
     {
       path: AUTHEXPLORE_PAGE_PATH,
-      element: <ExplorePage />,
+      element: <PrivateExplorePage />,
     },
     {
       path: NOTIFICATIONS_PAGE_PATH,
