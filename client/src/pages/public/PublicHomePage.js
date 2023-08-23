@@ -5,7 +5,8 @@ import { Context } from "../..";
 import twitsApi from "../../http/twitsApi";
 
 import SidebarContent from "../../components/SidebarContent";
-import ContentExplorePage from "../../components/ContentExplorePage";
+import ContentPublicHomePage from "../../components/ContentPublicHomePage";
+
 
 const PublicHomePage = observer(() => {
   const { twitsStore } = useContext(Context);
@@ -20,7 +21,7 @@ const PublicHomePage = observer(() => {
   });
   return (
     <>
-      <ContentExplorePage />
+      <ContentPublicHomePage />
       <SidebarContent />
     </>
   );

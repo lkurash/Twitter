@@ -7,7 +7,7 @@ import MainSearchBlock from "./MainSearchBlock";
 
 import spinner from "../utils/spinner";
 
-const ContentExplorePage = observer(() => {
+const ContentPublicHomePage = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -34,4 +34,4 @@ const ContentExplorePage = observer(() => {
   );
 });
 
-export default ContentExplorePage;
+export default ContentPublicHomePage;
