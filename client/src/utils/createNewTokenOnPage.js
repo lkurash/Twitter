@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-// import { checkToken, getUserById } from "../http/userApi";
+// import { checkToken, getUserProfile } from "../http/userApi";
 
 import getAuthUserID from "./getAuthUserID";
 
@@ -26,7 +26,7 @@ export default function CreateNewTokenOnPage(user, navigate, loadingPage) {
   //       }
   //       if (user.isAuth) {
   //         const authUserID = getAuthUserID(user);
-  //         return getUserById(authUserID).then((userInfo) => user.setUser(userInfo));
+  //         return getUserProfile(authUserID).then((userInfo) => user.setUser(userInfo));
   //       }
   //     })
   //     .catch((error) => {

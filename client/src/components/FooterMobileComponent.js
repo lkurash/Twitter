@@ -5,7 +5,7 @@ import { Context } from "..";
 import {
   BOOKMARKS_PAGE_PATH,
   PRIVATE_HOME_PAGE_PATH,
-  PROFILE_PAGE_USERS_PATH,
+  PROFILE_PAGE_USER_PATH,
 } from "../utils/constans";
 
 import home from "./Img/home_icon.png";
@@ -55,7 +55,7 @@ function FooterMobileComponent() {
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(PROFILE_PAGE_USERS_PATH + usersStore.user.id)}
+          onClick={() => navigate(PROFILE_PAGE_USER_PATH)}
         >
           <img src={profile} alt="profile" className="button-icon-menu" />
         </div>

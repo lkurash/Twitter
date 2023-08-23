@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Context } from "..";
 import twitsApi from "../http/twitsApi";
 import getMoreTwitsWithMedia from "../utils/getMoreTwitsWithMedia";
@@ -10,12 +9,12 @@ import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import Twit from "./Twit";
 
 const ProfilePageMedia = observer(() => {
+  const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const [loadingPage, setIsLoadingPage] = useState(true);
-  const { id } = useParams();
 
   useEffect(() => {
-    twitsApi.getUserTwitsWithMedia(id).then((twits) => {
+    twitsApi.getUserTwitsWithMedia(usersStore.userPage.id).then((twits) => {
       twitsStore.setUserTwitsWithMedia(twits);
     });
     setTimeout(() => {

@@ -1,9 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Context } from "..";
 
-import { FOLLOWERS_PAGE_PATH, FOLLOWINGS_PAGE_PATH } from "../utils/constans";
+import {
+  FOLLOWERS_PAGE_PATH,
+  FOLLOWINGS_PAGE_PATH,
+  PROFILE_PAGE_USER_PATH,
+} from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
@@ -23,6 +27,7 @@ const ProfileUserInfo = observer(() => {
   const navigate = useNavigate();
   const { id } = useParams();
   const authUserID = getAuthUserID();
+  const location = useLocation().pathname;
 
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
@@ -55,10 +60,10 @@ const ProfileUserInfo = observer(() => {
 
           {usersStore.isAuth && (
             <>
-              {authUserID === +id && (
+              {(location === PROFILE_PAGE_USER_PATH || authUserID === +id) && (
                 <ButtonEditProfile usersStore={usersStore} />
               )}
-              {authUserID !== +id && (
+              {location !== PROFILE_PAGE_USER_PATH && authUserID !== +id && (
                 <ButtonFollowingUsersProfile
                   user={usersStore}
                   usersFollow={usersFollowingsStore}
@@ -80,7 +85,7 @@ const ProfileUserInfo = observer(() => {
           <p
             onClick={() => {
               if (usersStore.isAuth) {
-                navigate(FOLLOWINGS_PAGE_PATH + id);
+                navigate(FOLLOWINGS_PAGE_PATH + usersStore.userPage.id);
               } else {
                 setTooltipUserNotAuth(true);
               }
@@ -92,7 +97,7 @@ const ProfileUserInfo = observer(() => {
             className="profile-panel-count-followers"
             onClick={() => {
               if (usersStore.isAuth) {
-                navigate(FOLLOWERS_PAGE_PATH + id);
+                navigate(FOLLOWERS_PAGE_PATH + usersStore.userPage.id);
               } else {
                 setTooltipUserNotAuth(true);
               }

@@ -16,17 +16,17 @@ const PublicProfilePageUser = observer(() => {
 
   useEffect(() => {
     userApi
-      .getUserById(id)
+      .getUserProfile(id)
       .then((userById) => usersStore.setUserPage(userById));
     twitsApi
       .getTwitsByUser(id)
       .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
     twitsApi.getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
     userApi
-      .getFollowingUsers(id)
+      .getFollowingsUser(id)
       .then((followings) => usersFollowingsStore.setuserFollowing(followings));
     userApi
-      .getFollowerUsers(id)
+      .getFollowersUser(id)
       .then((followers) => usersFollowingsStore.setuserFollowers(followers));
   });
 

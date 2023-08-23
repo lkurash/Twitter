@@ -11,24 +11,20 @@ const ButtonFollowInFollowList = observer(
     const { usersFollowingsStore } = useContext(Context);
     const authUserID = getAuthUserID(usersStore);
 
-    const deleteFollowAndGetAllUsers = async (userFollowId) => {
+    const deleteFollowAndgetUsers = async (userFollowId) => {
       await userApi
         .deleteFollowings(authUserID, userFollowId)
         .catch((error) => console.log(error.response.data.message));
-      await userApi
-        .getAllUsers()
-        .then((users) => usersStore.setAllUsers(users));
+      await userApi.getUsers().then((users) => usersStore.setAllUsers(users));
     };
 
-    const createFollowAndGetAllUsers = async (userFollowId) => {
+    const createFollowAndgetUsers = async (userFollowId) => {
       await userApi
         .createFollowings(authUserID, userFollowId)
         .catch((error) => {
           console.log(error.response.data.message);
         });
-      await userApi
-        .getAllUsers()
-        .then((users) => usersStore.setAllUsers(users));
+      await userApi.getUsers().then((users) => usersStore.setAllUsers(users));
     };
 
     return (
@@ -42,7 +38,7 @@ const ButtonFollowInFollowList = observer(
             }}
             onMouseLeave={() => usersFollowingsStore.setHoverFollowUser({})}
             onClick={() => {
-              deleteFollowAndGetAllUsers(userId);
+              deleteFollowAndgetUsers(userId);
               usersFollowingsStore.setUnfollowUsersIds(
                 usersFollowingsStore.unfollowUsersIds.concat(profile.id)
               );
@@ -60,7 +56,7 @@ const ButtonFollowInFollowList = observer(
             className="follow-page-main-button-following"
             onClick={() => {
               usersFollowingsStore.deleteIdInUnfollowListIds(profile.id);
-              createFollowAndGetAllUsers(userId);
+              createFollowAndgetUsers(userId);
               usersFollowingsStore.setStartFollowUser(profile);
             }}
           >

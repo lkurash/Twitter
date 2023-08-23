@@ -1,17 +1,16 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
-import getAuthUserID from "../../utils/getAuthUserID";
+import { EDIT_PROFILE_PAGE_PATH } from "../../utils/constans";
 
 const ButtonEditProfile = observer(({ usersStore }) => {
   const navigate = useNavigate();
-  const authUserID = getAuthUserID(usersStore);
 
   return (
     <button
       type="button"
       className="button-edit-profile"
-      onClick={() => navigate(`/home/profile/${authUserID}/edit`)}
+      onClick={() => navigate(EDIT_PROFILE_PAGE_PATH)}
     >
       <span>Edit Profile</span>
     </button>

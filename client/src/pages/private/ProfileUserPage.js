@@ -6,13 +6,13 @@ import { Context } from "../..";
 import twitsApi from "../../http/twitsApi";
 import userApi from "../../http/userApi";
 
-import ContentUsersPage from "../../components/ContentUsersPage";
+import ContentUserProfilePage from "../../components/ContentUserProfilePage";
 import SidebarContent from "../../components/SidebarContent";
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getInfoAuthPage from "../../utils/getInfoAuthPage";
 
-const UserPageComponent = observer(({ loadingPage }) => {
+const ProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
@@ -24,25 +24,27 @@ const UserPageComponent = observer(({ loadingPage }) => {
   useEffect(() => {
     try {
       userApi
-        .getUserById(id)
+        .getUserProfile(id)
         .then((userById) => usersStore.setUserPage(userById));
 
-      userApi
-        .getUserById(authUserID)
-        .then((userInfo) => usersStore.setUser(userInfo));
+      if (authUserID) {
+        userApi
+          .getUserProfile(authUserID)
+          .then((userInfo) => usersStore.setUser(userInfo));
+      }
 
       twitsApi
         .getTwitsByUser(id)
         .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
 
       userApi
-        .getFollowingUsers(id)
+        .getFollowingsUser(id)
         .then((followings) =>
           usersFollowingsStore.setuserFollowing(followings)
         );
 
       userApi
-        .getFollowerUsers(id)
+        .getFollowersUser(id)
         .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
       getInfoAuthPage(
@@ -64,7 +66,7 @@ const UserPageComponent = observer(({ loadingPage }) => {
     <>
       <div className="main-wrapper">
         <main className="main">
-          <ContentUsersPage />
+          <ContentUserProfilePage />
         </main>
       </div>
       <SidebarContent />
@@ -72,4 +74,4 @@ const UserPageComponent = observer(({ loadingPage }) => {
   );
 });
 
-export default UserPageComponent;
+export default ProfileUserPage;

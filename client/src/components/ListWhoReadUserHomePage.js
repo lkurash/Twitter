@@ -5,7 +5,7 @@ import { Context } from "..";
 
 import userApi from "../http/userApi";
 import {
-  PROFILE_PAGE_USERS_PATH,
+  PRIVATE_USERS_PAGE_PATH,
   PUBLIC_USERS_PAGE_PATH,
 } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
@@ -47,7 +47,7 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
                 className="section-read-main-user-info"
                 onClick={() => {
                   if (usersStore.isAuth) {
-                    navigate(PROFILE_PAGE_USERS_PATH + profile.id);
+                    navigate(PRIVATE_USERS_PAGE_PATH + profile.id);
                   } else {
                     navigate(PUBLIC_USERS_PAGE_PATH + profile.id);
                   }

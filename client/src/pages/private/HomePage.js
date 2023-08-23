@@ -16,8 +16,7 @@ import "../../components/common/common.css";
 import "../../components/main.css";
 import "../../components/userpage.css";
 
-
-const HomePageComponent = observer(({ loadingPage }) => {
+const HomePage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
@@ -27,15 +26,15 @@ const HomePageComponent = observer(({ loadingPage }) => {
 
   useEffect(() => {
     userApi
-      .getUserById(authUserID)
+      .getUserProfile(authUserID)
       .then((userInfo) => usersStore.setUser(userInfo));
 
     userApi
-      .getFollowingUsers(authUserID)
+      .getFollowingsUser(authUserID)
       .then((followings) => usersFollowingsStore.setuserFollowing(followings));
 
     userApi
-      .getFollowerUsers(authUserID)
+      .getFollowersUser(authUserID)
       .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
     twitsApi.getTwitsByUser(authUserID).then((usersTwits) => {
@@ -66,4 +65,4 @@ const HomePageComponent = observer(({ loadingPage }) => {
   );
 });
 
-export default HomePageComponent;
+export default HomePage;

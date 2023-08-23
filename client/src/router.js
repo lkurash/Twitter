@@ -10,13 +10,14 @@ import TrendsPage from "./pages/public/TrendsPage";
 import LoginPage from "./pages/public/LoginPage";
 import SignUpPage from "./pages/public/SignUpPage";
 
-import HomePageComponent from "./pages/private/HomePageComponent";
+import HomePage from "./pages/private/HomePage";
 import PrivateExplorePage from "./pages/private/PrivateExplorePage";
-import MessagesPageComponent from "./pages/private/MessagePageComponent";
-import BookmarksPageComponent from "./pages/private/BookmarkPageComponent";
-import UserPageComponent from "./pages/private/UserPageComponent";
-import EditProfilePageComponent from "./pages/private/EditProfilPageComponent";
-import FollowPageComponent from "./pages/private/FollowPageComponent";
+import MessagesPage from "./pages/private/MessagesPage";
+import BookmarksPage from "./pages/private/BookmarkPage";
+import HomeProfileUserPage from "./pages/private/HomeProfileUserPage";
+import EditProfilePage from "./pages/private/EditProfilePage";
+import FollowPage from "./pages/private/FollowPage";
+import ProfileUserPage from "./pages/private/ProfileUserPage";
 
 import ProfilePageLikes from "./components/ProfilePageLikes";
 import ProfilePageMedia from "./components/ProfilePageMedia";
@@ -28,8 +29,6 @@ import {
   BOOKMARKS_PAGE_PATH,
   EDIT_PROFILE_PAGE_PATH,
   EXPLORE_PAGE_PATH,
-  FOLLOWER_PAGE_PATH,
-  FOLLOWING_PAGE_PATH,
   LOGIN_PAGE_PATH,
   MESSAGE_PAGE_PATH,
   NOTIFICATIONS_PAGE_PATH,
@@ -48,6 +47,17 @@ import {
   PUBLIC_USER_PAGE_PATH,
   PROFILE_PAGE_USER_TWITS_PATH,
   AUTHTREND_PAGE_PATH,
+  PRIVATE_USER_PAGE_PATH,
+  PRIVATE_USER_PAGE_TWITS_PATH,
+  PRIVATE_USER_PAGE_ANSWERS_PATH,
+  PRIVATE_USER_PAGE_LIKES_PATH,
+  PRIVATE_USER_PAGE__MEDIA_PATH,
+  PRIVATE_USER_FOLLOWER_PAGE_PATH,
+  PRIVATE_USER_FOLLOWING_PAGE_PATH,
+  FOLLOWINGS_PAGE_PATH,
+  FOLLOWERS_PAGE_PATH,
+  FOLLOWING_PAGE_PATH,
+  FOLLOWER_PAGE_PATH,
 } from "./utils/constans";
 
 export const publicRoutes = {
@@ -101,7 +111,7 @@ export const privateRoutes = {
   children: [
     {
       path: PRIVATE_HOME_PAGE_PATH,
-      element: <HomePageComponent />,
+      element: <HomePage />,
     },
     {
       path: AUTHEXPLORE_PAGE_PATH,
@@ -112,15 +122,15 @@ export const privateRoutes = {
     },
     {
       path: MESSAGE_PAGE_PATH,
-      element: <MessagesPageComponent />,
+      element: <MessagesPage />,
     },
     {
       path: BOOKMARKS_PAGE_PATH,
-      element: <BookmarksPageComponent />,
+      element: <BookmarksPage />,
     },
     {
       path: PROFILE_PAGE_USER_PATH,
-      element: <UserPageComponent />,
+      element: <HomeProfileUserPage />,
       children: [
         {
           path: PROFILE_PAGE_USER_TWITS_PATH,
@@ -140,21 +150,59 @@ export const privateRoutes = {
         },
         {
           path: EDIT_PROFILE_PAGE_PATH,
-          element: <EditProfilePageComponent />,
+          element: <EditProfilePage />,
         },
       ],
     },
     {
       path: FOLLOWING_PAGE_PATH,
-      element: <FollowPageComponent />,
+      element: <FollowPage />,
     },
     {
       path: FOLLOWER_PAGE_PATH,
-      element: <FollowPageComponent />,
+      element: <FollowPage />,
     },
     {
       path: AUTHTREND_PAGE_PATH,
       element: <TrendsPage />,
+    },
+  ],
+};
+
+export const privateUserPageRoutes = {
+  path: PRIVATE_USER_PAGE_PATH,
+  element: <AppLayout />,
+  loader: authenticate,
+  children: [
+    {
+      path: PRIVATE_USER_PAGE_PATH,
+      element: <ProfileUserPage />,
+      children: [
+        {
+          path: PRIVATE_USER_PAGE_TWITS_PATH,
+          element: <UserTwits />,
+        },
+        {
+          path: PRIVATE_USER_PAGE_ANSWERS_PATH,
+          element: <ProfilePageAnswers />,
+        },
+        {
+          path: PRIVATE_USER_PAGE_LIKES_PATH,
+          element: <ProfilePageLikes />,
+        },
+        {
+          path: PRIVATE_USER_PAGE__MEDIA_PATH,
+          element: <ProfilePageMedia />,
+        },
+      ],
+    },
+    {
+      path: PRIVATE_USER_FOLLOWER_PAGE_PATH,
+      element: <FollowPage />,
+    },
+    {
+      path: PRIVATE_USER_FOLLOWING_PAGE_PATH,
+      element: <FollowPage />,
     },
   ],
 };

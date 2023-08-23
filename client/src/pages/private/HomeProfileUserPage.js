@@ -1,34 +1,50 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
+import twitsApi from "../../http/twitsApi";
+import userApi from "../../http/userApi";
+
+import ContentUserProfilePage from "../../components/ContentUserProfilePage";
 import SidebarContent from "../../components/SidebarContent";
-import ContentBookmarksPage from "../../components/ContentBookmarksPage";
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getInfoAuthPage from "../../utils/getInfoAuthPage";
-import userApi from "../../http/userApi";
 
-const BookmarksPageComponent = observer(() => {
-  const { twitsStore } = useContext(Context);
+const HomeProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
-  const { retwitsStore } = useContext(Context);
-  const { trendsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
+  const { retwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
-  const authUserID = getAuthUserID(usersStore);
+  const authUserID = getAuthUserID();
 
   useEffect(() => {
     try {
       userApi
-        .getUserById(authUserID)
-        .then((userInfo) => usersStore.setUser(userInfo));
+        .getUserProfile(authUserID)
+        .then((userById) => usersStore.setUserPage(userById));
+
+      if (authUserID) {
+        userApi
+          .getUserProfile(authUserID)
+          .then((userInfo) => usersStore.setUser(userInfo));
+      }
+
+      twitsApi
+        .getTwitsByUser(authUserID)
+        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
 
       userApi
-        .getFollowingUsers(authUserID)
+        .getFollowingsUser(authUserID)
         .then((followings) =>
           usersFollowingsStore.setuserFollowing(followings)
         );
+
+      userApi
+        .getFollowersUser(authUserID)
+        .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
       getInfoAuthPage(
         authUserID,
@@ -36,8 +52,7 @@ const BookmarksPageComponent = observer(() => {
         usersFollowingsStore,
         twitsStore,
         retwitsStore,
-        favoriteTwitsStore,
-        trendsStore
+        favoriteTwitsStore
       );
 
       usersStore.setAuth(getFlagIsAuth());
@@ -50,9 +65,7 @@ const BookmarksPageComponent = observer(() => {
     <>
       <div className="main-wrapper">
         <main className="main">
-          <div className="user-main-content">
-            <ContentBookmarksPage />
-          </div>
+          <ContentUserProfilePage pathHomeProfileUser />
         </main>
       </div>
       <SidebarContent />
@@ -60,4 +73,4 @@ const BookmarksPageComponent = observer(() => {
   );
 });
 
-export default BookmarksPageComponent;
+export default HomeProfileUserPage;

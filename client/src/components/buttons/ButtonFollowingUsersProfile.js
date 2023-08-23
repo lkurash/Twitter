@@ -24,7 +24,7 @@ const ButtonFollowingUsersProfile = observer(({ user, usersFollow }) => {
     setFollowing(true);
     userApi.createFollowings(authUserID, user.userPage.id);
     userApi
-      .getFollowingUsers(id)
+      .getFollowingsUser(id)
       .then((followings) => usersFollow.setuserFollowing(followings));
   };
 

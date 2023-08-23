@@ -7,25 +7,27 @@ export default async function getInfoAuthPage(
   usersFollowingsStore,
   twitsStore,
   retwitsStore,
-  favoriteTwitsStore,
+  favoriteTwitsStore
 ) {
-  await userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+  await userApi.getUsers().then((users) => usersStore.setAllUsers(users));
 
   await twitsApi.getAllTwits().then((alltwits) => {
     twitsStore.setTwits(alltwits);
   });
 
-  await twitsApi.getTwitsWithUsersLike(authUserID).then((twits) => {
-    twitsStore.setTwitsIdWithUsersLike(twits.ids);
-    twitsStore.setTwitsWithUsersLike(twits.twits);
-  });
+  if (authUserID) {
+    await twitsApi.getTwitsWithUsersLike(authUserID).then((twits) => {
+      twitsStore.setTwitsIdWithUsersLike(twits.ids);
+      twitsStore.setTwitsWithUsersLike(twits.twits);
+    });
 
-  await twitsApi
-    .getUserRetwits(authUserID)
-    .then((retwits) => retwitsStore.setUserRetwits(retwits));
+    await twitsApi
+      .getUserRetwits(authUserID)
+      .then((retwits) => retwitsStore.setUserRetwits(retwits));
 
-  await twitsApi.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
-    favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser.favoriteTwits);
-    favoriteTwitsStore.setFavoriteTwitsIds(favoriteTwitsByUser.ids);
-  });
+    await twitsApi.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
+      favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser.favoriteTwits);
+      favoriteTwitsStore.setFavoriteTwitsIds(favoriteTwitsByUser.ids);
+    });
+  }
 }

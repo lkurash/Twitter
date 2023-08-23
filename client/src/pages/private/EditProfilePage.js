@@ -3,10 +3,10 @@ import { observer } from "mobx-react-lite";
 import EditProfileForm from "../../components/forms/EditProfilForm";
 import UserTwits from "../../components/UserTwits";
 
-const EditProfilePageComponent = observer(() => {
+const EditProfilePage = observer(() => {
   return (
     <>
-    <UserTwits />
+      <UserTwits />
       <div className="edit-profile-page">
         <EditProfileForm />
       </div>
@@ -14,4 +14,4 @@ const EditProfilePageComponent = observer(() => {
   );
 });
 
-export default EditProfilePageComponent;
+export default EditProfilePage;
