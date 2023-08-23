@@ -33,7 +33,7 @@ class UserApi {
     return userProfile.data.user;
   }
 
-  async getAllUsers() {
+  async getUsers() {
     const users = await $host.get("api/users");
 
     return users.data;
@@ -45,7 +45,7 @@ class UserApi {
     return users.data;
   }
 
-  async getUserById(id) {
+  async getUserProfile(id) {
     const userById = await $authHost.get(`api/users/${id}`);
 
     return userById.data;
@@ -67,13 +67,13 @@ class UserApi {
     return unFollowings.data;
   }
 
-  async getFollowingUsers(id) {
+  async getFollowingsUser(id) {
     const followings = await $authHost.get(`api/users/${id}/followings`);
 
     return followings.data;
   }
 
-  async getFollowerUsers(id) {
+  async getFollowersUser(id) {
     const followers = await $authHost.get(`api/users/${id}/followers`);
 
     return followers.data;

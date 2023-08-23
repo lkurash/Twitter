@@ -12,12 +12,13 @@ const MainSectionWhoToRead = observer((props) => {
 
   useEffect(() => {
     if (authUserID) {
-      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+      userApi.getUsers().then((users) => usersStore.setAllUsers(users));
       userApi
         .getWhoNotReadingUsers(authUserID)
         .then((users) => usersStore.setUsersWhoToReadUsers(users));
+        
     } else {
-      userApi.getAllUsers().then((users) => {
+      userApi.getUsers().then((users) => {
         usersStore.setUsersWhoToReadUsers(users);
         usersStore.setAllUsers(users);
       });

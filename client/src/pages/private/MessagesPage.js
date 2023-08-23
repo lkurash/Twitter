@@ -8,12 +8,12 @@ import ContentMessagesPage from "../../components/ContentMessagesPage";
 
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
-const MessagesPageComponent = observer(() => {
+const MessagesPage = observer(() => {
   const { usersStore } = useContext(Context);
 
   useEffect(() => {
     try {
-      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+      userApi.getUsers().then((users) => usersStore.setAllUsers(users));
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);
@@ -34,4 +34,4 @@ const MessagesPageComponent = observer(() => {
   );
 });
 
-export default MessagesPageComponent;
+export default MessagesPage;

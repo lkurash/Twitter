@@ -10,7 +10,7 @@ import {
   PRIVATE_HOME_PAGE_PATH,
   MESSAGE_PAGE_PATH,
   NOTIFICATIONS_PAGE_PATH,
-  PROFILE_PAGE_USERS_PATH,
+  PROFILE_PAGE_USER_PATH,
 } from "./constans";
 import getAuthUserID from "./getAuthUserID";
 
@@ -24,7 +24,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Home",
       classNameButtonImg: "home-icon",
       buttonName: "Home",
-      nav: PRIVATE_HOME_PAGE_PATH,
+      nav: `/${PRIVATE_HOME_PAGE_PATH}`,
     },
 
     {
@@ -70,7 +70,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Profile",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Profile",
-      nav: PROFILE_PAGE_USERS_PATH + authUserID,
+      nav: PROFILE_PAGE_USER_PATH,
     },
   ];
 

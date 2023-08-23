@@ -19,7 +19,7 @@ const Logo = observer((props) => {
           className={props.class}
           onClick={() => {
             usersStore.setUserPage({});
-            navigate(PRIVATE_HOME_PAGE_PATH);
+            navigate(`/${PRIVATE_HOME_PAGE_PATH}`);
           }}
         >
           <img src={logo} alt="logo" className="logo-icon" />

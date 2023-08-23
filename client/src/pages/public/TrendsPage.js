@@ -6,7 +6,6 @@ import { Context } from "../..";
 import trendsApi from "../../http/trendsApi";
 import userApi from "../../http/userApi";
 
-
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import spinner from "../../utils/spinner";
@@ -38,10 +37,10 @@ const TrendsPage = observer(() => {
     trendsApi
       .getTrendsTwits(trend)
       .then((trendstTwits) => trendsStore.setTrendsTwits(trendstTwits));
-    userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+    userApi.getUsers().then((users) => usersStore.setAllUsers(users));
     if (authUserID) {
       userApi
-        .getUserById(authUserID)
+        .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
 
       getInfoAuthPage(

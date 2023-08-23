@@ -8,7 +8,7 @@ import ContentFollowPage from "../../components/ContentFollowPage";
 import SidebarContent from "../../components/SidebarContent";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
-const FollowPageComponent = observer(() => {
+const FollowPage = observer(() => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
@@ -16,20 +16,20 @@ const FollowPageComponent = observer(() => {
   useEffect(() => {
     try {
       userApi
-        .getFollowingUsers(id)
+        .getUserProfile(id)
+        .then((userById) => usersStore.setUserPage(userById));
+
+      userApi
+        .getFollowingsUser(id)
         .then((followings) =>
           usersFollowingsStore.setuserFollowing(followings)
         );
 
       userApi
-        .getFollowerUsers(id)
+        .getFollowersUser(id)
         .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
-      userApi
-        .getUserById(id)
-        .then((userById) => usersStore.setUserPage(userById));
-
-      userApi.getAllUsers().then((users) => usersStore.setAllUsers(users));
+      userApi.getUsers().then((users) => usersStore.setAllUsers(users));
 
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
@@ -51,4 +51,4 @@ const FollowPageComponent = observer(() => {
   );
 });
 
-export default FollowPageComponent;
+export default FollowPage;

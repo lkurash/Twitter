@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import {
-  PROFILE_PAGE_USERS_PATH,
+  PRIVATE_USERS_PAGE_PATH,
   PUBLIC_USERS_PAGE_PATH,
 } from "../utils/constans";
 
@@ -22,7 +22,7 @@ const TwitDesc = ({ twit }) => {
               if (usersStore.isAuth) {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
-                navigate(PROFILE_PAGE_USERS_PATH + twit.twitUser.id);
+                navigate(PRIVATE_USERS_PAGE_PATH + twit.twitUser.id);
               } else {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
@@ -42,7 +42,7 @@ const TwitDesc = ({ twit }) => {
               if (usersStore.isAuth) {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
-                navigate(PROFILE_PAGE_USERS_PATH + twit.user.id);
+                navigate(PRIVATE_USERS_PAGE_PATH + twit.user.id);
               } else {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);

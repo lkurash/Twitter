@@ -11,7 +11,6 @@ import getAuthUserID from "../../utils/getAuthUserID";
 import SidebarContent from "../../components/SidebarContent";
 import ContentExplorePageAllTwits from "../../components/ContentExplorePageAllTwits";
 
-
 const PrivateExplorePage = observer(() => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
@@ -24,9 +23,8 @@ const PrivateExplorePage = observer(() => {
       usersStore.setAuth(getFlagIsAuth());
 
       userApi
-        .getUserById(authUserID)
+        .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
-
     } catch (error) {
       console.log(error.response.data.message);
     }
