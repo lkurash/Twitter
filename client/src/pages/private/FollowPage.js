@@ -7,26 +7,28 @@ import userApi from "../../http/userApi";
 import ContentFollowPage from "../../components/ContentFollowPage";
 import SidebarContent from "../../components/SidebarContent";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
+import getAuthUserID from "../../utils/getAuthUserID";
 
 const FollowPage = observer(() => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
+  const authUserID = getAuthUserID();
 
   useEffect(() => {
     try {
       userApi
-        .getUserProfile(id)
+        .getUserProfile(id || authUserID)
         .then((userById) => usersStore.setUserPage(userById));
 
       userApi
-        .getFollowingsUser(id)
+        .getFollowingsUser(id || authUserID)
         .then((followings) =>
           usersFollowingsStore.setuserFollowing(followings)
         );
 
       userApi
-        .getFollowersUser(id)
+        .getFollowersUser(id || authUserID)
         .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
       userApi.getUsers().then((users) => usersStore.setAllUsers(users));

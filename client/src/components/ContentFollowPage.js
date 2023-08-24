@@ -1,9 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import { FOLLOWERS_PAGE_PATH, FOLLOWINGS_PAGE_PATH } from "../utils/constans";
+import {
+  FOLLOWERS_PAGE_PATH,
+  FOLLOWINGS_PAGE_PATH,
+  PRIVATE_USERS_FOLLOWERS_PAGE_PATH,
+  PRIVATE_USERS_FOLLOWINGS_PAGE_PATH,
+} from "../utils/constans";
 
 import UserFollowersList from "./UserFollowersList";
 import UserFollowingList from "./UserFollowingList";
@@ -14,14 +19,7 @@ const ContentFollowPage = observer(() => {
   const { usersStore } = useContext(Context);
   const navigate = useNavigate();
   const location = useLocation().pathname;
-
-  const getClassNameButton = (page) => {
-    if (location === `${page}${usersStore.userPage.id}`) {
-      return "follow-page-main-button-onpanel follow-page-active-button-panel";
-    } else {
-      return "follow-page-main-button-onpanel";
-    }
-  };
+  const pathHomeProfileUser = location.includes("home");
 
   return (
     <div>
@@ -42,32 +40,39 @@ const ContentFollowPage = observer(() => {
         </div>
 
         <div className="user-main-content-button-panel">
-          <button
-            className={getClassNameButton(FOLLOWINGS_PAGE_PATH)}
-            type="button"
-            onClick={() =>
-              navigate(FOLLOWINGS_PAGE_PATH + usersStore.userPage.id)
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? `follow-page-main-button-onpanel follow-page-active-button-panel`
+                : `follow-page-main-button-onpanel`
             }
+            to={
+              pathHomeProfileUser
+                ? FOLLOWINGS_PAGE_PATH
+                : `/${usersStore.userPage.id}${PRIVATE_USERS_FOLLOWINGS_PAGE_PATH}`
+            }
+            end
           >
             <span>Following</span>
-          </button>
-          <button
-            className={getClassNameButton(FOLLOWERS_PAGE_PATH)}
-            type="button"
-            onClick={() =>
-              navigate(FOLLOWERS_PAGE_PATH + usersStore.userPage.id)
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              isActive
+                ? `follow-page-main-button-onpanel follow-page-active-button-panel`
+                : `follow-page-main-button-onpanel`
+            }
+            to={
+              pathHomeProfileUser
+                ? FOLLOWERS_PAGE_PATH
+                : `/${usersStore.userPage.id}${PRIVATE_USERS_FOLLOWERS_PAGE_PATH}`
             }
           >
             <span>Followers</span>
-          </button>
+          </NavLink>
         </div>
       </div>
-      {location === `${FOLLOWINGS_PAGE_PATH}${usersStore.userPage.id}` && (
-        <UserFollowingList />
-      )}
-      {location === `${FOLLOWERS_PAGE_PATH}${usersStore.userPage.id}` && (
-        <UserFollowersList />
-      )}
+      {location.includes("following") && <UserFollowingList />}
+      {location.includes("followers") && <UserFollowersList />}
     </div>
   );
 });
