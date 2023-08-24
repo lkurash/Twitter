@@ -1,11 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Context } from "..";
 
 import {
   FOLLOWERS_PAGE_PATH,
   FOLLOWINGS_PAGE_PATH,
+  PRIVATE_USERS_FOLLOWERS_PAGE_PATH,
+  PRIVATE_USERS_FOLLOWINGS_PAGE_PATH,
   PROFILE_PAGE_USER_PATH,
 } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
@@ -20,7 +22,7 @@ import registrationIcon from "./Img/month_icon.png";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
 import getAuthUserID from "../utils/getAuthUserID";
 
-const ProfileUserInfo = observer(() => {
+const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
 
@@ -81,30 +83,32 @@ const ProfileUserInfo = observer(() => {
         <article className="profile-panel-about-user">
           <p>{usersStore.userPage.about}</p>
         </article>
-        <div className="profile-panel-followers">
-          <p
-            onClick={() => {
-              if (usersStore.isAuth) {
-                navigate(FOLLOWINGS_PAGE_PATH + usersStore.userPage.id);
-              } else {
-                setTooltipUserNotAuth(true);
-              }
-            }}
+        <div className="profile-button-panel-followers">
+          <NavLink
+            to={
+              pathHomeProfileUser && usersStore.isAuth
+                ? FOLLOWINGS_PAGE_PATH
+                : `/${usersStore.userPage.id}${PRIVATE_USERS_FOLLOWINGS_PAGE_PATH}`
+            }
+            id="following"
           >
-            <span>{usersFollowingsStore.userFollowing.length}</span> Following
-          </p>
-          <p
-            className="profile-panel-count-followers"
-            onClick={() => {
-              if (usersStore.isAuth) {
-                navigate(FOLLOWERS_PAGE_PATH + usersStore.userPage.id);
-              } else {
-                setTooltipUserNotAuth(true);
-              }
-            }}
+            <span className="profile-panel-button-text-followers">
+              {usersFollowingsStore.userFollowing.length} Following
+            </span>
+          </NavLink>
+          <NavLink
+            className="profile-panel-button-followers"
+            to={
+              pathHomeProfileUser && usersStore.isAuth
+                ? FOLLOWERS_PAGE_PATH
+                : `/${usersStore.userPage.id}${PRIVATE_USERS_FOLLOWERS_PAGE_PATH}`
+            }
+            id="followers"
           >
-            <span>{usersFollowingsStore.userFollowers.length}</span> Followers
-          </p>
+            <span className="profile-panel-button-text-followers">
+              {usersFollowingsStore.userFollowers.length} Followers
+            </span>
+          </NavLink>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}
             onCloseTooltip={onCloseTooltip}

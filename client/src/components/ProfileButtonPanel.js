@@ -1,6 +1,10 @@
 import { observer } from "mobx-react-lite";
 import { NavLink, useParams } from "react-router-dom";
 import {
+  PRIVATE_USERS_PAGE_ANSWERS_PATH,
+  PRIVATE_USERS_PAGE_LIKES_PATH,
+  PRIVATE_USERS_PAGE__MEDIA_PATH,
+  PRIVATE_USER_PAGE_TWITS_PATH,
   PROFILE_PAGE_USER_ANSWERS_PATH,
   PROFILE_PAGE_USER_LIKES_PATH,
   PROFILE_PAGE_USER_MEDIA_PATH,
@@ -23,7 +27,7 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
             to={
               pathHomeProfileUser
                 ? PROFILE_PAGE_USER_TWITS_PATH
-                : `/profile/${id}`
+                : PRIVATE_USER_PAGE_TWITS_PATH
             }
             end
           >
@@ -35,7 +39,7 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
             to={
               pathHomeProfileUser
                 ? PROFILE_PAGE_USER_ANSWERS_PATH
-                : `/profile/${id}/answers`
+                : `/${id}${PRIVATE_USERS_PAGE_ANSWERS_PATH}`
             }
             className={({ isActive }) =>
               isActive
@@ -51,7 +55,7 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
             to={
               pathHomeProfileUser
                 ? PROFILE_PAGE_USER_MEDIA_PATH
-                : `/profile/${id}/media`
+                : `/${id}${PRIVATE_USERS_PAGE__MEDIA_PATH}`
             }
             className={({ isActive }) =>
               isActive
@@ -67,7 +71,7 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
             to={
               pathHomeProfileUser
                 ? PROFILE_PAGE_USER_LIKES_PATH
-                : `/profile/${id}/likes`
+                : `/${id}${PRIVATE_USERS_PAGE_LIKES_PATH}`
             }
             className={({ isActive }) =>
               isActive

@@ -128,7 +128,7 @@ h2 {
   white-space: pre-wrap;
 }
 
-.profile-panel-followers {
+.profile-button-panel-followers {
   display: flex;
   height: 19px;
   margin-top: 15px;
@@ -137,20 +137,21 @@ h2 {
   color: grey;
 }
 
-.profile-panel-followers p {
+.profile-button-panel-followers a {
   cursor: pointer;
 }
 
-.profile-panel-followers p:hover {
+.profile-button-panel-followers a:hover {
   border-bottom: 1px solid rgb(230 230 230);
 }
 
-.profile-panel-count-followers {
+.profile-panel-button-followers {
   margin-left: 10px;
 }
 
-.profile-panel-followers span {
-  color: aliceblue;
+.profile-panel-button-text-followers {
+  color: grey;
+  cursor: pointer;
 }
 
 .profile-panel-info-user {
@@ -301,9 +302,9 @@ h2 {
   color: rgb(59 179 244);
 }
 
-.active {
+/* .active {
   border: 1px solid rgb(59 179 244);
-}
+} */
 
 .edit-profile-background {
   height: 180px;
@@ -388,7 +389,7 @@ h2 {
 
 .follow-page-header {
   border-bottom: 0.1px solid rgb(174 174 174 / 55.8%);
-  height: 110px;
+  height: 105px;
 }
 
 .follow-page-header-page-name {
@@ -407,7 +408,10 @@ h2 {
 
 .follow-page-main-button-onpanel {
   width: 100%;
-  height: 50px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: grey;
   font-size: 15px;
   font-weight: bold;

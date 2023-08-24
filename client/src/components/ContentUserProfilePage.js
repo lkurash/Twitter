@@ -43,10 +43,8 @@ const ContentUserProfilePage = observer(
         </div>
         <>
           <div className="user-main-content-profile-panel">
-            <ProfileUserInfo />
-            <ProfileButtonPanel
-              pathHomeProfileUser={pathHomeProfileUser}
-            />
+            <ProfileUserInfo pathHomeProfileUser={pathHomeProfileUser} />
+            <ProfileButtonPanel pathHomeProfileUser={pathHomeProfileUser} />
           </div>
           <Outlet />
         </>

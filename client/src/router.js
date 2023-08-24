@@ -56,8 +56,6 @@ import {
   PRIVATE_USER_FOLLOWING_PAGE_PATH,
   FOLLOWINGS_PAGE_PATH,
   FOLLOWERS_PAGE_PATH,
-  FOLLOWING_PAGE_PATH,
-  FOLLOWER_PAGE_PATH,
 } from "./utils/constans";
 
 export const publicRoutes = {
@@ -155,11 +153,11 @@ export const privateRoutes = {
       ],
     },
     {
-      path: FOLLOWING_PAGE_PATH,
+      path: FOLLOWINGS_PAGE_PATH,
       element: <FollowPage />,
     },
     {
-      path: FOLLOWER_PAGE_PATH,
+      path: FOLLOWERS_PAGE_PATH,
       element: <FollowPage />,
     },
     {
