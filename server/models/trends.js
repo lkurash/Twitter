@@ -2,13 +2,16 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Topics extends Model {
+  class Trends extends Model {
     static associate(models) {
-      // define association here
+      Trends.hasMany(models.NotInteresting_trends, {
+        as: "notInteresting_trends",
+        foreignKey: "trendId",
+      });
     }
   }
 
-  Topics.init(
+  Trends.init(
     {
       trend: DataTypes.STRING,
       title: DataTypes.STRING,
@@ -17,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Topics",
+      modelName: "Trends",
     }
   );
-  return Topics;
+  return Trends;
 };
