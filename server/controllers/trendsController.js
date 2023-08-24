@@ -4,7 +4,7 @@ const uuid = require("uuid");
 const path = require("path");
 const models = require("../models/index");
 const Twits = models.Twits;
-const Trends = models.Topics;
+const Trends = models.Trends;
 const User = models.User;
 const Likes = models.Likes;
 const Comments = models.Comments;
@@ -27,18 +27,18 @@ class TrendsController {
             },
           });
 
-          const checkTrends = await models.Topics.findOne({
+          const checkTrends = await models.Trends.findOne({
             where: { title: word },
           });
 
           if (!checkTrends) {
-            const trend = await models.Topics.create({
+            const trend = await models.Trends.create({
               trend: "Trend all over the world",
               title: word,
               count_twits: countTwits,
             });
           } else {
-            await models.Topics.update(
+            await models.Trends.update(
               { count_twits: countTwits },
               { where: { title: word } }
             );
@@ -58,33 +58,24 @@ class TrendsController {
     limit = limit || 4;
 
     if (userId) {
-      const notInterestingTrends = await models.Topics.findAll({
-        attributes: ["id"],
-        order: [["count_twits", "DESC"]],
+      const trends = await Trends.findAll({
         where: {
-          notinteresting_for_users: { [Op.substring]: userId },
+          [Op.or]: [
+            {
+              "$notInteresting_trends.userId$": { [Op.ne]: +userId },
+              "$notInteresting_trends.userId$": null,
+            },
+          ],
         },
-      });
-
-      const idsNotInterestingTrends = [];
-
-      if (notInterestingTrends) {
-        notInterestingTrends.map((item) => {
-          return idsNotInterestingTrends.push(item.id);
-        });
-      }
-
-      const trends = await models.Topics.findAll({
-        limit: limit,
-        order: [["count_twits", "DESC"]],
-        where: {
-          id: { [Op.notIn]: idsNotInterestingTrends },
+        include: {
+          model: models.NotInteresting_trends,
+          as: "notInteresting_trends",
         },
       });
 
       return response.json(trends);
     } else {
-      const trends = await models.Topics.findAll({
+      const trends = await models.Trends.findAll({
         limit: limit,
         order: [["count_twits", "DESC"]],
       });
@@ -123,40 +114,18 @@ class TrendsController {
   }
 
   async createNotInterestingTrend(request, response) {
-    const Op = Sequelize.Op;
     const { userId, trendId } = request.params;
 
-    const trend = await models.Topics.findOne({ where: { id: trendId } });
+    const checkTrends = await models.NotInteresting_trends.findOne({
+      where: { userId, trendId },
+    });
 
-    if (trend) {
-      const idsUsers = await models.Topics.findAll({
-        where: { id: trendId },
-        attributes: ["notinteresting_for_users"],
+    if (!checkTrends) {
+      const notInterestingTrend = await models.NotInteresting_trends.create({
+        trendId,
+        userId,
       });
-
-      const ids = [];
-
-      if (idsUsers) {
-        idsUsers.map((item) => {
-          if (item.notinteresting_for_users !== null) {
-            return ids.push(item.notinteresting_for_users);
-          }
-        });
-      }
-
-      if (!ids.includes(userId)) {
-        ids.push(userId);
-
-        const trend = await models.Topics.update(
-          {
-            notinteresting_for_users: ids.toString(),
-          },
-          {
-            where: { id: trendId },
-          }
-        );
-      }
-      return response.json(trend);
+      return response.json(notInterestingTrend);
     }
   }
 
@@ -174,15 +143,15 @@ class TrendsController {
           },
         });
 
-        const checkTrends = await models.Topics.findOne({
+        const checkTrends = await models.Trends.findOne({
           where: { title: word },
         });
 
         if (checkTrends) {
           if (countTwits === 0) {
-            await models.Topics.destroy({ where: { title: word } });
+            await models.Trends.destroy({ where: { title: word } });
           } else {
-            await models.Topics.update(
+            await models.Trends.update(
               { count_twits: countTwits },
               { where: { title: word } }
             );
