@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 
-const BirthForm = observer(({user}) => {
+const BirthForm = observer(({ user }) => {
   const { usersStore } = useContext(Context);
   const [userSelectMonth, setUserSelectMonth] = useState("");
   const [userSelectDay, setUserSelectDay] = useState("");
@@ -63,12 +63,7 @@ const BirthForm = observer(({user}) => {
   getYears();
 
   const checkUserBirthdate = () => {
-    if (
-      user &&
-      !userSelectDay &&
-      !userSelectMonth &&
-      !userSelectYear
-    ) {
+    if (user && !userSelectDay && !userSelectMonth && !userSelectYear) {
       const userBirthdate = usersStore.user.birthdate.split(" ");
 
       setUserSelectDay(userBirthdate[0]);
@@ -76,8 +71,6 @@ const BirthForm = observer(({user}) => {
       setUserSelectYear(userBirthdate[2]);
     }
   };
-
-  // console.log(usersStore.user);
 
   const createUserBirthdate = () => {
     if (userSelectDay && userSelectMonth && userSelectYear) {
@@ -87,11 +80,13 @@ const BirthForm = observer(({user}) => {
     }
   };
 
-  createUserBirthdate();
-
   useEffect(() => {
     checkUserBirthdate();
-  });
+  }, []);
+
+   useEffect(() => {
+     createUserBirthdate();
+   }, [userSelectDay, userSelectMonth, userSelectYear]);
 
   return (
     <>

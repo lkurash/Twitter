@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
@@ -7,30 +8,58 @@ import BirthForm from "./BirthForm";
 
 import "./loginAndRegistretionForm.css";
 
-function SignUpForm({ getRegistrationUserInfo }) {
+const SignUpForm = observer(({ setCheckUserInfo }) => {
   const { usersStore } = useContext(Context);
-  const [activeDivName, setActivedivName] = useState(false);
-  const [activeDivEmail, setActivedivEmail] = useState(false);
-  const [activeDivPassword, setActivedivPassword] = useState(false);
+
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const divRef = useRef(null);
 
-  if (userName.length > 20) {
-    setUserName(userName.slice(0, 20));
-  }
-  if (email.length > 30) {
-    setEmail(email.slice(0, 30));
-  }
-  if (password.length > 30) {
-    setPassword(password.slice(0, 30));
-  }
+  const [activeDivName, setActivedivName] = useState(false);
+  const [activeDivEmail, setActivedivEmail] = useState(false);
+  const [activeDivPassword, setActivedivPassword] = useState(false);
+  const [checkName, setCheckName] = useState(true);
+  const [checkEmail, setCheckEmail] = useState(true);
+  const [checkPassword, setCheckPassword] = useState(true);
 
   const onClose = () => {
     setActivedivName(false);
     setActivedivEmail(false);
     setActivedivPassword(false);
+  };
+
+  const checkUserInfo = () => {
+    if (
+      usersStore.userRegistrationName &&
+      usersStore.userRegistrationEmail &&
+      usersStore.userRegistrationPassword &&
+      usersStore.birthDate
+    ) {
+      setCheckUserInfo(true);
+    } else {
+      setCheckName(usersStore.userRegistrationName);
+      setCheckEmail(usersStore.userRegistrationEmail);
+      setCheckPassword(usersStore.userRegistrationPassword);
+    }
+  };
+
+  const createRegistrationUserInfo = () => {
+    if (userName && email && password && usersStore.birthDate) {
+      usersStore.setUserRegistrationName(userName);
+      usersStore.setUserRegistrationEmail(email);
+      usersStore.setUserRegistrationPassword(password);
+
+      checkUserInfo();
+    }
+  };
+
+  const checkActiveButtonNext = () => {
+    if (!userName || !email || !password || !usersStore.birthDate) {
+      return "signup-form-button";
+    } else {
+      return "signup-form-button signup-form-button-active";
+    }
   };
 
   useOutsideClick(divRef, onClose);
@@ -44,10 +73,12 @@ function SignUpForm({ getRegistrationUserInfo }) {
           value={userName}
           setUserInfo={setUserName}
           activeInput={activeDivName}
+          checkUserInfo={checkName}
           onClick={() => {
             setActivedivName(true);
             setActivedivPassword(false);
             setActivedivEmail(false);
+            setCheckName(true);
           }}
           name
         />
@@ -56,10 +87,12 @@ function SignUpForm({ getRegistrationUserInfo }) {
           value={email}
           setUserInfo={setEmail}
           activeInput={activeDivEmail}
+          checkUserInfo={checkEmail}
           onClick={() => {
             setActivedivEmail(true);
             setActivedivName(false);
             setActivedivPassword(false);
+            setCheckEmail(true);
           }}
         />
         <SignUpFormInput
@@ -67,10 +100,12 @@ function SignUpForm({ getRegistrationUserInfo }) {
           value={password}
           setUserInfo={setPassword}
           activeInput={activeDivPassword}
+          checkUserInfo={checkPassword}
           onClick={() => {
             setActivedivPassword(true);
             setActivedivEmail(false);
             setActivedivName(false);
+            setCheckPassword(true);
           }}
           password
         />
@@ -85,22 +120,15 @@ function SignUpForm({ getRegistrationUserInfo }) {
       <div className="signup-birth-form">
         <BirthForm />
         <button
-          className="signup-form-button"
+          className={checkActiveButtonNext()}
           type="submit"
-          onClick={() =>
-            getRegistrationUserInfo(
-              userName,
-              email,
-              usersStore.birthDate,
-              password
-            )
-          }
+          onClick={createRegistrationUserInfo}
         >
           <span>Next</span>
         </button>
       </div>
     </main>
   );
-}
+});
 
 export default SignUpForm;
