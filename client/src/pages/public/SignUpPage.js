@@ -14,30 +14,19 @@ const SignUpPage = observer(() => {
   const { usersStore } = useContext(Context);
   const navigate = useNavigate();
   const [checkUserInfo, setCheckUserInfo] = useState(false);
-  const [registrationUserInfo, setRegistrationUserInfo] = useState({});
 
-  const getRegistrationUserInfo = (userName, email, birthdate, password) => {
-    if ((userName && email && birthdate, password)) {
-      setCheckUserInfo(true);
-      setRegistrationUserInfo({
-        userName,
-        email,
-        password,
-        birthdate,
-      });
-    }
-  };
   const signUp = async () => {
     if (checkUserInfo) {
       const registerResult = await userApi.register(
-        registrationUserInfo.userName,
-        registrationUserInfo.email,
-        registrationUserInfo.password,
-        registrationUserInfo.birthdate
+        usersStore.userRegistrationName,
+        usersStore.userRegistrationEmail,
+        usersStore.userRegistrationPassword,
+        usersStore.birthDate
       );
 
       usersStore.setUser(registerResult.user);
       usersStore.setAuth(true);
+      usersStore.setBirthDate("");
 
       LocalAuthClient.setAccessToken(registerResult.token);
 
@@ -48,29 +37,33 @@ const SignUpPage = observer(() => {
   return (
     <>
       {!checkUserInfo ? (
-        <SignUpForm getRegistrationUserInfo={getRegistrationUserInfo} />
+        <SignUpForm setCheckUserInfo={setCheckUserInfo} />
       ) : (
         <main className="signup-form-main">
           <h2>Create your account</h2>
           <div className="signup-form-input">
             <label className="signup-user-info">Name</label>
             <label className="signup-user-name">
-              {registrationUserInfo.userName}
+              {usersStore.userRegistrationName}
             </label>
           </div>
           <div className="signup-form-input">
             <label className="signup-user-info">Email</label>
             <label className="signup-user-email">
-              {registrationUserInfo.email}
+              {usersStore.userRegistrationEmail}
             </label>
           </div>
           <div className="signup-form-input">
             <label className="signup-user-info">Date of birth</label>
             <label className="signup-user-birthdate">
-              {registrationUserInfo.birthdate}
+              {usersStore.birthDate}
             </label>
           </div>
-          <button className="signup-form-button" type="submit" onClick={signUp}>
+          <button
+            className="signup-form-button signup-form-button-active"
+            type="submit"
+            onClick={signUp}
+          >
             <span>Sign up</span>
           </button>
         </main>

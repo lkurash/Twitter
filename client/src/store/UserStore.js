@@ -4,6 +4,9 @@ class UserStore {
   constructor() {
     this._auth = false;
     this._user = [];
+    this._userRegistrationName = "";
+    this._userRegistrationEmail = "";
+    this._userRegistrationPassword = "";
     this._birthDate = "";
     this._allUsers = [];
     this._usersWhoToReadUsers = [];
@@ -14,6 +17,30 @@ class UserStore {
 
   setAuth(bool) {
     this._auth = bool;
+  }
+
+  setUserRegistrationName(name) {
+    if (name.length > 0) {
+      this._userRegistrationName = name;
+    } else {
+      this._userRegistrationName = false;
+    }
+  }
+
+  setUserRegistrationEmail(email) {
+    if (email.length > 0 && email.includes("@")) {
+      this._userRegistrationEmail = email;
+    } else {
+      this._userRegistrationEmail = false;
+    }
+  }
+
+  setUserRegistrationPassword(password) {
+    if (password.length > 0) {
+      this._userRegistrationPassword = password;
+    } else {
+      this._userRegistrationPassword = false;
+    }
   }
 
   setUser(user) {
@@ -54,6 +81,18 @@ class UserStore {
 
   get user() {
     return this._user;
+  }
+
+  get userRegistrationName() {
+    return this._userRegistrationName;
+  }
+
+  get userRegistrationEmail() {
+    return this._userRegistrationEmail;
+  }
+
+  get userRegistrationPassword() {
+    return this._userRegistrationPassword;
   }
 
   get allUsers() {
