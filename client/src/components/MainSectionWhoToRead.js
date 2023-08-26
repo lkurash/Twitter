@@ -1,7 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
+
 import userApi from "../http/userApi";
+
 import getAuthUserID from "../utils/getAuthUserID";
 
 import ListWhoReadUserHomePage from "./ListWhoReadUserHomePage";
@@ -16,7 +18,7 @@ const MainSectionWhoToRead = observer((props) => {
       userApi
         .getWhoNotReadingUsers(authUserID)
         .then((users) => usersStore.setUsersWhoToReadUsers(users));
-        
+
     } else {
       userApi.getUsers().then((users) => {
         usersStore.setUsersWhoToReadUsers(users);

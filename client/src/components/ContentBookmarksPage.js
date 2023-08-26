@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";
+
 import Twit from "./Twit";
 
 import arrowLeft from "./Img/arrow_left_icon.png";

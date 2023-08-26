@@ -3,10 +3,12 @@ import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
 import userApi from "../../http/userApi";
+
+import getFlagIsAuth from "../../utils/getFlagIsAuth";
+
 import SidebarContent from "../../components/SidebarContent";
 import ContentMessagesPage from "../../components/ContentMessagesPage";
 
-import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 const MessagesPage = observer(() => {
   const { usersStore } = useContext(Context);

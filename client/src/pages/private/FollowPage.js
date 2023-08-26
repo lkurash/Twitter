@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
 import userApi from "../../http/userApi";
-import ContentFollowPage from "../../components/ContentFollowPage";
-import SidebarContent from "../../components/SidebarContent";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
+
+import ContentFollowPage from "../../components/ContentFollowPage";
+import SidebarContent from "../../components/SidebarContent";
 
 const FollowPage = observer(() => {
   const { usersStore } = useContext(Context);

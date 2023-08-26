@@ -3,8 +3,10 @@ import { useContext, useState } from "react";
 import { Context } from "../..";
 
 import twitsApi from "../../http/twitsApi";
+
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
+
 import ButtonEmoji from "../buttons/ButtonEmoji";
 
 import close from "../Img/x_icon.png";

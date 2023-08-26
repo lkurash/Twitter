@@ -2,12 +2,15 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import SidebarContent from "../../components/SidebarContent";
-import ContentBookmarksPage from "../../components/ContentBookmarksPage";
+import userApi from "../../http/userApi";
+
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getInfoAuthPage from "../../utils/getInfoAuthPage";
-import userApi from "../../http/userApi";
+
+import SidebarContent from "../../components/SidebarContent";
+import ContentBookmarksPage from "../../components/ContentBookmarksPage";
+
 
 const BookmarksPage = observer(() => {
   const { twitsStore } = useContext(Context);

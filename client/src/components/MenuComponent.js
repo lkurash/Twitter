@@ -4,11 +4,11 @@ import { Context } from "..";
 
 import getFlagIsAuth from "../utils/getFlagIsAuth";
 import { EXPLORE_PAGE_PATH } from "../utils/constans";
+import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 
 import ButtonMenu from "./buttons/ButtonMenu";
 import UserInfoAndButtonSignOut from "./UserInfoAndButtonSignOut";
 import ButtonWriteTwit from "./buttons/ButtonWriteTwit";
-import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 
 import "./menu.css";
 import Logo from "./common/Logo";

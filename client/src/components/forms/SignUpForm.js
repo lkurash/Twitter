@@ -3,6 +3,7 @@ import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
 import useOutsideClick from "../../utils/useOutsideClickFunction";
+
 import SignUpFormInput from "../SignUpFormInput";
 import BirthForm from "./BirthForm";
 

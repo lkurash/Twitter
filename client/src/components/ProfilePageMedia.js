@@ -1,10 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
-import twitsApi from "../http/twitsApi";
-import getMoreTwitsWithMedia from "../utils/getMoreTwitsWithMedia";
 
+import twitsApi from "../http/twitsApi";
+
+import getMoreTwitsWithMedia from "../utils/getMoreTwitsWithMedia";
 import spinner from "../utils/spinner";
+
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import Twit from "./Twit";
 

@@ -2,8 +2,6 @@ import { NavLink } from "react-router-dom";
 
 import { LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "../utils/constans";
 
-import "./footer.css";
-
 const FooterComponent = () => {
 
   return (

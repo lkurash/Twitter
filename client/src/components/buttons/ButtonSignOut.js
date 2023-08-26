@@ -1,9 +1,9 @@
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../..";
+import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import { ROOT_PAGE_PATH } from "../../utils/constans";
-import useOutsideClick from "../../utils/useOutsideClickFunction";
 const Cookies = require("js-cookie");
 
 function ButtonSignOut({ buttonSignOutVisible, onClose }) {

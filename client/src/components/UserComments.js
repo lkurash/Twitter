@@ -1,9 +1,10 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
-import getMoreComments from "../utils/getMoreComments";
 
+import getMoreComments from "../utils/getMoreComments";
 import spinner from "../utils/spinner";
+
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import TwitDesc from "./TwitDesc";
 import UserPhoto from "./UserPhoto";

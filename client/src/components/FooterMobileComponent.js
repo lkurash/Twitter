@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { Context } from "..";
+import { useState } from "react";
 
 import {
   BOOKMARKS_PAGE_PATH,
@@ -18,7 +17,6 @@ import "./footer.css";
 
 function FooterMobileComponent() {
   const navigate = useNavigate();
-  const { usersStore } = useContext(Context);
   const [twitFormVisible, setTwitFormVisible] = useState(false);
 
   return (
