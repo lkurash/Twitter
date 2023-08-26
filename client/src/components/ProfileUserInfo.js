@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { Context } from "..";
 
 import {
@@ -26,7 +26,6 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
 
-  const navigate = useNavigate();
   const { id } = useParams();
   const authUserID = getAuthUserID();
   const location = useLocation().pathname;

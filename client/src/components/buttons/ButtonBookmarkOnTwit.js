@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
 import twitsApi from "../../http/twitsApi";
@@ -8,7 +7,6 @@ import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
-import "../userTwitPanel.css";
 import activeBookmark from "../Img/active_bookmark_icon.png";
 import notactiveBookmark from "../Img/notactive_bookmark_icon.png";
 import hoverBookmark from "../Img/hover_bookmark.png";

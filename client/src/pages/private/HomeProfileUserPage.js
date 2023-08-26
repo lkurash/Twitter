@@ -1,16 +1,16 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
 import twitsApi from "../../http/twitsApi";
 import userApi from "../../http/userApi";
 
-import ContentUserProfilePage from "../../components/ContentUserProfilePage";
-import SidebarContent from "../../components/SidebarContent";
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getInfoAuthPage from "../../utils/getInfoAuthPage";
+
+import ContentUserProfilePage from "../../components/ContentUserProfilePage";
+import SidebarContent from "../../components/SidebarContent";
 
 const HomeProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);

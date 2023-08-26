@@ -2,12 +2,13 @@ import { Context } from "..";
 import { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 
+import userApi from "../http/userApi";
+
 import Logo from "./common/Logo";
 import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 
 import logo from "./Img/logo_icon.png";
 import searchIcon from "./Img/zoom__icon.png";
-import userApi from "../http/userApi";
 
 const MainSearchBlock = observer(({ classNameForm }) => {
   const { usersStore } = useContext(Context);

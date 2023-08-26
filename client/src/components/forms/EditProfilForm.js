@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
 import userApi from "../../http/userApi";
+
 import getUserPhoto from "../../utils/getUserPhoto";
 import { PROFILE_PAGE_USER_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";

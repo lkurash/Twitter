@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { Context } from "..";
 
@@ -9,7 +9,6 @@ import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
 
-import "./sideBar.css";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 const SidebarContent = observer(() => {

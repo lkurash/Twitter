@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import { PRIVATE_HOME_PAGE_PATH } from "../../utils/constans";
 import userApi from "../../http/userApi";
+
+import { PRIVATE_HOME_PAGE_PATH } from "../../utils/constans";
+
+import LocalAuthClient from "../../store/LocalAuthClient";
+
 import LoginPasswordForm from "./LoginPasswordForm";
 import LoginEmailForm from "./LoginEmailForm";
-
-import "./loginAndRegistretionForm.css";
-import LocalAuthClient from "../../store/LocalAuthClient";
 
 const LoginForm = observer(() => {
   const { usersStore } = useContext(Context);

@@ -11,11 +11,6 @@ import getInfoAuthPage from "../../utils/getInfoAuthPage";
 import twitsApi from "../../http/twitsApi";
 import userApi from "../../http/userApi";
 
-import "../../../src/App.css";
-import "../../components/common/common.css";
-import "../../components/main.css";
-import "../../components/userpage.css";
-
 const HomePage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);

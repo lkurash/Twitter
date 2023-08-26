@@ -1,4 +1,5 @@
 import getAuthUserID from "../utils/getAuthUserID";
+
 import ButtonDeleteTwit from "./buttons/ButtonDeleteTwit";
 import TwitActions from "./TwitActions";
 import TwitDesc from "./TwitDesc";
@@ -6,7 +7,7 @@ import UserPhoto from "./UserPhoto";
 
 const Twit = ({ twit }) => {
   const authUserID = getAuthUserID();
-  
+
   return (
     <>
       <div className="twit">
