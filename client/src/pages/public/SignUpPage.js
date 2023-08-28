@@ -5,7 +5,7 @@ import { Context } from "../..";
 
 import LocalAuthClient from "../../store/LocalAuthClient";
 
-import userApi from "../../http/userApi";
+import usersClient from "../../http/usersClient";
 
 import { PRIVATE_HOME_PAGE_PATH } from "../../utils/constans";
 
@@ -19,7 +19,7 @@ const SignUpPage = observer(() => {
 
   const signUp = async () => {
     if (checkUserInfo) {
-      const registerResult = await userApi.register(
+      const registerResult = await usersClient.register(
         usersStore.userRegistrationName,
         usersStore.userRegistrationEmail,
         usersStore.userRegistrationPassword,

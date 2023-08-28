@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-// import { checkToken, getUserProfile } from "../http/userApi";
+// import { checkToken, getUserProfile } from "../http/usersClient";
 
 import getAuthUserID from "./getAuthUserID";
 

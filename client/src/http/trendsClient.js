@@ -1,6 +1,6 @@
-import { $host } from ".";
+import { $host } from "./hosts";
 
-class Trends {
+class TrendsClient {
   async getAllTrends(userId, limit) {
     const trends = await $host.get("api/twitter/trends", {
       params: { userId, limit },
@@ -25,7 +25,7 @@ class Trends {
 
   async createNotInterestingTrend(trendId, userId) {
     const trend = await $host.put(
-      `api/twitter//trends/trend/${trendId}/user/${userId}`
+      `api/twitter/trends/trend/${trendId}/user/${userId}`
     );
 
     return trend.data;
@@ -37,6 +37,6 @@ class Trends {
     return trends.data;
   }
 }
-const trendsApi = new Trends();
+const trendsClient = new TrendsClient();
 
-export default trendsApi;
+export default trendsClient;

@@ -3,8 +3,8 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
-import twitsApi from "../../http/twitsApi";
-import userApi from "../../http/userApi";
+import twitsClient from "../../http/twitsClient";
+import usersClient from "../../http/usersClient";
 
 import PublicProfileUser from "../../components/PublicProfileUser";
 
@@ -15,17 +15,17 @@ const PublicProfilePageUser = observer(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    userApi
+    usersClient
       .getUserProfile(id)
       .then((userById) => usersStore.setUserPage(userById));
-    twitsApi
+    twitsClient
       .getTwitsByUser(id)
       .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
-    twitsApi.getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
-    userApi
+    twitsClient.getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
+    usersClient
       .getFollowingsUser(id)
       .then((followings) => usersFollowingsStore.setuserFollowing(followings));
-    userApi
+    usersClient
       .getFollowersUser(id)
       .then((followers) => usersFollowingsStore.setuserFollowers(followers));
   });

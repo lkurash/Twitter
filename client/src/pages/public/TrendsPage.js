@@ -1,10 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-import trendsApi from "../../http/trendsApi";
-import userApi from "../../http/userApi";
+import trendsClient from "../../http/trendsClient";
+import usersClient from "../../http/usersClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
@@ -26,7 +29,9 @@ const TrendsPage = observer(() => {
   const { retwitsStore } = useContext(Context);
   const { trendsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
-  const { trend } = useParams();
+  const [searchParams] = useSearchParams();
+  const trend = searchParams.get("trend");
+
   const authUserID = getAuthUserID(usersStore);
 
   const navigate = useNavigate();
@@ -34,12 +39,12 @@ const TrendsPage = observer(() => {
   const [isLoadingTrends, setIsLoadingTrends] = useState(true);
 
   useEffect(() => {
-    trendsApi
+    trendsClient
       .getTrendsTwits(trend)
       .then((trendstTwits) => trendsStore.setTrendsTwits(trendstTwits));
-    userApi.getUsers().then((users) => usersStore.setAllUsers(users));
+    usersClient.getUsers().then((users) => usersStore.setAllUsers(users));
     if (authUserID) {
-      userApi
+      usersClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
 

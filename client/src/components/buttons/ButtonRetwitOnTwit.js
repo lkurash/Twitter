@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import twitsApi from "../../http/twitsApi";
+import twitsClient from "../../http/twitsClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
@@ -26,7 +26,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
     if (twit.img) {
       formData.append("img", twit.img);
     }
-    await twitsApi
+    await twitsClient
       .createRetwitByUser(authUserID, twit.id, formData)
       .then((retwit) => {
         if (retwit) {
@@ -36,7 +36,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
         }
       });
 
-    await twitsApi.getCountRetwits(twit.id).then((retwit) => {
+    await twitsClient.getCountRetwits(twit.id).then((retwit) => {
       if (retwit) {
         twitsStore.addRetwitTwit(retwit);
       }

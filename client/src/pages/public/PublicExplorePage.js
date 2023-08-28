@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-import twitsApi from "../../http/twitsApi";
+import twitsClient from "../../http/twitsClient";
 
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
@@ -15,9 +15,10 @@ const PublicExplorePage = observer(() => {
 
   useEffect(() => {
     try {
-      twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+      twitsClient
+        .getAllTwits()
+        .then((alltwits) => twitsStore.setTwits(alltwits));
       usersStore.setAuth(getFlagIsAuth());
-
     } catch (error) {
       console.log(error.response.data.message);
     }

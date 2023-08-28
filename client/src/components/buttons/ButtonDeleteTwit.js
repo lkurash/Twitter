@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
-import trendsApi from "../../http/trendsApi";
-import twitsApi from "../../http/twitsApi";
+import trendsClient from "../../http/trendsClient";
+import twitsClient from "../../http/twitsClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
@@ -17,20 +17,20 @@ const ButtonDeleteTwit = observer(({ twit }) => {
   const authUserID = getAuthUserID(usersStore);
 
   const deleteTwit = async (twit) => {
-    await twitsApi.deleteTwitByUser(twit.id);
+    await twitsClient.deleteTwitByUser(twit.id);
     if (twit.twitId) {
-      await twitsApi.getCountLikes(twit.twitId);
-      await twitsApi.getCountRetwits(twit.twitId);
+      await twitsClient.getCountLikes(twit.twitId);
+      await twitsClient.getCountRetwits(twit.twitId);
     }
 
-    await twitsApi
+    await twitsClient
       .getTwitsByFollowingsUsers(authUserID)
       .then((twits) => twitsStore.setTwitsWhoReading(twits));
-    await twitsApi.getAllTwits().then((alltwits) => {
+    await twitsClient.getAllTwits().then((alltwits) => {
       twitsStore.setTwits(alltwits);
     });
 
-    await trendsApi.getCountTrends(twit)
+    await trendsClient.getCountTrends(twit);
   };
   const onClose = () => {
     setDeleteButtonVisible(false);

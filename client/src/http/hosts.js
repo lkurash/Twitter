@@ -1,12 +1,14 @@
 import axios from "axios";
 const Cookies = require("js-cookie");
 
+const URL = "http://localhost:5500";
+
 const $host = axios.create({
-  baseURL: "http://localhost:5500",
+  baseURL: URL,
 });
 
 const $authHost = axios.create({
-  baseURL: "http://localhost:5500",
+  baseURL: URL,
 });
 
 const authInterceptor = (config) => {

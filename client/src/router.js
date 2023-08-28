@@ -43,10 +43,8 @@ import {
   PUBLIC_HOME_PAGE_PATH,
   PRIVATE_HOME_PAGE_PATH,
   AUTH_PAGE_PATH,
-  TREND_PAGE_PATH,
   PUBLIC_USER_PAGE_PATH,
   PROFILE_PAGE_USER_TWITS_PATH,
-  AUTHTREND_PAGE_PATH,
   PRIVATE_USER_PAGE_PATH,
   PRIVATE_USER_PAGE_TWITS_PATH,
   PRIVATE_USER_PAGE_ANSWERS_PATH,
@@ -56,6 +54,8 @@ import {
   PRIVATE_USER_FOLLOWING_PAGE_PATH,
   FOLLOWINGS_PAGE_PATH,
   FOLLOWERS_PAGE_PATH,
+  TRENDS_PAGE_PATH,
+  AUTHTRENDS_PAGE_PATH,
 } from "./utils/constans";
 
 export const publicRoutes = {
@@ -72,7 +72,7 @@ export const publicRoutes = {
       element: <PublicExplorePage />,
     },
     {
-      path: TREND_PAGE_PATH,
+      path: TRENDS_PAGE_PATH,
       element: <TrendsPage />,
     },
     {
@@ -82,7 +82,7 @@ export const publicRoutes = {
   ],
 };
 
-export const authorizationRoutes = {
+export const authRoutes = {
   path: AUTH_PAGE_PATH,
   element: <LayoutLoginAndSignUpPage />,
   loader: redirectLoader,
@@ -161,7 +161,7 @@ export const privateRoutes = {
       element: <FollowPage />,
     },
     {
-      path: AUTHTREND_PAGE_PATH,
+      path: AUTHTRENDS_PAGE_PATH,
       element: <TrendsPage />,
     },
   ],

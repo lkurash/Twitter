@@ -2,20 +2,19 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import userApi from "../../http/userApi";
+import usersClient from "../../http/usersClient";
 
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 import SidebarContent from "../../components/SidebarContent";
 import ContentMessagesPage from "../../components/ContentMessagesPage";
 
-
 const MessagesPage = observer(() => {
   const { usersStore } = useContext(Context);
 
   useEffect(() => {
     try {
-      userApi.getUsers().then((users) => usersStore.setAllUsers(users));
+      usersClient.getUsers().then((users) => usersStore.setAllUsers(users));
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

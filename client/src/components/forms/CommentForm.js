@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import twitsApi from "../../http/twitsApi";
+import twitsClient from "../../http/twitsClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
@@ -18,9 +18,9 @@ const CommentForm = observer(({ twit }) => {
   const authUserID = getAuthUserID(usersStore);
 
   const createComment = async (twitId) => {
-    await twitsApi.createCommentTwitByUser(authUserID, twitId, commentText);
+    await twitsClient.createCommentTwitByUser(authUserID, twitId, commentText);
     commentsStore.setActiveComment({});
-    await twitsApi.getCountComments(twitId);
+    await twitsClient.getCountComments(twitId);
   };
   const createTwitDate = (createdAt) => {
     const date = new Date(createdAt).toString().split(" ");

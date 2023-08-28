@@ -30,7 +30,7 @@ const ListFoundUserSearchBlock = observer(
                   if (usersStore.isAuth) {
                     navigate(PRIVATE_USERS_PAGE_PATH + profile.id);
                   } else {
-                    navigate(PUBLIC_USERS_PAGE_PATH + profile.id);
+                    navigate(`${PUBLIC_USERS_PAGE_PATH}/${profile.id}`);
                   }
                 }}
               >

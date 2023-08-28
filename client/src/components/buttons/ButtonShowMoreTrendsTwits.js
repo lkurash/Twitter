@@ -1,4 +1,4 @@
-import trendsApi from "../../http/trendsApi";
+import trendsClient from "../../http/trendsClient";
 
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
@@ -14,7 +14,7 @@ const ButtonShowMoreTrendsTwits = observer(({ trend }) => {
 
   async function getMoreTrendsTwits() {
     if (showMoreTwits) {
-      await trendsApi
+      await trendsClient
         .getTrendsTwits(trend, 7, itemListTwits)
         .then((trendstTwits) => {
           trendsStore.setTrendsTwits(

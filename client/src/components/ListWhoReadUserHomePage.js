@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import userApi from "../http/userApi";
+import usersClient from "../http/usersClient";
 
 import {
   PRIVATE_USERS_PAGE_PATH,
@@ -21,9 +21,9 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
   const authUserID = getAuthUserID();
 
   const createUserFollowings = async (profile) => {
-    await userApi.createFollowings(authUserID, profile.id);
+    await usersClient.createFollowings(authUserID, profile.id);
 
-    await userApi
+    await usersClient
       .getWhoNotReadingUsers(authUserID)
       .then((users) => usersStore.setUsersWhoToReadUsers(users));
   };
@@ -50,7 +50,7 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
                   if (usersStore.isAuth) {
                     navigate(PRIVATE_USERS_PAGE_PATH + profile.id);
                   } else {
-                    navigate(PUBLIC_USERS_PAGE_PATH + profile.id);
+                    navigate(`${PUBLIC_USERS_PAGE_PATH}/${profile.id}`);
                   }
                 }}
               >

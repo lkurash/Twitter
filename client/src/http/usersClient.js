@@ -1,6 +1,6 @@
-import { $authHost, $host } from ".";
+import { $authHost, $host } from "./hosts";
 
-class UserApi {
+class UsersClient {
   async register(name, email, password, birthdate) {
     const response = await $host.post("api/users/registration", {
       name,
@@ -86,6 +86,6 @@ class UserApi {
   }
 }
 
-const userApi = new UserApi();
+const usersClient = new UsersClient();
 
-export default userApi;
+export default usersClient;

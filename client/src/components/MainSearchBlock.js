@@ -2,7 +2,7 @@ import { Context } from "..";
 import { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 
-import userApi from "../http/userApi";
+import usersClient from "../http/usersClient";
 
 import Logo from "./common/Logo";
 import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
@@ -13,8 +13,7 @@ import searchIcon from "./Img/zoom__icon.png";
 const MainSearchBlock = observer(({ classNameForm }) => {
   const { usersStore } = useContext(Context);
   const [userName, setUserName] = useState("");
-  const [listFoundUsersVisible, setListFoundUsersVisible] =
-    useState(false);
+  const [listFoundUsersVisible, setListFoundUsersVisible] = useState(false);
   const [activeInput, setActiveInput] = useState(false);
 
   const onClose = () => {
@@ -24,7 +23,7 @@ const MainSearchBlock = observer(({ classNameForm }) => {
 
   const searchUsers = (name) => {
     setTimeout(() => {
-      userApi.getSearchUsers(name).then((users) => {
+      usersClient.getSearchUsers(name).then((users) => {
         usersStore.setFoundUsers(users);
       });
     }, 500);

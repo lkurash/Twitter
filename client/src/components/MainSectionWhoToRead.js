@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
 
-import userApi from "../http/userApi";
+import usersClient from "../http/usersClient";
 
 import getAuthUserID from "../utils/getAuthUserID";
 
@@ -14,13 +14,12 @@ const MainSectionWhoToRead = observer((props) => {
 
   useEffect(() => {
     if (authUserID) {
-      userApi.getUsers().then((users) => usersStore.setAllUsers(users));
-      userApi
+      usersClient.getUsers().then((users) => usersStore.setAllUsers(users));
+      usersClient
         .getWhoNotReadingUsers(authUserID)
         .then((users) => usersStore.setUsersWhoToReadUsers(users));
-
     } else {
-      userApi.getUsers().then((users) => {
+      usersClient.getUsers().then((users) => {
         usersStore.setUsersWhoToReadUsers(users);
         usersStore.setAllUsers(users);
       });

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import twitsApi from "../../http/twitsApi";
+import twitsClient from "../../http/twitsClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -17,20 +17,19 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const authUserID = getAuthUserID(usersStore);
 
-
   const createFavoriteTwits = async (twit) => {
-    await twitsApi.createFavoriteTwitByUser(authUserID, twit.id);
-    await twitsApi.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
-      favoriteTwitsStore.setFavoriteTwitsIds(favoriteTwitsByUser.ids);
-    });
+    await twitsClient.createFavoriteTwitByUser(authUserID, twit.id);
+    await twitsClient
+      .getFavoriteTwits(authUserID)
+      .then((favoriteTwitsByUser) => {
+        favoriteTwitsStore.setFavoriteTwitsIds(favoriteTwitsByUser.ids);
+      });
   };
 
   const hoverAndActiveButtonBookmark = (twit) => {
-
     if (twit.id === favoriteTwitsStore.hoverTwitBookmark.id) {
       return hoverBookmark;
-    }
-    else if (twit.id === favoriteTwitsStore.newTwitBookmark.id) {
+    } else if (twit.id === favoriteTwitsStore.newTwitBookmark.id) {
       return activeBookmark;
     }
     return notactiveBookmark;

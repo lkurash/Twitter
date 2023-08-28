@@ -2,8 +2,8 @@ import { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-import userApi from "../../http/userApi";
-import twitsApi from "../../http/twitsApi";
+import usersClient from "../../http/usersClient";
+import twitsClient from "../../http/twitsClient";
 
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
@@ -18,11 +18,13 @@ const PrivateExplorePage = observer(() => {
 
   useEffect(() => {
     try {
-      twitsApi.getAllTwits().then((alltwits) => twitsStore.setTwits(alltwits));
+      twitsClient
+        .getAllTwits()
+        .then((alltwits) => twitsStore.setTwits(alltwits));
 
       usersStore.setAuth(getFlagIsAuth());
 
-      userApi
+      usersClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
     } catch (error) {

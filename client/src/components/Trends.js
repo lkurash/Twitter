@@ -17,9 +17,15 @@ const Trends = observer(({ topic }) => {
         className="trends-item"
         onClick={() => {
           if (usersStore.isAuth) {
-            navigate(AUTHTRENDS_PAGE_PATH + topic.title);
+            navigate({
+              pathname: `${AUTHTRENDS_PAGE_PATH}`,
+              search: `trend=${topic.title}`,
+            });
           } else {
-            navigate(TRENDS_PAGE_PATH + topic.title);
+            navigate({
+              pathname: `${TRENDS_PAGE_PATH}`,
+              search: `trend=${topic.title}`,
+            });
           }
         }}
       >
