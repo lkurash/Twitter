@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
-import twitsApi from "../http/twitsApi";
+import twitsClient from "../http/twitsClient";
 
 import getMoreTwitsWithMedia from "../utils/getMoreTwitsWithMedia";
 import spinner from "../utils/spinner";
@@ -16,7 +16,7 @@ const ProfilePageMedia = observer(() => {
   const [loadingPage, setIsLoadingPage] = useState(true);
 
   useEffect(() => {
-    twitsApi.getUserTwitsWithMedia(usersStore.userPage.id).then((twits) => {
+    twitsClient.getUserTwitsWithMedia(usersStore.userPage.id).then((twits) => {
       twitsStore.setUserTwitsWithMedia(twits);
     });
     setTimeout(() => {

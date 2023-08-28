@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import userApi from "../../http/userApi";
+import usersClient from "../../http/usersClient";
 
 import { PRIVATE_HOME_PAGE_PATH } from "../../utils/constans";
 
@@ -29,7 +29,7 @@ const LoginForm = observer(() => {
   const signIn = async () => {
     try {
       if (email && password) {
-        const authenticationResult = await userApi.authentication(
+        const authenticationResult = await usersClient.authentication(
           email,
           password
         );

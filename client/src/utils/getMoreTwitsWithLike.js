@@ -1,4 +1,4 @@
-import twitsApi from "../http/twitsApi";
+import twitsClient from "../http/twitsClient";
 import getAuthUserID from "./getAuthUserID";
 
 export default async function getMoreTwitsWithLike(
@@ -11,10 +11,12 @@ export default async function getMoreTwitsWithLike(
   if (showMoreTwits) {
     const authUserID = getAuthUserID();
 
-    await twitsApi
+    await twitsClient
       .getTwitsWithUsersLike(authUserID, 7, itemListTwits)
       .then((twits) => {
-        store.setTwitsWithUsersLike(store.twitsWithUsersLike.concat(twits.twits));
+        store.setTwitsWithUsersLike(
+          store.twitsWithUsersLike.concat(twits.twits)
+        );
 
         setShowMoreTwits(false);
 

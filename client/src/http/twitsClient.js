@@ -1,6 +1,6 @@
-import { $authHost, $host } from ".";
+import { $authHost, $host } from "./hosts";
 
-class TwitsApi {
+class TwitsClient {
   async createTwitByUser(twit) {
     const newTwit = await $authHost.post("api/twits/twit", twit);
 
@@ -134,6 +134,6 @@ class TwitsApi {
     return twits.data;
   }
 }
-const twitsApi = new TwitsApi();
+const twitsClient = new TwitsClient();
 
-export default twitsApi;
+export default twitsClient;

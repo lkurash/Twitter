@@ -1,4 +1,4 @@
-import twitsApi from "../http/twitsApi";
+import twitsClient from "../http/twitsClient";
 import getAuthUserID from "./getAuthUserID";
 
 export default async function getMoreFavoriteTwits(
@@ -11,7 +11,7 @@ export default async function getMoreFavoriteTwits(
   if (showMoreTwits) {
     const authUserID = getAuthUserID();
 
-    await twitsApi
+    await twitsClient
       .getFavoriteTwits(authUserID, 7, itemListTwits)
       .then((favoriteTwitsByUser) => {
         store.setFavoriteTwits(

@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import twitsApi from "../../http/twitsApi";
-import userApi from "../../http/userApi";
+import twitsClient from "../../http/twitsClient";
+import usersClient from "../../http/usersClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
@@ -22,27 +22,27 @@ const HomeProfileUserPage = observer(({ loadingPage }) => {
 
   useEffect(() => {
     try {
-      userApi
+      usersClient
         .getUserProfile(authUserID)
         .then((userById) => usersStore.setUserPage(userById));
 
       if (authUserID) {
-        userApi
+        usersClient
           .getUserProfile(authUserID)
           .then((userInfo) => usersStore.setUser(userInfo));
       }
 
-      twitsApi
+      twitsClient
         .getTwitsByUser(authUserID)
         .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
 
-      userApi
+      usersClient
         .getFollowingsUser(authUserID)
         .then((followings) =>
           usersFollowingsStore.setuserFollowing(followings)
         );
 
-      userApi
+      usersClient
         .getFollowersUser(authUserID)
         .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 

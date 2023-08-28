@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import trendsApi from "../../http/trendsApi";
-import twitsApi from "../../http/twitsApi";
+import trendsClient from "../../http/trendsClient";
+import twitsClient from "../../http/twitsClient";
 
 import getUserPhoto from "../../utils/getUserPhoto";
 import ButtonEmoji from "../buttons/ButtonEmoji";
@@ -33,7 +33,7 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
 
         formData.append("text", text);
         formData.append("img", img);
-        await twitsApi.createTwitByUser(formData).then((twit) => {
+        await twitsClient.createTwitByUser(formData).then((twit) => {
           if (twitsStore.twits) {
             twitsStore.setTwits(twit.concat(twitsStore.twits));
           } else {
@@ -44,7 +44,7 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
           );
         });
 
-        await trendsApi.createTrends(formData);
+        await trendsClient.createTrends(formData);
 
         setText("");
         setImg("");

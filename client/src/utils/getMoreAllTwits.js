@@ -1,4 +1,4 @@
-import twitsApi from "../http/twitsApi";
+import twitsClient from "../http/twitsClient";
 
 export default async function getMoreAllTwits(
   showMoreTwits,
@@ -8,9 +8,9 @@ export default async function getMoreAllTwits(
   setShowButton
 ) {
   if (showMoreTwits) {
-    await twitsApi.getAllTwits(7, itemListTwits).then((alltwits) => {
+    await twitsClient.getAllTwits(7, itemListTwits).then((alltwits) => {
       twitsStore.setTwits(twitsStore.twits.concat(alltwits));
-      
+
       setShowMoreTwits(false);
 
       if (alltwits.length < 7) {

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-import userApi from "../../http/userApi";
+import usersClient from "../../http/usersClient";
 
 import getUserPhoto from "../../utils/getUserPhoto";
 import { PROFILE_PAGE_USER_PATH } from "../../utils/constans";
@@ -55,7 +55,7 @@ const EditProfileForm = observer(() => {
     formData.append("web_site_url", textWebSiteUrl.trim());
     formData.append("about", about.trim());
 
-    await userApi.updateUserProfile(id, formData).catch((error) => {
+    await usersClient.updateUserProfile(id, formData).catch((error) => {
       console.log(error.response.data.message);
     });
 

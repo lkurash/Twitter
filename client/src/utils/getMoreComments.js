@@ -1,4 +1,4 @@
-import twitsApi from "../http/twitsApi";
+import twitsClient from "../http/twitsClient";
 import getAuthUserID from "./getAuthUserID";
 
 export default async function getMoreComments(
@@ -11,7 +11,7 @@ export default async function getMoreComments(
   if (showMoreTwits) {
     const authUserID = getAuthUserID();
 
-    await twitsApi
+    await twitsClient
       .getCommentsByUser(authUserID, 4, itemListTwits)
       .then((comments) => {
         store.setComments(store.comments.concat(comments));

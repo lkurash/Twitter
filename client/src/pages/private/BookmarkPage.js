@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import userApi from "../../http/userApi";
+import usersClient from "../../http/usersClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
@@ -10,7 +10,6 @@ import getInfoAuthPage from "../../utils/getInfoAuthPage";
 
 import SidebarContent from "../../components/SidebarContent";
 import ContentBookmarksPage from "../../components/ContentBookmarksPage";
-
 
 const BookmarksPage = observer(() => {
   const { twitsStore } = useContext(Context);
@@ -23,11 +22,11 @@ const BookmarksPage = observer(() => {
 
   useEffect(() => {
     try {
-      userApi
+      usersClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
 
-      userApi
+      usersClient
         .getFollowingsUser(authUserID)
         .then((followings) =>
           usersFollowingsStore.setuserFollowing(followings)

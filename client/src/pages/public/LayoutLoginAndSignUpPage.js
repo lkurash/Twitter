@@ -15,9 +15,7 @@ export default function LayoutLoginAndSignUpPage() {
       <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
           <ButtonClose
-            nav={
-              location === "/authentication/redirect" ? EXPLORE_PAGE_PATH : -1
-            }
+            nav={location === "/auth/login/redirect" ? EXPLORE_PAGE_PATH : -1}
           />
           <Logo class="logo-icon-form" />
         </header>

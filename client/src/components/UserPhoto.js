@@ -27,7 +27,7 @@ const UserPhoto = observer(({ twit }) => {
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(PUBLIC_USERS_PAGE_PATH + twit.twitUser.id);
+              navigate(`${PUBLIC_USERS_PAGE_PATH}/${twit.twitUser.id}`);
             }
           }}
         >
@@ -44,7 +44,7 @@ const UserPhoto = observer(({ twit }) => {
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(PUBLIC_USERS_PAGE_PATH + twit.user.id);
+              navigate(`${PUBLIC_USERS_PAGE_PATH}/${twit.user.id}`);
             }
           }}
         >
