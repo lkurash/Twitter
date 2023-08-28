@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Context } from "../..";
 
 import twitsClient from "../../http/twitsClient";
@@ -12,23 +12,23 @@ const PublicProfilePageUser = observer(() => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
-  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("user");
 
   useEffect(() => {
     usersClient
-      .getUserProfile(id)
+      .getUserProfile(userId)
       .then((userById) => usersStore.setUserPage(userById));
     twitsClient
-      .getTwitsByUser(id)
+      .getTwitsByUser(userId)
       .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
-    twitsClient.getAllTwits().then((allTwits) => twitsStore.setTwits(allTwits));
     usersClient
-      .getFollowingsUser(id)
+      .getFollowingsUser(userId)
       .then((followings) => usersFollowingsStore.setuserFollowing(followings));
     usersClient
-      .getFollowersUser(id)
+      .getFollowersUser(userId)
       .then((followers) => usersFollowingsStore.setuserFollowers(followers));
-  });
+  },[]);
 
   return (
     <div className="main-wrapper">

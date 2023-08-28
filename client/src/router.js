@@ -43,7 +43,6 @@ import {
   PUBLIC_HOME_PAGE_PATH,
   PRIVATE_HOME_PAGE_PATH,
   AUTH_PAGE_PATH,
-  PUBLIC_USER_PAGE_PATH,
   PROFILE_PAGE_USER_TWITS_PATH,
   PRIVATE_USER_PAGE_PATH,
   PRIVATE_USER_PAGE_TWITS_PATH,
@@ -56,6 +55,7 @@ import {
   FOLLOWERS_PAGE_PATH,
   TRENDS_PAGE_PATH,
   AUTHTRENDS_PAGE_PATH,
+  PUBLIC_USERS_PAGE_PATH,
 } from "./utils/constans";
 
 export const publicRoutes = {
@@ -76,7 +76,7 @@ export const publicRoutes = {
       element: <TrendsPage />,
     },
     {
-      path: PUBLIC_USER_PAGE_PATH,
+      path: PUBLIC_USERS_PAGE_PATH,
       element: <PublicProfilePageUser />,
     },
   ],
