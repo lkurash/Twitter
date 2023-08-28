@@ -52,7 +52,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Message",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Message",
-      nav: MESSAGE_PAGE_PATH + authUserID,
+      nav: MESSAGE_PAGE_PATH
     },
     {
       id: "5",

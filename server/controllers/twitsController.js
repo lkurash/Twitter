@@ -150,7 +150,9 @@ class TwitsController {
   }
 
   async gelAllTwits(request, response) {
+    const Op = Sequelize.Op;
     let { limit, list } = request.query;
+
     limit = limit || 7;
     list = list || 1;
     let offset = list * limit - limit;
@@ -161,10 +163,10 @@ class TwitsController {
         { model: User, as: "user" },
         { model: Twits, as: "originalTwit" },
         { model: User, as: "twitUser" },
-        { model: Likes },
         { model: Favorite_twits },
         { model: Comments },
       ],
+      
       limit: limit,
       offset: offset,
     });
@@ -186,21 +188,17 @@ class TwitsController {
       raw: true,
     });
 
-    const twits = await Likes.findAll({
-      where: { UserId: userId, like: true },
+    const twits = await Twits.findAll({
       order: [["id", "DESC"]],
       include: [
-        {
-          model: Twits,
-          include: [
-            { model: User, as: "user" },
-            { model: User, as: "twitUser" },
-            { model: Likes },
-            { model: Favorite_twits },
-            { model: Comments },
-          ],
-        },
+        { model: User, as: "user" },
+        { model: Twits, as: "originalTwit" },
+        { model: User, as: "twitUser" },
+        { model: Favorite_twits },
+        { model: Likes, where: { UserId: userId } },
+        { model: Comments },
       ],
+
       limit: limit,
       offset: offset,
     });

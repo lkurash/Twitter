@@ -20,7 +20,7 @@ function ButtonSignOut({ buttonSignOutVisible, onClose }) {
     usersStore.setUser({});
     usersStore.setUserPage({});
     retwitsStore.setRetwitTwit({});
-    favoriteTwitsStore.setFavoriteTwits({});
+    favoriteTwitsStore.setFavoriteTwitsIds([]);
     usersStore.setAuth(false);
     navigate(ROOT_PAGE_PATH);
   };
