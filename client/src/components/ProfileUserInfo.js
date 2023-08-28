@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { Context } from "..";
 
 import {
@@ -26,9 +26,11 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
 
-  const { id } = useParams();
-  const authUserID = getAuthUserID();
   const location = useLocation().pathname;
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("user");
+
+  const authUserID = getAuthUserID();
 
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
@@ -61,15 +63,17 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
 
           {usersStore.isAuth && (
             <>
-              {(location === PROFILE_PAGE_USER_PATH || authUserID === +id) && (
+              {(location === PROFILE_PAGE_USER_PATH ||
+                authUserID === +userId) && (
                 <ButtonEditProfile usersStore={usersStore} />
               )}
-              {location !== PROFILE_PAGE_USER_PATH && authUserID !== +id && (
-                <ButtonFollowingUsersProfile
-                  user={usersStore}
-                  usersFollow={usersFollowingsStore}
-                />
-              )}
+              {location !== PROFILE_PAGE_USER_PATH &&
+                authUserID !== +userId && (
+                  <ButtonFollowingUsersProfile
+                    user={usersStore}
+                    usersFollow={usersFollowingsStore}
+                  />
+                )}
             </>
           )}
         </div>
