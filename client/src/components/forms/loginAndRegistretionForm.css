@@ -260,16 +260,17 @@
 
 .signup-active-input {
   font-size: 12px;
+  margin-top: 3px;
   margin-left: 5px;
   color: rgb(59 179 244);
 }
 
 .signup-form-input input {
   margin-left: 5px;
-  width: 380px;
+  width: 425px;
+  height: 100%;
   font-size: 18px;
   color: aliceblue;
-  height: 25px;
   border: none;
   background-color: black;
   caret-color: aliceblue;
@@ -277,7 +278,7 @@
 
 .signup-birth {
   color: grey;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .signup-birth-hint {
@@ -357,6 +358,15 @@
   color: grey;
   font-size: 8px;
   margin-left: 75%;
+  margin-bottom: 3px;
+}
+
+.signup-form-input-login-error {
+  color: rgb(255, 0, 0);
+  font-size: 9px;
+  margin-left: 10px;
+  padding-top: 5px;
+  height: 5px;
 }
 
 @media (width <= 400px) {

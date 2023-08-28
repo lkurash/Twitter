@@ -7,6 +7,7 @@ const SignUpFormInput = ({
   onClick,
   name,
   password,
+  login,
 }) => {
   const getClassName = () => {
     if (activeInput) {
@@ -19,18 +20,25 @@ const SignUpFormInput = ({
     }
   };
   return (
-    <div onClick={onClick} className={getClassName()}>
-      {activeInput && (
-        <label className="signup-active-input">{placeholder}</label>
-      )}
-      <input
-        placeholder={activeInput ? "" : placeholder}
-        type={password ? "password" : "text"}
-        value={value}
-        onChange={(e) => setUserInfo(e.target.value.trim().slice(0, 20))}
-      />
-      <p className="signup-form-input-help">Min length 1 max 20</p>
-    </div>
+    <>
+      <div onClick={onClick} className={getClassName()}>
+        {activeInput && (
+          <label className="signup-active-input">{placeholder}</label>
+        )}
+        <input
+          placeholder={activeInput ? "" : placeholder}
+          type={password ? "password" : "text"}
+          value={value}
+          onChange={(e) => setUserInfo(e.target.value.trim().slice(0, 20))}
+        />
+        {activeInput && (
+          <p className="signup-form-input-help">Min length 1 max 20</p>
+        )}
+      </div>
+      <div className="signup-form-input-login-error">
+        {!checkUserInfo && login && <p>Please enter a valid email.</p>}
+      </div>
+    </>
   );
 };
 

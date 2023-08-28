@@ -95,6 +95,7 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
             setActivedivPassword(false);
             setCheckEmail(true);
           }}
+          login
         />
         <SignUpFormInput
           placeholder={"Password"}

@@ -23,7 +23,7 @@ const ProfilePageLikes = observer(() => {
   return (
     <div className="twits">
       {twitsStore.twitsWithUsersLike.map((like) => (
-        <Twit twit={like.Twit} key={like.Twit.id} />
+        <Twit twit={like} key={like.id} />
       ))}
       {twitsStore.twitsWithUsersLike.length >= 7 && (
         <ButtonShowMoreTwits
