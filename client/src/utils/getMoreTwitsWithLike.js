@@ -12,7 +12,7 @@ export default async function getMoreTwitsWithLike(
     const authUserID = getAuthUserID();
 
     await twitsClient
-      .getTwitsWithUsersLike(authUserID, 7, itemListTwits)
+      .getTwitsForAuthUser(authUserID, 7, itemListTwits)
       .then((twits) => {
         store.setTwitsWithUsersLike(
           store.twitsWithUsersLike.concat(twits.twits)

@@ -12,10 +12,10 @@ module.exports = {
       text: {
         type: Sequelize.STRING,
       },
-      UserId: {
+      userId: {
         type: Sequelize.INTEGER,
       },
-      TwitId: {
+      twitId: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

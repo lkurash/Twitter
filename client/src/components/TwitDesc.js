@@ -22,20 +22,20 @@ const TwitDesc = ({ twit }) => {
               if (usersStore.isAuth) {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
-                navigate(PRIVATE_USERS_PAGE_PATH + twit.twitUser.id);
+                navigate(PRIVATE_USERS_PAGE_PATH + twit.twit_user.id);
               } else {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
                 navigate({
                   pathname: `${PUBLIC_USERS_PAGE_PATH}`,
-                  search: `user=${twit.twitUser.id}`,
+                  search: `user=${twit.twit_user.id}`,
                 });
               }
             }}
           >
-            {twit.twitUser.user_name}
+            {twit.twit_user.user_name}
           </h4>
-          <p className="profile-name">{`@${twit.twitUser.user_name}`}</p>
+          <p className="profile-name">{`@${twit.twit_user.user_name}`}</p>
         </div>
       ) : (
         <div className="twit-user-name-block">

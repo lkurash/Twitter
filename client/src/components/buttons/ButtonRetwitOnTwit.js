@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 
 import twitsClient from "../../http/twitsClient";
@@ -17,12 +17,22 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
   const { retwitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
+
   const authUserID = getAuthUserID(usersStore);
+
+  const getCountRetwits = async (originalTwitId, retwitId) => {
+    await twitsClient.getCountRetwits(originalTwitId).then((retwit) => {
+      if (retwit) {
+        twitsStore.addRetwitTwit(retwit);
+        twitsStore.deleteRetwit(originalTwitId, retwitId);
+      }
+    });
+  };
 
   const createRetwitTwit = async (twit) => {
     const formData = new FormData();
     formData.append("text", twit.text);
-    formData.append("twitUserId", twit.UserId);
+    formData.append("twitUserId", twit.userId);
     if (twit.img) {
       formData.append("img", twit.img);
     }
@@ -31,8 +41,6 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
       .then((retwit) => {
         if (retwit) {
           twitsStore.setTwits(retwit.concat(twitsStore.twits));
-        } else {
-          twitsStore.deleteRetwit(twit);
         }
       });
 
@@ -40,6 +48,12 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
       if (retwit) {
         twitsStore.addRetwitTwit(retwit);
       }
+    });
+  };
+
+  const deleteRetwit = async (twit) => {
+    twitsClient.deleteRetwit(twit.id, authUserID).then((deleteTwit) => {
+      getCountRetwits(deleteTwit[0].originalTwit, deleteTwit[0].retwit);
     });
   };
 
@@ -66,8 +80,8 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
 
   return (
     <div className="user-twit-panel-retwit">
-      {retwitsStore.userRetwits.includes(twit.id) ||
-      (twit.retwit && twit.UserId === authUserID) ? (
+      {twit.retwits.length > 0 ||
+      (twit.retwit && twit.userId === authUserID) ? (
         <div
           className="user-twit-panel-button-retwit"
           key={twit.id}
@@ -77,7 +91,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
           onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
           onClick={() => {
             retwitsStore.setDeleteRetwit(twit);
-            createRetwitTwit(twit);
+            deleteRetwit(twit);
             retwitsStore.setRetwitTwit({});
           }}
         >
@@ -119,9 +133,6 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
         </>
       )}
       {twit.countRetwits > 0 && <p>{twit.countRetwits}</p>}
-      {twit.originalTwit && twit.originalTwit.countRetwits > 0 && (
-        <p>{twit.originalTwit.countRetwits}</p>
-      )}
     </div>
   );
 });

@@ -256,9 +256,9 @@ class UserController {
               model: Twits,
               include: [
                 { model: User, as: "user" },
-                { model: User, as: "twitUser" },
-                { model: Likes },
-                { model: Favorite_twits },
+                { model: User, as: "twit_user" },
+                { model: Likes, as: "likes" },
+                { model: Favorite_twits, as: "favorite_twits" },
                 { model: Comments },
               ],
             },
@@ -285,7 +285,7 @@ class UserController {
         next(ApiError.badRequest(`Check authentication ${id}`));
       }
       const followings = await Following.findOne({
-        where: { UserId: userId, followUserId: followUserId },
+        where: { userId: userId, followUserId: followUserId },
       });
 
       if (followings) {
@@ -294,7 +294,7 @@ class UserController {
 
       if (!followings) {
         const followings = await Following.create({
-          UserId: userId,
+          userId: userId,
           followUserId: followUserId,
         });
 
@@ -318,7 +318,7 @@ class UserController {
       }
 
       const unFollow = await Following.destroy({
-        where: { followUserId: +followUserId, UserId: userId },
+        where: { followUserId: +followUserId, userId: userId },
       });
 
       return response.json(unFollow);
@@ -331,19 +331,19 @@ class UserController {
     try {
       const { id } = request.params;
       const followings = await Following.findAll({
-        where: { UserId: id },
+        where: { userId: id },
         include: [
           {
             model: User,
-            as: "followUser",
+            as: "followings_users",
             include: [
               {
                 model: Twits,
                 include: [
                   { model: User, as: "user" },
-                  { model: User, as: "twitUser" },
-                  { model: Likes },
-                  { model: Favorite_twits },
+                  { model: User, as: "twit_user" },
+                  { model: Likes, as: "likes" },
+                  { model: Favorite_twits, as: "favorite_twits" },
                   { model: Comments },
                 ],
               },
@@ -363,7 +363,7 @@ class UserController {
       const { id } = request.params;
       const followings = await Following.findAll({
         where: { followUserId: id },
-        include: [{ model: User, as: "User" }],
+        include: [{ model: User, as: "followers_users" }],
       });
 
       return response.json(followings);
@@ -380,7 +380,7 @@ class UserController {
 
     const followingUserId = await Following.findAll({
       attributes: ["followUserId"],
-      where: { UserId: id },
+      where: { userId: id },
       raw: true,
     });
 

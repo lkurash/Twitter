@@ -19,6 +19,10 @@ router.post(
   actionsTwitsController.createCommentByUser
 );
 router.put("/twit/:twitId/retwits", actionsTwitsController.getCountRetwits);
+router.put(
+  "/retwits/:retwitId/user/:userId",
+  actionsTwitsController.deleteRetwitByUser
+);
 router.put("/twit/:twitId/likes", actionsTwitsController.getCountLikes);
 router.put("/twit/:twitId/comments", actionsTwitsController.getCountComments);
 

@@ -23,18 +23,18 @@ const UserPhoto = observer(({ twit }) => {
             if (usersStore.isAuth) {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(PRIVATE_USERS_PAGE_PATH + twit.twitUser.id);
+              navigate(PRIVATE_USERS_PAGE_PATH + twit.twit_user.id);
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
               navigate({
                 pathname: `${PUBLIC_USERS_PAGE_PATH}`,
-                search: `user=${twit.twitUser.id}`,
+                search: `user=${twit.twit_user.id}`,
               });
             }
           }}
         >
-          <img alt="User" src={getUserPhoto(twit.twitUser)} />
+          <img alt="User" src={getUserPhoto(twit.twit_user)} />
         </div>
       ) : (
         <div

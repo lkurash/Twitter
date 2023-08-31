@@ -18,14 +18,11 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
   const authUserID = getAuthUserID(usersStore);
 
   const createLikeTwit = async (twit) => {
-    await twitsClient.createLikeTwitByUser(authUserID, twit.id);
-    await twitsClient
-      .getCountLikes(twit.id)
-      .then((twit) => twitsStore.addLikeTwit(twit));
-
-    await twitsClient
-      .getTwitsWithUsersLike(authUserID)
-      .then((data) => twitsStore.setTwitsIdWithUsersLike(data.ids));
+    await twitsClient.createLikeTwitByUser(authUserID, twit.id).then((like) => {
+      twitsClient
+        .getCountLikes(twit.id)
+        .then((twit) => twitsStore.addLikeTwit(twit, like));
+    });
   };
 
   const hoverAndActiveButtonLike = (twit) => {
@@ -51,7 +48,7 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
 
   return (
     <div className="user-twit-panel-like">
-      {!twitsStore.twitsIdWithUsersLike.includes(twit.id) ? (
+      {!twit.likes.length > 0 ? (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}

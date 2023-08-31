@@ -43,7 +43,7 @@ const ContentBookmarksPage = observer(() => {
       <div className="twits">
         {favoriteTwitsStore.favoriteTwits ? (
           favoriteTwitsStore.favoriteTwits.map((bookmark) => (
-            <Twit twit={bookmark.Twit} key={bookmark.Twit.id} />
+            <Twit twit={bookmark} key={bookmark.id} />
           ))
         ) : (
           <p className="empty-twits">No twits</p>

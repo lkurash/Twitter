@@ -12,7 +12,7 @@ const TooltipRetwitOnTwit = ({ retwit }) => {
     <>
       {retwit && (
         <>
-          {retwit.UserId === getAuthUserID(usersStore) ? (
+          {retwit.userId === getAuthUserID(usersStore) ? (
             <div className="retwit-info-twit">
               <img src={retwitIcon} alt="Retwit" /> <p>You retweeted</p>
             </div>
