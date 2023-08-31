@@ -14,15 +14,15 @@ import hoverBookmark from "../Img/hover_bookmark.png";
 const ButtonBookmarkOnTwit = observer(({ twit }) => {
   const { favoriteTwitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const authUserID = getAuthUserID(usersStore);
 
   const createFavoriteTwits = async (twit) => {
-    await twitsClient.createFavoriteTwitByUser(authUserID, twit.id);
     await twitsClient
-      .getFavoriteTwits(authUserID)
-      .then((favoriteTwitsByUser) => {
-        favoriteTwitsStore.setFavoriteTwitsIds(favoriteTwitsByUser.ids);
+      .createFavoriteTwitByUser(authUserID, twit.id)
+      .then((bookmark) => {
+        twitsStore.addFavoriteTwit(twit, bookmark);
       });
   };
 
@@ -48,7 +48,7 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
 
   return (
     <div className="user-twit-panel-bookmark">
-      {!favoriteTwitsStore.favoriteTwitsIds.includes(twit.id) ? (
+      {!twit.favorite_twits.length > 0 ? (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}

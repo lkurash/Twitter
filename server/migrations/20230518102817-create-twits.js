@@ -15,7 +15,7 @@ module.exports = {
       img: {
         type: Sequelize.STRING,
       },
-      UserId: {
+      userId: {
         type: Sequelize.INTEGER,
       },
       retwit: {

@@ -13,8 +13,8 @@ const ButtonFollowingUsersProfile = observer(({ user, usersFollow }) => {
 
   const checkFollowingUser = () => {
     usersFollow.userFollowers.map((follower) => {
-      if (follower.UserId === user.user.id) {
-        followingUser.push(follower.UserId);
+      if (follower.userId === user.user.id) {
+        followingUser.push(follower.userId);
       }
       return followingUser;
     });

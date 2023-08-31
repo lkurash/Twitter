@@ -30,16 +30,49 @@ class TwitsStore {
     }
   }
 
-  addLikeTwit(twitLike) {
+  addLikeTwit(twitLike, like) {
     this._twits.map((twit) => {
       if (twit.id === twitLike.id) {
         twit.countLikes = twitLike.countLikes;
+        if (like) {
+          twit.likes = [like];
+        } else {
+          twit.likes = [];
+        }
       }
     });
 
     this._twitsWhoReading.map((twit) => {
       if (twit.id === twitLike.id) {
         twit.countLikes = twitLike.countLikes;
+        if (like) {
+          twit.likes = [like];
+        } else {
+          twit.likes = [];
+        }
+      }
+    });
+    return [this._twits, this._twitsWhoReading];
+  }
+
+  addFavoriteTwit(bookmarkTwit, bookmark) {
+    this._twits.map((twit) => {
+      if (twit.id === bookmarkTwit.id) {
+        if (bookmark) {
+          twit.favorite_twits = [bookmark];
+        } else {
+          twit.favorite_twits = [];
+        }
+      }
+    });
+
+    this._twitsWhoReading.map((twit) => {
+      if (twit.id === bookmarkTwit.id) {
+        if (bookmark) {
+          twit.favorite_twits = [bookmark];
+        } else {
+          twit.favorite_twits = [];
+        }
       }
     });
     return [this._twits, this._twitsWhoReading];
@@ -48,19 +81,25 @@ class TwitsStore {
   addRetwitTwit(retwit) {
     this._twits.map((twit) => {
       if (twit.id === retwit.id) {
+        twit.retwits = [retwit];
+        twit.countRetwits = retwit.countRetwits;
+      }
+      if (twit.twitId === retwit.id) {
         twit.countRetwits = retwit.countRetwits;
       }
       return this._twits;
     });
   }
 
-  deleteRetwit(retwit) {
-    let twit = this._twits.findIndex(
-      (twit) =>
-        (twit.twitId === retwit.id && twit.retwit === true) ||
-        (twit.id === retwit.id && twit.retwit === true)
+  deleteRetwit(originalTwit, retwit) {
+    let originalTwitsIndex = this._twits.findIndex(
+      (twit) => twit.id === originalTwit
     );
-    return this._twits.splice(twit, 1);
+
+    let retwitsIndex = this._twits.findIndex((twit) => twit.id === retwit);
+
+    this._twits[originalTwitsIndex].retwits = [];
+    this._twits.splice(retwitsIndex, 1);
   }
 
   setLikedTwit(twit) {

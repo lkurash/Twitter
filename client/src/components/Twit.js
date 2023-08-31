@@ -7,7 +7,7 @@ import UserPhoto from "./UserPhoto";
 
 const Twit = ({ twit }) => {
   const authUserID = getAuthUserID();
-
+  
   return (
     <>
       <div className="twit">
@@ -15,7 +15,7 @@ const Twit = ({ twit }) => {
         <div className="user-block-twit">
           <UserPhoto twit={twit} />
           <TwitDesc twit={twit} />
-          {authUserID === twit.UserId && (
+          {authUserID === twit.userId && (
             <ButtonDeleteTwit twit={twit} key={`button-${twit.id}`} />
           )}
         </div>

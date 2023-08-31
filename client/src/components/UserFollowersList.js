@@ -38,7 +38,7 @@ const UserFollowersList = observer(() => {
               {profile.User.id !== authUserID && (
                 <ButtonFollowInFollowList
                   profile={profile}
-                  userId={profile.UserId}
+                  userId={profile.userId}
                 />
               )}
             </li>

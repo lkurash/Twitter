@@ -112,7 +112,7 @@ class TwitsClient {
     return twit.data;
   }
 
-  async getTwitsWithUsersLike(userId, limit, list) {
+  async getTwitsForAuthUser(userId, limit, list) {
     const twitsIds = await $authHost.get(`api/twits/likes/user/${userId}`, {
       params: { limit, list },
     });
@@ -124,6 +124,14 @@ class TwitsClient {
     const twitsIds = await $authHost.get(`api/twits/retwits/user/${userId}`);
 
     return twitsIds.data;
+  }
+
+  async deleteRetwit(retwitId, userId) {
+    const retwit = await $authHost.put(
+      `api/twits/retwits/${retwitId}/user/${userId}`
+    );
+
+    return retwit.data;
   }
 
   async getUserTwitsWithMedia(userId, limit, list) {

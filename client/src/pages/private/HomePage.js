@@ -32,9 +32,9 @@ const HomePage = observer(({ loadingPage }) => {
       .getFollowersUser(authUserID)
       .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
-    twitsClient.getTwitsByUser(authUserID).then((usersTwits) => {
-      twitsStore.setUserTwits(usersTwits);
-    });
+    // twitsClient.getTwitsByUser(authUserID).then((usersTwits) => {
+    //   twitsStore.setUserTwits(usersTwits);
+    // });
 
     twitsClient
       .getTwitsByFollowingsUsers(authUserID)

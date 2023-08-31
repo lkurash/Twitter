@@ -4,15 +4,23 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Twits extends Model {
     static associate(models) {
-      Twits.hasMany(models.Favorite_twits);
-      Twits.belongsTo(models.User, { as: "user", foreignKey: "UserId" });
-      Twits.belongsTo(models.Twits, { as: "originalTwit", foreignKey: "twitId" });
+      Twits.hasMany(models.Favorite_twits, {
+        as: "favorite_twits",
+        foreignKey: "twitId",
+      });
+      Twits.belongsTo(models.User, { as: "user", foreignKey: "userId" });
+
+      Twits.hasMany(models.Twits, {
+        as: "retwits",
+        foreignKey: "twitId",
+      });
+
       Twits.belongsTo(models.User, {
-        as: "twitUser",
+        as: "twit_user",
         foreignKey: "twitUserId",
       });
-      Twits.hasMany(models.Likes);
-      Twits.hasMany(models.Comments);
+      Twits.hasMany(models.Likes, { as: "likes", foreignKey: "twitId" });
+      Twits.hasMany(models.Comments, { foreignKey: "id" });
     }
   }
 
@@ -22,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       img: {
         type: DataTypes.STRING,
       },
-      UserId: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
       retwit: {
         type: Boolean,
         defaultValue: false,

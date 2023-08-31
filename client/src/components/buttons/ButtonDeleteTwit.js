@@ -26,9 +26,13 @@ const ButtonDeleteTwit = observer(({ twit }) => {
     await twitsClient
       .getTwitsByFollowingsUsers(authUserID)
       .then((twits) => twitsStore.setTwitsWhoReading(twits));
-    await twitsClient.getAllTwits().then((alltwits) => {
-      twitsStore.setTwits(alltwits);
-    });
+
+    if (authUserID) {
+      await twitsClient.getTwitsForAuthUser(authUserID).then((twits) => {
+        twitsStore.setTwitsIdWithUsersLike(twits.ids);
+        twitsStore.setTwitsWithUsersLike(twits.twits);
+      });
+    }
 
     await trendsClient.getCountTrends(twit);
   };

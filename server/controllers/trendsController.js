@@ -71,6 +71,9 @@ class TrendsController {
           model: models.NotInteresting_trends,
           as: "notInteresting_trends",
         },
+        order: [["count_twits", "DESC"]],
+        limit: limit,
+        subQuery: false,
       });
 
       return response.json(trends);
@@ -101,9 +104,9 @@ class TrendsController {
       include: [
         { model: User, as: "user" },
         { model: Twits, as: "originalTwit" },
-        { model: User, as: "twitUser" },
-        { model: Likes },
-        { model: Favorite_twits },
+        { model: User, as: "twit_user" },
+        { model: Likes, as: "likes" },
+        { model: Favorite_twits, as: "favorite_twits" },
         { model: Comments },
       ],
       limit: limit,
