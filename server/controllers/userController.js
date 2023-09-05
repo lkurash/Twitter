@@ -4,6 +4,20 @@ const jwt = require("jsonwebtoken");
 const uuid = require("uuid");
 const path = require("path");
 
+const FollowersUserPresenter = require("../presenters/followersUserPresenter");
+const FollowingsUserPresenter = require("../presenters/followingsUserPresenter");
+
+const { QueryTypes } = require("sequelize");
+const sequelize = new Sequelize(
+  "twitter_development",
+  "postgres",
+  "qweqweqwe",
+  {
+    host: "127.0.0.1",
+    dialect: "postgres",
+  }
+);
+
 const SECRET_KEY = "super_secret_key22";
 const SECRET_KEY_ACCESS_TOKEN = "super_secret_key22";
 const SECRET_KEY_REFRESH_TOKEN = "super_secret_key";
@@ -224,7 +238,7 @@ class UserController {
     let { limit } = request.query;
     limit = limit || 5;
     const users = await User.findAll({
-      include: [{ model: Following }],
+      include: [{ model: Following, as: "followings_user" }],
       limit: limit,
     });
 
@@ -262,7 +276,7 @@ class UserController {
                 { model: Comments },
               ],
             },
-            { model: Following },
+            { model: Following, as: "followings_user" },
           ],
         });
 
@@ -298,7 +312,7 @@ class UserController {
           followUserId: followUserId,
         });
 
-        return response.json(followings);
+        return response.json(followings.followUserId);
       }
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
@@ -317,11 +331,17 @@ class UserController {
         next(ApiError.badRequest(`Check authentication ${id}`));
       }
 
-      const unFollow = await Following.destroy({
+      const following = await Following.findOne({
         where: { followUserId: +followUserId, userId: userId },
       });
 
-      return response.json(unFollow);
+      if (following) {
+        const unFollow = await Following.destroy({
+          where: { followUserId: +followUserId, userId: userId },
+        });
+      }
+
+      return response.json(following.followUserId);
     } catch (error) {
       next(ApiError.badRequest("Check followUserId"));
     }
@@ -329,30 +349,27 @@ class UserController {
 
   async getFollowingUsers(request, response, next) {
     try {
-      const { id } = request.params;
-      const followings = await Following.findAll({
-        where: { userId: id },
-        include: [
-          {
-            model: User,
-            as: "followings_users",
-            include: [
-              {
-                model: Twits,
-                include: [
-                  { model: User, as: "user" },
-                  { model: User, as: "twit_user" },
-                  { model: Likes, as: "likes" },
-                  { model: Favorite_twits, as: "favorite_twits" },
-                  { model: Comments },
-                ],
-              },
-            ],
-          },
-        ],
-      });
+    const Op = Sequelize.Op;
 
-      return response.json(followings);
+    const user = decodeUser(request);
+    const userIdToken = user.id;
+
+    const { id } = request.params;
+
+    const users = await Following.findAll({
+      where: {
+        userId: id,
+      },
+      include: {
+        model: User,
+        as: "user",
+      },
+    });
+
+    let presenter = new FollowingsUserPresenter(users);
+
+    return response.json(presenter.toJSON(users));
+
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
@@ -360,13 +377,23 @@ class UserController {
 
   async getFollowerUsers(request, response, next) {
     try {
-      const { id } = request.params;
-      const followings = await Following.findAll({
-        where: { followUserId: id },
-        include: [{ model: User, as: "followers_users" }],
-      });
+      const Op = Sequelize.Op;
+      const user = decodeUser(request);
+      const userIdToken = user.id;
 
-      return response.json(followings);
+      const { id } = request.params;
+
+      const users = await sequelize.query(
+        `SELECT "Following"."id", "Following"."followUserId", "Following"."userId", "Following"."createdAt", "Following"."updatedAt", "followUser"."id" AS "followUser.id", "followUser"."user_name" AS "followUser.user_name", "followUser"."email" AS "followUser.email", "followUser"."password" AS "followUser.password", "followUser"."birthdate" AS "followUser.birthdate", "followUser"."web_site_url" AS "followUser.web_site_url", "followUser"."about" AS "followUser.about", "followUser"."photo" AS "followUser.photo", "followUser"."background" AS "followUser.background", "followUser"."createdAt" AS "followUser.createdAt", "followUser"."updatedAt" AS "followUser.updatedAt", "followUser->followers_user"."id" AS "followUser.followers_user.id", "followUser->followers_user"."followUserId" AS "followUser.followers_user.followUserId", "followUser->followers_user"."userId" AS "followUser.followers_user.userId", "followUser->followers_user"."createdAt" AS "followUser.followers_user.createdAt", "followUser->followers_user"."updatedAt" AS "followUser.followers_user.updatedAt" FROM "Followings"  AS "Following" LEFT OUTER JOIN  "Users" AS "followUser" ON "Following"."userId" = "followUser"."id" LEFT OUTER JOIN "Followings" AS "followUser->followers_user" ON ("followUser->followers_user"."userId" = ${userIdToken}  and "followUser"."id" = "followUser->followers_user"."followUserId") where "Following"."followUserId" = ${id}`,
+        {
+          type: QueryTypes.SELECT,
+          nest: true,
+        }
+      );
+
+      let presenter = new FollowersUserPresenter(users);
+
+      return response.json(presenter.toJSON(users));
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
@@ -397,6 +424,7 @@ class UserController {
       include: [
         {
           model: Following,
+          as: "followings_user",
         },
       ],
       limit: limit,

@@ -19,19 +19,18 @@ const ProfilePageLikes = observer(() => {
   }, []);
 
   if (twitsStore.twits.length === 0 || loadingPage) return spinner();
-
   return (
     <div className="twits">
-      {twitsStore.twitsWithUsersLike.map((like) => (
+      {twitsStore.twitsWithUsersLikes.map((like) => (
         <Twit twit={like} key={like.id} />
       ))}
-      {twitsStore.twitsWithUsersLike.length >= 7 && (
+      {twitsStore.twitsWithUsersLikes.length >= 7 && (
         <ButtonShowMoreTwits
           getMoreTwits={getMoreTwitsWithLike}
           store={twitsStore}
         />
       )}
-      {twitsStore.twitsWithUsersLike.length === 0 && (
+      {twitsStore.twitsWithUsersLikes.length === 0 && (
         <p className="empty-twits">No twits</p>
       )}
     </div>

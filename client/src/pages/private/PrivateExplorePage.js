@@ -18,15 +18,17 @@ const PrivateExplorePage = observer(() => {
 
   useEffect(() => {
     try {
-      twitsClient
-        .getAllTwits()
-        .then((alltwits) => twitsStore.setTwits(alltwits));
+      if (authUserID) {
+        twitsClient.getTwitsForAuthUser(authUserID).then((twits) => {
+          twitsStore.setTwits(twits);
+        });
+        
+        usersClient
+          .getUserProfile(authUserID)
+          .then((userInfo) => usersStore.setUser(userInfo));
+      }
 
       usersStore.setAuth(getFlagIsAuth());
-
-      usersClient
-        .getUserProfile(authUserID)
-        .then((userInfo) => usersStore.setUser(userInfo));
     } catch (error) {
       console.log(error.response.data.message);
     }

@@ -48,7 +48,23 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
 
   return (
     <div className="user-twit-panel-like">
-      {!twit.likes.length > 0 ? (
+      {twit.likes.length > 0 ? (
+        <div className="user-twit-panel-button-like">
+          <img
+            alt="Like"
+            key={twit.id}
+            className="user-twit-panel-like-img"
+            src={disLikeButtonImg(twit)}
+            onMouseEnter={() => twitsStore.sethoverTwitLike(twit)}
+            onMouseLeave={() => twitsStore.sethoverTwitLike({})}
+            onClick={() => {
+              createLikeTwit(twit);
+              twitsStore.setDislikeTwit(twit);
+              twitsStore.setLikedTwit({});
+            }}
+          />
+        </div>
+      ) : (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}
@@ -79,22 +95,6 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
             />
           </div>
         </>
-      ) : (
-        <div className="user-twit-panel-button-like">
-          <img
-            alt="Like"
-            key={twit.id}
-            className="user-twit-panel-like-img"
-            src={disLikeButtonImg(twit)}
-            onMouseEnter={() => twitsStore.sethoverTwitLike(twit)}
-            onMouseLeave={() => twitsStore.sethoverTwitLike({})}
-            onClick={() => {
-              createLikeTwit(twit);
-              twitsStore.setDislikeTwit(twit);
-              twitsStore.setLikedTwit({});
-            }}
-          />
-        </div>
       )}
       <p className="user-twit-panel-count-like">
         {twit.countLikes > 0 && twit.countLikes}

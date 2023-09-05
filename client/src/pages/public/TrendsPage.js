@@ -42,7 +42,9 @@ const TrendsPage = observer(() => {
     trendsClient
       .getTrendsTwits(trend)
       .then((trendstTwits) => trendsStore.setTrendsTwits(trendstTwits));
+
     usersClient.getUsers().then((users) => usersStore.setAllUsers(users));
+    
     if (authUserID) {
       usersClient
         .getUserProfile(authUserID)
