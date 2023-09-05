@@ -67,6 +67,7 @@ class TwitsController {
             { model: User, as: "twit_user" },
             { model: Likes, as: "likes" },
             { model: Favorite_twits, as: "favorite_twits" },
+            { model: Twits, as: "retwits" },
             { model: Comments },
           ],
           where: { id: newTwit.id },
@@ -129,33 +130,66 @@ class TwitsController {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const followingUserId = await Following.findAll({
-        attributes: ["followUserId"],
-        where: { userId: userId },
-        raw: true,
-      });
-
-      const ids = [userId];
-
-      if (followingUserId) {
-        followingUserId.map((item) => {
-          return ids.push(item.followUserId);
-        });
-      }
-
       const twits = await Twits.findAll({
-        order: [["id", "DESC"]],
-        where: { userId: { [Op.in]: ids } },
+        where: {
+          [Op.or]: {
+            "$likes.userId$": { [Op.or]: [userId, null] },
+            "$favorite_twits.userId$": { [Op.or]: [userId, null] },
+            "$retwits.userId$": { [Op.or]: [userId, null] },
+          },
+        },
+        where: {
+          [Op.or]: {
+            "$user.followings_user.userId$": userId,
+            "$user.id$": userId,
+          },
+        },
+
         include: [
-          { model: User, as: "user" },
-          { model: User, as: "twit_user" },
           { model: Likes, as: "likes" },
+          {
+            model: User,
+            as: "user",
+            include: { model: Following, as: "followings_user" },
+          },
+          { model: Twits, as: "retwits" },
+          { model: User, as: "twit_user" },
           { model: Favorite_twits, as: "favorite_twits" },
           { model: Comments },
         ],
+        order: [["id", "DESC"]],
         limit: limit,
         offset: offset,
+        subQuery: false,
       });
+
+      // const followingUserId = await Following.findAll({
+      //   attributes: ["followUserId"],
+      //   where: { userId: userId },
+      //   raw: true,
+      // });
+
+      // const ids = [userId];
+
+      // if (followingUserId) {
+      //   followingUserId.map((item) => {
+      //     return ids.push(item.followUserId);
+      //   });
+      // }
+
+      // const twits = await Twits.findAll({
+      //   order: [["id", "DESC"]],
+      //   where: { userId: { [Op.in]: ids } },
+      //   include: [
+      //     { model: User, as: "user" },
+      //     { model: User, as: "twit_user" },
+      //     { model: Likes, as: "likes" },
+      //     { model: Favorite_twits, as: "favorite_twits" },
+      //     { model: Comments },
+      //   ],
+      //   limit: limit,
+      //   offset: offset,
+      // });
 
       return response.json(twits);
     } catch (error) {
@@ -241,6 +275,7 @@ class TwitsController {
           [Op.and]: {
             "$likes.userId$": { [Op.or]: [userId, null] },
             "$favorite_twits.userId$": userId,
+            "$retwits.userId$": { [Op.or]: [userId, null] },
           },
         },
 
@@ -356,21 +391,72 @@ class TwitsController {
       let offset = list * limit - limit;
 
       const twits = await Twits.findAll({
-        order: [["id", "DESC"]],
+        where: {
+          [Op.and]: {
+            "$likes.userId$": { [Op.or]: [userId, null] },
+            "$favorite_twits.userId$": { [Op.or]: [userId, null] },
+            "$retwits.userId$": { [Op.or]: [userId, null] },
+          },
+        },
         where: { [Op.and]: [{ userId: userId, img: { [Op.ne]: null } }] },
         include: [
-          { model: User, as: "user" },
-          { model: User, as: "twit_user" },
           { model: Likes, as: "likes" },
+          { model: User, as: "user" },
+          { model: Twits, as: "retwits" },
+          { model: User, as: "twit_user" },
           { model: Favorite_twits, as: "favorite_twits" },
           { model: Comments },
         ],
 
+        order: [["id", "DESC"]],
         limit: limit,
         offset: offset,
+        subQuery: false,
       });
 
       return response.json(twits);
+    } catch (error) {
+      next(ApiError.badRequest("Check user.id"));
+    }
+  }
+
+  async getTwitsWithUserLikes(request, response, next) {
+    try {
+      const Op = Sequelize.Op;
+      const user = decodeUser(request);
+      const userIdToken = user.id;
+
+      const { userId } = request.params;
+      let { limit, list } = request.query;
+
+      limit = limit || 7;
+      list = list || 1;
+      let offset = list * limit - limit;
+
+      const twitsWithLikes = await Twits.findAll({
+        where: {
+          [Op.and]: {
+            "$likes.userId$": userId,
+            "$favorite_twits.userId$": { [Op.or]: [userIdToken, null] },
+            "$retwits.userId$": { [Op.or]: [userIdToken, null] },
+          },
+        },
+
+        include: [
+          { model: Likes, as: "likes" },
+          { model: User, as: "user" },
+          { model: Twits, as: "retwits" },
+          { model: User, as: "twit_user" },
+          { model: Favorite_twits, as: "favorite_twits" },
+          { model: Comments },
+        ],
+        order: [["id", "DESC"]],
+        limit: limit,
+        offset: offset,
+        subQuery: false,
+      });
+
+      return response.json(twitsWithLikes);
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }

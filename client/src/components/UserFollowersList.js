@@ -27,18 +27,18 @@ const UserFollowersList = observer(() => {
                 onClick={() => {
                   usersStore.setUserPage({});
                   twitsStore.setUserTwits([]);
-                  navigate(PRIVATE_USERS_PAGE_PATH + profile.User.id);
+                  navigate(PRIVATE_USERS_PAGE_PATH + profile.id);
                 }}
               >
-                <img src={getUserPhoto(profile.User)} alt="User" />
+                <img src={getUserPhoto(profile)} alt="User" />
                 <p className="follow-page-main-user-name">
-                  {profile.User.user_name}
+                  {profile.user_name}
                 </p>
               </div>
-              {profile.User.id !== authUserID && (
+              {profile.id !== authUserID && (
                 <ButtonFollowInFollowList
                   profile={profile}
-                  userId={profile.userId}
+                  following={profile.following}
                 />
               )}
             </li>

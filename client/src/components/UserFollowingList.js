@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import { PRIVATE_USERS_PAGE_PATH } from "../utils/constans";
+import getAuthUserID from "../utils/getAuthUserID";
 import getUserPhoto from "../utils/getUserPhoto";
 
 import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
@@ -12,6 +13,7 @@ const UserFollowingList = observer(() => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
+    const authUserID = getAuthUserID(usersStore);
   const navigate = useNavigate();
 
   return (
@@ -25,18 +27,20 @@ const UserFollowingList = observer(() => {
                 onClick={() => {
                   usersStore.setUserPage({});
                   twitsStore.setUserTwits([]);
-                  navigate(PRIVATE_USERS_PAGE_PATH + profile.followUser.id);
+                  navigate(PRIVATE_USERS_PAGE_PATH + profile.id);
                 }}
               >
-                <img src={getUserPhoto(profile.followUser)} alt="User" />
+                <img src={getUserPhoto(profile)} alt="User" />
                 <p className="follow-page-main-user-name">
-                  {profile.followUser.user_name}
+                  {profile.user_name}
                 </p>
               </div>
-              <ButtonFollowInFollowList
-                profile={profile}
-                userId={profile.followUserId}
-              />
+              {profile.id !== authUserID && (
+                <ButtonFollowInFollowList
+                  profile={profile}
+                  following={profile.following}
+                />
+              )}
             </li>
           ))}
         </ul>

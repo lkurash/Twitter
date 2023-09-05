@@ -89,7 +89,7 @@ class TrendsController {
 
   async getTrendsTwits(request, response) {
     const Op = Sequelize.Op;
-
+    
     const { trend } = request.params;
     let { limit, list } = request.query;
 
@@ -103,7 +103,7 @@ class TrendsController {
       },
       include: [
         { model: User, as: "user" },
-        { model: Twits, as: "originalTwit" },
+        { model: Twits, as: "retwits" },
         { model: User, as: "twit_user" },
         { model: Likes, as: "likes" },
         { model: Favorite_twits, as: "favorite_twits" },

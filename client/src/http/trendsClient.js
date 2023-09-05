@@ -15,7 +15,7 @@ class TrendsClient {
     return trends.data;
   }
 
-  async getTrendsTwits(trend, limit, list) {
+  async getTrendsTwits(trend, userId, limit, list) {
     const twits = await $host.get(`api/twitter/trends/${trend}`, {
       params: { limit, list },
     });

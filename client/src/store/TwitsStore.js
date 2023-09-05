@@ -9,7 +9,7 @@ class TwitsStore {
     this._hoverTwitLike = {};
     this._dislikeTwit = {};
     this._twitsIdWithUsersLike = [];
-    this._twitsWithUsersLike = [];
+    this._twitsWithUsersLikes = [];
     this._userTwitsWithMedia = [];
     makeAutoObservable(this);
   }
@@ -118,12 +118,12 @@ class TwitsStore {
     this._twitsWhoReading = twits;
   }
 
-  setTwitsIdWithUsersLike(ids) {
-    this._twitsIdWithUsersLike = ids;
+  setTwitsIdWithUsersLikes(ids) {
+    this._twitsIdWithUsersLikes = ids;
   }
 
-  setTwitsWithUsersLike(twits) {
-    this._twitsWithUsersLike = twits;
+  setTwitsWithUsersLikes(twits) {
+    this._twitsWithUsersLikes = twits;
   }
 
   setUserTwitsWithMedia(twits) {
@@ -154,12 +154,12 @@ class TwitsStore {
     return this._twitsWhoReading;
   }
 
-  get twitsIdWithUsersLike() {
-    return this._twitsIdWithUsersLike;
+  get twitsIdWithUsersLikes() {
+    return this._twitsIdWithUsersLikes;
   }
 
-  get twitsWithUsersLike() {
-    return this._twitsWithUsersLike;
+  get twitsWithUsersLikes() {
+    return this._twitsWithUsersLikes;
   }
   get userTwitsWithMedia() {
     return this._userTwitsWithMedia;

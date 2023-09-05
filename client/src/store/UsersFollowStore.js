@@ -36,6 +36,32 @@ class UsersFollowStore {
     return this._unfollowUsersIds.splice(unFollowId, 1);
   }
 
+  deleteFollowUserInFollowList(followingUserId) {
+    this._userFollowers.forEach((following) => {
+      if (following.id === followingUserId) {
+        following.following = false;
+      }
+    });
+    this._userFollowing.forEach((following) => {
+      if (following.id === followingUserId) {
+        following.following = false;
+      }
+    });
+  }
+
+  createFollowUserInFollowList(followingUserId) {
+    this._userFollowers.forEach((following) => {
+      if (following.id === followingUserId) {
+        following.following = true;
+      }
+    });
+    this._userFollowing.forEach((following) => {
+      if (following.id === followingUserId) {
+        following.following = true;
+      }
+    });
+  }
+
   get userFollowing() {
     return this._userFollowing;
   }

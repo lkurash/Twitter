@@ -34,6 +34,10 @@ const ProfileUserPage = observer(({ loadingPage }) => {
           .then((userInfo) => usersStore.setUser(userInfo));
       }
 
+      twitsClient.getTwitsWithUserLikes(id).then((twits) => {
+        twitsStore.setTwitsWithUsersLikes(twits);
+      });
+
       twitsClient
         .getTwitsByUser(id)
         .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
@@ -62,7 +66,6 @@ const ProfileUserPage = observer(({ loadingPage }) => {
       console.log(error.response.data.message);
     }
   });
-
   return (
     <>
       <div className="main-wrapper">

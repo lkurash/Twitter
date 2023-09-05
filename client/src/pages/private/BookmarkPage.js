@@ -10,12 +10,10 @@ import getInfoAuthPage from "../../utils/getInfoAuthPage";
 
 import SidebarContent from "../../components/SidebarContent";
 import ContentBookmarksPage from "../../components/ContentBookmarksPage";
+import twitsClient from "../../http/twitsClient";
 
 const BookmarksPage = observer(() => {
-  const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
-  const { retwitsStore } = useContext(Context);
-  const { trendsStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
@@ -32,15 +30,9 @@ const BookmarksPage = observer(() => {
           usersFollowingsStore.setuserFollowing(followings)
         );
 
-      getInfoAuthPage(
-        authUserID,
-        usersStore,
-        usersFollowingsStore,
-        twitsStore,
-        retwitsStore,
-        favoriteTwitsStore,
-        trendsStore
-      );
+      twitsClient.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
+        favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser);
+      });
 
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {

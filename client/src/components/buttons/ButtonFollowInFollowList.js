@@ -6,7 +6,7 @@ import usersClient from "../../http/usersClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonFollowInFollowList = observer(
-  ({ profile, userId, userFollowingIds }) => {
+  ({ profile, userFollowingIds, following }) => {
     const { usersStore } = useContext(Context);
     const { usersFollowingsStore } = useContext(Context);
     const authUserID = getAuthUserID(usersStore);
@@ -14,26 +14,28 @@ const ButtonFollowInFollowList = observer(
     const deleteFollowAndgetUsers = async (userFollowId) => {
       await usersClient
         .deleteFollowings(authUserID, userFollowId)
+        .then((unfollowUser) => {
+          usersFollowingsStore.deleteFollowUserInFollowList(
+            unfollowUser,
+          );
+        })
         .catch((error) => console.log(error.response.data.message));
-      await usersClient
-        .getUsers()
-        .then((users) => usersStore.setAllUsers(users));
     };
 
     const createFollowAndgetUsers = async (userFollowId) => {
       await usersClient
         .createFollowings(authUserID, userFollowId)
+        .then((followingUser) => {
+          usersFollowingsStore.createFollowUserInFollowList(followingUser);
+        })
         .catch((error) => {
           console.log(error.response.data.message);
         });
-      await usersClient
-        .getUsers()
-        .then((users) => usersStore.setAllUsers(users));
     };
 
     return (
       <>
-        {!usersFollowingsStore.unfollowUsersIds.includes(profile.id) ? (
+        {following ? (
           <button
             key={profile.id}
             className="follow-page-main-button-following button-following-hover"
@@ -42,10 +44,7 @@ const ButtonFollowInFollowList = observer(
             }}
             onMouseLeave={() => usersFollowingsStore.setHoverFollowUser({})}
             onClick={() => {
-              deleteFollowAndgetUsers(userId);
-              usersFollowingsStore.setUnfollowUsersIds(
-                usersFollowingsStore.unfollowUsersIds.concat(profile.id)
-              );
+              deleteFollowAndgetUsers(profile.id);
             }}
           >
             <span>
@@ -59,8 +58,7 @@ const ButtonFollowInFollowList = observer(
             type="submit"
             className="follow-page-main-button-following"
             onClick={() => {
-              usersFollowingsStore.deleteIdInUnfollowListIds(profile.id);
-              createFollowAndgetUsers(userId);
+              createFollowAndgetUsers(profile.id);
               usersFollowingsStore.setStartFollowUser(profile);
             }}
           >
