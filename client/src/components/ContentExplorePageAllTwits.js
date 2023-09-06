@@ -8,7 +8,7 @@ import {
 } from "react";
 import { Context } from "..";
 
-import getMoreAllTwits from "../utils/getMoreAllTwits";
+import getTwitsForAuthUser from "../utils/getTwitsForAuthUser";
 import spinner from "../utils/spinner";
 
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
@@ -49,7 +49,7 @@ const ContentExplorePageAllTwits = observer(() => {
                   ))}
                   {twitsStore.twits.length >= 7 && (
                     <ButtonShowMoreTwits
-                      getMoreTwits={getMoreAllTwits}
+                      getMoreTwits={getTwitsForAuthUser}
                       store={twitsStore}
                     />
                   )}

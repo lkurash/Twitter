@@ -4,6 +4,18 @@ const Sequelize = require("sequelize");
 const uuid = require("uuid");
 const path = require("path");
 
+const { QueryTypes } = require("sequelize");
+const sequelize = new Sequelize(
+  "twitter_development",
+  "postgres",
+  "qweqweqwe",
+  {
+    host: "127.0.0.1",
+    dialect: "postgres",
+  }
+);
+
+const TwitsPresenter = require("../presenters/twitsPresenter");
 const models = require("../models/index");
 const ApiError = require("../error/ApiError");
 const Twits = models.Twits;
@@ -27,6 +39,28 @@ const checkUsersAuth = (request, userId, next) => {
   if (userIdToken !== parseInt(userId)) {
     next(ApiError.badRequest(`Check authentication ${userId}`));
   }
+};
+
+const dbRequestTwitsForAuthUser = async (request, anyParams) => {
+  const { userId } = request.params;
+  const user = decodeUser(request);
+  const userIdToken = user.id;
+
+  const twits = await sequelize.query(
+    `SELECT "Twits"."id", "Twits"."text", "Twits"."img", "Twits"."userId", "Twits"."retwit", "Twits"."twitId", "Twits"."twitUserId", "Twits"."countRetwits", "Twits"."countLikes", "Twits"."countComments", "Twits"."createdAt", "Twits"."updatedAt", "likes"."id" AS "likes.id", "likes"."like" AS "likes.like", "likes"."userId" AS "likes.userId", "likes"."twitId" AS "likes.twitId", "likes"."createdAt" AS "likes.createdAt", "likes"."updatedAt" AS "likes.updatedAt", "user"."id" AS "user.id", "user"."user_name" AS "user.user_name", "user"."email" AS "user.email", "user"."password" AS "user.password", "user"."birthdate" AS "user.birthdate", "user"."web_site_url" AS "user.web_site_url", "user"."about" AS "user.about", "user"."photo" AS "user.photo", "user"."background" AS "user.background", "user"."createdAt" AS "user.createdAt", "user"."updatedAt" AS "user.updatedAt", "retwits"."id" AS "retwits.id", "retwits"."text" AS "retwits.text", "retwits"."img" AS "retwits.img", "retwits"."userId" AS "retwits.userId", "retwits"."retwit" AS "retwits.retwit", "retwits"."twitId" AS "retwits.twitId", "retwits"."twitUserId" AS "retwits.twitUserId", "retwits"."countRetwits" AS "retwits.countRetwits", "retwits"."countLikes" AS "retwits.countLikes", "retwits"."countComments" AS "retwits.countComments", "retwits"."createdAt" AS "retwits.createdAt", "retwits"."updatedAt" AS "retwits.updatedAt", "twit_user"."id" AS "twit_user.id", "twit_user"."user_name" AS "twit_user.user_name", "twit_user"."email" AS "twit_user.email", "twit_user"."password" AS "twit_user.password", "twit_user"."birthdate" AS "twit_user.birthdate", "twit_user"."web_site_url" AS "twit_user.web_site_url", "twit_user"."about" AS "twit_user.about", "twit_user"."photo" AS "twit_user.photo", "twit_user"."background" AS "twit_user.background", "twit_user"."createdAt" AS "twit_user.createdAt", "twit_user"."updatedAt" AS "twit_user.updatedAt", "favorite_twits"."id" AS "favorite_twits.id", "favorite_twits"."bookmark" AS "favorite_twits.bookmark", "favorite_twits"."userId" AS "favorite_twits.userId", "favorite_twits"."twitId" AS "favorite_twits.twitId", "favorite_twits"."createdAt" AS "favorite_twits.createdAt", "favorite_twits"."updatedAt" AS "favorite_twits.updatedAt"
+    FROM "Twits" AS "Twits"
+      LEFT OUTER JOIN "Likes" AS "likes" ON ("Twits"."id" = "likes"."twitId" and "likes"."userId" = ${userIdToken} )
+      LEFT OUTER JOIN "Users" AS "user" ON "Twits"."userId" = "user"."id"
+      LEFT OUTER JOIN "Twits" AS "retwits" ON ("Twits"."id" = "retwits"."twitId" and "retwits"."userId" = ${userIdToken})
+      LEFT OUTER JOIN "Users" AS "twit_user" ON "Twits"."twitUserId" = "twit_user"."id"
+      LEFT OUTER JOIN "Favorite_twits" AS "favorite_twits" ON ("Twits"."id" = "favorite_twits"."twitId" and "favorite_twits"."userId" = ${userIdToken})
+      ${anyParams}`,
+    {
+      type: QueryTypes.SELECT,
+      nest: true,
+    }
+  );
+  return twits;
 };
 
 class TwitsController {
@@ -90,32 +124,13 @@ class TwitsController {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const twits = await Twits.findAll({
-        where: {
-          [Op.or]: {
-            "$likes.userId$": { [Op.or]: [userId, null] },
-            "$favorite_twits.userId$": { [Op.or]: [userId, null] },
-            "$retwits.userId$": { [Op.or]: [userId, null] },
-          },
-        },
-        where: { userId: userId },
+      const params = `WHERE "Twits"."userId" = ${userId} ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
-        include: [
-          { model: User, as: "user" },
-          { model: User, as: "twit_user" },
-          { model: Likes, as: "likes" },
-          { model: Favorite_twits, as: "favorite_twits" },
-          { model: Twits, as: "retwits" },
-          { model: Comments },
-        ],
+      const twits = await dbRequestTwitsForAuthUser(request, params);
 
-        order: [["id", "DESC"]],
-        limit: limit,
-        offset: offset,
-        subQuery: false,
-      });
+      const presenter = new TwitsPresenter(twits);
 
-      return response.json(twits);
+      return response.json(presenter.toJSON());
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
@@ -123,75 +138,35 @@ class TwitsController {
 
   async getTwitsByFollowingUsers(request, response, next) {
     try {
-      const Op = Sequelize.Op;
-      const { userId } = request.params;
-      let { limit, list } = request.query;
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
+    const Op = Sequelize.Op;
+    const { userId } = request.params;
+    let { limit, list } = request.query;
+    limit = limit || 7;
+    list = list || 1;
+    let offset = list * limit - limit;
 
-      const twits = await Twits.findAll({
-        where: {
-          [Op.or]: {
-            "$likes.userId$": { [Op.or]: [userId, null] },
-            "$favorite_twits.userId$": { [Op.or]: [userId, null] },
-            "$retwits.userId$": { [Op.or]: [userId, null] },
-          },
-        },
-        where: {
-          [Op.or]: {
-            "$user.followings_user.userId$": userId,
-            "$user.id$": userId,
-          },
-        },
+    const twits = await sequelize.query(
+      `SELECT "Twits"."id", "Twits"."text", "Twits"."img", "Twits"."userId", "Twits"."retwit", "Twits"."twitId", "Twits"."twitUserId", "Twits"."countRetwits", "Twits"."countLikes", "Twits"."countComments", "Twits"."createdAt", "Twits"."updatedAt", "likes"."id"
+      AS "likes.id", "likes"."like" AS "likes.like", "likes"."userId"
+      AS "likes.userId", "likes"."twitId" AS "likes.twitId", "likes"."createdAt" AS "likes.createdAt", "likes"."updatedAt" AS "likes.updatedAt", "user"."id"
+      AS "user.id", "user"."user_name" AS "user.user_name", "user"."email" AS "user.email", "user"."password" AS "user.password", "user"."birthdate" AS "user.birthdate", "user"."web_site_url" AS "user.web_site_url", "user"."about" AS "user.about", "user"."photo" AS "user.photo", "user"."background" AS "user.background", "user"."createdAt" AS "user.createdAt", "user"."updatedAt" AS "user.updatedAt", "user->followings_user"."id" AS "user.followings_user.id", "user->followings_user"."followUserId" AS "user.followings_user.followUserId", "user->followings_user"."userId" AS "user.followings_user.userId", "user->followings_user"."createdAt" AS "user.followings_user.createdAt", "user->followings_user"."updatedAt" AS "user.followings_user.updatedAt", "retwits"."id" AS "retwits.id", "retwits"."text" AS "retwits.text", "retwits"."img" AS "retwits.img", "retwits"."userId" AS "retwits.userId", "retwits"."retwit" AS "retwits.retwit", "retwits"."twitId" AS "retwits.twitId", "retwits"."twitUserId" AS "retwits.twitUserId", "retwits"."countRetwits" AS "retwits.countRetwits", "retwits"."countLikes" AS "retwits.countLikes", "retwits"."countComments" AS "retwits.countComments", "retwits"."createdAt" AS "retwits.createdAt", "retwits"."updatedAt" AS "retwits.updatedAt", "twit_user"."id" AS "twit_user.id", "twit_user"."user_name" AS "twit_user.user_name", "twit_user"."email" AS "twit_user.email", "twit_user"."password" AS "twit_user.password", "twit_user"."birthdate" AS "twit_user.birthdate", "twit_user"."web_site_url" AS "twit_user.web_site_url", "twit_user"."about" AS "twit_user.about", "twit_user"."photo" AS "twit_user.photo", "twit_user"."background" AS "twit_user.background", "twit_user"."createdAt" AS "twit_user.createdAt", "twit_user"."updatedAt" AS "twit_user.updatedAt", "favorite_twits"."id" AS "favorite_twits.id", "favorite_twits"."bookmark" AS "favorite_twits.bookmark", "favorite_twits"."userId" AS "favorite_twits.userId", "favorite_twits"."twitId" AS "favorite_twits.twitId", "favorite_twits"."createdAt" AS "favorite_twits.createdAt", "favorite_twits"."updatedAt" AS "favorite_twits.updatedAt"
+      FROM "Twits" AS "Twits"
+      LEFT OUTER JOIN "Likes" AS "likes" ON ("Twits"."id" = "likes"."twitId" and "likes"."userId" = 1 )
+      LEFT OUTER JOIN "Users" AS "user" ON "Twits"."userId" = "user"."id"
+      LEFT OUTER JOIN "Followings" AS "user->followings_user" ON ("user"."id" = "user->followings_user"."followUserId" and "user->followings_user"."userId" = ${userId})
+      LEFT OUTER JOIN "Twits" AS "retwits" ON ("Twits"."id" = "retwits"."twitId" and "retwits"."userId" = ${userId})
+      LEFT OUTER JOIN "Users" AS "twit_user" ON "Twits"."twitUserId" = "twit_user"."id"
+      LEFT OUTER JOIN "Favorite_twits" AS "favorite_twits" ON ("Twits"."id" = "favorite_twits"."twitId" and "favorite_twits"."userId" = ${userId})
+      WHERE "user->followings_user"."userId" = ${userId} or "Twits"."userId" = ${userId} ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`,
+      {
+        type: QueryTypes.SELECT,
+        nest: true,
+      }
+    );
 
-        include: [
-          { model: Likes, as: "likes" },
-          {
-            model: User,
-            as: "user",
-            include: { model: Following, as: "followings_user" },
-          },
-          { model: Twits, as: "retwits" },
-          { model: User, as: "twit_user" },
-          { model: Favorite_twits, as: "favorite_twits" },
-          { model: Comments },
-        ],
-        order: [["id", "DESC"]],
-        limit: limit,
-        offset: offset,
-        subQuery: false,
-      });
+    const presenter = new TwitsPresenter(twits);
 
-      // const followingUserId = await Following.findAll({
-      //   attributes: ["followUserId"],
-      //   where: { userId: userId },
-      //   raw: true,
-      // });
-
-      // const ids = [userId];
-
-      // if (followingUserId) {
-      //   followingUserId.map((item) => {
-      //     return ids.push(item.followUserId);
-      //   });
-      // }
-
-      // const twits = await Twits.findAll({
-      //   order: [["id", "DESC"]],
-      //   where: { userId: { [Op.in]: ids } },
-      //   include: [
-      //     { model: User, as: "user" },
-      //     { model: User, as: "twit_user" },
-      //     { model: Likes, as: "likes" },
-      //     { model: Favorite_twits, as: "favorite_twits" },
-      //     { model: Comments },
-      //   ],
-      //   limit: limit,
-      //   offset: offset,
-      // });
-
-      return response.json(twits);
+    return response.json(presenter.toJSON());
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
@@ -205,14 +180,6 @@ class TwitsController {
     let offset = list * limit - limit;
 
     const twits = await Twits.findAll({
-      include: [
-        { model: Likes, as: "likes" },
-        { model: User, as: "user" },
-        { model: Twits, as: "retwits" },
-        { model: User, as: "twit_user" },
-        { model: Favorite_twits, as: "favorite_twits" },
-        { model: Comments },
-      ],
       order: [["id", "DESC"]],
       limit: limit,
       offset: offset,
@@ -224,37 +191,21 @@ class TwitsController {
   async getTwitsForAuthUser(request, response, next) {
     const Op = Sequelize.Op;
     const { userId } = request.params;
+    const user = decodeUser(request);
+    const userIdToken = user.id;
 
     let { limit, list } = request.query;
 
     limit = limit || 7;
     list = list || 1;
     let offset = list * limit - limit;
+    let order = `ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
-    const twits = await Twits.findAll({
-      where: {
-        [Op.or]: {
-          "$likes.userId$": { [Op.or]: [userId, null] },
-          "$favorite_twits.userId$": { [Op.or]: [userId, null] },
-          "$retwits.userId$": { [Op.or]: [userId, null] },
-        },
-      },
+    const twits = await dbRequestTwitsForAuthUser(request, order);
 
-      include: [
-        { model: Likes, as: "likes" },
-        { model: User, as: "user" },
-        { model: Twits, as: "retwits" },
-        { model: User, as: "twit_user" },
-        { model: Favorite_twits, as: "favorite_twits" },
-        { model: Comments },
-      ],
-      order: [["id", "DESC"]],
-      limit: limit,
-      offset: offset,
-      subQuery: false,
-    });
+    const presenter = new TwitsPresenter(twits);
 
-    return response.json(twits);
+    return response.json(presenter.toJSON());
   }
 
   async getFavoriteTwitByUser(request, response, next) {
@@ -270,30 +221,13 @@ class TwitsController {
 
       checkUsersAuth(request, userId, next);
 
-      const favoriteTwits = await Twits.findAll({
-        where: {
-          [Op.and]: {
-            "$likes.userId$": { [Op.or]: [userId, null] },
-            "$favorite_twits.userId$": userId,
-            "$retwits.userId$": { [Op.or]: [userId, null] },
-          },
-        },
+      const params = `WHERE "favorite_twits"."userId" = ${userId} ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
-        include: [
-          { model: Likes, as: "likes" },
-          { model: User, as: "user" },
-          { model: Twits, as: "retwits" },
-          { model: User, as: "twit_user" },
-          { model: Favorite_twits, as: "favorite_twits" },
-          { model: Comments },
-        ],
-        order: [["id", "DESC"]],
-        limit: limit,
-        offset: offset,
-        subQuery: false,
-      });
+      const favoriteTwits = await dbRequestTwitsForAuthUser(request, params);
 
-      return response.json(favoriteTwits);
+      const presenter = new TwitsPresenter(favoriteTwits);
+
+      return response.json(presenter.toJSON());
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }

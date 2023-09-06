@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../..";
 
 import twitsClient from "../../http/twitsClient";
@@ -41,6 +41,9 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
       .then((retwit) => {
         if (retwit) {
           twitsStore.setTwits(retwit.concat(twitsStore.twits));
+          twitsStore.setTwitsWhoReading(
+            retwit.concat(twitsStore.twitsWhoReading)
+          );
         }
       });
 
@@ -80,8 +83,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
 
   return (
     <div className="user-twit-panel-retwit">
-      {twit.retwits.length > 0 ||
-      (twit.retwit && twit.userId === authUserID) ? (
+      {(twit.retwit && twit.userId === authUserID) || twit.retwitsAuthUser ? (
         <div
           className="user-twit-panel-button-retwit"
           key={twit.id}
