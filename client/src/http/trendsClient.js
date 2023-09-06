@@ -1,4 +1,4 @@
-import { $host } from "./hosts";
+import { $authHost, $host } from "./hosts";
 
 class TrendsClient {
   async getAllTrends(userId, limit) {
@@ -16,7 +16,7 @@ class TrendsClient {
   }
 
   async getTrendsTwits(trend, userId, limit, list) {
-    const twits = await $host.get(`api/twitter/trends/${trend}`, {
+    const twits = await $authHost.get(`api/twitter/trends/${trend}`, {
       params: { limit, list },
     });
 

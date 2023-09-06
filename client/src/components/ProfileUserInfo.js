@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { NavLink, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { NavLink, useLocation, useSearchParams } from "react-router-dom";
 import { Context } from "..";
 
 import {
   FOLLOWERS_PAGE_PATH,
   FOLLOWINGS_PAGE_PATH,
-  PRIVATE_USERS_FOLLOWERS_PAGE_PATH,
-  PRIVATE_USERS_FOLLOWINGS_PAGE_PATH,
+  PRIVATE_USER_FOLLOWER_PAGE_PATH,
+  PRIVATE_USER_FOLLOWING_PAGE_PATH,
   PROFILE_PAGE_USER_PATH,
 } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
@@ -21,14 +21,13 @@ import webSiteIcon from "./Img/url_web_icon.png";
 import registrationIcon from "./Img/month_icon.png";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
 import getAuthUserID from "../utils/getAuthUserID";
+import path from "../utils/path";
 
 const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
 
   const location = useLocation().pathname;
-  const [searchParams] = useSearchParams();
-  const userId = searchParams.get("user");
 
   const authUserID = getAuthUserID();
 
@@ -64,11 +63,11 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
           {usersStore.isAuth && (
             <>
               {(location === PROFILE_PAGE_USER_PATH ||
-                authUserID === +userId) && (
+                authUserID === usersStore.userPage.id) && (
                 <ButtonEditProfile usersStore={usersStore} />
               )}
               {location !== PROFILE_PAGE_USER_PATH &&
-                authUserID !== +userId && (
+                authUserID !== usersStore.userPage.id && (
                   <ButtonFollowingUsersProfile
                     user={usersStore}
                     usersFollow={usersFollowingsStore}
@@ -91,7 +90,7 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
             to={
               pathHomeProfileUser && usersStore.isAuth
                 ? FOLLOWINGS_PAGE_PATH
-                : `/${usersStore.userPage.id}${PRIVATE_USERS_FOLLOWINGS_PAGE_PATH}`
+                : path(PRIVATE_USER_FOLLOWING_PAGE_PATH, usersStore.userPage.id)
             }
             id="following"
           >
@@ -104,7 +103,7 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
             to={
               pathHomeProfileUser && usersStore.isAuth
                 ? FOLLOWERS_PAGE_PATH
-                : `/${usersStore.userPage.id}${PRIVATE_USERS_FOLLOWERS_PAGE_PATH}`
+                : path(PRIVATE_USER_FOLLOWER_PAGE_PATH, usersStore.userPage.id)
             }
             id="followers"
           >

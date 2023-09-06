@@ -10,18 +10,27 @@ import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 
 import "./main.css";
+import twitsClient from "../http/twitsClient";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const UserTwits = observer(() => {
+  const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
+  const authUserID = getAuthUserID();
+
   const [loadingPage, setIsLoadingPage] = useState(true);
 
   useEffect(() => {
+    twitsClient
+      .getTwitsByUser(authUserID)
+      .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
+
     setTimeout(() => {
       setIsLoadingPage(false);
     }, 250);
   }, []);
 
-  if (twitsStore.userTwits.length === 0 || loadingPage) return spinner();
+  if (usersStore.user.length === 0 || loadingPage) return spinner();
 
   return (
     <div className="twits">

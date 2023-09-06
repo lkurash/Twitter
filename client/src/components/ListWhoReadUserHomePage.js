@@ -6,11 +6,12 @@ import { Context } from "..";
 import usersClient from "../http/usersClient";
 
 import {
-  PRIVATE_USERS_PAGE_PATH,
-  PUBLIC_USERS_PAGE_PATH,
+  PRIVATE_USER_PAGE_PATH,
+  PUBLIC_USER_PAGE_PATH,
 } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
 import getUserPhoto from "../utils/getUserPhoto";
+import path from "../utils/path";
 import spinner from "../utils/spinner";
 
 const ListWhoReadUserHomePage = observer(({ users }) => {
@@ -48,12 +49,9 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
                 className="section-read-main-user-info"
                 onClick={() => {
                   if (usersStore.isAuth) {
-                    navigate(PRIVATE_USERS_PAGE_PATH + profile.id);
+                    navigate(path(PRIVATE_USER_PAGE_PATH, profile.id));
                   } else {
-                    navigate({
-                      pathname: `${PUBLIC_USERS_PAGE_PATH}`,
-                      search: `user=${profile.id}`,
-                    });
+                    navigate(path(PUBLIC_USER_PAGE_PATH, profile.id));
                   }
                 }}
               >

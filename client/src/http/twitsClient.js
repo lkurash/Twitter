@@ -120,11 +120,11 @@ class TwitsClient {
     return twitsIds.data;
   }
 
-  async getUserRetwits(userId) {
-    const twitsIds = await $authHost.get(`api/twits/retwits/user/${userId}`);
+  // async getUserRetwits(userId) {
+  //   const twitsIds = await $authHost.get(`api/twits/retwits/user/${userId}`);
 
-    return twitsIds.data;
-  }
+  //   return twitsIds.data;
+  // }
 
   async deleteRetwit(retwitId, userId) {
     const retwit = await $authHost.put(

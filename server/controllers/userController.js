@@ -238,7 +238,6 @@ class UserController {
     let { limit } = request.query;
     limit = limit || 5;
     const users = await User.findAll({
-      include: [{ model: Following, as: "followings_user" }],
       limit: limit,
     });
 
@@ -265,19 +264,6 @@ class UserController {
       if (id) {
         const user = await User.findOne({
           where: { id },
-          include: [
-            {
-              model: Twits,
-              include: [
-                { model: User, as: "user" },
-                { model: User, as: "twit_user" },
-                { model: Likes, as: "likes" },
-                { model: Favorite_twits, as: "favorite_twits" },
-                { model: Comments },
-              ],
-            },
-            { model: Following, as: "followings_user" },
-          ],
         });
 
         return response.json(user);
@@ -384,7 +370,10 @@ class UserController {
       const { id } = request.params;
 
       const users = await sequelize.query(
-        `SELECT "Following"."id", "Following"."followUserId", "Following"."userId", "Following"."createdAt", "Following"."updatedAt", "followUser"."id" AS "followUser.id", "followUser"."user_name" AS "followUser.user_name", "followUser"."email" AS "followUser.email", "followUser"."password" AS "followUser.password", "followUser"."birthdate" AS "followUser.birthdate", "followUser"."web_site_url" AS "followUser.web_site_url", "followUser"."about" AS "followUser.about", "followUser"."photo" AS "followUser.photo", "followUser"."background" AS "followUser.background", "followUser"."createdAt" AS "followUser.createdAt", "followUser"."updatedAt" AS "followUser.updatedAt", "followUser->followers_user"."id" AS "followUser.followers_user.id", "followUser->followers_user"."followUserId" AS "followUser.followers_user.followUserId", "followUser->followers_user"."userId" AS "followUser.followers_user.userId", "followUser->followers_user"."createdAt" AS "followUser.followers_user.createdAt", "followUser->followers_user"."updatedAt" AS "followUser.followers_user.updatedAt" FROM "Followings"  AS "Following" LEFT OUTER JOIN  "Users" AS "followUser" ON "Following"."userId" = "followUser"."id" LEFT OUTER JOIN "Followings" AS "followUser->followers_user" ON ("followUser->followers_user"."userId" = ${userIdToken}  and "followUser"."id" = "followUser->followers_user"."followUserId") where "Following"."followUserId" = ${id}`,
+        `SELECT "Following"."id", "Following"."followUserId", "Following"."userId", "followUser"."id" AS "followUser.id", "followUser"."user_name" AS "followUser.user_name", "followUser"."email" AS "followUser.email", "followUser"."password" AS "followUser.password", "followUser"."birthdate" AS "followUser.birthdate", "followUser"."web_site_url" AS "followUser.web_site_url", "followUser"."about" AS "followUser.about", "followUser"."photo" AS "followUser.photo", "followUser"."background" AS "followUser.background", "followUser->followers_user"."id" AS "followUser.followers_user.id", "followUser->followers_user"."followUserId" AS "followUser.followers_user.followUserId", "followUser->followers_user"."userId" AS "followUser.followers_user.userId"
+        FROM "Followings"  AS "Following"
+        LEFT OUTER JOIN  "Users" AS "followUser" ON "Following"."userId" = "followUser"."id"
+        LEFT OUTER JOIN "Followings" AS "followUser->followers_user" ON ("followUser->followers_user"."userId" = ${userIdToken}  and "followUser"."id" = "followUser->followers_user"."followUserId") where "Following"."followUserId" = ${id}`,
         {
           type: QueryTypes.SELECT,
           nest: true,

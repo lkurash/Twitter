@@ -32,10 +32,6 @@ const loadPageUserInfo = () => {
                 <article className="profile-panel-about-user">
                   <p className="about-user-load-page" />
                 </article>
-                <div className="profile-panel-followers load-page">
-                  <p />
-                  <p />
-                </div>
                 <div className="profile-panel-info-user">
                   <div className="profile-panel-info-user-web-site load-page">
                     <p />

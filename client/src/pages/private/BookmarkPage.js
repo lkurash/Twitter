@@ -15,25 +15,21 @@ import twitsClient from "../../http/twitsClient";
 const BookmarksPage = observer(() => {
   const { usersStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
     try {
-      usersClient
-        .getUserProfile(authUserID)
-        .then((userInfo) => usersStore.setUser(userInfo));
+      if (authUserID) {
 
-      usersClient
-        .getFollowingsUser(authUserID)
-        .then((followings) =>
-          usersFollowingsStore.setuserFollowing(followings)
-        );
+        usersClient
+          .getUserProfile(authUserID)
+          .then((userInfo) => usersStore.setUser(userInfo));
 
-      twitsClient.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
-        favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser);
-      });
-
+        twitsClient.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
+          favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser);
+        });
+      }
+      
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

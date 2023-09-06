@@ -21,7 +21,7 @@ const ContentUserProfilePage = observer(
     useEffect(() => {
       setTimeout(() => {
         setIsLoading(false);
-      }, 300);
+      }, 250);
     }, []);
 
     if (isLoading || !usersStore.userPage.id) {
