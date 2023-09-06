@@ -28,7 +28,7 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
 
   const createTwits = async () => {
     try {
-      if (text.length > 0) {
+      if (img || text.length > 0) {
         const formData = new FormData();
 
         formData.append("text", text);

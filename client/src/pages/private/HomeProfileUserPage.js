@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import twitsClient from "../../http/twitsClient";
 import usersClient from "../../http/usersClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
@@ -13,7 +12,6 @@ import SidebarContent from "../../components/SidebarContent";
 
 const HomeProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID();
 
@@ -25,23 +23,15 @@ const HomeProfileUserPage = observer(({ loadingPage }) => {
           usersStore.setUserPage(userInfo);
         });
 
-        twitsClient.getTwitsWithUserLikes(authUserID).then((twits) => {
-          twitsStore.setTwitsWithUsersLikes(twits);
-        });
-
-        twitsClient
-          .getTwitsByUser(authUserID)
-          .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
-
-        usersClient.getFollowingsUser(authUserID).then((followings) => {
-          usersFollowingsStore.setuserFollowing(followings);
-        });
-
         usersClient
           .getFollowersUser(authUserID)
           .then((followers) =>
             usersFollowingsStore.setuserFollowers(followers)
           );
+
+        usersClient.getFollowingsUser(authUserID).then((followings) => {
+          usersFollowingsStore.setuserFollowing(followings);
+        });
       }
 
       usersStore.setAuth(getFlagIsAuth());

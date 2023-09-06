@@ -32,8 +32,6 @@ const FollowPage = observer(() => {
         .getFollowersUser(id || authUserID)
         .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
-      usersClient.getUsers().then((users) => usersStore.setAllUsers(users));
-
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

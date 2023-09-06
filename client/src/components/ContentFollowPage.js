@@ -6,14 +6,15 @@ import { Context } from "..";
 import {
   FOLLOWERS_PAGE_PATH,
   FOLLOWINGS_PAGE_PATH,
-  PRIVATE_USERS_FOLLOWERS_PAGE_PATH,
-  PRIVATE_USERS_FOLLOWINGS_PAGE_PATH,
+  PRIVATE_USER_FOLLOWER_PAGE_PATH,
+  PRIVATE_USER_FOLLOWING_PAGE_PATH,
 } from "../utils/constans";
 
 import UserFollowersList from "./UserFollowersList";
 import UserFollowingList from "./UserFollowingList";
 
 import arrowLeft from "./Img/arrow_left_icon.png";
+import path from "../utils/path";
 
 const ContentFollowPage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -49,7 +50,7 @@ const ContentFollowPage = observer(() => {
             to={
               pathHomeProfileUser
                 ? FOLLOWINGS_PAGE_PATH
-                : `/${usersStore.userPage.id}${PRIVATE_USERS_FOLLOWINGS_PAGE_PATH}`
+                : path(PRIVATE_USER_FOLLOWING_PAGE_PATH, usersStore.userPage.id)
             }
             end
           >
@@ -64,7 +65,7 @@ const ContentFollowPage = observer(() => {
             to={
               pathHomeProfileUser
                 ? FOLLOWERS_PAGE_PATH
-                : `/${usersStore.userPage.id}${PRIVATE_USERS_FOLLOWERS_PAGE_PATH}`
+                : path(PRIVATE_USER_FOLLOWER_PAGE_PATH, usersStore.userPage.id)
             }
           >
             <span>Followers</span>

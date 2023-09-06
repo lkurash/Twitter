@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 const uuid = require("uuid");
 const path = require("path");
 const models = require("../models/index");
+const dbRequestTwitsForAuthUser = require("../sql/dbRequestTwitsForAuthUser ");
 const Twits = models.Twits;
 const Trends = models.Trends;
 const User = models.User;
@@ -10,6 +11,15 @@ const Likes = models.Likes;
 const Comments = models.Comments;
 const Favorite_twits = models.Favorite_twits;
 const Following = models.Following;
+const jwt = require("jsonwebtoken");
+const TwitsPresenter = require("../presenters/twitsPresenter");
+
+const decodeUser = (request) => {
+  const token = request.headers.authorization.split(" ")[1];
+  const decodeUser = jwt.decode(token);
+
+  return decodeUser;
+};
 
 class TrendsController {
   async createTrends(request, response, next) {
@@ -89,7 +99,7 @@ class TrendsController {
 
   async getTrendsTwits(request, response) {
     const Op = Sequelize.Op;
-    
+
     const { trend } = request.params;
     let { limit, list } = request.query;
 
@@ -97,23 +107,13 @@ class TrendsController {
     list = list || 1;
     let offset = list * limit - limit;
 
-    const trends = await Twits.findAll({
-      where: {
-        text: { [Op.substring]: trend },
-      },
-      include: [
-        { model: User, as: "user" },
-        { model: Twits, as: "retwits" },
-        { model: User, as: "twit_user" },
-        { model: Likes, as: "likes" },
-        { model: Favorite_twits, as: "favorite_twits" },
-        { model: Comments },
-      ],
-      limit: limit,
-      offset: offset,
-    });
+    const params = `WHERE "Twits"."text" LIKE '%${trend}%' ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
-    return response.json(trends);
+    const trends = await dbRequestTwitsForAuthUser(decodeUser, request, params);
+
+    const presenter = new TwitsPresenter(trends);
+
+    return response.json(presenter.toJSON());
   }
 
   async createNotInterestingTrend(request, response) {

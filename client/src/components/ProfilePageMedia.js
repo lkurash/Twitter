@@ -24,7 +24,7 @@ const ProfilePageMedia = observer(() => {
     }, 250);
   }, []);
 
-  if (twitsStore.userTwits.length === 0 || loadingPage) return spinner();
+  if (usersStore.user.length === 0 || loadingPage) return spinner();
 
   return (
     <div className="twits">

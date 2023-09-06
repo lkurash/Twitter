@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import {
-  PRIVATE_USERS_PAGE_PATH,
-  PUBLIC_USERS_PAGE_PATH,
+  PRIVATE_USER_PAGE_PATH,
+  PUBLIC_USER_PAGE_PATH,
 } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
+import path from "../utils/path";
 
 const UserPhoto = observer(({ twit }) => {
   const { usersStore } = useContext(Context);
@@ -23,14 +24,11 @@ const UserPhoto = observer(({ twit }) => {
             if (usersStore.isAuth) {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(PRIVATE_USERS_PAGE_PATH + twit.twit_user.id);
+              navigate(path(PRIVATE_USER_PAGE_PATH, twit.twit_user.id));
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate({
-                pathname: `${PUBLIC_USERS_PAGE_PATH}`,
-                search: `user=${twit.twit_user.id}`,
-              });
+              navigate(path(PUBLIC_USER_PAGE_PATH, twit.twit_user.id));
             }
           }}
         >
@@ -43,14 +41,11 @@ const UserPhoto = observer(({ twit }) => {
             if (usersStore.isAuth) {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(PRIVATE_USERS_PAGE_PATH + twit.user.id);
+              navigate(path(PRIVATE_USER_PAGE_PATH, twit.user.id));
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate({
-                pathname: `${PUBLIC_USERS_PAGE_PATH}`,
-                search: `user=${twit.user.id}`,
-              });
+              navigate(path(PUBLIC_USER_PAGE_PATH, twit.user.id));
             }
           }}
         >
