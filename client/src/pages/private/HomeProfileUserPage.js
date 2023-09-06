@@ -38,7 +38,7 @@ const HomeProfileUserPage = observer(({ loadingPage }) => {
     } catch (error) {
       console.log(error.response.data.message);
     }
-  }, []);
+  },[]);
 
   return (
     <>
