@@ -35,9 +35,9 @@ class TwitsStore {
       if (twit.id === twitLike.id) {
         twit.countLikes = twitLike.countLikes;
         if (like) {
-          twit.likes = [like];
+          twit.authUserLike = true;
         } else {
-          twit.likes = [];
+          twit.authUserLike = false;
         }
       }
     });
@@ -46,9 +46,9 @@ class TwitsStore {
       if (twit.id === twitLike.id) {
         twit.countLikes = twitLike.countLikes;
         if (like) {
-          twit.likes = [like];
+          twit.authUserLike = true;
         } else {
-          twit.likes = [];
+          twit.authUserLike = false;
         }
       }
     });
@@ -59,9 +59,9 @@ class TwitsStore {
     this._twits.map((twit) => {
       if (twit.id === bookmarkTwit.id) {
         if (bookmark) {
-          twit.favorite_twits = [bookmark];
+          twit.authUserFavorite = true;
         } else {
-          twit.favorite_twits = [];
+          twit.authUserFavorite = false;
         }
       }
     });
@@ -69,9 +69,9 @@ class TwitsStore {
     this._twitsWhoReading.map((twit) => {
       if (twit.id === bookmarkTwit.id) {
         if (bookmark) {
-          twit.favorite_twits = [bookmark];
+          twit.authUserFavorite = true;
         } else {
-          twit.favorite_twits = [];
+          twit.authUserFavorite = false;
         }
       }
     });
@@ -81,14 +81,26 @@ class TwitsStore {
   addRetwitTwit(retwit) {
     this._twits.map((twit) => {
       if (twit.id === retwit.id) {
-        twit.retwits = [retwit];
+        twit.retwitsAuthUser = true;
         twit.countRetwits = retwit.countRetwits;
       }
       if (twit.twitId === retwit.id) {
+        twit.retwitsAuthUser = true;
         twit.countRetwits = retwit.countRetwits;
       }
-      return this._twits;
     });
+
+    this._twitsWhoReading.map((twit) => {
+      if (twit.id === retwit.id) {
+        twit.retwitsAuthUser = true;
+        twit.countRetwits = retwit.countRetwits;
+      }
+      if (twit.twitId === retwit.id) {
+        twit.retwitsAuthUser = true;
+        twit.countRetwits = retwit.countRetwits;
+      }
+    });
+    return [this._twits, this._twitsWhoReading];
   }
 
   deleteRetwit(originalTwit, retwit) {
@@ -98,8 +110,10 @@ class TwitsStore {
 
     let retwitsIndex = this._twits.findIndex((twit) => twit.id === retwit);
 
-    this._twits[originalTwitsIndex].retwits = [];
+    this._twits[originalTwitsIndex].retwitsAuthUser = false;
+    this._twitsWhoReading[originalTwitsIndex].retwitsAuthUser = false;
     this._twits.splice(retwitsIndex, 1);
+    this._twitsWhoReading.splice(retwitsIndex, 1);
   }
 
   setLikedTwit(twit) {

@@ -48,7 +48,7 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
 
   return (
     <div className="user-twit-panel-bookmark">
-      {!twit.favorite_twits.length > 0 ? (
+      {!twit.authUserFavorite ? (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}

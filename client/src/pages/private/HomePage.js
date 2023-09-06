@@ -13,7 +13,6 @@ import usersClient from "../../http/usersClient";
 const HomePage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
   const authUserID = getAuthUserID();
 
   useEffect(() => {
@@ -21,16 +20,6 @@ const HomePage = observer(({ loadingPage }) => {
       usersClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
-
-      usersClient
-        .getFollowingsUser(authUserID)
-        .then((followings) =>
-          usersFollowingsStore.setuserFollowing(followings)
-        );
-
-      usersClient
-        .getFollowersUser(authUserID)
-        .then((followers) => usersFollowingsStore.setuserFollowers(followers));
 
       twitsClient
         .getTwitsByFollowingsUsers(authUserID)

@@ -15,7 +15,7 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
-  const authUserID = getAuthUserID(usersStore);
+  const authUserID = getAuthUserID();
 
   const createLikeTwit = async (twit) => {
     await twitsClient.createLikeTwitByUser(authUserID, twit.id).then((like) => {
@@ -48,7 +48,7 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
 
   return (
     <div className="user-twit-panel-like">
-      {twit.likes.length > 0 ? (
+      {twit.authUserLike ? (
         <div className="user-twit-panel-button-like">
           <img
             alt="Like"
