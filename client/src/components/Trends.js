@@ -3,7 +3,10 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import { AUTHTRENDS_PAGE_PATH, TRENDS_PAGE_PATH } from "../utils/constans";
+import {
+  PRIVATE_TRENDS_PAGE_PATH,
+  PUBLIC_TRENDS_PAGE_PATH,
+} from "../utils/constans";
 
 import ButtonOnTrend from "./buttons/ButtonOnTrend";
 
@@ -18,12 +21,12 @@ const Trends = observer(({ topic }) => {
         onClick={() => {
           if (usersStore.isAuth) {
             navigate({
-              pathname: `${AUTHTRENDS_PAGE_PATH}`,
+              pathname: `${PRIVATE_TRENDS_PAGE_PATH}`,
               search: `trend=${topic.title}`,
             });
           } else {
             navigate({
-              pathname: `${TRENDS_PAGE_PATH}`,
+              pathname: `${PUBLIC_TRENDS_PAGE_PATH}`,
               search: `trend=${topic.title}`,
             });
           }

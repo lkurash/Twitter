@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
 import getFlagIsAuth from "../utils/getFlagIsAuth";
-import { EXPLORE_PAGE_PATH } from "../utils/constans";
+import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/constans";
 import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 
 import ButtonMenu from "./buttons/ButtonMenu";
@@ -48,7 +48,7 @@ const MenuComponent = observer(() => {
               buttonName="Explore"
               id="0"
               classNameButtonImg="button-icon-menu"
-              nav={EXPLORE_PAGE_PATH}
+              nav={PUBLIC_EXPLORE_PAGE_PATH}
             />
           </div>
         )}

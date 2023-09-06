@@ -56,11 +56,12 @@ const MainSearchBlock = observer(({ classNameForm }) => {
               }}
               onChange={(e) => {
                 if (e.target.value.length > 0) {
-                  searchUsers(e.target.value);
+
+                  searchUsers(e.target.value.slice(0, 20));
                 } else {
                   searchUsers(null);
                 }
-                setUserName(e.target.value);
+                setUserName(e.target.value.slice(0, 20));
                 setListFoundUsersVisible(true);
               }}
             />

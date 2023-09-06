@@ -6,7 +6,7 @@ import { Context } from "../..";
 import usersClient from "../../http/usersClient";
 
 import getUserPhoto from "../../utils/getUserPhoto";
-import { PROFILE_PAGE_USER_PATH } from "../../utils/constans";
+import { PRIVATE_PROFILE_PAGE_USER_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import BirthForm from "./BirthForm";
@@ -64,7 +64,7 @@ const EditProfileForm = observer(() => {
       usersStore.setUserPage(userInfo);
     });
 
-    navigate(PROFILE_PAGE_USER_PATH);
+    navigate(PRIVATE_PROFILE_PAGE_USER_PATH);
   };
   const onClose = () => {
     setActivInputName(false);
