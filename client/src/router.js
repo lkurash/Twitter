@@ -25,17 +25,17 @@ import ProfilePageAnswers from "./components/ProfilePageAnswers";
 import UserTwits from "./components/UserTwits";
 
 import {
-  AUTHEXPLORE_PAGE_PATH,
-  BOOKMARKS_PAGE_PATH,
-  EDIT_PROFILE_PAGE_PATH,
-  EXPLORE_PAGE_PATH,
+  PRIVATE_EXPLORE_PAGE_PATH,
+  PRIVATE_BOOKMARKS_PAGE_PATH,
+  PRIVATE_EDIT_PROFILE_PAGE_PATH,
+  PUBLIC_EXPLORE_PAGE_PATH,
   LOGIN_PAGE_PATH,
-  MESSAGE_PAGE_PATH,
-  NOTIFICATIONS_PAGE_PATH,
-  PROFILE_PAGE_USER_PATH,
-  PROFILE_PAGE_USER_ANSWERS_PATH,
-  PROFILE_PAGE_USER_LIKES_PATH,
-  PROFILE_PAGE_USER_MEDIA_PATH,
+  PRIVATE_MESSAGE_PAGE_PATH,
+  PRIVATE_NOTIFICATIONS_PAGE_PATH,
+  PRIVATE_PROFILE_PAGE_USER_PATH,
+  PRIVATE_PROFILE_PAGE_USER_ANSWERS_PATH,
+  PRIVATE_PROFILE_PAGE_USER_LIKES_PATH,
+  PRIVATE_PROFILE_PAGE_USER_MEDIA_PATH,
   SIGNUP_PAGE_PATH,
   ROOT_PAGE_PATH,
   LOGIN_REDIRECT_PAGE_PATH,
@@ -43,7 +43,7 @@ import {
   PUBLIC_HOME_PAGE_PATH,
   PRIVATE_HOME_PAGE_PATH,
   AUTH_PAGE_PATH,
-  PROFILE_PAGE_USER_TWITS_PATH,
+  PRIVATE_PROFILE_PAGE_USER_TWITS_PATH,
   PRIVATE_USER_PAGE_PATH,
   PRIVATE_USER_PAGE_TWITS_PATH,
   PRIVATE_USER_PAGE_ANSWERS_PATH,
@@ -51,10 +51,10 @@ import {
   PRIVATE_USER_PAGE__MEDIA_PATH,
   PRIVATE_USER_FOLLOWER_PAGE_PATH,
   PRIVATE_USER_FOLLOWING_PAGE_PATH,
-  FOLLOWINGS_PAGE_PATH,
-  FOLLOWERS_PAGE_PATH,
-  TRENDS_PAGE_PATH,
-  AUTHTRENDS_PAGE_PATH,
+  PRIVATE_FOLLOWINGS_PAGE_PATH,
+  PRIVATE_FOLLOWERS_PAGE_PATH,
+  PUBLIC_TRENDS_PAGE_PATH,
+  PRIVATE_TRENDS_PAGE_PATH,
   PUBLIC_USER_PAGE_PATH,
 } from "./utils/constans";
 
@@ -68,11 +68,11 @@ export const publicRoutes = {
       loader: redirectLoader,
     },
     {
-      path: EXPLORE_PAGE_PATH,
+      path: PUBLIC_EXPLORE_PAGE_PATH,
       element: <PublicExplorePage />,
     },
     {
-      path: TRENDS_PAGE_PATH,
+      path: PUBLIC_TRENDS_PAGE_PATH,
       element: <TrendsPage />,
     },
     {
@@ -112,56 +112,56 @@ export const privateRoutes = {
       element: <HomePage />,
     },
     {
-      path: AUTHEXPLORE_PAGE_PATH,
+      path: PRIVATE_EXPLORE_PAGE_PATH,
       element: <PrivateExplorePage />,
     },
     {
-      path: NOTIFICATIONS_PAGE_PATH,
+      path: PRIVATE_NOTIFICATIONS_PAGE_PATH,
     },
     {
-      path: MESSAGE_PAGE_PATH,
+      path: PRIVATE_MESSAGE_PAGE_PATH,
       element: <MessagesPage />,
     },
     {
-      path: BOOKMARKS_PAGE_PATH,
+      path: PRIVATE_BOOKMARKS_PAGE_PATH,
       element: <BookmarksPage />,
     },
     {
-      path: PROFILE_PAGE_USER_PATH,
+      path: PRIVATE_PROFILE_PAGE_USER_PATH,
       element: <HomeProfileUserPage />,
       children: [
         {
-          path: PROFILE_PAGE_USER_TWITS_PATH,
+          path: PRIVATE_PROFILE_PAGE_USER_TWITS_PATH,
           element: <UserTwits />,
         },
         {
-          path: PROFILE_PAGE_USER_ANSWERS_PATH,
+          path: PRIVATE_PROFILE_PAGE_USER_ANSWERS_PATH,
           element: <ProfilePageAnswers />,
         },
         {
-          path: PROFILE_PAGE_USER_LIKES_PATH,
+          path: PRIVATE_PROFILE_PAGE_USER_LIKES_PATH,
           element: <ProfilePageLikes />,
         },
         {
-          path: PROFILE_PAGE_USER_MEDIA_PATH,
+          path: PRIVATE_PROFILE_PAGE_USER_MEDIA_PATH,
           element: <ProfilePageMedia />,
         },
         {
-          path: EDIT_PROFILE_PAGE_PATH,
+          path: PRIVATE_EDIT_PROFILE_PAGE_PATH,
           element: <EditProfilePage />,
         },
       ],
     },
     {
-      path: FOLLOWINGS_PAGE_PATH,
+      path: PRIVATE_FOLLOWINGS_PAGE_PATH,
       element: <FollowPage />,
     },
     {
-      path: FOLLOWERS_PAGE_PATH,
+      path: PRIVATE_FOLLOWERS_PAGE_PATH,
       element: <FollowPage />,
     },
     {
-      path: AUTHTRENDS_PAGE_PATH,
+      path: PRIVATE_TRENDS_PAGE_PATH,
       element: <TrendsPage />,
     },
   ],

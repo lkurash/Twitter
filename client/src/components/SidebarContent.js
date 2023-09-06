@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { Context } from "..";
 
-import { EXPLORE_PAGE_PATH } from "../utils/constans";
+import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/constans";
 
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
@@ -19,7 +19,7 @@ const SidebarContent = observer(() => {
 
   return (
     <aside className="side-bar">
-      {(userAuth || location === EXPLORE_PAGE_PATH) && (
+      {(userAuth || location === PUBLIC_EXPLORE_PAGE_PATH) && (
         <>
           <MainSearchBlock classNameForm="main-search-form-home section-background" />
           <div className="main-content">

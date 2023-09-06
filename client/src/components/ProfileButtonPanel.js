@@ -5,10 +5,10 @@ import {
   PRIVATE_USER_PAGE_LIKES_PATH,
   PRIVATE_USER_PAGE_PATH,
   PRIVATE_USER_PAGE__MEDIA_PATH,
-  PROFILE_PAGE_USER_ANSWERS_PATH,
-  PROFILE_PAGE_USER_LIKES_PATH,
-  PROFILE_PAGE_USER_MEDIA_PATH,
-  PROFILE_PAGE_USER_TWITS_PATH,
+  PRIVATE_PROFILE_PAGE_USER_ANSWERS_PATH,
+  PRIVATE_PROFILE_PAGE_USER_LIKES_PATH,
+  PRIVATE_PROFILE_PAGE_USER_MEDIA_PATH,
+  PRIVATE_PROFILE_PAGE_USER_TWITS_PATH,
 } from "../utils/constans";
 import path from "../utils/path";
 
@@ -27,7 +27,7 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
             }
             to={
               pathHomeProfileUser
-                ? PROFILE_PAGE_USER_TWITS_PATH
+                ? PRIVATE_PROFILE_PAGE_USER_TWITS_PATH
                 : path(PRIVATE_USER_PAGE_PATH, id)
             }
             end
@@ -39,7 +39,7 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
           <NavLink
             to={
               pathHomeProfileUser
-                ? PROFILE_PAGE_USER_ANSWERS_PATH
+                ? PRIVATE_PROFILE_PAGE_USER_ANSWERS_PATH
                 : path(PRIVATE_USER_PAGE_ANSWERS_PATH, id)
             }
             className={({ isActive }) =>
@@ -55,7 +55,7 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
           <NavLink
             to={
               pathHomeProfileUser
-                ? PROFILE_PAGE_USER_MEDIA_PATH
+                ? PRIVATE_PROFILE_PAGE_USER_MEDIA_PATH
                 : path(PRIVATE_USER_PAGE__MEDIA_PATH, id)
             }
             className={({ isActive }) =>
@@ -71,7 +71,7 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
           <NavLink
             to={
               pathHomeProfileUser
-                ? PROFILE_PAGE_USER_LIKES_PATH
+                ? PRIVATE_PROFILE_PAGE_USER_LIKES_PATH
                 : path(PRIVATE_USER_PAGE_LIKES_PATH, id)
             }
             className={({ isActive }) =>

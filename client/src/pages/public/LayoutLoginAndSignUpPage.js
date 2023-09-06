@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 
-import { EXPLORE_PAGE_PATH } from "../../utils/constans";
+import { PUBLIC_EXPLORE_PAGE_PATH } from "../../utils/constans";
 
 import ButtonClose from "../../components/buttons/ButtonClose";
 import Logo from "../../components/common/Logo";
@@ -15,7 +15,11 @@ export default function LayoutLoginAndSignUpPage() {
       <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
           <ButtonClose
-            nav={location === "/auth/login/redirect" ? EXPLORE_PAGE_PATH : -1}
+            nav={
+              location === "/auth/login/redirect"
+                ? PUBLIC_EXPLORE_PAGE_PATH
+                : -1
+            }
           />
           <Logo class="logo-icon-form" />
         </header>

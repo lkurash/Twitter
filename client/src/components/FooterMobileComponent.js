@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import {
-  BOOKMARKS_PAGE_PATH,
+  PRIVATE_BOOKMARKS_PAGE_PATH,
   PRIVATE_HOME_PAGE_PATH,
-  PROFILE_PAGE_USER_PATH,
+  PRIVATE_PROFILE_PAGE_USER_PATH,
 } from "../utils/constans";
 
 import home from "./Img/home_icon.png";
@@ -46,14 +46,14 @@ function FooterMobileComponent() {
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(BOOKMARKS_PAGE_PATH)}
+          onClick={() => navigate(PRIVATE_BOOKMARKS_PAGE_PATH)}
         >
           <img src={bookmark} alt="bookmark" className="button-icon-menu" />
         </div>
         <div
           className="footer-mobile-menu-button"
           type="button"
-          onClick={() => navigate(PROFILE_PAGE_USER_PATH)}
+          onClick={() => navigate(PRIVATE_PROFILE_PAGE_USER_PATH)}
         >
           <img src={profile} alt="profile" className="button-icon-menu" />
         </div>

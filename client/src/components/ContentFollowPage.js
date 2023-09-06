@@ -4,8 +4,8 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Context } from "..";
 
 import {
-  FOLLOWERS_PAGE_PATH,
-  FOLLOWINGS_PAGE_PATH,
+  PRIVATE_FOLLOWERS_PAGE_PATH,
+  PRIVATE_FOLLOWINGS_PAGE_PATH,
   PRIVATE_USER_FOLLOWER_PAGE_PATH,
   PRIVATE_USER_FOLLOWING_PAGE_PATH,
 } from "../utils/constans";
@@ -49,7 +49,7 @@ const ContentFollowPage = observer(() => {
             }
             to={
               pathHomeProfileUser
-                ? FOLLOWINGS_PAGE_PATH
+                ? PRIVATE_FOLLOWINGS_PAGE_PATH
                 : path(PRIVATE_USER_FOLLOWING_PAGE_PATH, usersStore.userPage.id)
             }
             end
@@ -64,7 +64,7 @@ const ContentFollowPage = observer(() => {
             }
             to={
               pathHomeProfileUser
-                ? FOLLOWERS_PAGE_PATH
+                ? PRIVATE_FOLLOWERS_PAGE_PATH
                 : path(PRIVATE_USER_FOLLOWER_PAGE_PATH, usersStore.userPage.id)
             }
           >
