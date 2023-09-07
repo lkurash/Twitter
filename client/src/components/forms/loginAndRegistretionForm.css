@@ -246,7 +246,7 @@
   border: 1px solid rgb(59 179 244);
 }
 
-.signup-input-error{
+.signup-input-error {
   border: 1px solid rgb(244, 59, 59);
 }
 
@@ -292,18 +292,38 @@
   margin-top: 20px;
 }
 
+.wrapper-birth-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper-select {
+  height: 55px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  border: 1px solid rgb(174 174 174 / 55.8%);
+}
+
+.select-name {
+  position: absolute;
+  font-size: 10px;
+  color: grey;
+  margin-left: 3px;
+  margin-top: 2px;
+}
+
 .signup-birth-form-month,
 .signup-birth-form-day,
-.signup-birth-form-year{
-  height: 55px;
+.signup-birth-form-year {
+  border: none;
+  height: 100%;
   font-size: 17px;
   font-weight: bold;
   background-color: black;
   color: aliceblue;
   cursor: pointer;
-  border-radius: 5px;
 }
-
 
 .signup-birth-form-month {
   width: 200px;
@@ -311,7 +331,6 @@
 
 .signup-birth-form-day {
   width: 90px;
-  margin-left: 10px;
   margin-right: 10px;
 }
 
@@ -331,9 +350,9 @@
   font-weight: 600;
 }
 
-.signup-form-button-active{
- background-color: aliceblue;
- cursor: pointer;
+.signup-form-button-active {
+  background-color: aliceblue;
+  cursor: pointer;
 }
 
 .signup-user-info {

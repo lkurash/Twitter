@@ -84,61 +84,70 @@ const BirthForm = observer(({ user }) => {
     checkUserBirthdate();
   }, []);
 
-   useEffect(() => {
-     createUserBirthdate();
-   }, [userSelectDay, userSelectMonth, userSelectYear]);
+  useEffect(() => {
+    createUserBirthdate();
+  }, [userSelectDay, userSelectMonth, userSelectYear]);
 
   return (
     <>
       <h4 className="edit-form-input-birth">Date of birth:</h4>
-      <select
-        name="month"
-        value={userSelectMonth}
-        className="signup-birth-form-month"
-        onChange={(e) => {
-          setUserSelectMonth(e.target.value);
-        }}
-      >
-        <option disabled />
-        {monthsOption.map((month) => (
-          <option value={month} key={month}>
-            {month}
-          </option>
-        ))}
-      </select>
-
-      <select
-        name="day"
-        value={userSelectDay}
-        onInput={(e) => {
-          setUserSelectDay(e.target.value);
-        }}
-        className="signup-birth-form-day"
-      >
-        {!userSelectMonth && <option disabled>Select month</option>}
-        <option disabled />
-        {daysOption.map((day) => (
-          <option value={day} key={day}>
-            {day}
-          </option>
-        ))}
-      </select>
-
-      <select
-        name="year"
-        value={userSelectYear}
-        className="signup-birth-form-year"
-        onInput={(e) => {
-          setUserSelectYear(e.target.value);
-        }}
-      >
-        <option disabled />
-        {yearsOption.map((year) => (
-          <option value={year} key={year}>
-            {year}
-          </option>
-        ))}
-      </select>
+      <div className="wrapper-birth-form">
+        <div className="wrapper-select">
+          <p className="select-name">Mounth</p>
+          <select
+            name="month"
+            value={userSelectMonth}
+            className="signup-birth-form-month"
+            onChange={(e) => {
+              setUserSelectMonth(e.target.value);
+            }}
+          >
+            <option disabled />
+            {monthsOption.map((month) => (
+              <option value={month} key={month}>
+                {month}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="wrapper-select">
+          <p className="select-name">Day</p>
+          <select
+            name="day"
+            value={userSelectDay}
+            onInput={(e) => {
+              setUserSelectDay(e.target.value);
+            }}
+            className="signup-birth-form-day"
+          >
+            {!userSelectMonth && <option disabled>Select month</option>}
+            <option disabled />
+            {daysOption.map((day) => (
+              <option value={day} key={day}>
+                {day}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="wrapper-select">
+          <p className="select-name">Year</p>
+          <select
+            name="year"
+            value={userSelectYear}
+            className="signup-birth-form-year"
+            onInput={(e) => {
+              setUserSelectYear(e.target.value);
+            }}
+          >
+            <option disabled />
+            {yearsOption.map((year) => (
+              <option value={year} key={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
     </>
   );
 });
