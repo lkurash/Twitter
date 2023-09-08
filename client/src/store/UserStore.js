@@ -28,7 +28,9 @@ class UserStore {
   }
 
   setUserRegistrationEmail(email) {
-    if (email.length > 0 && email.includes("@")) {
+    const expression =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (expression.test(String(email).toLowerCase())) {
       this._userRegistrationEmail = email;
     } else {
       this._userRegistrationEmail = false;

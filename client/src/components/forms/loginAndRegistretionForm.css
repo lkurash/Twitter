@@ -259,10 +259,22 @@
 }
 
 .signup-active-input {
+  animation-duration: 0.1s;
+  animation-name: hint-signup-input;
   font-size: 12px;
   margin-top: 3px;
   margin-left: 5px;
   color: rgb(59 179 244);
+}
+
+@keyframes hint-signup-input {
+  from {
+    margin-top: 20px;
+  }
+
+  to {
+    margin-top: 3px;
+  }
 }
 
 .signup-form-input input {
