@@ -18,19 +18,23 @@ const FollowPage = observer(() => {
 
   useEffect(() => {
     try {
-      usersClient
-        .getUserProfile(id || authUserID)
-        .then((userById) => usersStore.setUserPage(userById));
+      if (authUserID) {
+        usersClient
+          .getUserProfile(id || authUserID)
+          .then((userById) => usersStore.setUserPage(userById));
 
-      usersClient
-        .getFollowingsUser(id || authUserID)
-        .then((followings) =>
-          usersFollowingsStore.setuserFollowing(followings)
-        );
+        usersClient
+          .getFollowingsUser(id || authUserID)
+          .then((followings) =>
+            usersFollowingsStore.setuserFollowing(followings)
+          );
 
-      usersClient
-        .getFollowersUser(id || authUserID)
-        .then((followers) => usersFollowingsStore.setuserFollowers(followers));
+        usersClient
+          .getFollowersUser(id || authUserID)
+          .then((followers) =>
+            usersFollowingsStore.setuserFollowers(followers)
+          );
+      }
 
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {

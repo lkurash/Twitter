@@ -116,6 +116,11 @@ class TwitsStore {
     this._twitsWhoReading.splice(retwitsIndex, 1);
   }
 
+  deleteTwit(deleteTwit) {
+    let twitIndex = this._twits.findIndex((twit) => twit.id === deleteTwit.id);
+    this._twits.splice(twitIndex, 1);
+  }
+
   setLikedTwit(twit) {
     this._likedTwit = twit;
   }

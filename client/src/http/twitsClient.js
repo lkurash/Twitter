@@ -14,7 +14,15 @@ class TwitsClient {
   }
 
   async getTwitsByUser(userId, limit, list) {
-    const usersTwits = await $authHost.get(`api/twits/user/${userId}`, {
+    const usersTwits = await $authHost.get(`api/twits/auth/user/${userId}`, {
+      params: { limit, list },
+    });
+
+    return usersTwits.data;
+  }
+
+  async getPublicTwitsByUser(userId, limit, list) {
+    const usersTwits = await $host.get(`api/twits/user/${userId}`, {
       params: { limit, list },
     });
 

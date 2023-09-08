@@ -9,6 +9,7 @@ import ContentPublicHomePage from "../../components/ContentPublicHomePage";
 
 const PublicHomePage = observer(() => {
   const { twitsStore } = useContext(Context);
+  
 
   useEffect(() => {
     try {

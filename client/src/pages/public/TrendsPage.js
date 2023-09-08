@@ -1,7 +1,4 @@
-import {
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
@@ -12,7 +9,6 @@ import usersClient from "../../http/usersClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import spinner from "../../utils/spinner";
-import getInfoAuthPage from "../../utils/getInfoAuthPage";
 
 import SidebarContent from "../../components/SidebarContent";
 import TwitsForTrends from "../../components/TwitsForTrends";
@@ -24,11 +20,7 @@ import arrowLeft from "../../components/Img/arrow_left_icon.png";
 
 const TrendsPage = observer(() => {
   const { usersStore } = useContext(Context);
-  const { favoriteTwitsStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
-  const { retwitsStore } = useContext(Context);
   const { trendsStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
   const [searchParams] = useSearchParams();
   const trend = searchParams.get("trend");
 
@@ -39,25 +31,20 @@ const TrendsPage = observer(() => {
   const [isLoadingTrends, setIsLoadingTrends] = useState(true);
 
   useEffect(() => {
-    trendsClient
-      .getTrendsTwits(trend)
-      .then((trendstTwits) => trendsStore.setTrendsTwits(trendstTwits));
-
     usersClient.getUsers().then((users) => usersStore.setAllUsers(users));
-    
+
     if (authUserID) {
       usersClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
 
-      getInfoAuthPage(
-        authUserID,
-        usersStore,
-        usersFollowingsStore,
-        twitsStore,
-        retwitsStore,
-        favoriteTwitsStore
-      );
+      trendsClient
+        .getTrendsTwitsForAuthUser(trend)
+        .then((trendstTwits) => trendsStore.setTrendsTwits(trendstTwits));
+    } else {
+      trendsClient
+        .getPublicTrendsTwits(trend)
+        .then((trendstTwits) => trendsStore.setTrendsTwits(trendstTwits));
     }
 
     usersStore.setAuth(getFlagIsAuth());
@@ -68,6 +55,7 @@ const TrendsPage = observer(() => {
       setIsLoadingTrends(false);
     }, 300);
   }, [trend]);
+  console.log(trend);
 
   return (
     <>

@@ -13,6 +13,7 @@ const Favorite_twits = models.Favorite_twits;
 const Following = models.Following;
 const jwt = require("jsonwebtoken");
 const TwitsPresenter = require("../presenters/twitsPresenter");
+const TwitsPresenterForPublicPage = require("../presenters/twitsPresenterForPublicPage");
 
 const decodeUser = (request) => {
   const token = request.headers.authorization.split(" ")[1];
@@ -97,7 +98,7 @@ class TrendsController {
     }
   }
 
-  async getTrendsTwits(request, response) {
+  async getTrendsTwitsForAuthUser(request, response) {
     const Op = Sequelize.Op;
 
     const { trend } = request.params;
@@ -112,6 +113,32 @@ class TrendsController {
     const trends = await dbRequestTwitsForAuthUser(decodeUser, request, params);
 
     const presenter = new TwitsPresenter(trends);
+
+    return response.json(presenter.toJSON());
+  }
+
+  async getPublicTrendsTwits(request, response) {
+    const Op = Sequelize.Op;
+
+    const { trend } = request.params;
+    let { limit, list } = request.query;
+
+    limit = limit || 7;
+    list = list || 1;
+    let offset = list * limit - limit;
+
+    const trends = await Twits.findAll({
+      where: { text: { [Op.substring]: trend } },
+      include: [
+        { model: User, as: "user" },
+        { model: User, as: "twit_user" },
+      ],
+      order: [["id", "DESC"]],
+      limit: limit,
+      offset: offset,
+    });
+
+    const presenter = new TwitsPresenterForPublicPage(trends);
 
     return response.json(presenter.toJSON());
   }
