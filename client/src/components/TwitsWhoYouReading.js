@@ -1,6 +1,8 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { Context } from "..";
+import twitsClient from "../http/twitsClient";
+import getAuthUserID from "../utils/getAuthUserID";
 
 import getMoreWhoYouReadingTwits from "../utils/getMoreWhoYouReadingTwits";
 
@@ -10,10 +12,18 @@ import Twit from "./Twit";
 
 const TwitsWhoYouRead = observer(() => {
   const { twitsStore } = useContext(Context);
+  const authUserID = getAuthUserID();
+
+  // useEffect(()=>{
+  //   twitsClient
+  //     .getTwitsByFollowingsUsers(authUserID)
+  //     .then((twits) => twitsStore.setTwits(twits));
+  // },[])
+
   return (
     <div className="twits">
       <>
-        {twitsStore.twitsWhoReading.map((twit) => (
+        {twitsStore.twits.map((twit) => (
           <Fragment key={twit.id}>
             {twit.retwit && <TooltipRetwitOnTwit retwit={twit} />}
             <Twit key={twit.id} twit={twit} />

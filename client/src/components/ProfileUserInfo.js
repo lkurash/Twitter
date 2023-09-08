@@ -95,7 +95,7 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
             id="following"
           >
             <span className="profile-panel-button-text-followers">
-              {usersFollowingsStore.userFollowing.length} Following
+              {usersStore.userPage.following} Following
             </span>
           </NavLink>
           <NavLink
@@ -108,7 +108,7 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
             id="followers"
           >
             <span className="profile-panel-button-text-followers">
-              {usersFollowingsStore.userFollowers.length} Followers
+              {usersStore.userPage.followers} Followers
             </span>
           </NavLink>
           <TooltipUserNotAuth

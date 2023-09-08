@@ -20,6 +20,7 @@ const TwitsWithUserLikesPresenter = require("../presenters/twitsWithUserLikesPre
 const models = require("../models/index");
 const ApiError = require("../error/ApiError");
 const dbRequestTwitsForAuthUser = require("../sql/dbRequestTwitsForAuthUser ");
+const TwitsPresenterForPublicPage = require("../presenters/twitsPresenterForPublicPage");
 const Twits = models.Twits;
 const User = models.User;
 const Likes = models.Likes;
@@ -106,6 +107,35 @@ class TwitsController {
     }
   }
 
+  async getPublicTwitsByUser(request, response, next) {
+    try {
+      const Op = Sequelize.Op;
+      const { userId } = request.params;
+
+      let { limit, list } = request.query;
+      limit = limit || 7;
+      list = list || 1;
+      let offset = list * limit - limit;
+
+      const twits = await Twits.findAll({
+        order: [["id", "DESC"]],
+        where: { userId: userId },
+        include: [
+          { model: User, as: "user" },
+          { model: User, as: "twit_user" },
+        ],
+        limit: limit,
+        offset: offset,
+      });
+
+      const presenter = new TwitsPresenterForPublicPage(twits);
+
+      return response.json(presenter.toJSON());
+    } catch (error) {
+      next(ApiError.badRequest("Check user.id"));
+    }
+  }
+
   async getTwitsByFollowingUsers(request, response, next) {
     try {
       const Op = Sequelize.Op;
@@ -150,11 +180,17 @@ class TwitsController {
 
     const twits = await Twits.findAll({
       order: [["id", "DESC"]],
+      include: [
+        { model: User, as: "user" },
+        { model: User, as: "twit_user" },
+      ],
       limit: limit,
       offset: offset,
     });
 
-    return response.json(twits);
+    const presenter = new TwitsPresenterForPublicPage(twits);
+
+    return response.json(presenter.toJSON());
   }
 
   async getTwitsForAuthUser(request, response, next) {

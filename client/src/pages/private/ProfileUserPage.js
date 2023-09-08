@@ -8,7 +8,6 @@ import usersClient from "../../http/usersClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
-import getInfoAuthPage from "../../utils/getInfoAuthPage";
 
 import ContentUserProfilePage from "../../components/ContentUserProfilePage";
 import SidebarContent from "../../components/SidebarContent";
@@ -16,8 +15,6 @@ import SidebarContent from "../../components/SidebarContent";
 const ProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
-  const { favoriteTwitsStore } = useContext(Context);
-  const { retwitsStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
   const { id } = useParams();
   const authUserID = getAuthUserID();
@@ -33,33 +30,6 @@ const ProfileUserPage = observer(({ loadingPage }) => {
           .getUserProfile(authUserID)
           .then((userInfo) => usersStore.setUser(userInfo));
       }
-
-      twitsClient.getTwitsWithUserLikes(id).then((twits) => {
-        twitsStore.setTwitsWithUsersLikes(twits);
-      });
-
-      twitsClient
-        .getTwitsByUser(id)
-        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
-
-      usersClient
-        .getFollowingsUser(id)
-        .then((followings) =>
-          usersFollowingsStore.setuserFollowing(followings)
-        );
-
-      usersClient
-        .getFollowersUser(id)
-        .then((followers) => usersFollowingsStore.setuserFollowers(followers));
-
-      getInfoAuthPage(
-        authUserID,
-        usersStore,
-        usersFollowingsStore,
-        twitsStore,
-        retwitsStore,
-        favoriteTwitsStore
-      );
 
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {

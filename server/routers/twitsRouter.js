@@ -4,7 +4,8 @@ const router = new Router();
 
 router.post("/twit", twitsController.createTwitByUser);
 router.get("/", twitsController.gelAllTwits);
-router.get("/user/:userId", twitsController.getTwitsByUser);
+router.get("/auth/user/:userId", twitsController.getTwitsByUser);
+router.get("/user/:userId", twitsController.getPublicTwitsByUser);
 router.get("/user/:userId/bookmarks", twitsController.getFavoriteTwitByUser);
 router.get("/user/:userId/comments", twitsController.getCommentsByUser);
 router.delete("/twit/:twitId", twitsController.deleteTwit);

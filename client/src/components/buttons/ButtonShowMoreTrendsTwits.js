@@ -15,7 +15,7 @@ const ButtonShowMoreTrendsTwits = observer(({ trend }) => {
   async function getMoreTrendsTwits() {
     if (showMoreTwits) {
       await trendsClient
-        .getTrendsTwits(trend, 7, itemListTwits)
+        .getTrendsTwitsForAuthUser(trend, 7, itemListTwits)
         .then((trendstTwits) => {
           trendsStore.setTrendsTwits(
             trendsStore.trensTwits.concat(trendstTwits)

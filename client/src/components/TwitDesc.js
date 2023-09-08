@@ -23,10 +23,12 @@ const TwitDesc = ({ twit }) => {
               if (usersStore.isAuth) {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
+
                 navigate(path(PRIVATE_USER_PAGE_PATH, twit.twit_user.id));
               } else {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
+
                 navigate(path(PUBLIC_USER_PAGE_PATH, twit.twit_user.id));
               }
             }}
@@ -43,10 +45,12 @@ const TwitDesc = ({ twit }) => {
               if (usersStore.isAuth) {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
+
                 navigate(path(PRIVATE_USER_PAGE_PATH, twit.user.id));
               } else {
                 usersStore.setUserPage({});
                 twitsStore.setUserTwits([]);
+
                 navigate(path(PUBLIC_USER_PAGE_PATH, twit.user.id));
               }
             }}

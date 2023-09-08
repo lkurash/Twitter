@@ -24,6 +24,7 @@ const SECRET_KEY_REFRESH_TOKEN = "super_secret_key";
 
 const ApiError = require("../error/ApiError");
 const models = require("../models/index");
+const UserPresenter = require("../presenters/userPresenter");
 
 const Twits = models.Twits;
 const User = models.User;
@@ -264,9 +265,21 @@ class UserController {
       if (id) {
         const user = await User.findOne({
           where: { id },
+          include: [
+            {
+              model: Following,
+              as: "followings_user",
+            },
+            {
+              model: Following,
+              as: "followers_user",
+            },
+          ],
         });
 
-        return response.json(user);
+         const presenter = new UserPresenter(user);
+
+         return response.json(presenter.toJSON());
       }
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
@@ -335,27 +348,26 @@ class UserController {
 
   async getFollowingUsers(request, response, next) {
     try {
-    const Op = Sequelize.Op;
+      const Op = Sequelize.Op;
 
-    const user = decodeUser(request);
-    const userIdToken = user.id;
+      const user = decodeUser(request);
+      const userIdToken = user.id;
 
-    const { id } = request.params;
+      const { id } = request.params;
 
-    const users = await Following.findAll({
-      where: {
-        userId: id,
-      },
-      include: {
-        model: User,
-        as: "user",
-      },
-    });
+      const users = await Following.findAll({
+        where: {
+          userId: id,
+        },
+        include: {
+          model: User,
+          as: "user",
+        },
+      });
 
-    let presenter = new FollowingsUserPresenter(users);
+      let presenter = new FollowingsUserPresenter(users);
 
-    return response.json(presenter.toJSON(users));
-
+      return response.json(presenter.toJSON(users));
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
