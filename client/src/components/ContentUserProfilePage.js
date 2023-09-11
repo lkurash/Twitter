@@ -12,46 +12,46 @@ import ProfileUserInfo from "./ProfileUserInfo";
 
 import arrowLeft from "./Img/arrow_left_icon.png";
 
-const ContentUserProfilePage = observer(
-  ({ pathHomeProfileUser}) => {
-    const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(true);
-    const { usersStore } = useContext(Context);
+const ContentUserProfilePage = observer(({ pathHomeProfileUser }) => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const { usersStore } = useContext(Context);
 
-    useEffect(() => {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 250);
-    }, []);
+  useEffect(() => {
+    setIsLoading(true);
 
-    if (isLoading || !usersStore.userPage.id) {
-      return loadPageUserInfo();
-    }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 250);
+  }, [usersStore.userPage.id]);
 
-    return (
-      <div className="user-main-content-block">
-        <div className="page-name main-stiky-panel">
-          <div
-            className="main-search-block-button-return"
-            onClick={() => navigate(PRIVATE_HOME_PAGE_PATH)}
-          >
-            <img src={arrowLeft} alt="Button return" />
-          </div>
-          <div className="page-name-user-name">
-            <h2>{usersStore.userPage.user_name}</h2>
-            <p>@{usersStore.userPage.user_name}</p>
-          </div>
-        </div>
-        <>
-          <div className="user-main-content-profile-panel">
-            <ProfileUserInfo pathHomeProfileUser={pathHomeProfileUser} />
-            <ProfileButtonPanel pathHomeProfileUser={pathHomeProfileUser} />
-          </div>
-          <Outlet />
-        </>
-      </div>
-    );
+  if (isLoading || !usersStore.userPage.id) {
+    return loadPageUserInfo();
   }
-);
+
+  return (
+    <div className="user-main-content-block">
+      <div className="page-name main-stiky-panel">
+        <div
+          className="main-search-block-button-return"
+          onClick={() => navigate(PRIVATE_HOME_PAGE_PATH)}
+        >
+          <img src={arrowLeft} alt="Button return" />
+        </div>
+        <div className="page-name-user-name">
+          <h2>{usersStore.userPage.user_name}</h2>
+          <p>@{usersStore.userPage.user_name}</p>
+        </div>
+      </div>
+      <>
+        <div className="user-main-content-profile-panel">
+          <ProfileUserInfo pathHomeProfileUser={pathHomeProfileUser} />
+          <ProfileButtonPanel pathHomeProfileUser={pathHomeProfileUser} />
+        </div>
+        <Outlet />
+      </>
+    </div>
+  );
+});
 
 export default ContentUserProfilePage;

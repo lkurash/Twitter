@@ -9,10 +9,12 @@ import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 import ContentUserProfilePage from "../../components/ContentUserProfilePage";
 import SidebarContent from "../../components/SidebarContent";
+import { useParams } from "react-router-dom";
 
 const HomeProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
+  const { id } = useParams();
+
   const authUserID = getAuthUserID();
 
   useEffect(() => {
@@ -23,22 +25,22 @@ const HomeProfileUserPage = observer(({ loadingPage }) => {
           usersStore.setUserPage(userInfo);
         });
 
-        usersClient
-          .getFollowersUser(authUserID)
-          .then((followers) =>
-            usersFollowingsStore.setuserFollowers(followers)
-          );
-
-        usersClient.getFollowingsUser(authUserID).then((followings) => {
-          usersFollowingsStore.setuserFollowing(followings);
-        });
+        if (id) {
+          usersClient.getUserProfile(id).then((userInfo) => {
+            usersStore.setUserPage(userInfo);
+          });
+        } else {
+          usersClient.getUserProfile(authUserID).then((userInfo) => {
+            usersStore.setUserPage(userInfo);
+          });
+        }
       }
 
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);
     }
-  },[]);
+  }, []);
 
   return (
     <>

@@ -3,7 +3,6 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
-import twitsClient from "../../http/twitsClient";
 import usersClient from "../../http/usersClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
@@ -14,21 +13,26 @@ import SidebarContent from "../../components/SidebarContent";
 
 const ProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
+
   const { id } = useParams();
   const authUserID = getAuthUserID();
 
   useEffect(() => {
     try {
-      usersClient
-        .getUserProfile(id)
-        .then((userById) => usersStore.setUserPage(userById));
-
       if (authUserID) {
         usersClient
           .getUserProfile(authUserID)
           .then((userInfo) => usersStore.setUser(userInfo));
+      }
+
+      if (id) {
+        usersClient
+          .getUserProfile(id)
+          .then((userById) => usersStore.setUserPage(userById));
+      }else{
+        usersClient
+          .getUserProfile(authUserID)
+          .then((userById) => usersStore.setUserPage(userById));
       }
 
       usersStore.setAuth(getFlagIsAuth());

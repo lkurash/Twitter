@@ -3,21 +3,19 @@ import { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Context } from "..";
 
-import spinner from "../utils/spinner";
-
 import TwitForm from "./forms/TwitForm";
 import TwitsForYou from "./TwitsForYou";
 import TwitsWhoYouRead from "./TwitsWhoYouReading";
 
 const ContentHomePage = observer(() => {
   const { twitsStore } = useContext(Context);
-  const [cookies, setCookie] = useCookies(["twitsWhoReading"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["twitsWhoReading"]);
 
   const [twitsForYouVisible, setTwitsForYouVisible] = useState("true");
   const [twitsWhoReadingVisible, setTwitsWhoReadingVisible] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
   const setCookieTwitsForYou = (show) => {
+    removeCookie("twitsWhoReading");
     setCookie("twitsWhoReading", show);
   };
 
@@ -33,9 +31,6 @@ const ContentHomePage = observer(() => {
 
   useEffect(() => {
     checkCookieTwitsForYou();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 400);
   }, [cookies.twitsWhoReading]);
 
   return (
@@ -93,17 +88,13 @@ const ContentHomePage = observer(() => {
               <TwitForm />
             </div>
             <div className="main-line" />
-            {twitsStore.twits.length === 0 || isLoading ? (
-              spinner()
-            ) : (
-              <>
-                {twitsForYouVisible && <TwitsForYou />}
+            <>
+              {twitsForYouVisible && <TwitsForYou />}
 
-                {twitsWhoReadingVisible && (
-                  <TwitsWhoYouRead userTwits={twitsStore.userTwits} />
-                )}
-              </>
-            )}
+              {twitsWhoReadingVisible && (
+                <TwitsWhoYouRead userTwits={twitsStore.userTwits} />
+              )}
+            </>
           </div>
         </div>
       </div>

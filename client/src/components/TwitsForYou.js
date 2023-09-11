@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
 import getTwitsForAuthUser from "../utils/getTwitsForAuthUser";
@@ -11,17 +11,27 @@ import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import "./main.css";
 import twitsClient from "../http/twitsClient";
 import getAuthUserID from "../utils/getAuthUserID";
+import spinner from "../utils/spinner";
 
 const TwitsForYou = observer(() => {
   const { twitsStore } = useContext(Context);
+  const [isLoading, setIsLoading] = useState(true);
 
   const authUserID = getAuthUserID();
 
-  // useEffect(()=>{
-  //   twitsClient.getTwitsForAuthUser(authUserID).then((twits) => {
-  //     twitsStore.setTwits(twits);
-  //   });
-  // },[])
+  useEffect(() => {
+    twitsClient.getTwitsForAuthUser(authUserID).then((twits) => {
+      twitsStore.setTwits(twits);
+    });
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 400);
+  }, []);
+
+  if (twitsStore.twits.length === 0 || isLoading) {
+    return spinner();
+  }
 
   return (
     <div className="twits">

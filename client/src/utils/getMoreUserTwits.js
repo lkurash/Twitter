@@ -12,7 +12,7 @@ export default async function getMoreUserTwits(
     await twitsClient
       .getTwitsByUser(userId, 7, itemListTwits)
       .then((usersTwits) => {
-        twitsStore.setUserTwits(twitsStore.userTwits.concat(usersTwits));
+        twitsStore.setTwits(twitsStore.twits.concat(usersTwits));
 
         setShowMoreTwits(false);
 

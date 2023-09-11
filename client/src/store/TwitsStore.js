@@ -41,18 +41,7 @@ class TwitsStore {
         }
       }
     });
-
-    this._twitsWhoReading.map((twit) => {
-      if (twit.id === twitLike.id) {
-        twit.countLikes = twitLike.countLikes;
-        if (like) {
-          twit.authUserLike = true;
-        } else {
-          twit.authUserLike = false;
-        }
-      }
-    });
-    return [this._twits, this._twitsWhoReading];
+    return this._twits
   }
 
   addFavoriteTwit(bookmarkTwit, bookmark) {
@@ -65,17 +54,7 @@ class TwitsStore {
         }
       }
     });
-
-    this._twitsWhoReading.map((twit) => {
-      if (twit.id === bookmarkTwit.id) {
-        if (bookmark) {
-          twit.authUserFavorite = true;
-        } else {
-          twit.authUserFavorite = false;
-        }
-      }
-    });
-    return [this._twits, this._twitsWhoReading];
+    return this._twits;
   }
 
   addRetwitTwit(retwit) {
@@ -90,17 +69,7 @@ class TwitsStore {
       }
     });
 
-    this._twitsWhoReading.map((twit) => {
-      if (twit.id === retwit.id) {
-        twit.retwitsAuthUser = true;
-        twit.countRetwits = retwit.countRetwits;
-      }
-      if (twit.twitId === retwit.id) {
-        twit.retwitsAuthUser = true;
-        twit.countRetwits = retwit.countRetwits;
-      }
-    });
-    return [this._twits, this._twitsWhoReading];
+    return this._twits;
   }
 
   deleteRetwit(originalTwit, retwit) {
@@ -111,9 +80,7 @@ class TwitsStore {
     let retwitsIndex = this._twits.findIndex((twit) => twit.id === retwit);
 
     this._twits[originalTwitsIndex].retwitsAuthUser = false;
-    this._twitsWhoReading[originalTwitsIndex].retwitsAuthUser = false;
     this._twits.splice(retwitsIndex, 1);
-    this._twitsWhoReading.splice(retwitsIndex, 1);
   }
 
   deleteTwit(deleteTwit) {

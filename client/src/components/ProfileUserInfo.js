@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { NavLink, useLocation, useSearchParams } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Context } from "..";
 
 import {
@@ -87,10 +87,20 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
         </article>
         <div className="profile-button-panel-followers">
           <NavLink
+            onClick={() => {
+              if (!authUserID) {
+                setTooltipUserNotAuth(true);
+              }
+            }}
             to={
-              pathHomeProfileUser && usersStore.isAuth
-                ? PRIVATE_FOLLOWINGS_PAGE_PATH
-                : path(PRIVATE_USER_FOLLOWING_PAGE_PATH, usersStore.userPage.id)
+              authUserID
+                ? pathHomeProfileUser && authUserID
+                  ? PRIVATE_FOLLOWINGS_PAGE_PATH
+                  : path(
+                      PRIVATE_USER_FOLLOWING_PAGE_PATH,
+                      usersStore.userPage.id
+                    )
+                : ""
             }
             id="following"
           >
@@ -100,10 +110,20 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
           </NavLink>
           <NavLink
             className="profile-panel-button-followers"
+            onClick={() => {
+              if (!authUserID) {
+                setTooltipUserNotAuth(true);
+              }
+            }}
             to={
-              pathHomeProfileUser && usersStore.isAuth
-                ? PRIVATE_FOLLOWERS_PAGE_PATH
-                : path(PRIVATE_USER_FOLLOWER_PAGE_PATH, usersStore.userPage.id)
+              authUserID
+                ? authUserID && pathHomeProfileUser
+                  ? PRIVATE_FOLLOWERS_PAGE_PATH
+                  : path(
+                      PRIVATE_USER_FOLLOWER_PAGE_PATH,
+                      usersStore.userPage.id
+                    )
+                : ""
             }
             id="followers"
           >

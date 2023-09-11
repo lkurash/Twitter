@@ -14,7 +14,7 @@ export default async function getMoreWhoYouReadingTwits(
     await twitsClient
       .getTwitsByFollowingsUsers(authUserID, 7, itemListTwits)
       .then((twits) => {
-        twitsStore.setTwitsWhoReading(twitsStore.twitsWhoReading.concat(twits));
+        twitsStore.setTwits(twitsStore.twits.concat(twits));
 
         setShowMoreTwits(false);
 
