@@ -25,12 +25,13 @@ const UserTwits = observer(() => {
   useEffect(() => {
     if (authUserID) {
       twitsClient
-        .getTwitsByUser(authUserID)
-        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
+        .getTwitsByUser(usersStore.userPage.id)
+        .then((usersTwits) => twitsStore.setTwits(usersTwits));
+
     } else {
       twitsClient
         .getPublicTwitsByUser(id)
-        .then((usersTwits) => twitsStore.setUserTwits(usersTwits));
+        .then((usersTwits) => twitsStore.setTwits(usersTwits));
     }
 
     setTimeout(() => {
@@ -38,13 +39,13 @@ const UserTwits = observer(() => {
     }, 250);
   }, []);
 
-  if (usersStore.userPage.length === 0 || loadingPage) return spinner();
+  if (usersStore.userPage.length === 0 || loadingPage) return <div className="twits">{spinner()}</div>;
 
   return (
     <div className="twits">
-      {twitsStore.userTwits ? (
+      {twitsStore.twits ? (
         <>
-          {twitsStore.userTwits.map((twit) => (
+          {twitsStore.twits.map((twit) => (
             <Fragment key={twit.id}>
               {twit.retwit && (
                 <TooltipRetwitOnTwit retwit={twit} key={`tooltip-${twit.id}`} />
@@ -52,7 +53,7 @@ const UserTwits = observer(() => {
               <Twit twit={twit} key={twit.id} />
             </Fragment>
           ))}
-          {twitsStore.userTwits.length >= 7 && (
+          {twitsStore.twits.length >= 7 && (
             <ButtonShowMoreTwits
               getMoreTwits={getMoreUserTwits}
               store={twitsStore}

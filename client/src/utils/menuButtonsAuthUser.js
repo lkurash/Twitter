@@ -12,10 +12,8 @@ import {
   PRIVATE_NOTIFICATIONS_PAGE_PATH,
   PRIVATE_PROFILE_PAGE_USER_PATH,
 } from "./constans";
-import getAuthUserID from "./getAuthUserID";
 
 export const menuButtonsAuthUser = (user) => {
-  const authUserID = getAuthUserID();
   const buttons = [
     {
       id: "1",

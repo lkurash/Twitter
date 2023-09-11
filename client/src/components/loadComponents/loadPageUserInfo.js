@@ -32,6 +32,10 @@ const loadPageUserInfo = () => {
                 <article className="profile-panel-about-user">
                   <p className="about-user-load-page" />
                 </article>
+                <div className="profile-button-panel-followers load-page">
+                  <span className="profile-panel-button-text-followers" />
+                  <span className="profile-panel-button-text-followers" />
+                </div>
                 <div className="profile-panel-info-user">
                   <div className="profile-panel-info-user-web-site load-page">
                     <p />
@@ -47,25 +51,25 @@ const loadPageUserInfo = () => {
             </>
             <>
               <div className="user-main-content-button-panel">
-                <div className="wrapper-button load-page">
+                <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
                     className="user-main-content-twits-button-onpanel"
                     type="button"
                   ></button>
                 </div>
-                <div className="wrapper-button load-page">
+                <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
                     className="user-main-content-answers-button-onpanel"
                     type="button"
                   ></button>
                 </div>
-                <div className="wrapper-button load-page">
+                <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
                     className="user-main-content-media-button-onpanel"
                     type="button"
                   ></button>
                 </div>
-                <div className="wrapper-button load-page">
+                <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
                     className="user-main-content-likes-button-onpanel"
                     type="button"
@@ -74,10 +78,10 @@ const loadPageUserInfo = () => {
               </div>
               <div className="main-line" />
             </>
+            <div className="twits">{spinner()}</div>
           </div>
         </>
       </div>
-      {spinner()}
     </>
   );
 };

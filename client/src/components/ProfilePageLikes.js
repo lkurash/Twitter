@@ -18,28 +18,35 @@ const ProfilePageLikes = observer(() => {
   const [loadingPage, setIsLoadingPage] = useState(true);
 
   useEffect(() => {
-    twitsClient.getTwitsWithUserLikes(authUserID).then((twits) => {
-      twitsStore.setTwitsWithUsersLikes(twits);
-    });
-    setTimeout(() => {
-      setIsLoadingPage(false);
-    }, 250);
+    if (authUserID) {
+      twitsClient
+        .getTwitsWithUserLikes(usersStore.userPage.id)
+        .then((twits) => {
+          twitsStore.setTwits(twits);
+        });
+      setTimeout(() => {
+        setIsLoadingPage(false);
+      }, 250);
+    }
   }, []);
 
-  if (usersStore.user.length === 0 || loadingPage) return spinner();
+  if (usersStore.userPage.length === 0 || loadingPage) return spinner();
 
   return (
     <div className="twits">
-      {twitsStore.twitsWithUsersLikes.map((like) => (
-        <Twit twit={like} key={like.id} />
-      ))}
-      {twitsStore.twitsWithUsersLikes.length >= 7 && (
-        <ButtonShowMoreTwits
-          getMoreTwits={getMoreTwitsWithLike}
-          store={twitsStore}
-        />
-      )}
-      {twitsStore.twitsWithUsersLikes.length === 0 && (
+      {twitsStore.twits ? (
+        <>
+          {twitsStore.twits.map((like) => (
+            <Twit twit={like} key={like.id} />
+          ))}
+          {twitsStore.twits.length >= 7 && (
+            <ButtonShowMoreTwits
+              getMoreTwits={getMoreTwitsWithLike}
+              store={twitsStore}
+            />
+          )}
+        </>
+      ) : (
         <p className="empty-twits">No twits</p>
       )}
     </div>

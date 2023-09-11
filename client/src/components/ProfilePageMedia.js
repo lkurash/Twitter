@@ -17,27 +17,30 @@ const ProfilePageMedia = observer(() => {
 
   useEffect(() => {
     twitsClient.getUserTwitsWithMedia(usersStore.userPage.id).then((twits) => {
-      twitsStore.setUserTwitsWithMedia(twits);
+      twitsStore.setTwits(twits);
     });
     setTimeout(() => {
       setIsLoadingPage(false);
     }, 250);
   }, []);
 
-  if (usersStore.user.length === 0 || loadingPage) return spinner();
+  if (usersStore.userPage.length === 0 || loadingPage) return spinner();
 
   return (
     <div className="twits">
-      {twitsStore.userTwitsWithMedia.map((twit) => (
-        <Twit twit={twit} key={twit.id} />
-      ))}
-      {twitsStore.userTwitsWithMedia.length >= 4 && (
-        <ButtonShowMoreTwits
-          getMoreTwits={getMoreTwitsWithMedia}
-          store={twitsStore}
-        />
-      )}
-      {twitsStore.userTwitsWithMedia.length === 0 && (
+      {twitsStore.twits ? (
+        <>
+          {twitsStore.twits.map((twit) => (
+            <Twit twit={twit} key={twit.id} />
+          ))}
+          {twitsStore.twits.length >= 4 && (
+            <ButtonShowMoreTwits
+              getMoreTwits={getMoreTwitsWithMedia}
+              store={twitsStore}
+            />
+          )}
+        </>
+      ) : (
         <p className="empty-twits">No twits</p>
       )}
     </div>
