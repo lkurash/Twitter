@@ -47,7 +47,7 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
   };
 
   return (
-    <div className="user-twit-panel-bookmark">
+    <div className="twit-action-bookmark">
       {!twit.authUserFavorite ? (
         <>
           <TooltipUserNotAuth
@@ -56,7 +56,7 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
             bookmark
           />
           <div
-            className="user-twit-panel-button-bookmark"
+            className="twit-action-button-bookmark"
             key={twit.id}
             onClick={() => {
               if (usersStore.isAuth) {
@@ -74,13 +74,13 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
             <img
               src={hoverAndActiveButtonBookmark(twit)}
               alt="Bookmark"
-              className="user-twit-panel-bookmark-img"
+              className="twit-action-bookmark-img"
             />
           </div>
         </>
       ) : (
         <div
-          className="user-twit-panel-button-bookmark"
+          className="twit-action-button-bookmark"
           key={twit.id}
           onClick={() => {
             favoriteTwitsStore.setNotActiveFavoriteTwit(twit);
@@ -95,7 +95,7 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
           <img
             src={notActiveButtonBookmark(twit)}
             alt="Bookmark"
-            className="user-twit-panel-bookmark-img"
+            className="twit-action-bookmark-img"
           />
         </div>
       )}

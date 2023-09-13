@@ -63,8 +63,14 @@ h2 {
   border: none;
 }
 
-.user-main-content-profile-panel {
+.main-content-profile-panel {
   height: max-content;
+}
+
+.users-page-stiky-panel {
+  display: flex;
+  height: 50px;
+  padding-top: 20px;
 }
 
 .profile-panel-photo {
@@ -407,7 +413,7 @@ h2 {
   height: 105px;
 }
 
-.follow-page-header-page-name {
+.follow-page-header-main-page-name {
   display: flex;
   align-items: center;
   margin-top: 20px;
@@ -455,7 +461,7 @@ h2 {
   cursor: pointer;
 }
 
-.follow-page-main-button-follow {
+.section-whoyouread-button-follow {
   width: 80px;
   height: 32px;
   margin-top: 10px;
@@ -478,7 +484,7 @@ h2 {
   color: rgb(168 42 42);
 }
 
-.follow-page-main-users {
+.users {
   margin: 0;
   padding: 0;
   margin-bottom: 25px;
@@ -486,15 +492,15 @@ h2 {
   list-style-type: none;
 }
 
-.follow-page-main-user-info {
+.section-whoyouread-user-info {
   display: flex;
+  justify-content: space-around;
   align-items: center;
-  margin-left: 20px;
 }
 
-.section-read-main-user-info {
-  display: flex;
-  align-items: center;
+.section-whoyouread-user-name p {
+  word-wrap: break-word;
+  width: 80px;
 }
 
 .wrapper-follow-user-img {
@@ -505,7 +511,7 @@ h2 {
   background-color: rgba(51, 51, 51, 0.56);
 }
 
-.follow-page-main-user {
+.user {
   margin: 0;
   display: flex;
   align-items: center;
@@ -515,7 +521,7 @@ h2 {
   cursor: pointer;
 }
 
-.follow-page-main-user img {
+.user img {
   margin-right: 10px;
   height: 50px;
   width: 50px;

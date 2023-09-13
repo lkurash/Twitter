@@ -7,8 +7,6 @@ import useOutsideClick from "../../utils/useOutsideClickFunction";
 import SignUpFormInput from "../SignUpFormInput";
 import BirthForm from "./BirthForm";
 
-import "./loginAndRegistretionForm.css";
-
 const SignUpForm = observer(({ setCheckUserInfo }) => {
   const { usersStore } = useContext(Context);
 
@@ -75,6 +73,7 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
           setUserInfo={setUserName}
           activeInput={activeDivName}
           checkUserInfo={checkName}
+          length={20}
           onClick={() => {
             setActivedivName(true);
             setActivedivPassword(false);
@@ -89,13 +88,14 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
           setUserInfo={setEmail}
           activeInput={activeDivEmail}
           checkUserInfo={checkEmail}
+          length={300}
           onClick={() => {
             setActivedivEmail(true);
             setActivedivName(false);
             setActivedivPassword(false);
             setCheckEmail(true);
           }}
-          login
+          email
         />
         <SignUpFormInput
           placeholder={"Password"}
@@ -103,6 +103,7 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
           setUserInfo={setPassword}
           activeInput={activeDivPassword}
           checkUserInfo={checkPassword}
+          length={100}
           onClick={() => {
             setActivedivPassword(true);
             setActivedivEmail(false);

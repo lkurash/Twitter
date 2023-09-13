@@ -23,37 +23,40 @@ const ContentBookmarksPage = observer(() => {
     }, 300);
   });
 
-  if (isLoading || favoriteTwitsStore.favoriteTwits.length === 0)
-    return spinner();
-
   return (
-    <div className="user-main-content-block">
-      <div className="page-name main-stiky-panel">
+    <div className="main-content-block">
+      <div className="main-stiky-panel users-page-stiky-panel">
         <div
           className="main-search-block-button-return"
           onClick={() => navigate(-1)}
         >
           <img src={arrowLeft} alt="Button return" />
         </div>
-        <div className="page-name-user-name">
+        <div className="main-page-name">
           <h2>Bookmarks</h2>
           <p>@{usersStore.user.user_name}</p>
         </div>
       </div>
-      <div className="twits">
-        {favoriteTwitsStore.favoriteTwits ? (
-          favoriteTwitsStore.favoriteTwits.map((bookmark) => (
-            <Twit twit={bookmark} key={bookmark.id} />
-          ))
-        ) : (
-          <p className="empty-twits">No twits</p>
-        )}
-      </div>
-      {favoriteTwitsStore.favoriteTwits.length >= 7 && (
-        <ButtonShowMoreTwits
-          getMoreTwits={getMoreFavoriteTwits}
-          store={favoriteTwitsStore}
-        />
+      {isLoading || favoriteTwitsStore.favoriteTwits.length === 0 ? (
+        spinner()
+      ) : (
+        <>
+          <div className="twits">
+            {favoriteTwitsStore.favoriteTwits ? (
+              favoriteTwitsStore.favoriteTwits.map((bookmark) => (
+                <Twit twit={bookmark} key={bookmark.id} />
+              ))
+            ) : (
+              <p className="twit-hint-about-lack-twits">No twits</p>
+            )}
+          </div>
+          {favoriteTwitsStore.favoriteTwits.length >= 7 && (
+            <ButtonShowMoreTwits
+              getMoreTwits={getMoreFavoriteTwits}
+              store={favoriteTwitsStore}
+            />
+          )}
+        </>
       )}
     </div>
   );

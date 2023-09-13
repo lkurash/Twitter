@@ -1,5 +1,5 @@
 .menu {
-  width: 275px;
+  width: 20%;
   height: 100%;
   color: #dcdcdc;
   position: sticky;
@@ -121,19 +121,11 @@
   width: 14px;
   height: 14px;
   margin-right: 10px;
-
-  /* margin-left: 40px; */
 }
 
 .tweet-icon {
   display: none;
 }
-
-/* .twit-count-like {
-  margin-left: 3px;
-  color: grey;
-  font-size: 13px;
-} */
 
 @media (width <= 1245px) {
   .menu {

@@ -20,11 +20,11 @@ const UserFollowersList = observer(() => {
   return (
     <div>
       {usersFollowingsStore.userFollowers.length > 0 ? (
-        <ul className="follow-page-main-users">
+        <ul className="users">
           {usersFollowingsStore.userFollowers.map((profile) => (
-            <li key={profile.id} className="follow-page-main-user">
+            <li key={profile.id} className="user">
               <div
-                className="follow-page-main-user-info"
+                className="user-info"
                 onClick={() => {
                   usersStore.setUserPage({});
                   twitsStore.setUserTwits([]);
@@ -32,9 +32,7 @@ const UserFollowersList = observer(() => {
                 }}
               >
                 <img src={getUserPhoto(profile)} alt="User" />
-                <p className="follow-page-main-user-name">
-                  {profile.user_name}
-                </p>
+                <p className="user-name">{profile.user_name}</p>
               </div>
               {profile.id !== authUserID && (
                 <ButtonFollowInFollowList

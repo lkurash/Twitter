@@ -46,7 +46,7 @@ const FollowPage = observer(() => {
     <>
       <div className="main-wrapper">
         <main className="main">
-          <div className="user-main-content">
+          <div className="main-content">
             <ContentFollowPage />
           </div>
         </main>

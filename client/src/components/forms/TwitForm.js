@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import trendClient from "../../http/trendClient";
 import twitClient from "../../http/twitClient";
 
 import getUserPhoto from "../../utils/getUserPhoto";
@@ -33,7 +32,7 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
 
         formData.append("text", text);
         formData.append("img", img);
-        
+
         await twitClient.createTwitByUser(formData).then((newTwit) => {
           if (twitsStore.twits) {
             twitsStore.setTwits(newTwit.twit.concat(twitsStore.twits));
@@ -71,7 +70,7 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
             <textarea
               value={text}
               autoFocus={twitFormVisible}
-              className="twit-form-input-text"
+              className="twit-input-text"
               onChange={(e) => setText(e.target.value)}
               placeholder="What's happening?"
             />

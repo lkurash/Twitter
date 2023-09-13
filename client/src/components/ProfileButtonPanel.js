@@ -17,13 +17,13 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
 
   return (
     <>
-      <div className="user-main-content-button-panel">
+      <div className="main-content-button-panel">
         <div className="wrapper-button">
           <NavLink
             className={({ isActive, isPending }) =>
               isActive
-                ? `user-main-content-twits-button-onpanel active-button-panel`
-                : `user-main-content-twits-button-onpanel`
+                ? `main-content-twits-button-onpanel active-button-panel`
+                : `main-content-twits-button-onpanel`
             }
             to={
               pathHomeProfileUser
@@ -44,8 +44,8 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
             }
             className={({ isActive }) =>
               isActive
-                ? `user-main-content-answers-button-onpanel active-button-panel`
-                : `user-main-content-answers-button-onpanel`
+                ? `main-content-answers-button-onpanel active-button-panel`
+                : `main-content-answers-button-onpanel`
             }
           >
             Answers
@@ -60,8 +60,8 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
             }
             className={({ isActive }) =>
               isActive
-                ? `user-main-content-media-button-onpanel active-button-panel`
-                : `user-main-content-media-button-onpanel`
+                ? `main-content-media-button-onpanel active-button-panel`
+                : `main-content-media-button-onpanel`
             }
           >
             Media
@@ -76,8 +76,8 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
             }
             className={({ isActive }) =>
               isActive
-                ? `user-main-content-likes-button-onpanel active-button-panel`
-                : `user-main-content-likes-button-onpanel`
+                ? `main-content-likes-button-onpanel active-button-panel`
+                : `main-content-likes-button-onpanel`
             }
           >
             <span>Likes</span>

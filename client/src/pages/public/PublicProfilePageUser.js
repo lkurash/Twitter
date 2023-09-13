@@ -5,6 +5,7 @@ import { Context } from "../..";
 import userClient from "../../http/userClient";
 
 import PublicProfileUser from "../../components/PublicProfileUser";
+import SidebarContent from "../../components/SidebarContent";
 
 const PublicProfilePageUser = observer(() => {
   const { usersStore } = useContext(Context);
@@ -14,14 +15,17 @@ const PublicProfilePageUser = observer(() => {
     userClient
       .getUserProfile(id)
       .then((userById) => usersStore.setUserPage(userById));
-  }, []);
+  });
 
   return (
-    <div className="main-wrapper">
-      <main className="main">
-        <PublicProfileUser />
-      </main>
-    </div>
+    <>
+      <div className="main-wrapper">
+        <main className="main">
+          <PublicProfileUser />
+        </main>
+      </div>
+      <SidebarContent />
+    </>
   );
 });
 

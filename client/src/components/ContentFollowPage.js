@@ -25,7 +25,7 @@ const ContentFollowPage = observer(() => {
   return (
     <div>
       <div className="follow-page-header">
-        <div className="follow-page-header-page-name">
+        <div className="follow-page-header-main-page-name">
           <div
             className="main-search-block-button-return"
             onClick={() => navigate(-1)}
@@ -40,7 +40,7 @@ const ContentFollowPage = observer(() => {
           )}
         </div>
 
-        <div className="user-main-content-button-panel">
+        <div className="main-content-button-panel">
           <NavLink
             className={({ isActive }) =>
               isActive

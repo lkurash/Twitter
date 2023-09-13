@@ -3,16 +3,16 @@ import spinner from "../../utils/spinner";
 const loadPageUserInfo = () => {
   return (
     <>
-      <div className="user-main-content-block">
-        <div className="page-name main-stiky-panel">
+      <div className="main-content-block">
+        <div className="main-stiky-panel users-page-stiky-panel">
           <div className="main-search-block-button-return" />
-          <div className="page-name-user-name load-page">
+          <div className="main-page-name-user-name load-page">
             <h2 />
             <p />
           </div>
         </div>
         <>
-          <div className="user-main-content-profile-panel">
+          <div className="main-content-profile-panel">
             <>
               <div className="profile-panel-photo">
                 <div className="profile-panel-background-user" />
@@ -50,28 +50,28 @@ const loadPageUserInfo = () => {
               </div>
             </>
             <>
-              <div className="user-main-content-button-panel">
+              <div className="main-content-button-panel">
                 <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
-                    className="user-main-content-twits-button-onpanel"
+                    className="main-content-twits-button-onpanel"
                     type="button"
                   ></button>
                 </div>
                 <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
-                    className="user-main-content-answers-button-onpanel"
+                    className="main-content-answers-button-onpanel"
                     type="button"
                   ></button>
                 </div>
                 <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
-                    className="user-main-content-media-button-onpanel"
+                    className="main-content-media-button-onpanel"
                     type="button"
                   ></button>
                 </div>
                 <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
-                    className="user-main-content-likes-button-onpanel"
+                    className="main-content-likes-button-onpanel"
                     type="button"
                   ></button>
                 </div>

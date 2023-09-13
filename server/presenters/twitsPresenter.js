@@ -28,6 +28,7 @@ class TwitsPresenter {
           user_name: twit.twit_user.user_name,
           photo: twit.twit_user.photo,
         },
+        twit_createDate: twit.createdAt,
         authUserFavorite: twit.favorite_twits.id != null,
         authUserLike: twit.likes.id != null,
         authUserRetwits: twit.retwits.id != null,

@@ -24,8 +24,8 @@ const CommentForm = observer(({ twit }) => {
   };
   const createTwitDate = (createdAt) => {
     const date = new Date(createdAt).toString().split(" ");
-
-    return `${date[2]} ${date[1]}.`;
+    
+    return `${date[2]} ${date[1]}. ${date[3]}`;
   };
 
   if (commentText.length > 255) {
@@ -37,7 +37,7 @@ const CommentForm = observer(({ twit }) => {
   };
 
   return (
-    <div className="comment-background">
+    <div className="comment-form-wrapper">
       <div className="comment-form">
         <div
           className="button-close"
@@ -45,34 +45,34 @@ const CommentForm = observer(({ twit }) => {
         >
           <img src={close} alt="close-icon" className="close-icon" />
         </div>
-        <div className="comment-form-info">
-          <div className="comment-user-info">
+        <div className="comment-wrapper-user-info-block">
+          <div className="comment-user-info-block">
             <img alt="User" src={getUserPhoto(twit.user)} />
             <div className="comment-line" />
             <img src={getUserPhoto(usersStore.user)} alt="User" />
           </div>
-          <div className="comment-text-info">
-            <div className="twit-comment">
-              <div className="twit-comment-info-user-and-date">
+          <div className="comment-wrapper-twit-info-block">
+            <div className="comment-twit-info-block">
+              <div className="comment-info-username-and-date">
                 <h4>{twit.user.user_name}</h4>
-                <p className="create-date-twit">{`@${twit.user.user_name}`}</p>
-                <p className="create-date-twit">
-                  {createTwitDate(twit.createdAt)}
+                <p className="comment-twit-info-block-desc">{`@${twit.user.user_name}`}</p>
+                <p className="comment-twit-info-block-desc">
+                  {createTwitDate(twit.twit_createDate)}
                 </p>
               </div>
-              <p className="twit-comment-text">{twit.text}</p>
+              <p className="comment-twit-text">{twit.text}</p>
             </div>
-            <div className="comment-form-input">
+            <div className="comment-wrapper-input">
               <textarea
                 value={commentText}
-                className="twit-form-input-text"
+                className="twit-input-text"
                 onChange={(e) => setCommentText(e.target.value)}
                 placeholder="What's happening?"
               />
             </div>
           </div>
         </div>
-        <div className="comment-twit-panel">
+        <div className="comment-panel">
           <ButtonEmoji addEmojiInTwitText={addEmojiInTwitText} />
           <button onClick={() => createComment(twit.id)}>
             <span>Answer</span>

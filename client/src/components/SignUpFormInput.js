@@ -7,7 +7,8 @@ const SignUpFormInput = ({
   onClick,
   name,
   password,
-  login,
+  email,
+  length,
 }) => {
   const getClassName = () => {
     if (activeInput) {
@@ -22,21 +23,27 @@ const SignUpFormInput = ({
   return (
     <>
       <div onClick={onClick} className={getClassName()}>
-        {activeInput && (
-          <label className="signup-active-input">{placeholder}</label>
+        {(activeInput || value.length > 0) && (
+          <div className="signup-header-active-input">
+            <label className="signup-active-input">{placeholder}</label>
+            {!email && value.length > 0 && (
+              <p className="signup-form-hint-length">
+                {value.length}/{length}
+              </p>
+            )}
+          </div>
         )}
         <input
           placeholder={activeInput ? "" : placeholder}
           type={password ? "password" : "text"}
           value={value}
-          onChange={(e) => setUserInfo(e.target.value.trim().slice(0, 20))}
+          onChange={(e) => {
+            setUserInfo(e.target.value.trim().slice(0, length));
+          }}
         />
-        {activeInput && (
-          <p className="signup-form-input-help">Min length 1 max 20</p>
-        )}
       </div>
-      <div className="signup-form-input-login-error">
-        {!checkUserInfo && login && <p>Please enter a valid email.</p>}
+      <div className="signup-form-hint-login-error">
+        {!checkUserInfo && email && <p>Please enter a valid email.</p>}
       </div>
     </>
   );

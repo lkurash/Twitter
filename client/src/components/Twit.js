@@ -5,13 +5,15 @@ import TwitActions from "./TwitActions";
 import TwitDesc from "./TwitDesc";
 import UserPhoto from "./UserPhoto";
 
+import "./twitActions.css";
+import "./twit.css";
+
 const Twit = ({ twit }) => {
   const authUserID = getAuthUserID();
-  
+
   return (
     <>
       <div className="twit">
-        {/* <div className="content-block"> */}
         <div className="user-block-twit">
           <UserPhoto twit={twit} />
           <TwitDesc twit={twit} />

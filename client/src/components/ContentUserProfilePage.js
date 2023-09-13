@@ -30,21 +30,21 @@ const ContentUserProfilePage = observer(({ pathHomeProfileUser }) => {
   }
 
   return (
-    <div className="user-main-content-block">
-      <div className="page-name main-stiky-panel">
+    <div className="main-content-block">
+      <div className="main-stiky-panel users-page-stiky-panel">
         <div
           className="main-search-block-button-return"
           onClick={() => navigate(HOME_PAGE_PATH)}
         >
           <img src={arrowLeft} alt="Button return" />
         </div>
-        <div className="page-name-user-name">
+        <div className="main-page-name">
           <h2>{usersStore.userPage.user_name}</h2>
           <p>@{usersStore.userPage.user_name}</p>
         </div>
       </div>
       <>
-        <div className="user-main-content-profile-panel">
+        <div className="main-content-profile-panel">
           <ProfileUserInfo pathHomeProfileUser={pathHomeProfileUser} />
           <ProfileButtonPanel pathHomeProfileUser={pathHomeProfileUser} />
         </div>

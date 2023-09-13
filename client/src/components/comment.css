@@ -3,7 +3,7 @@
 
 /* page create comment for twit */
 
-.comment-background {
+.comment-form-wrapper {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -25,19 +25,19 @@
   border-radius: 20px;
 }
 
-.comment-form-info {
+.comment-wrapper-user-info-block {
   display: flex;
   height: 100%;
 }
 
-.comment-user-info {
+.comment-user-info-block {
   margin: 0 auto;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
-.comment-user-info img {
+.comment-user-info-block img {
   margin-top: 5px;
   margin-bottom: 5px;
   width: 50px;
@@ -46,14 +46,14 @@
   border-radius: 30px;
 }
 
-.comment-text-info {
+.comment-wrapper-twit-info-block {
   margin: 0 auto;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
-.twit-comment {
+.comment-twit-info-block {
   width: 470px;
   margin-top: 10px;
   min-height: 100px;
@@ -61,23 +61,16 @@
   color: aliceblue;
 }
 
-.twit-comment-info-user-and-date {
+.comment-info-username-and-date {
   display: flex;
 }
 
-.twit-comment-info-user-and-date h4 {
+.comment-info-username-and-date h4 {
   font-size: 18px;
   margin-bottom: 5px;
 }
 
-.create-date-twit {
-  margin-top: 2px;
-  margin-left: 5px;
-  font-size: 15px;
-  color: grey;
-}
-
-.twit-comment-text {
+.comment-twit-text {
   overflow-wrap: break-word;
   hyphens: auto;
   line-height: 20px;
@@ -86,7 +79,7 @@
   white-space: pre-wrap;
 }
 
-.comment-form-input {
+.comment-wrapper-input {
   width: 467px;
   height: max-content;
   margin-top: 20px;
@@ -98,15 +91,15 @@
   background-color: black;
 }
 
-.comment-form-input::placeholder {
+.comment-wrapper-input::placeholder {
   font-size: 20px;
 }
 
-.comment-form-input:focus {
+.comment-wrapper-input:focus {
   border: none;
 }
 
-.comment-twit-panel {
+.comment-panel {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -116,7 +109,7 @@
   height: 48px;
 }
 
-.comment-twit-panel button {
+.comment-panel button {
   margin-top: 10px;
   width: 100px;
   height: 36px;
@@ -139,19 +132,18 @@
   border-left: 2px solid rgb(174 174 174 / 55.8%);
 }
 
-.connection-twit-comment-photo {
+.comment-twit-info-block-connection-photo {
   display: flex;
   flex-direction: column;
 }
 
-.connection-twit-comment-text {
+.comment-twit-info-block-connection-text {
   display: flex;
   align-items: flex-end;
   min-height: 80px;
-  /* height: 81%; */
 }
 
-.comment-form-input div {
+.comment-wrapper-input div {
   background-color: black;
 }
 
@@ -164,8 +156,15 @@
   margin-top: 50px;
 }
 
-.comment-form-input button svg {
+.comment-wrapper-input button svg {
   fill: #626262;
   width: 15px;
   height: 15px;
+}
+
+.comment-twit-info-block-desc {
+  margin-top: 2px;
+  margin-left: 5px;
+  font-size: 15px;
+  color: grey;
 }

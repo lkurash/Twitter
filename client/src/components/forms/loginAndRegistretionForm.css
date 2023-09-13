@@ -231,9 +231,9 @@
 }
 
 .signup-form-input {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; */
   border-radius: 5px;
   border: 1px solid rgb(174 174 174 / 55.8%);
   width: 435px;
@@ -258,29 +258,39 @@
   cursor: text;
 }
 
-.signup-active-input {
-  animation-duration: 0.1s;
-  animation-name: hint-signup-input;
+.signup-header-active-input {
+  width: 425px;
+  position: absolute;
+  animation-duration: 0.3s;
+  animation-name: active-hint-signup-input;
   font-size: 12px;
-  margin-top: 3px;
+  margin-top: 2px;
   margin-left: 5px;
   color: rgb(59 179 244);
 }
 
-@keyframes hint-signup-input {
+@keyframes active-hint-signup-input {
   from {
-    margin-top: 20px;
+    margin-top: 15px;
+    font-size: 18px;
   }
 
   to {
-    margin-top: 3px;
+    margin-top: 2px;
+    font-size: 12px;
   }
 }
 
+.signup-header-active-input {
+  display: flex;
+  justify-content: space-between;
+}
+
 .signup-form-input input {
+  margin-top: 2px;
   margin-left: 5px;
   width: 425px;
-  height: 100%;
+  height: 50px;
   font-size: 18px;
   color: aliceblue;
   border: none;
@@ -291,6 +301,10 @@
 .signup-birth {
   color: grey;
   margin-top: 30px;
+}
+
+.signup-birth h4 {
+  color: aliceblue;
 }
 
 .signup-birth-hint {
@@ -387,14 +401,15 @@
   cursor: text;
 }
 
-.signup-form-input-help {
+.signup-form-hint-length {
   color: grey;
-  font-size: 8px;
+  font-size: 11px;
   margin-left: 75%;
-  margin-bottom: 3px;
+  margin-right: 3px;
+  margin-top: 3px;
 }
 
-.signup-form-input-login-error {
+.signup-form-hint-login-error {
   color: rgb(255, 0, 0);
   font-size: 9px;
   margin-left: 10px;

@@ -5,12 +5,10 @@ import { Context } from "../..";
 import CommentForm from "../forms/CommentForm";
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
-import "../userTwitPanel.css";
-import "../comment.css";
 import activeComment from "../Img/active_comment_icon.png";
 import notactiveComment from "../Img/notactive_comment_icon.png";
 
-const ButtonCommentOnTwit = observer(({twit}) => {
+const ButtonCommentOnTwit = observer(({ twit }) => {
   const { commentsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
@@ -30,14 +28,14 @@ const ButtonCommentOnTwit = observer(({twit}) => {
   };
 
   return (
-    <div className="user-twit-panel-comments">
+    <div className="twit-action-comments">
       <TooltipUserNotAuth
         tooltipUserNotAuth={tooltipUserNotAuth}
         onCloseTooltip={onCloseTooltip}
         comment
       />
       <div
-        className="user-twit-panel-button-comments"
+        className="twit-action-button-comments"
         key={twit.id}
         onClick={() => {
           if (usersStore.isAuth) {
@@ -54,7 +52,7 @@ const ButtonCommentOnTwit = observer(({twit}) => {
         <img
           src={imgButtonComment(twit)}
           alt="Comment"
-          className="user-twit-panel-comments-img"
+          className="twit-action-comments-img"
         />
       </div>
       {twit.countComments > 0 && <p>{twit.countComments}</p>}

@@ -37,7 +37,10 @@ const MainSectionTrends = observer((props) => {
           <Trends key={trend.id} topic={trend} />
         ))
       ) : (
-        <p className="section-aside-hidden"> No trends today</p>
+        <p className="section-whoyouread-hint-about-lack-section">
+          {" "}
+          No trends today
+        </p>
       )}
     </section>
   );

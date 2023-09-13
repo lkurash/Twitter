@@ -20,7 +20,6 @@ import arrowLeft from "../../components/Img/arrow_left_icon.png";
 
 const TrendsPage = observer(() => {
   const { usersStore } = useContext(Context);
-  const { trendsStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const [searchParams] = useSearchParams();
   const trend = searchParams.get("trend");
@@ -87,7 +86,7 @@ const TrendsPage = observer(() => {
           </div>
           {!isLoadingTrends ? (
             <>
-              <div className="user-main-content">
+              <div className="main-content">
                 <TwitsForTrends trend={trend} />
               </div>
               {twitsStore.twits.length >= 7 && (

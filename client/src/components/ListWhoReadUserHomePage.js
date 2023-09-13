@@ -37,13 +37,13 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
   }
 
   return (
-    <ul className="follow-page-main-users">
+    <ul className="users">
       {usersStore.allUsers ? (
         <>
           {users.map((profile) => (
-            <li className="follow-page-main-user" key={profile.id}>
+            <li className="user" key={profile.id}>
               <div
-                className="section-read-main-user-info"
+                className="section-whoyouread-user-info"
                 onClick={() => {
                   if (usersStore.isAuth) {
                     navigate(path(USER_PAGE_PATH, profile.id));
@@ -53,14 +53,14 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
                 }}
               >
                 <img src={getUserPhoto(profile)} alt="User" />
-                <div className="section-read-main-user-name">
+                <div className="section-whoyouread-user-name">
                   <p className="user-name">{profile.user_name}</p>
                   <p className="profile-name">{`@${profile.user_name}`}</p>
                 </div>
               </div>
               {usersStore.isAuth && (
                 <button
-                  className="follow-page-main-button-follow"
+                  className="section-whoyouread-button-follow"
                   onClick={() => {
                     usersFollowingsStore.setStartFollowUser(profile);
                     createUserFollowings(profile);
@@ -72,11 +72,15 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
             </li>
           ))}
           {users.length === 0 && (
-            <p className="section-aside-hidden">You are following all users</p>
+            <p className="section-whoyouread-hint-about-lack-section">
+              You are following all users
+            </p>
           )}
         </>
       ) : (
-        <p className="section-aside-hidden">No users to read</p>
+        <p className="section-whoyouread-hint-about-lack-section">
+          No users to read
+        </p>
       )}
     </ul>
   );
