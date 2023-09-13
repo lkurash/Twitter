@@ -183,6 +183,7 @@ const EditProfileForm = observer(() => {
           </div>
         </div>
         <div className="signup-birth-form">
+          <h4 className="edit-form-input-birth">Date of birth:</h4>
           <BirthForm user={usersStore.user} />
         </div>
       </main>
