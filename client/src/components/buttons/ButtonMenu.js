@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 const ButtonMenu = ({
   classNameButtonImg,
   buttonName,
-  classNameButton,
   nav,
   alt,
   img,
@@ -13,8 +12,8 @@ const ButtonMenu = ({
     <NavLink
       className={({ isActive }) =>
         isActive
-          ? `menu-button ${classNameButton} active-menu-button`
-          : `menu-button ${classNameButton} notactive`
+          ? `menu-button active-menu-button`
+          : `menu-button notactive`
       }
       type="button"
       to={nav}

@@ -10,7 +10,6 @@ import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
 import activeRetwit from "../Img/active_retweet_icon.png";
 import notactiveRetwit from "../Img/notactive_retweet_icon.png";
-import "../userTwitPanel.css";
 
 const ButtonRetwitOnTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
@@ -82,10 +81,10 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
   };
 
   return (
-    <div className="user-twit-panel-retwit">
+    <div className="twit-action-retwit">
       {(twit.retwit && twit.userId === authUserID) || twit.retwitsAuthUser ? (
         <div
-          className="user-twit-panel-button-retwit"
+          className="twit-action-button-retwit"
           key={twit.id}
           onMouseEnter={() => {
             retwitsStore.sethoverTwitRetwit(twit);
@@ -100,7 +99,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
           <img
             src={deleteActiveRetwitButtonImg(twit)}
             alt="button retwit"
-            className="user-twit-panel-retwit-img"
+            className="twit-action-retwit-img"
           />
         </div>
       ) : (
@@ -111,7 +110,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
             retwit
           />
           <div
-            className="user-twit-panel-button-retwit"
+            className="twit-action-button-retwit"
             key={twit.id}
             onClick={() => {
               if (usersStore.isAuth) {
@@ -129,7 +128,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
             <img
               src={hoverAndActiveButtonRetwit(twit)}
               alt="button retwit"
-              className="user-twit-panel-retwit-img"
+              className="twit-action-retwit-img"
             />
           </div>
         </>

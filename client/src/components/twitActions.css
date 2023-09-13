@@ -1,4 +1,4 @@
-.user-twit-panel {
+.twit-action {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -9,7 +9,7 @@
 
 /* button comment on twit panel */
 
-.user-twit-panel-comments {
+.twit-action-comments {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,16 +20,16 @@
   height: 35px;
 }
 
-.user-twit-panel-comments:hover {
+.twit-action-comments:hover {
   color: #1d9bf0;
 }
 
-.user-twit-panel-comments-img {
+.twit-action-comments-img {
   width: 14px;
   height: 14px;
 }
 
-.user-twit-panel-button-comments {
+.twit-action-button-comments {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,18 +40,18 @@
   border-radius: 30px;
 }
 
-.user-twit-panel-button-comments:hover {
+.twit-action-button-comments:hover {
   background-color: #008cff25;
 }
 
 /* button retwit on twit panel */
 
-.user-twit-panel-retwit-img {
+.twit-action-retwit-img {
   width: 19px;
   height: 19px;
 }
 
-.user-twit-panel-retwit {
+.twit-action-retwit {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,17 +61,17 @@
   height: 35px;
 }
 
-.user-twit-panel-button-retwit {
+.twit-action-button-retwit {
   width: 22px;
   height: 22px;
   cursor: pointer;
 }
 
-.user-twit-panel-retwit:hover {
+.twit-action-retwit:hover {
   color: #46d452;
 }
 
-.user-twit-panel-button-retwit {
+.twit-action-button-retwit {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,13 +82,13 @@
   border-radius: 30px;
 }
 
-.user-twit-panel-button-retwit:hover {
+.twit-action-button-retwit:hover {
   background-color: #2efc3f1e;
 }
 
 /* button like on twit panel  */
 
-.user-twit-panel-like {
+.twit-action-like {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,16 +98,16 @@
   height: 35px;
 }
 
-.user-twit-panel-like-img {
+.twit-action-like-img {
   width: 15px;
   height: 15px;
 }
 
-.user-twit-panel-like:hover {
+.twit-action-like:hover {
   color: #ff4a6e;
 }
 
-.user-twit-panel-button-like {
+.twit-action-button-like {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,19 +117,19 @@
   border-radius: 30px;
 }
 
-.user-twit-panel-count-like {
+.twit-action-count-like {
   margin-left: 3px;
   min-width: 10px;
   min-height: 15px;
 }
 
-.user-twit-panel-button-like:hover {
+.twit-action-button-like:hover {
   background-color: #f02b7d2a;
 }
 
 /* button bookmark on twit panel */
 
-.user-twit-panel-bookmark {
+.twit-action-bookmark {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,16 +139,16 @@
   height: 35px;
 }
 
-.user-twit-panel-bookmark-img {
+.twit-action-bookmark-img {
   width: 19px;
   height: 19px;
 }
 
-.user-twit-panel-bookmark:hover {
+.twit-action-bookmark:hover {
   color: #366cff;
 }
 
-.user-twit-panel-button-bookmark {
+.twit-action-button-bookmark {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,12 +159,12 @@
   border-radius: 30px;
 }
 
-.user-twit-panel-button-bookmark:hover {
+.twit-action-button-bookmark:hover {
   background-color: #008cff25;
 }
 
 @media (width <= 550px) {
-  .user-twit-panel-button-bookmark {
+  .twit-action-button-bookmark {
     margin-right: 20px;
   }
 }

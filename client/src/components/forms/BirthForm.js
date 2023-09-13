@@ -90,7 +90,6 @@ const BirthForm = observer(({ user }) => {
 
   return (
     <>
-      <h4 className="edit-form-input-birth">Date of birth:</h4>
       <div className="wrapper-birth-form">
         <div className="wrapper-select">
           <p className="select-name">Mounth</p>

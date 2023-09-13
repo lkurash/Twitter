@@ -36,7 +36,7 @@ const ButtonShowMoreTrendsTwits = observer(({ trend }) => {
 
   return (
     <button
-      className="button-show-more"
+      className="twits-button-show-more"
       type="button"
       onClick={() => {
         setItemListTwits(itemListTwits + 1);

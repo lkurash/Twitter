@@ -22,7 +22,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Home",
       classNameButtonImg: "home-icon",
       buttonName: "Home",
-      nav: `/${HOME_PAGE_PATH}`,
+      nav: `/home`,
     },
 
     {

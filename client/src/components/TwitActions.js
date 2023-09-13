@@ -5,7 +5,7 @@ import ButtonBookmarkOnTwit from "./buttons/ButtonBookmarkOnTwit";
 
 const TwitActions = ({ twit }) => {
   return (
-    <div className="user-twit-panel" key={twit.id}>
+    <div className="twit-action" key={twit.id}>
       <ButtonCommentOnTwit twit={twit} />
       <ButtonRetwitOnTwit twit={twit} />
       <ButtonLikeOnTwit twit={twit} />

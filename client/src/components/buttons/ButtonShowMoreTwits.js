@@ -25,7 +25,7 @@ const ButtonShowMoreTwits = observer(({ getMoreTwits, store }) => {
 
   return (
     <button
-      className="button-show-more"
+      className="twits-button-show-more"
       type="button"
       onClick={() => {
         setItemListTwits(itemListTwits + 1);

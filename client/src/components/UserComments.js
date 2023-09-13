@@ -29,7 +29,7 @@ const UserComments = observer(() => {
             <div className="twit" key={comment.id}>
               <div className="content-block">
                 <div className="user-block-twit">
-                  <div className="connection-twit-comment-photo">
+                  <div className="comment-twit-info-block-connection-photo">
                     <UserPhoto twit={comment.Twit} />
                     <div className="comment-line" />
                     <UserPhoto twit={comment} />
@@ -37,7 +37,7 @@ const UserComments = observer(() => {
                   <div className="comment-desc">
                     <TwitDesc twit={comment.Twit} />
                     {!comment.Twit.img && (
-                      <div className="connection-twit-comment-text" />
+                      <div className="comment-twit-info-block-connection-text" />
                     )}
                     <TwitDesc twit={comment} />
                   </div>
@@ -54,7 +54,7 @@ const UserComments = observer(() => {
           )}
         </>
       ) : (
-        <p className="empty-twits">No twits</p>
+        <p className="twit-hint-about-lack-twits">No twits</p>
       )}
     </>
   );

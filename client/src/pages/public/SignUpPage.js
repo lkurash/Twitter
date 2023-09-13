@@ -11,7 +11,6 @@ import { HOME_PAGE_PATH } from "../../utils/constans";
 
 import SignUpForm from "../../components/forms/SignUpForm";
 
-import "../../components/forms/loginAndRegistretionForm.css";
 const SignUpPage = observer(() => {
   const { usersStore } = useContext(Context);
   const navigate = useNavigate();

@@ -1,21 +1,31 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
-
-import spinner from "../utils/spinner";
 
 import ProfileUserInfo from "./ProfileUserInfo";
 import UserTwits from "./UserTwits";
+import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
 
 const PublicProfileUser = observer(() => {
+  const [isLoading, setIsLoading] = useState(true);
   const { usersStore } = useContext(Context);
 
-  if (!usersStore.userPage.id) return spinner();
+  useEffect(() => {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 250);
+  }, [usersStore.userPage.id]);
+
+  if (isLoading || !usersStore.userPage.id) {
+    return loadPageUserInfo();
+  }
 
   return (
-    <div className="user-main-content">
-      <div className="user-main-content-block">
-        <div className="user-main-content-profile-panel">
+    <div className="main-content">
+      <div className="main-content-block">
+        <div className="main-content-profile-panel">
           <ProfileUserInfo />
         </div>
         <div className="main-line" />

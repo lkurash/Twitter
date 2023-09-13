@@ -24,9 +24,9 @@ const ContentPublicHomePage = observer(() => {
           spinner()
         ) : (
           <div className="main-content">
-            <MainSectionTrends className="section trends" />
+            <MainSectionTrends className="section section-public-page trends" />
             <div className="main-line" />
-            <MainSectionWhoToRead className="section happen" />
+            <MainSectionWhoToRead className="section section-public-page happen" />
           </div>
         )}
       </div>

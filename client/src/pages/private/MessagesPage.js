@@ -25,7 +25,7 @@ const MessagesPage = observer(() => {
     <>
       <main className="main-wrapper">
         <div className="main">
-          <div className="user-main-content">
+          <div className="main-content">
             <ContentMessagesPage />
           </div>
         </div>

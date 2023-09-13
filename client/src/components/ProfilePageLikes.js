@@ -45,7 +45,7 @@ const ProfilePageLikes = observer(() => {
           )}
         </>
       ) : (
-        <p className="empty-twits">No twits</p>
+        <p className="twit-hint-about-lack-twits">No twits</p>
       )}
     </div>
   );

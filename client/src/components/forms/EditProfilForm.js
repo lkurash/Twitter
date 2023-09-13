@@ -12,7 +12,6 @@ import useOutsideClick from "../../utils/useOutsideClickFunction";
 import BirthForm from "./BirthForm";
 import ButtonClose from "../buttons/ButtonClose";
 
-import "../userpage.css";
 import buttonEditPhoto from "../Img/add_photo_icon.png";
 import undefinedUserPhoto from "../Img/user_photo.jpeg";
 import getAuthUserID from "../../utils/getAuthUserID";
@@ -183,6 +182,7 @@ const EditProfileForm = observer(() => {
           </div>
         </div>
         <div className="signup-birth-form">
+          <h4 className="edit-form-input-birth">Date of birth:</h4>
           <BirthForm user={usersStore.user} />
         </div>
       </main>

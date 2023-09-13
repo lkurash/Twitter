@@ -35,19 +35,19 @@ const ContentHomePage = observer(() => {
   return (
     <main className="main-wrapper">
       <div className="main">
-        <div className="user-main-content">
-          <div className="user-main-content-block">
+        <div className="main-content">
+          <div className="main-content-block">
             <div className="main-stiky-panel">
-              <div className="page-name">
-                <div className="page-name-user-name">
+              <div className="main-page-name-wrapper">
+                <div className="main-page-name">
                   <h2>Home</h2>
                 </div>
               </div>
-              <div className="user-main-content-button-panel">
+              <div className="main-content-button-panel">
                 <div className="wrapper-button">
                   <button
                     type="button"
-                    className="user-main-content-foryou-button-panel"
+                    className="main-button-foryou"
                     onClick={() => {
                       setCookieTwitsForYou(false);
                     }}
@@ -57,15 +57,15 @@ const ContentHomePage = observer(() => {
                   <div
                     className={
                       twitsForYouVisible
-                        ? "active-button-panel-main"
-                        : "button-panel-main"
+                        ? "main-button-active"
+                        : "main-button-notactive"
                     }
                   />
                 </div>
                 <div className="wrapper-button">
                   <button
                     type="button"
-                    className="user-main-content-reading-button-panel"
+                    className="main-button-whoyouread"
                     onClick={() => {
                       setCookieTwitsForYou(true);
                     }}
@@ -75,15 +75,15 @@ const ContentHomePage = observer(() => {
                   <div
                     className={
                       twitsWhoReadingVisible
-                        ? "active-button-panel-main"
-                        : "button-panel-main"
+                        ? "main-button-active"
+                        : "main-button-notactive"
                     }
                   />
                 </div>
               </div>
             </div>
             <div className="main-line" />
-            <div className="user-main-content-block user-main-content-block-mobile">
+            <div className="main-content-block main-content-block-mobile">
               <TwitForm />
             </div>
             <div className="main-line" />

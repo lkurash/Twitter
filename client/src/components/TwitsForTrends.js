@@ -9,9 +9,11 @@ const TwitsForTrends = observer(({ trend }) => {
 
   return (
     <div className="twits">
-      {twitsStore.twits.map((twit) => (
-        <Twit twit={twit} key={twit.id} />
-      ))}
+      {twitsStore.twits ? (
+        twitsStore.twits.map((twit) => <Twit twit={twit} key={twit.id} />)
+      ) : (
+        <p className="twit-hint-about-lack-twits">No twits</p>
+      )}
     </div>
   );
 });

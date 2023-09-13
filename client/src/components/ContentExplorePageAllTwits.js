@@ -33,8 +33,8 @@ const ContentExplorePageAllTwits = observer(() => {
     <main className="main-wrapper">
       <div className="main">
         <div className="main-content" ref={ref}>
-          <div className="page-name main-stiky-panel">
-            <div className="page-name-user-name">
+          <div className="main-stiky-panel explore-page-stiky-panel">
+            <div className="main-page-name">
               <h2>Explore</h2>
             </div>
           </div>
@@ -55,7 +55,7 @@ const ContentExplorePageAllTwits = observer(() => {
                   )}
                 </>
               ) : (
-                <p className="empty-twits">No twits</p>
+                <p className="twit-hint-about-lack-twits">No twits</p>
               )}
             </div>
           )}

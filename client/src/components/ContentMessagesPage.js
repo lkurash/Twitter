@@ -13,28 +13,28 @@ const ContentMessagesPage = observer(() => {
   const [writeMessage, setWriteMessage] = useState(false);
 
   return (
-    <div className="user-main-content-block">
+    <div className="main-content-block">
       <div className="main-stiky-panel">
-        <div className="page-name">
+        <div className="main-page-name-wrapper">
           <div
             className="main-search-block-button-return"
             onClick={() => navigate(-1)}
           >
             <img src={arrowLeft} alt="Button return" />
           </div>
-          <div className="page-name-user-name">
+          <div className="main-page-name">
             <h2>Messages</h2>
             <p>@{usersStore.user.user_name}</p>
           </div>
         </div>
       </div>
       <div className="main-line" />
-      <div className="page-messages-welcome">
-        <div className="page-messages-welcome-desc">
+      <div className="messages-welcome">
+        <div className="messages-welcome-desc">
           <h2>Welcome to inbox!</h2>
           <p>Send a message in a private message with other Twitter users.</p>
           <button
-            className="page-messages-button-write"
+            className="messages-button-write"
             type="button"
             onClick={() => setWriteMessage(true)}
           >

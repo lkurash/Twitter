@@ -1,7 +1,5 @@
 import imgFile from "../Img/file.png";
 
-import "../main.css";
-
 function TwitPanel(props) {
   return (
     <div className={props.className}>

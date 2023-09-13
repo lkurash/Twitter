@@ -5,7 +5,6 @@ import { Context } from "../..";
 import activeLike from "../Img/active_like.png";
 import notactiveLike from "../Img/notactive_like.png";
 import hoverLike from "../Img/hover_like.png";
-import "../userTwitPanel.css";
 
 import twitClient from "../../http/twitClient";
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -47,13 +46,13 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
   };
 
   return (
-    <div className="user-twit-panel-like">
+    <div className="twit-action-like">
       {twit.authUserLike ? (
-        <div className="user-twit-panel-button-like">
+        <div className="twit-action-button-like">
           <img
             alt="Like"
             key={twit.id}
-            className="user-twit-panel-like-img"
+            className="twit-action-like-img"
             src={disLikeButtonImg(twit)}
             onMouseEnter={() => twitsStore.sethoverTwitLike(twit)}
             onMouseLeave={() => twitsStore.sethoverTwitLike({})}
@@ -72,7 +71,7 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
             like
           />
           <div
-            className="user-twit-panel-button-like"
+            className="twit-action-button-like"
             key={twit.id}
             onClick={() => {
               if (usersStore.isAuth) {
@@ -91,12 +90,12 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
             <img
               src={hoverAndActiveButtonLike(twit)}
               alt="Like"
-              className="user-twit-panel-like-img"
+              className="twit-action-like-img"
             />
           </div>
         </>
       )}
-      <p className="user-twit-panel-count-like">
+      <p className="twit-action-count-like">
         {twit.countLikes > 0 && twit.countLikes}
       </p>
     </div>
