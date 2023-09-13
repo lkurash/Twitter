@@ -2,15 +2,14 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
-import getInfoAuthPage from "../../utils/getInfoAuthPage";
 
 import SidebarContent from "../../components/SidebarContent";
 import ContentBookmarksPage from "../../components/ContentBookmarksPage";
-import twitsClient from "../../http/twitsClient";
+import twitClient from "../../http/twitClient";
 
 const BookmarksPage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -20,16 +19,15 @@ const BookmarksPage = observer(() => {
   useEffect(() => {
     try {
       if (authUserID) {
-
-        usersClient
+        userClient
           .getUserProfile(authUserID)
           .then((userInfo) => usersStore.setUser(userInfo));
 
-        twitsClient.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
+        twitClient.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
           favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser);
         });
       }
-      
+
       usersStore.setAuth(getFlagIsAuth());
     } catch (error) {
       console.log(error.response.data.message);

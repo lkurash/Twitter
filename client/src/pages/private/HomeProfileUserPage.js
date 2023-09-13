@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
@@ -20,17 +20,17 @@ const HomeProfileUserPage = observer(({ loadingPage }) => {
   useEffect(() => {
     try {
       if (authUserID) {
-        usersClient.getUserProfile(authUserID).then((userInfo) => {
+        userClient.getUserProfile(authUserID).then((userInfo) => {
           usersStore.setUser(userInfo);
           usersStore.setUserPage(userInfo);
         });
 
         if (id) {
-          usersClient.getUserProfile(id).then((userInfo) => {
+          userClient.getUserProfile(id).then((userInfo) => {
             usersStore.setUserPage(userInfo);
           });
         } else {
-          usersClient.getUserProfile(authUserID).then((userInfo) => {
+          userClient.getUserProfile(authUserID).then((userInfo) => {
             usersStore.setUserPage(userInfo);
           });
         }

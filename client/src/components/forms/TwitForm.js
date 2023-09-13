@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import trendsClient from "../../http/trendsClient";
-import twitsClient from "../../http/twitsClient";
+import trendClient from "../../http/trendClient";
+import twitClient from "../../http/twitClient";
 
 import getUserPhoto from "../../utils/getUserPhoto";
 import ButtonEmoji from "../buttons/ButtonEmoji";
@@ -33,18 +33,14 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
 
         formData.append("text", text);
         formData.append("img", img);
-        await twitsClient.createTwitByUser(formData).then((twit) => {
+        
+        await twitClient.createTwitByUser(formData).then((newTwit) => {
           if (twitsStore.twits) {
-            twitsStore.setTwits(twit.concat(twitsStore.twits));
+            twitsStore.setTwits(newTwit.twit.concat(twitsStore.twits));
           } else {
-            twitsStore.setTwits(twit);
+            twitsStore.setTwits(newTwit.twit);
           }
-          twitsStore.setTwitsWhoReading(
-            twit.concat(twitsStore.twitsWhoReading)
-          );
         });
-
-        await trendsClient.createTrends(formData);
 
         setText("");
         setImg("");

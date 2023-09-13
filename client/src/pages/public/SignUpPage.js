@@ -5,9 +5,9 @@ import { Context } from "../..";
 
 import LocalAuthClient from "../../store/LocalAuthClient";
 
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 
-import { PRIVATE_HOME_PAGE_PATH } from "../../utils/constans";
+import { HOME_PAGE_PATH } from "../../utils/constans";
 
 import SignUpForm from "../../components/forms/SignUpForm";
 
@@ -19,7 +19,7 @@ const SignUpPage = observer(() => {
 
   const signUp = async () => {
     if (checkUserInfo) {
-      const registerResult = await usersClient.register(
+      const registerResult = await userClient.register(
         usersStore.userRegistrationName,
         usersStore.userRegistrationEmail,
         usersStore.userRegistrationPassword,
@@ -32,7 +32,7 @@ const SignUpPage = observer(() => {
 
       LocalAuthClient.setAccessToken(registerResult.token);
 
-      navigate(PRIVATE_HOME_PAGE_PATH);
+      navigate(HOME_PAGE_PATH);
     }
   };
 

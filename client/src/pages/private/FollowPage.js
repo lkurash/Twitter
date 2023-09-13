@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
 
@@ -19,17 +19,17 @@ const FollowPage = observer(() => {
   useEffect(() => {
     try {
       if (authUserID) {
-        usersClient
+        userClient
           .getUserProfile(id || authUserID)
           .then((userById) => usersStore.setUserPage(userById));
 
-        usersClient
+        userClient
           .getFollowingsUser(id || authUserID)
           .then((followings) =>
             usersFollowingsStore.setuserFollowing(followings)
           );
 
-        usersClient
+        userClient
           .getFollowersUser(id || authUserID)
           .then((followers) =>
             usersFollowingsStore.setuserFollowers(followers)

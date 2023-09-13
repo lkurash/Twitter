@@ -40,8 +40,8 @@ class TwitsStore {
           twit.authUserLike = false;
         }
       }
+      return this._twits;
     });
-    return this._twits
   }
 
   addFavoriteTwit(bookmarkTwit, bookmark) {
@@ -53,8 +53,8 @@ class TwitsStore {
           twit.authUserFavorite = false;
         }
       }
+      return this._twits;
     });
-    return this._twits;
   }
 
   addRetwitTwit(retwit) {
@@ -67,9 +67,8 @@ class TwitsStore {
         twit.retwitsAuthUser = true;
         twit.countRetwits = retwit.countRetwits;
       }
+      return this._twits;
     });
-
-    return this._twits;
   }
 
   deleteRetwit(originalTwit, retwit) {

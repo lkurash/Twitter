@@ -1,20 +1,22 @@
-import { $authHost, $host } from "./hosts";
+import { $authClient, $client } from "./clients";
 
-class TwitsClient {
+class TwitClient {
   async createTwitByUser(twit) {
-    const newTwit = await $authHost.post("api/twits/twit", twit);
+    const newTwit = await $authClient.post("api/twits/twit", twit);
 
     return newTwit.data;
   }
 
   async getAllTwits(limit, list) {
-    const alltwits = await $host.get(`api/twits/`, { params: { limit, list } });
+    const alltwits = await $client.get(`api/twits/`, {
+      params: { limit, list },
+    });
 
     return alltwits.data;
   }
 
   async getTwitsByUser(userId, limit, list) {
-    const usersTwits = await $authHost.get(`api/twits/auth/user/${userId}`, {
+    const usersTwits = await $authClient.get(`api/twits/auth/user/${userId}`, {
       params: { limit, list },
     });
 
@@ -22,7 +24,7 @@ class TwitsClient {
   }
 
   async getPublicTwitsByUser(userId, limit, list) {
-    const usersTwits = await $host.get(`api/twits/user/${userId}`, {
+    const usersTwits = await $client.get(`api/twits/user/${userId}`, {
       params: { limit, list },
     });
 
@@ -30,7 +32,7 @@ class TwitsClient {
   }
 
   async getTwitsByFollowingsUsers(userId, limit, list) {
-    const twits = await $authHost.get(`api/twits/following/user/${userId}`, {
+    const twits = await $authClient.get(`api/twits/following/user/${userId}`, {
       params: { limit, list },
     });
 
@@ -38,7 +40,7 @@ class TwitsClient {
   }
 
   async createLikeTwitByUser(userId, twitId) {
-    const usersTwitsLikes = await $authHost.post(
+    const usersTwitsLikes = await $authClient.post(
       `api/twits/twit/${twitId}/user/${userId}/likes`
     );
 
@@ -46,7 +48,7 @@ class TwitsClient {
   }
 
   async createRetwitByUser(userId, twitId, twit) {
-    const retwitByUser = await $authHost.post(
+    const retwitByUser = await $authClient.post(
       `api/twits/twit/${twitId}/user/${userId}/retwits`,
       twit
     );
@@ -55,7 +57,7 @@ class TwitsClient {
   }
 
   async createFavoriteTwitByUser(userId, twitId) {
-    const favoriteTwit = await $authHost.post(
+    const favoriteTwit = await $authClient.post(
       `api/twits/twit/${twitId}/user/${userId}/bookmarks`
     );
 
@@ -63,7 +65,7 @@ class TwitsClient {
   }
 
   async createCommentTwitByUser(userId, twitId, text) {
-    const comment = await $authHost.post(
+    const comment = await $authClient.post(
       `api/twits/twit/${twitId}/user/${userId}/comments`,
       {
         text,
@@ -74,15 +76,18 @@ class TwitsClient {
   }
 
   async getCommentsByUser(userId, limit, list) {
-    const comments = await $authHost.get(`api/twits/user/${userId}/comments`, {
-      params: { limit, list },
-    });
+    const comments = await $authClient.get(
+      `api/twits/user/${userId}/comments`,
+      {
+        params: { limit, list },
+      }
+    );
 
     return comments.data;
   }
 
   async getFavoriteTwits(userId, limit, list) {
-    const favoriteTwits = await $authHost.get(
+    const favoriteTwits = await $authClient.get(
       `api/twits/user/${userId}/bookmarks`,
       {
         params: { limit, list },
@@ -93,7 +98,7 @@ class TwitsClient {
   }
 
   async getCountRetwits(twitId) {
-    const countRetwits = await $authHost.put(
+    const countRetwits = await $authClient.put(
       `api/twits/twit/${twitId}/retwits`
     );
 
@@ -101,13 +106,13 @@ class TwitsClient {
   }
 
   async getCountLikes(twitId) {
-    const countLikes = await $authHost.put(`api/twits/twit/${twitId}/likes`);
+    const countLikes = await $authClient.put(`api/twits/twit/${twitId}/likes`);
 
     return countLikes.data;
   }
 
   async getCountComments(twitId) {
-    const countComments = await $authHost.put(
+    const countComments = await $authClient.put(
       `api/twits/twit/${twitId}/comments`
     );
 
@@ -115,27 +120,21 @@ class TwitsClient {
   }
 
   async deleteTwitByUser(twitId) {
-    const twit = await $authHost.delete(`api/twits/twit/${twitId}`);
+    const twit = await $authClient.delete(`api/twits/twit/${twitId}`);
 
     return twit.data;
   }
 
   async getTwitsForAuthUser(userId, limit, list) {
-    const twitsIds = await $authHost.get(`api/twits/authUser/${userId}`, {
+    const twitsIds = await $authClient.get(`api/twits/authUser/${userId}`, {
       params: { limit, list },
     });
 
     return twitsIds.data;
   }
 
-  // async getUserRetwits(userId) {
-  //   const twitsIds = await $authHost.get(`api/twits/retwits/user/${userId}`);
-
-  //   return twitsIds.data;
-  // }
-
   async deleteRetwit(retwitId, userId) {
-    const retwit = await $authHost.put(
+    const retwit = await $authClient.put(
       `api/twits/retwits/${retwitId}/user/${userId}`
     );
 
@@ -143,7 +142,7 @@ class TwitsClient {
   }
 
   async getUserTwitsWithMedia(userId, limit, list) {
-    const twits = await $authHost.get(`api/twits/user/${userId}/media`, {
+    const twits = await $authClient.get(`api/twits/user/${userId}/media`, {
       params: { limit, list },
     });
 
@@ -151,13 +150,13 @@ class TwitsClient {
   }
 
   async getTwitsWithUserLikes(userId, limit, list) {
-    const twits = await $authHost.get(`api/twits/likes/user/${userId}`, {
+    const twits = await $authClient.get(`api/twits/likes/user/${userId}`, {
       params: { limit, list },
     });
 
     return twits.data;
   }
 }
-const twitsClient = new TwitsClient();
+const twitClient = new TwitClient();
 
-export default twitsClient;
+export default twitClient;

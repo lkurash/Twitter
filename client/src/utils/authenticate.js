@@ -1,10 +1,10 @@
 import Cookies from "js-cookie";
 import { redirect } from "react-router-dom";
-import usersClient from "../http/usersClient";
+import userClient from "../http/userClient";
 import LocalAuthClient from "../store/LocalAuthClient";
 
 const authenticate = async () => {
-  const token = await usersClient
+  const token = await userClient
     .createRefreshToken()
     .then((result) => LocalAuthClient.setRefreshToken(result.token))
     .catch((error) => {

@@ -3,12 +3,9 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import usersClient from "../http/usersClient";
+import userClient from "../http/userClient";
 
-import {
-  PRIVATE_USER_PAGE_PATH,
-  PUBLIC_USER_PAGE_PATH,
-} from "../utils/constans";
+import { USER_PAGE_PATH, PUBLIC_USER_PAGE_PATH } from "../utils/constans";
 import getAuthUserID from "../utils/getAuthUserID";
 import getUserPhoto from "../utils/getUserPhoto";
 import path from "../utils/path";
@@ -22,9 +19,9 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
   const authUserID = getAuthUserID();
 
   const createUserFollowings = async (profile) => {
-    await usersClient.createFollowings(authUserID, profile.id);
+    await userClient.createFollowings(authUserID, profile.id);
 
-    await usersClient
+    await userClient
       .getWhoNotReadingUsers(authUserID)
       .then((users) => usersStore.setUsersWhoToReadUsers(users));
   };
@@ -49,7 +46,7 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
                 className="section-read-main-user-info"
                 onClick={() => {
                   if (usersStore.isAuth) {
-                    navigate(path(PRIVATE_USER_PAGE_PATH, profile.id));
+                    navigate(path(USER_PAGE_PATH, profile.id));
                   } else {
                     navigate(path(PUBLIC_USER_PAGE_PATH, profile.id));
                   }

@@ -1,20 +1,17 @@
 const express = require('express');
-
-const models = require('./models/index');
+const fileupload = require("express-fileupload");
 
 const cors = require('cors');
-
-const cookieParser = require("cookie-parser");
-const router = require('./routers/index');
-const middleware = require('./middleware/errorMiddleware');
-
-const fileupload = require('express-fileupload');
 const path = require('path');
+
+const middleware = require("./middleware/errorMiddleware");
+
+const models = require("./models/index");
+const router = require("./routers/index");
 
 const PORT = 5500;
 const app = express();
 
-// app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, 'static')));

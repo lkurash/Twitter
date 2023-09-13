@@ -3,10 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import {
-  PRIVATE_USER_PAGE_PATH,
-  PUBLIC_USER_PAGE_PATH,
-} from "../utils/constans";
+import { USER_PAGE_PATH, PUBLIC_USER_PAGE_PATH } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 import path from "../utils/path";
 
@@ -24,7 +21,7 @@ const UserPhoto = observer(({ twit }) => {
             if (usersStore.isAuth) {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(path(PRIVATE_USER_PAGE_PATH, twit.twit_user.id));
+              navigate(path(USER_PAGE_PATH, twit.twit_user.id));
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
@@ -41,7 +38,7 @@ const UserPhoto = observer(({ twit }) => {
             if (usersStore.isAuth) {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);
-              navigate(path(PRIVATE_USER_PAGE_PATH, twit.user.id));
+              navigate(path(USER_PAGE_PATH, twit.user.id));
             } else {
               usersStore.setUserPage({});
               twitsStore.setUserTwits([]);

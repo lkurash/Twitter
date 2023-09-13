@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-import twitsClient from "../../http/twitsClient";
+import twitClient from "../../http/twitClient";
 
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
@@ -15,7 +15,7 @@ const PublicExplorePage = observer(() => {
 
   useEffect(() => {
     try {
-      twitsClient
+      twitClient
         .getAllTwits()
         .then((alltwits) => twitsStore.setTwits(alltwits));
       usersStore.setAuth(getFlagIsAuth());

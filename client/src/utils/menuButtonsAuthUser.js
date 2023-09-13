@@ -5,12 +5,12 @@ import profile from "../components/Img/profile_icon.png";
 import home from "../components/Img/home_icon.png";
 import message from "../components/Img/message_icon.png";
 import {
-  PRIVATE_EXPLORE_PAGE_PATH,
-  PRIVATE_BOOKMARKS_PAGE_PATH,
-  PRIVATE_HOME_PAGE_PATH,
-  PRIVATE_MESSAGE_PAGE_PATH,
-  PRIVATE_NOTIFICATIONS_PAGE_PATH,
-  PRIVATE_PROFILE_PAGE_USER_PATH,
+  EXPLORE_PAGE_PATH,
+  BOOKMARKS_PAGE_PATH,
+  HOME_PAGE_PATH,
+  MESSAGE_PAGE_PATH,
+  NOTIFICATIONS_PAGE_PATH,
+  PROFILE_PAGE_USER_PATH,
 } from "./constans";
 
 export const menuButtonsAuthUser = (user) => {
@@ -22,7 +22,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Home",
       classNameButtonImg: "home-icon",
       buttonName: "Home",
-      nav: `/${PRIVATE_HOME_PAGE_PATH}`,
+      nav: `/${HOME_PAGE_PATH}`,
     },
 
     {
@@ -32,7 +32,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Explore",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Explore",
-      nav: PRIVATE_EXPLORE_PAGE_PATH,
+      nav: EXPLORE_PAGE_PATH,
     },
     {
       id: "3",
@@ -41,7 +41,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "settings icon",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Notifications",
-      nav: PRIVATE_NOTIFICATIONS_PAGE_PATH,
+      nav: NOTIFICATIONS_PAGE_PATH,
     },
     {
       id: "4",
@@ -50,7 +50,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Message",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Message",
-      nav: PRIVATE_MESSAGE_PAGE_PATH,
+      nav: MESSAGE_PAGE_PATH,
     },
     {
       id: "5",
@@ -59,7 +59,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Bookmarks",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Bookmarks",
-      nav: PRIVATE_BOOKMARKS_PAGE_PATH,
+      nav: BOOKMARKS_PAGE_PATH,
     },
     {
       id: "6",
@@ -68,7 +68,7 @@ export const menuButtonsAuthUser = (user) => {
       alt: "Profile",
       classNameButtonImg: "button-icon-menu",
       buttonName: "Profile",
-      nav: PRIVATE_PROFILE_PAGE_USER_PATH,
+      nav: PROFILE_PAGE_USER_PATH,
     },
   ];
 

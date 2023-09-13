@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 
 import PublicProfileUser from "../../components/PublicProfileUser";
 
@@ -11,7 +11,7 @@ const PublicProfilePageUser = observer(() => {
   const { id } = useParams();
 
   useEffect(() => {
-    usersClient
+    userClient
       .getUserProfile(id)
       .then((userById) => usersStore.setUserPage(userById));
   }, []);

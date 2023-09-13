@@ -1,8 +1,8 @@
-import { $authHost, $host } from "./hosts";
+import { $authClient, $client } from "./clients";
 
-class TrendsClient {
+class TrendClient {
   async getAllTrends(userId, limit) {
-    const trends = await $host.get("api/twitter/trends", {
+    const trends = await $client.get("api/twitter/trends", {
       params: { userId, limit },
     });
 
@@ -10,13 +10,13 @@ class TrendsClient {
   }
 
   async createTrends(text) {
-    const trends = await $host.post("api/twitter/trends", text);
+    const trends = await $client.post("api/twitter/trends", text);
 
     return trends.data;
   }
 
   async getTrendsTwitsForAuthUser(trend, userId, limit, list) {
-    const twits = await $authHost.get(`api/twitter/auth/trends/${trend}`, {
+    const twits = await $authClient.get(`api/twitter/auth/trends/${trend}`, {
       params: { limit, list },
     });
 
@@ -24,7 +24,7 @@ class TrendsClient {
   }
 
   async getPublicTrendsTwits(trend, userId, limit, list) {
-    const twits = await $host.get(`api/twitter/trends/${trend}`, {
+    const twits = await $client.get(`api/twitter/trends/${trend}`, {
       params: { limit, list },
     });
 
@@ -32,7 +32,7 @@ class TrendsClient {
   }
 
   async createNotInterestingTrend(trendId, userId) {
-    const trend = await $host.put(
+    const trend = await $client.put(
       `api/twitter/trends/trend/${trendId}/user/${userId}`
     );
 
@@ -40,11 +40,11 @@ class TrendsClient {
   }
 
   async getCountTrends(text) {
-    const trends = await $host.put("api/twitter/trends/countTrends", text);
+    const trends = await $client.put("api/twitter/trends/countTrends", text);
 
     return trends.data;
   }
 }
-const trendsClient = new TrendsClient();
+const trendClient = new TrendClient();
 
-export default trendsClient;
+export default trendClient;

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import twitsClient from "../../http/twitsClient";
+import twitClient from "../../http/twitClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -19,7 +19,7 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
   const authUserID = getAuthUserID(usersStore);
 
   const createFavoriteTwits = async (twit) => {
-    await twitsClient
+    await twitClient
       .createFavoriteTwitByUser(authUserID, twit.id)
       .then((bookmark) => {
         twitsStore.addFavoriteTwit(twit, bookmark);

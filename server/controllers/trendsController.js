@@ -23,11 +23,9 @@ const decodeUser = (request) => {
 };
 
 class TrendsController {
-  async createTrends(request, response, next) {
+  async createTrends(text, response, next) {
     try {
       const Op = Sequelize.Op;
-      const { text } = request.body;
-
       const words = text.split(" ");
 
       words.forEach(async (word) => {
@@ -56,7 +54,8 @@ class TrendsController {
           }
         }
       });
-      return response.json(words);
+
+      return words;
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }

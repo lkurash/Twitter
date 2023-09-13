@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
 
-import trendsClient from "../http/trendsClient";
+import trendClient from "../http/trendClient";
 
 import getAuthUserID from "../utils/getAuthUserID";
 
@@ -15,11 +15,11 @@ const MainSectionTrends = observer((props) => {
 
   useEffect(() => {
     if (authUserID) {
-      trendsClient
+      trendClient
         .getAllTrends(authUserID)
         .then((allTrends) => trendsStore.setTrends(allTrends));
     } else {
-      trendsClient
+      trendClient
         .getAllTrends()
         .then((allTrends) => trendsStore.setTrends(allTrends));
     }

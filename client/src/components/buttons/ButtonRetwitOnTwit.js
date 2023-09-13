@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import twitsClient from "../../http/twitsClient";
+import twitClient from "../../http/twitClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
@@ -21,7 +21,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
   const authUserID = getAuthUserID(usersStore);
 
   const getCountRetwits = async (originalTwitId, retwitId) => {
-    await twitsClient.getCountRetwits(originalTwitId).then((retwit) => {
+    await twitClient.getCountRetwits(originalTwitId).then((retwit) => {
       if (retwit) {
         twitsStore.addRetwitTwit(retwit);
         twitsStore.deleteRetwit(originalTwitId, retwitId);
@@ -36,7 +36,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
     if (twit.img) {
       formData.append("img", twit.img);
     }
-    await twitsClient
+    await twitClient
       .createRetwitByUser(authUserID, twit.id, formData)
       .then((retwit) => {
         if (retwit) {
@@ -47,7 +47,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
         }
       });
 
-    await twitsClient.getCountRetwits(twit.id).then((retwit) => {
+    await twitClient.getCountRetwits(twit.id).then((retwit) => {
       if (retwit) {
         twitsStore.addRetwitTwit(retwit);
       }
@@ -55,7 +55,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
   };
 
   const deleteRetwit = async (twit) => {
-    twitsClient.deleteRetwit(twit.id, authUserID).then((deleteTwit) => {
+    twitClient.deleteRetwit(twit.id, authUserID).then((deleteTwit) => {
       getCountRetwits(deleteTwit[0].originalTwit, deleteTwit[0].retwit);
     });
   };

@@ -7,7 +7,7 @@ import notactiveLike from "../Img/notactive_like.png";
 import hoverLike from "../Img/hover_like.png";
 import "../userTwitPanel.css";
 
-import twitsClient from "../../http/twitsClient";
+import twitClient from "../../http/twitClient";
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
 
@@ -18,8 +18,8 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
   const authUserID = getAuthUserID();
 
   const createLikeTwit = async (twit) => {
-    await twitsClient.createLikeTwitByUser(authUserID, twit.id).then((like) => {
-      twitsClient
+    await twitClient.createLikeTwitByUser(authUserID, twit.id).then((like) => {
+      twitClient
         .getCountLikes(twit.id)
         .then((twit) => twitsStore.addLikeTwit(twit, like));
     });

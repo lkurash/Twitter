@@ -9,7 +9,7 @@ import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 
 import "./main.css";
-import twitsClient from "../http/twitsClient";
+import twitClient from "../http/twitClient";
 import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
 
@@ -20,7 +20,7 @@ const TwitsForYou = observer(() => {
   const authUserID = getAuthUserID();
 
   useEffect(() => {
-    twitsClient.getTwitsForAuthUser(authUserID).then((twits) => {
+    twitClient.getTwitsForAuthUser(authUserID).then((twits) => {
       twitsStore.setTwits(twits);
     });
 

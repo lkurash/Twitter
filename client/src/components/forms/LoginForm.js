@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 
-import { PRIVATE_HOME_PAGE_PATH } from "../../utils/constans";
+import { HOME_PAGE_PATH } from "../../utils/constans";
 
 import LocalAuthClient from "../../store/LocalAuthClient";
 
@@ -29,7 +29,7 @@ const LoginForm = observer(() => {
   const signIn = async () => {
     try {
       if (email && password) {
-        const authenticationResult = await usersClient.authentication(
+        const authenticationResult = await userClient.authentication(
           email,
           password
         );
@@ -39,7 +39,7 @@ const LoginForm = observer(() => {
 
         LocalAuthClient.setAccessToken(authenticationResult.token);
 
-        return navigate(PRIVATE_HOME_PAGE_PATH);
+        return navigate(HOME_PAGE_PATH);
       }
     } catch (e) {
       alert(e.response.data.message);
