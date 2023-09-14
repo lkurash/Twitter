@@ -1,12 +1,12 @@
 import { useContext, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 
 import getUserPhoto from "../../utils/getUserPhoto";
-import { PRIVATE_PROFILE_PAGE_USER_PATH } from "../../utils/constans";
+import { PROFILE_PAGE_USER_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import BirthForm from "./BirthForm";
@@ -56,15 +56,15 @@ const EditProfileForm = observer(() => {
     formData.append("web_site_url", textWebSiteUrl.trim());
     formData.append("about", about.trim());
 
-    await usersClient.updateUserProfile(authUserID, formData).catch((error) => {
+    await userClient.updateUserProfile(authUserID, formData).catch((error) => {
       console.log(error.response.data.message);
     });
 
-    await usersClient.getUserProfile(authUserID).then((userInfo) => {
+    await userClient.getUserProfile(authUserID).then((userInfo) => {
       usersStore.setUserPage(userInfo);
     });
 
-    navigate(PRIVATE_PROFILE_PAGE_USER_PATH);
+    navigate(PROFILE_PAGE_USER_PATH);
   };
   const onClose = () => {
     setActivInputName(false);

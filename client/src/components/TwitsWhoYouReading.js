@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
-import twitsClient from "../http/twitsClient";
+import twitClient from "../http/twitClient";
 import getAuthUserID from "../utils/getAuthUserID";
 
 import getMoreWhoYouReadingTwits from "../utils/getMoreWhoYouReadingTwits";
@@ -17,7 +17,7 @@ const TwitsWhoYouRead = observer(() => {
   const authUserID = getAuthUserID();
 
   useEffect(() => {
-    twitsClient
+    twitClient
       .getTwitsByFollowingsUsers(authUserID)
       .then((twits) => twitsStore.setTwits(twits));
 

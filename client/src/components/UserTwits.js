@@ -10,7 +10,7 @@ import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 
 import "./main.css";
-import twitsClient from "../http/twitsClient";
+import twitClient from "../http/twitClient";
 import getAuthUserID from "../utils/getAuthUserID";
 import { useParams } from "react-router-dom";
 
@@ -24,12 +24,11 @@ const UserTwits = observer(() => {
 
   useEffect(() => {
     if (authUserID) {
-      twitsClient
+      twitClient
         .getTwitsByUser(usersStore.userPage.id)
         .then((usersTwits) => twitsStore.setTwits(usersTwits));
-
     } else {
-      twitsClient
+      twitClient
         .getPublicTwitsByUser(id)
         .then((usersTwits) => twitsStore.setTwits(usersTwits));
     }
@@ -39,7 +38,8 @@ const UserTwits = observer(() => {
     }, 250);
   }, []);
 
-  if (usersStore.userPage.length === 0 || loadingPage) return <div className="twits">{spinner()}</div>;
+  if (usersStore.userPage.length === 0 || loadingPage)
+    return <div className="twits">{spinner()}</div>;
 
   return (
     <div className="twits">

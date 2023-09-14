@@ -2,7 +2,7 @@ import { Context } from "..";
 import { useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 
-import usersClient from "../http/usersClient";
+import userClient from "../http/userClient";
 
 import Logo from "./common/Logo";
 import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
@@ -23,7 +23,7 @@ const MainSearchBlock = observer(({ classNameForm }) => {
 
   const searchUsers = (name) => {
     setTimeout(() => {
-      usersClient.getSearchUsers(name).then((users) => {
+      userClient.getSearchUsers(name).then((users) => {
         usersStore.setFoundUsers(users);
       });
     }, 500);
@@ -56,7 +56,6 @@ const MainSearchBlock = observer(({ classNameForm }) => {
               }}
               onChange={(e) => {
                 if (e.target.value.length > 0) {
-
                   searchUsers(e.target.value.slice(0, 20));
                 } else {
                   searchUsers(null);

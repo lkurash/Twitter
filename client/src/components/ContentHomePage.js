@@ -19,17 +19,16 @@ const ContentHomePage = observer(() => {
     setCookie("twitsWhoReading", show);
   };
 
-  const checkCookieTwitsForYou = () => {
-    if (cookies.twitsWhoReading === "true") {
-      setTwitsForYouVisible(false);
-      return setTwitsWhoReadingVisible(true);
-    } else {
-      setTwitsForYouVisible(true);
-      return setTwitsWhoReadingVisible(false);
-    }
-  };
-
   useEffect(() => {
+    const checkCookieTwitsForYou = () => {
+      if (cookies.twitsWhoReading === "true") {
+        setTwitsForYouVisible(false);
+        return setTwitsWhoReadingVisible(true);
+      } else {
+        setTwitsForYouVisible(true);
+        return setTwitsWhoReadingVisible(false);
+      }
+    };
     checkCookieTwitsForYou();
   }, [cookies.twitsWhoReading]);
 

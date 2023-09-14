@@ -2,18 +2,17 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import twitsClient from "../../http/twitsClient";
+import twitClient from "../../http/twitClient";
 
 import SidebarContent from "../../components/SidebarContent";
 import ContentPublicHomePage from "../../components/ContentPublicHomePage";
 
 const PublicHomePage = observer(() => {
   const { twitsStore } = useContext(Context);
-  
 
   useEffect(() => {
     try {
-      twitsClient
+      twitClient
         .getAllTwits()
         .then((alltwits) => twitsStore.setTwits(alltwits));
     } catch (error) {

@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
@@ -20,17 +20,17 @@ const ProfileUserPage = observer(({ loadingPage }) => {
   useEffect(() => {
     try {
       if (authUserID) {
-        usersClient
+        userClient
           .getUserProfile(authUserID)
           .then((userInfo) => usersStore.setUser(userInfo));
       }
 
       if (id) {
-        usersClient
+        userClient
           .getUserProfile(id)
           .then((userById) => usersStore.setUserPage(userById));
-      }else{
-        usersClient
+      } else {
+        userClient
           .getUserProfile(authUserID)
           .then((userById) => usersStore.setUserPage(userById));
       }

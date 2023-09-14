@@ -1,4 +1,4 @@
-import twitsClient from "../http/twitsClient";
+import twitClient from "../http/twitClient";
 import getAuthUserID from "./getAuthUserID";
 
 export default async function getTwitsForAuthUser(
@@ -10,7 +10,7 @@ export default async function getTwitsForAuthUser(
 ) {
   const authUserID = getAuthUserID();
   if (showMoreTwits) {
-    await twitsClient
+    await twitClient
       .getTwitsForAuthUser(authUserID, 7, itemListTwits)
       .then((alltwits) => {
         twitsStore.setTwits(twitsStore.twits.concat(alltwits));

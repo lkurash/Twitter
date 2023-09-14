@@ -7,16 +7,16 @@ import ContentHomePage from "../../components/ContentHomePage";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 
 const HomePage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
-  
+
   const authUserID = getAuthUserID();
 
   useEffect(() => {
     if (authUserID) {
-      usersClient
+      userClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
     }

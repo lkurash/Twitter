@@ -8,15 +8,6 @@ const FollowersUserPresenter = require("../presenters/followersUserPresenter");
 const FollowingsUserPresenter = require("../presenters/followingsUserPresenter");
 
 const { QueryTypes } = require("sequelize");
-const sequelize = new Sequelize(
-  "twitter_development",
-  "postgres",
-  "qweqweqwe",
-  {
-    host: "127.0.0.1",
-    dialect: "postgres",
-  }
-);
 
 const SECRET_KEY = "super_secret_key22";
 const SECRET_KEY_ACCESS_TOKEN = "super_secret_key22";
@@ -25,6 +16,7 @@ const SECRET_KEY_REFRESH_TOKEN = "super_secret_key";
 const ApiError = require("../error/ApiError");
 const models = require("../models/index");
 const UserPresenter = require("../presenters/userPresenter");
+const dbRequestFollowers = require("../sql/dbRequestFollowers");
 
 const Twits = models.Twits;
 const User = models.User;
@@ -277,9 +269,9 @@ class UserController {
           ],
         });
 
-         const presenter = new UserPresenter(user);
+        const presenter = new UserPresenter(user);
 
-         return response.json(presenter.toJSON());
+        return response.json(presenter.toJSON());
       }
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
@@ -381,16 +373,7 @@ class UserController {
 
       const { id } = request.params;
 
-      const users = await sequelize.query(
-        `SELECT "Following"."id", "Following"."followUserId", "Following"."userId", "followUser"."id" AS "followUser.id", "followUser"."user_name" AS "followUser.user_name", "followUser"."email" AS "followUser.email", "followUser"."password" AS "followUser.password", "followUser"."birthdate" AS "followUser.birthdate", "followUser"."web_site_url" AS "followUser.web_site_url", "followUser"."about" AS "followUser.about", "followUser"."photo" AS "followUser.photo", "followUser"."background" AS "followUser.background", "followUser->followers_user"."id" AS "followUser.followers_user.id", "followUser->followers_user"."followUserId" AS "followUser.followers_user.followUserId", "followUser->followers_user"."userId" AS "followUser.followers_user.userId"
-        FROM "Followings"  AS "Following"
-        LEFT OUTER JOIN  "Users" AS "followUser" ON "Following"."userId" = "followUser"."id"
-        LEFT OUTER JOIN "Followings" AS "followUser->followers_user" ON ("followUser->followers_user"."userId" = ${userIdToken}  and "followUser"."id" = "followUser->followers_user"."followUserId") where "Following"."followUserId" = ${id}`,
-        {
-          type: QueryTypes.SELECT,
-          nest: true,
-        }
-      );
+      const users = await dbRequestFollowers(decodeUser, request);
 
       let presenter = new FollowersUserPresenter(users);
 

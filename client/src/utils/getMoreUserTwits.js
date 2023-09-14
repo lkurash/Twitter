@@ -1,4 +1,4 @@
-import twitsClient from "../http/twitsClient";
+import twitClient from "../http/twitClient";
 
 export default async function getMoreUserTwits(
   showMoreTwits,
@@ -9,7 +9,7 @@ export default async function getMoreUserTwits(
   userId
 ) {
   if (showMoreTwits) {
-    await twitsClient
+    await twitClient
       .getTwitsByUser(userId, 7, itemListTwits)
       .then((usersTwits) => {
         twitsStore.setTwits(twitsStore.twits.concat(usersTwits));

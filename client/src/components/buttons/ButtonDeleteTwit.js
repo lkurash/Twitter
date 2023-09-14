@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
-import trendsClient from "../../http/trendsClient";
-import twitsClient from "../../http/twitsClient";
+import trendClient from "../../http/trendClient";
+import twitClient from "../../http/twitClient";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import dotMenu from "../Img/more_dots_icon.png";
@@ -14,15 +14,15 @@ const ButtonDeleteTwit = observer(({ twit }) => {
   const tooltipDeleteTwit = useRef(null);
 
   const deleteTwit = async (twit) => {
-    await twitsClient.deleteTwitByUser(twit.id).then((deleteTwit) => {
+    await twitClient.deleteTwitByUser(twit.id).then((deleteTwit) => {
       twitsStore.deleteTwit(deleteTwit);
     });
     if (twit.twitId) {
-      await twitsClient.getCountLikes(twit.twitId);
-      await twitsClient.getCountRetwits(twit.twitId);
+      await twitClient.getCountLikes(twit.twitId);
+      await twitClient.getCountRetwits(twit.twitId);
     }
 
-    await trendsClient.getCountTrends(twit);
+    await trendClient.getCountTrends(twit);
   };
   const onClose = () => {
     setDeleteButtonVisible(false);

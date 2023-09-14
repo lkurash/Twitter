@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-import trendsClient from "../../http/trendsClient";
-import usersClient from "../../http/usersClient";
+import trendClient from "../../http/trendClient";
+import userClient from "../../http/userClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
@@ -21,6 +21,7 @@ import arrowLeft from "../../components/Img/arrow_left_icon.png";
 const TrendsPage = observer(() => {
   const { usersStore } = useContext(Context);
   const { trendsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const [searchParams] = useSearchParams();
   const trend = searchParams.get("trend");
 
@@ -31,20 +32,20 @@ const TrendsPage = observer(() => {
   const [isLoadingTrends, setIsLoadingTrends] = useState(true);
 
   useEffect(() => {
-    usersClient.getUsers().then((users) => usersStore.setAllUsers(users));
+    userClient.getUsers().then((users) => usersStore.setAllUsers(users));
 
     if (authUserID) {
-      usersClient
+      userClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
 
-      trendsClient
+      trendClient
         .getTrendsTwitsForAuthUser(trend)
-        .then((trendstTwits) => trendsStore.setTrendsTwits(trendstTwits));
+        .then((trendstTwits) => twitsStore.setTwits(trendstTwits));
     } else {
-      trendsClient
+      trendClient
         .getPublicTrendsTwits(trend)
-        .then((trendstTwits) => trendsStore.setTrendsTwits(trendstTwits));
+        .then((trendstTwits) => twitsStore.setTwits(trendstTwits));
     }
 
     usersStore.setAuth(getFlagIsAuth());
@@ -55,7 +56,6 @@ const TrendsPage = observer(() => {
       setIsLoadingTrends(false);
     }, 300);
   }, [trend]);
-  console.log(trend);
 
   return (
     <>
@@ -90,7 +90,7 @@ const TrendsPage = observer(() => {
               <div className="user-main-content">
                 <TwitsForTrends trend={trend} />
               </div>
-              {trendsStore.trensTwits.length >= 7 && (
+              {twitsStore.twits.length >= 7 && (
                 <ButtonShowMoreTrendsTwits trend={trend} />
               )}
             </>

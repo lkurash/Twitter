@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "../..";
 
-import usersClient from "../../http/usersClient";
+import userClient from "../../http/userClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonFollowInFollowList = observer(
@@ -12,18 +12,16 @@ const ButtonFollowInFollowList = observer(
     const authUserID = getAuthUserID(usersStore);
 
     const deleteFollowAndgetUsers = async (userFollowId) => {
-      await usersClient
+      await userClient
         .deleteFollowings(authUserID, userFollowId)
         .then((unfollowUser) => {
-          usersFollowingsStore.deleteFollowUserInFollowList(
-            unfollowUser,
-          );
+          usersFollowingsStore.deleteFollowUserInFollowList(unfollowUser);
         })
         .catch((error) => console.log(error.response.data.message));
     };
 
     const createFollowAndgetUsers = async (userFollowId) => {
-      await usersClient
+      await userClient
         .createFollowings(authUserID, userFollowId)
         .then((followingUser) => {
           usersFollowingsStore.createFollowUserInFollowList(followingUser);

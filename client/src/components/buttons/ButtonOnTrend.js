@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
-import trendsClient from "../../http/trendsClient";
+import trendClient from "../../http/trendClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
@@ -21,8 +21,8 @@ const ButtonOnTrend = observer(({ trend }) => {
   };
 
   const createNotInterestingTrend = async (trendId) => {
-    await trendsClient.createNotInterestingTrend(trendId, authUserID);
-    await trendsClient
+    await trendClient.createNotInterestingTrend(trendId, authUserID);
+    await trendClient
       .getAllTrends(authUserID)
       .then((allTrends) => trendsStore.setTrends(allTrends));
   };

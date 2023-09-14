@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
-import twitsClient from "../http/twitsClient";
+import twitClient from "../http/twitClient";
 import getAuthUserID from "../utils/getAuthUserID";
 
 import getMoreTwitsWithLike from "../utils/getMoreTwitsWithLike";
@@ -13,17 +13,15 @@ import Twit from "./Twit";
 const ProfilePageLikes = observer(() => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
-  const authUserID = getAuthUserID();
-
   const [loadingPage, setIsLoadingPage] = useState(true);
 
   useEffect(() => {
+    const authUserID = getAuthUserID();
+
     if (authUserID) {
-      twitsClient
-        .getTwitsWithUserLikes(usersStore.userPage.id)
-        .then((twits) => {
-          twitsStore.setTwits(twits);
-        });
+      twitClient.getTwitsWithUserLikes(usersStore.userPage.id).then((twits) => {
+        twitsStore.setTwits(twits);
+      });
       setTimeout(() => {
         setIsLoadingPage(false);
       }, 250);

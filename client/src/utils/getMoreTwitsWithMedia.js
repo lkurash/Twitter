@@ -1,4 +1,4 @@
-import twitsClient from "../http/twitsClient";
+import twitClient from "../http/twitClient";
 import getAuthUserID from "./getAuthUserID";
 
 export default async function getMoreTwitsWithMedia(
@@ -11,7 +11,7 @@ export default async function getMoreTwitsWithMedia(
   if (showMoreTwits) {
     const authUserID = getAuthUserID();
 
-    await twitsClient
+    await twitClient
       .getUserTwitsWithMedia(authUserID, 4, itemListTwits)
       .then((twits) => {
         store.setUserTwitsWithMedia(store.userTwitsWithMedia.concat(twits));

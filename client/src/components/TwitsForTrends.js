@@ -5,11 +5,11 @@ import { Context } from "..";
 import Twit from "./Twit";
 
 const TwitsForTrends = observer(({ trend }) => {
-  const { trendsStore } = useContext(Context);
-  
+  const { twitsStore } = useContext(Context);
+
   return (
     <div className="twits">
-      {trendsStore.trensTwits.map((twit) => (
+      {twitsStore.twits.map((twit) => (
         <Twit twit={twit} key={twit.id} />
       ))}
     </div>

@@ -62,29 +62,29 @@ const BirthForm = observer(({ user }) => {
   isDaysMonth();
   getYears();
 
-  const checkUserBirthdate = () => {
-    if (user && !userSelectDay && !userSelectMonth && !userSelectYear) {
-      const userBirthdate = usersStore.user.birthdate.split(" ");
-
-      setUserSelectDay(userBirthdate[0]);
-      setUserSelectMonth(userBirthdate[1]);
-      setUserSelectYear(userBirthdate[2]);
-    }
-  };
-
-  const createUserBirthdate = () => {
-    if (userSelectDay && userSelectMonth && userSelectYear) {
-      usersStore.setBirthDate(
-        `${userSelectDay} ${userSelectMonth} ${userSelectYear}`
-      );
-    }
-  };
-
   useEffect(() => {
+    const checkUserBirthdate = () => {
+      if (user && !userSelectDay && !userSelectMonth && !userSelectYear) {
+        const userBirthdate = usersStore.user.birthdate.split(" ");
+
+        setUserSelectDay(userBirthdate[0]);
+        setUserSelectMonth(userBirthdate[1]);
+        setUserSelectYear(userBirthdate[2]);
+      }
+    };
+    
     checkUserBirthdate();
   }, []);
 
   useEffect(() => {
+    const createUserBirthdate = () => {
+      if (userSelectDay && userSelectMonth && userSelectYear) {
+        usersStore.setBirthDate(
+          `${userSelectDay} ${userSelectMonth} ${userSelectYear}`
+        );
+      }
+    };
+
     createUserBirthdate();
   }, [userSelectDay, userSelectMonth, userSelectYear]);
 

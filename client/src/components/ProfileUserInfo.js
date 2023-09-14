@@ -4,11 +4,11 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Context } from "..";
 
 import {
-  PRIVATE_FOLLOWERS_PAGE_PATH,
-  PRIVATE_FOLLOWINGS_PAGE_PATH,
-  PRIVATE_USER_FOLLOWER_PAGE_PATH,
-  PRIVATE_USER_FOLLOWING_PAGE_PATH,
-  PRIVATE_PROFILE_PAGE_USER_PATH,
+  FOLLOWERS_PAGE_PATH,
+  FOLLOWINGS_PAGE_PATH,
+  USER_FOLLOWER_PAGE_PATH,
+  USER_FOLLOWING_PAGE_PATH,
+  PROFILE_PAGE_USER_PATH,
 } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
 
@@ -62,11 +62,11 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
 
           {usersStore.isAuth && (
             <>
-              {(location === PRIVATE_PROFILE_PAGE_USER_PATH ||
+              {(location === PROFILE_PAGE_USER_PATH ||
                 authUserID === usersStore.userPage.id) && (
                 <ButtonEditProfile usersStore={usersStore} />
               )}
-              {location !== PRIVATE_PROFILE_PAGE_USER_PATH &&
+              {location !== PROFILE_PAGE_USER_PATH &&
                 authUserID !== usersStore.userPage.id && (
                   <ButtonFollowingUsersProfile
                     user={usersStore}
@@ -95,11 +95,8 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
             to={
               authUserID
                 ? pathHomeProfileUser && authUserID
-                  ? PRIVATE_FOLLOWINGS_PAGE_PATH
-                  : path(
-                      PRIVATE_USER_FOLLOWING_PAGE_PATH,
-                      usersStore.userPage.id
-                    )
+                  ? FOLLOWINGS_PAGE_PATH
+                  : path(USER_FOLLOWING_PAGE_PATH, usersStore.userPage.id)
                 : ""
             }
             id="following"
@@ -118,11 +115,8 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
             to={
               authUserID
                 ? authUserID && pathHomeProfileUser
-                  ? PRIVATE_FOLLOWERS_PAGE_PATH
-                  : path(
-                      PRIVATE_USER_FOLLOWER_PAGE_PATH,
-                      usersStore.userPage.id
-                    )
+                  ? FOLLOWERS_PAGE_PATH
+                  : path(USER_FOLLOWER_PAGE_PATH, usersStore.userPage.id)
                 : ""
             }
             id="followers"
