@@ -1,4 +1,5 @@
 import twitClient from "../http/twitClient";
+import getAuthUserID from "./getAuthUserID";
 
 export default async function getMoreUserTwits(
   showMoreTwits,
@@ -8,17 +9,32 @@ export default async function getMoreUserTwits(
   setShowButton,
   userId
 ) {
+  const authUserID = getAuthUserID();
   if (showMoreTwits) {
-    await twitClient
-      .getTwitsByUser(userId, 7, itemListTwits)
-      .then((usersTwits) => {
-        twitsStore.setTwits(twitsStore.twits.concat(usersTwits));
+    if (authUserID) {
+      await twitClient
+        .getTwitsByUser(userId, 7, itemListTwits)
+        .then((usersTwits) => {
+          twitsStore.setTwits(twitsStore.twits.concat(usersTwits));
 
-        setShowMoreTwits(false);
+          setShowMoreTwits(false);
 
-        if (usersTwits.length < 7) {
-          setShowButton(false);
-        }
-      });
+          if (usersTwits.length < 7) {
+            setShowButton(false);
+          }
+        });
+    }else{
+      await twitClient
+        .getPublicTwitsByUsergit (userId, 7, itemListTwits)
+        .then((usersTwits) => {
+          twitsStore.setTwits(twitsStore.twits.concat(usersTwits));
+
+          setShowMoreTwits(false);
+
+          if (usersTwits.length < 7) {
+            setShowButton(false);
+          }
+        });
+    }
   }
 }

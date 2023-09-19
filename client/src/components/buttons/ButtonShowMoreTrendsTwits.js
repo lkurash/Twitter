@@ -15,16 +15,29 @@ const ButtonShowMoreTrendsTwits = observer(({ trend }) => {
 
   async function getMoreTrendsTwits() {
     if (showMoreTwits) {
-      await trendClient
-        .getTrendsTwitsForAuthUser(trend, authUserID, 7, itemListTwits)
-        .then((trendstTwits) => {
-          twitsStore.setTwits(twitsStore.twits.concat(trendstTwits));
-          setShowMoreTwits(false);
+      if (authUserID) {
+        await trendClient
+          .getTrendsTwitsForAuthUser(trend, authUserID, 7, itemListTwits)
+          .then((trendstTwits) => {
+            twitsStore.setTwits(twitsStore.twits.concat(trendstTwits));
+            setShowMoreTwits(false);
 
-          if (trendstTwits.length < 7) {
-            setButtonMoreTwitsVisible(false);
-          }
-        });
+            if (trendstTwits.length < 7) {
+              setButtonMoreTwitsVisible(false);
+            }
+          });
+      } else {
+        await trendClient
+          .getPublicTrendsTwits(trend, 7, itemListTwits)
+          .then((trendstTwits) => {
+            twitsStore.setTwits(twitsStore.twits.concat(trendstTwits));
+            setShowMoreTwits(false);
+
+            if (trendstTwits.length < 7) {
+              setButtonMoreTwitsVisible(false);
+            }
+          });
+      }
     }
   }
 
