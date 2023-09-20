@@ -45,6 +45,7 @@ const MainSearchBlock = observer(({ classNameForm }) => {
           />
           <div className="main-search-form-input">
             <input
+              name="searchFormInput"
               className="main-input"
               placeholder="Search User"
               value={userName}

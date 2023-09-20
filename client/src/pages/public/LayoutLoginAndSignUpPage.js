@@ -1,30 +1,58 @@
-import { Outlet, useLocation } from "react-router-dom";
-
-import { PUBLIC_EXPLORE_PAGE_PATH } from "../../utils/constans";
-
-import ButtonClose from "../../components/buttons/ButtonClose";
-import Logo from "../../components/common/Logo";
+import { Outlet, useNavigate } from "react-router-dom";
+import backgroundAuthPage from "../../components/Img/twitter-banner.png";
+import logoAuthPage from "../../components/Img/auth_twitter_icon.png";
 
 import "../../components/forms/loginAndRegistretionForm.css";
+import {
+  LOGIN_PAGE_PATH,
+  PUBLIC_EXPLORE_PAGE_PATH,
+  SIGNUP_PAGE_PATH,
+} from "../../utils/constans";
 
-export default function LayoutLoginAndSignUpPage() {
-  const location = useLocation().pathname;
-
+const LayoutLoginAndSignUpPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="body">
-      <div className="form-wrapper wrapper-border">
-        <header className="login-form-header">
-          <ButtonClose
-            nav={
-              location === "/auth/login/redirect"
-                ? PUBLIC_EXPLORE_PAGE_PATH
-                : -1
-            }
-          />
-          <Logo class="logo-icon-form" />
-        </header>
-        <Outlet />
+      <div
+        className="background-auth-page"
+        style={{
+          backgroundImage: `url(${backgroundAuthPage})`,
+        }}
+      >
+        <img
+          src={logoAuthPage}
+          alt="Logo"
+          onClick={() => navigate(PUBLIC_EXPLORE_PAGE_PATH)}
+        />
       </div>
+      <div className="right-side-bar">
+        <h1>Happening now</h1>
+        <h3>Join today.</h3>
+        <div className="auth-page-button-panel">
+          <button
+            className="auth-page-button button-create-account"
+            onClick={() => navigate(SIGNUP_PAGE_PATH)}
+          >
+            Create account
+          </button>
+          <p className="button-create-account-hint">
+            By signing up, you agree to the Terms of Service and Privacy Policy,
+            including Cookie Use.
+          </p>
+          <h4 className="auth-page-button-panel-hint">
+            Already have an account?
+          </h4>
+          <button
+            className="auth-page-button button-sign-in"
+            onClick={() => navigate(LOGIN_PAGE_PATH)}
+          >
+            Sign in
+          </button>
+        </div>
+      </div>
+      <Outlet />
     </div>
   );
-}
+};
+
+export default LayoutLoginAndSignUpPage;

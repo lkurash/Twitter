@@ -25,7 +25,7 @@ const SignUpFormInput = ({
       <div onClick={onClick} className={getClassName()}>
         {(activeInput || value.length > 0) && (
           <div className="signup-header-active-input">
-            <label className="signup-active-input">{placeholder}</label>
+            <p className="signup-active-input">{placeholder}</p>
             {!email && value.length > 0 && (
               <p className="signup-form-hint-length">
                 {value.length}/{length}
@@ -34,6 +34,7 @@ const SignUpFormInput = ({
           </div>
         )}
         <input
+          name="signUpFormInput"
           placeholder={activeInput ? "" : placeholder}
           type={password ? "password" : "text"}
           value={value}

@@ -9,7 +9,7 @@ const Emoji = ({ emojiVisible, addEmojiInTwitText, onClosePopUpEmoji }) => {
   useOutsideClick(popUpRef, onClosePopUpEmoji, emojiVisible);
 
   return (
-    <div className="popup-emoji" id="emoji" ref={popUpRef}>
+    <div className="popup-emoji" ref={popUpRef} id="emoji">
       <EmojiPicker
         height={500}
         width={350}

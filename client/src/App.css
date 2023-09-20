@@ -1,3 +1,4 @@
+h3,
 h4,
 p,
 body {
@@ -114,10 +115,16 @@ img {
   font-size: 18px;
 }
 
-.profile-name {
+/* .profile-name {
   color: grey;
-  font-size: 12px;
+  font-size: 10px;
 }
+
+.twit-date {
+  margin-left: 5px;
+  color: grey;
+  font-size: 5px;
+} */
 
 @media (width <= 825px) {
   .page {

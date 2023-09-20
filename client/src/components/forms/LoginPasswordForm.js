@@ -28,9 +28,10 @@ const LoginPasswordForm = ({
           <p className="password-form-notactive-input-email">{email}</p>
         </div>
         <div className="block-input input-password">
-          <label>
+          <span>
             <p className="password-form-hint">Password</p>
             <input
+              name="loginFormInput"
               autoFocus
               type="password"
               className="input-form"
@@ -38,7 +39,7 @@ const LoginPasswordForm = ({
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(event) => signInKeyDown(event)}
             />
-          </label>
+          </span>
         </div>
         <div className="password-form-forgot-password">
           <p>Forgot password?</p>

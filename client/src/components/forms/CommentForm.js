@@ -22,11 +22,6 @@ const CommentForm = observer(({ twit }) => {
     commentsStore.setActiveComment({});
     await twitClient.getCountComments(twitId);
   };
-  const createTwitDate = (createdAt) => {
-    const date = new Date(createdAt).toString().split(" ");
-    
-    return `${date[2]} ${date[1]}. ${date[3]}`;
-  };
 
   if (commentText.length > 255) {
     return setCommentText(commentText.slice(0, 254));
@@ -57,7 +52,7 @@ const CommentForm = observer(({ twit }) => {
                 <h4>{twit.user.user_name}</h4>
                 <p className="comment-twit-info-block-desc">{`@${twit.user.user_name}`}</p>
                 <p className="comment-twit-info-block-desc">
-                  {createTwitDate(twit.twit_createDate)}
+                  {twit.twit_createDate}
                 </p>
               </div>
               <p className="comment-twit-text">{twit.text}</p>

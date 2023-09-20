@@ -14,7 +14,7 @@ const authenticate = async () => {
     return null;
   } else {
     Cookies.remove("twitsWhoReading");
-    return redirect("/auth/login/redirect");
+    return redirect("/auth");
   }
 };
 

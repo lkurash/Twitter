@@ -186,7 +186,17 @@
 
 .twit-user-name-block p {
   margin-top: 5px;
-  font-size: 15px;
+}
+
+.profile-name {
+  color: grey;
+  font-size: 14px;
+}
+
+.twit-date {
+  margin-left: 5px;
+  color: grey;
+  font-size: 13px;
 }
 
 .twit-user-name {

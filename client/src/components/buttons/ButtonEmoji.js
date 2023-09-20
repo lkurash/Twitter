@@ -11,15 +11,13 @@ const ButtonEmoji = ({ addEmojiInTwitText }) => {
   };
 
   return (
-    <>
-      <label htmlFor="emoji">
-        <img
-          src={imgEmoji}
-          alt="Emoji"
-          className="twit-form-emoji"
-          onClick={() => setEmojiVisible(true)}
-        />
-      </label>
+    <div>
+      <img
+        src={imgEmoji}
+        alt="Emoji"
+        className="twit-form-emoji"
+        onClick={() => setEmojiVisible(true)}
+      />
       {emojiVisible && (
         <Emoji
           emojiVisible={emojiVisible}
@@ -27,7 +25,7 @@ const ButtonEmoji = ({ addEmojiInTwitText }) => {
           onClosePopUpEmoji={onClosePopUpEmoji}
         />
       )}
-    </>
+    </div>
   );
 };
 export default ButtonEmoji;
