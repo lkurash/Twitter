@@ -5,7 +5,7 @@ import { Context } from "../..";
 
 import { HOME_PAGE_PATH, ROOT_PAGE_PATH } from "../../utils/constans";
 
-import logo from "../Img/logo_icon.png";
+import logo from "../Imgs/logo_icon.png";
 
 const Logo = observer((props) => {
   const navigate = useNavigate();

@@ -7,11 +7,13 @@ import trendClient from "../../http/trendClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
-import dotMenu from "../Img/more_dots_icon.png";
-import sad_smile from "../Img/sad_smiley_icon.png";
+import dotMenu from "../Imgs/more_dots_icon.png";
+import sad_smile from "../Imgs/sad_smiley_icon.png";
 
-const ButtonOnTrend = observer(({ trend }) => {
+const NotInterestingTrendButton = observer(({ trend }) => {
   const { trendsStore } = useContext(Context);
+  const { infoMessageStore } = useContext(Context);
+
   const tooltip = useRef(null);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const authUserID = getAuthUserID();
@@ -25,6 +27,9 @@ const ButtonOnTrend = observer(({ trend }) => {
     await trendClient
       .getAllTrends(authUserID)
       .then((allTrends) => trendsStore.setTrends(allTrends));
+
+    infoMessageStore.setTextMessage("Not interested in the trend.");
+    infoMessageStore.setInfoMessageVisible(true);
   };
 
   useOutsideClick(tooltip, onClose, tooltipVisible);
@@ -59,4 +64,4 @@ const ButtonOnTrend = observer(({ trend }) => {
   );
 });
 
-export default ButtonOnTrend;
+export default NotInterestingTrendButton;

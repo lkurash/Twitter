@@ -1,19 +1,23 @@
 import { useContext, useState } from "react";
 import { Context } from "../..";
+import { useNavigate } from "react-router-dom";
+
+import userClient from "../../http/userClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
-import retwitIcon from "../Img/notactive_retweet_icon.png";
-import { useNavigate } from "react-router-dom";
 import path from "../../utils/path";
 import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../utils/constans";
-import userClient from "../../http/userClient";
+
 import PreviewUserOnTwit from "./PreviewUserOnTwit";
+
+import retwitIcon from "../Imgs/notactive_retweet_icon.png";
 
 const TooltipRetwitOnTwit = ({ retwit, user }) => {
   const { usersStore } = useContext(Context);
-  const [showProfileUser, setShowProfileUser] = useState(false);
   const { usersFollowingsStore } = useContext(Context);
+
+  const [showProfileUser, setShowProfileUser] = useState(false);
   const navigate = useNavigate();
 
   const checkFollowing = async (id) => {
@@ -52,20 +56,22 @@ const TooltipRetwitOnTwit = ({ retwit, user }) => {
             </div>
           ) : (
             <>
-              <div className="twit-hint-about-retwit">
+              <div
+                className="twit-hint-about-retwit"
+                onMouseEnter={() => {
+                  onMouseEnter(user);
+                }}
+                onMouseLeave={() => {
+                  onMouseLeave();
+                }}
+              >
                 <div
                   className="twit-hint-about-retwit-img-text"
-                  onMouseEnter={() => {
-                    onMouseEnter(user);
-                  }}
-                  onMouseLeave={() => {
-                    onMouseLeave();
-                  }}
                   onClick={() => {
                     if (usersStore.isAuth) {
-                      navigate(path(USER_PAGE_PATH, retwit.user.id));
+                      navigate(path(USER_PAGE_PATH, user.id));
                     } else {
-                      navigate(path(PUBLIC_USER_PAGE_PATH, retwit.user.id));
+                      navigate(path(PUBLIC_USER_PAGE_PATH, user.id));
                     }
                   }}
                 >
@@ -75,7 +81,7 @@ const TooltipRetwitOnTwit = ({ retwit, user }) => {
                     className="twit-hint-about-retwit-img"
                   />
                   <p className="twit-hint-about-retwit-text">
-                    {retwit.user.user_name} retweeted
+                    {user.user_name} retweeted
                   </p>
                 </div>
                 {showProfileUser && (

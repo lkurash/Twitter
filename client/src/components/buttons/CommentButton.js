@@ -5,10 +5,10 @@ import { Context } from "../..";
 import CommentForm from "../forms/CommentForm";
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
-import activeComment from "../Img/active_comment_icon.png";
-import notactiveComment from "../Img/notactive_comment_icon.png";
+import activeComment from "../Imgs/active_comment_icon.png";
+import notactiveComment from "../Imgs/notactive_comment_icon.png";
 
-const ButtonCommentOnTwit = observer(({ twit }) => {
+const CommentButton = observer(({ twit }) => {
   const { commentsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
@@ -63,4 +63,4 @@ const ButtonCommentOnTwit = observer(({ twit }) => {
   );
 });
 
-export default ButtonCommentOnTwit;
+export default CommentButton;

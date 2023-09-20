@@ -4,12 +4,11 @@ import { useLocation } from "react-router-dom";
 import { Context } from "..";
 
 import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/constans";
+import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
-
-import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 const SidebarContent = observer(() => {
   const { usersStore } = useContext(Context);

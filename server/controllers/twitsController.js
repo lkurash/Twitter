@@ -46,71 +46,75 @@ const checkUsersAuth = (request, userId, next) => {
 class TwitsController {
   async createTwitByUser(text, file, userId, request, response) {
     try {
-    if (file) {
-      const { imgs } = request.files;
-      let twitImgs = [];
+      if (file) {
+        const { imgs } = request.files;
+        let twitImgs = [];
 
-      if (Array.isArray(imgs)) {
-        imgs.forEach((twitImg) => {
+        if (Array.isArray(imgs)) {
+          imgs.forEach((twitImg) => {
+            let fileName = uuid.v4() + ".jpg";
+            twitImg.mv(path.resolve(__dirname, "..", "static", fileName));
+            twitImgs.push(fileName);
+          });
+        } else {
           let fileName = uuid.v4() + ".jpg";
-          twitImg.mv(path.resolve(__dirname, "..", "static", fileName));
+          imgs.mv(path.resolve(__dirname, "..", "static", fileName));
           twitImgs.push(fileName);
+        }
+
+        const newTwit = await Twits.create({
+          text,
+          img: twitImgs.toString(),
+          userId,
         });
+
+      const twit = await Twits.findOne({
+        include: [{ model: User, as: "user" }],
+        where: { id: newTwit.id },
+      });
+
+        const presenter = new TwitsPresenter([twit]);
+
+        return presenter.toJSON();
       } else {
-        let fileName = uuid.v4() + ".jpg";
-        imgs.mv(path.resolve(__dirname, "..", "static", fileName));
-        twitImgs.push(fileName);
+        const newTwit = await Twits.create({ text, userId });
+
+      const twit = await Twits.findOne({
+        include: [{ model: User, as: "user" }],
+        where: { id: newTwit.id },
+      });
+
+        const presenter = new TwitsPresenter([twit]);
+
+        return presenter.toJSON();
       }
-
-      const newTwit = await Twits.create({
-        text,
-        img: twitImgs.toString(),
-        userId,
-      });
-
-      const twit = await Twits.findOne({
-        include: [{ model: User, as: "user" }],
-        where: { id: newTwit.id },
-      });
-
-      const presenter = new TwitsPresenter([twit]);
-
-      return presenter.toJSON();
-    } else {
-      const newTwit = await Twits.create({ text, userId });
-
-      const twit = await Twits.findOne({
-        include: [{ model: User, as: "user" }],
-        where: { id: newTwit.id },
-      });
-
-      const presenter = new TwitsPresenter([twit]);
-
-      return presenter.toJSON();
-    }
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
   }
 
   async createTwitAndTrends(request, response, next) {
-    const { text } = request.body;
+    try {
+      const { text } = request.body;
 
-    const file = request.files;
-    const user = decodeUser(request);
-    const userId = user.id;
+      const file = request.files;
+      const user = decodeUser(request);
+      const userId = user.id;
 
-    const twit = await twitsController.createTwitByUser(
-      text,
-      file,
-      userId,
-      request,
-      response,
-      next
-    );
-    const trend = await trendsController.createTrends(text, response, next);
+      const twit = await twitsController.createTwitByUser(
+        text,
+        file,
+        userId,
+        request,
+        response,
+        next
+      );
+      const trend = await trendsController.createTrends(text, response, next);
 
-    return response.json({ twit, trend });
+      return response.json({ twit, trend });
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
   async getTwitsByUser(request, response, next) {
@@ -194,45 +198,53 @@ class TwitsController {
   }
 
   async gelAllTwits(request, response) {
-    let { limit, list } = request.query;
+    try {
+      let { limit, list } = request.query;
 
-    limit = limit || 7;
-    list = list || 1;
-    let offset = list * limit - limit;
+      limit = limit || 7;
+      list = list || 1;
+      let offset = list * limit - limit;
 
-    const twits = await Twits.findAll({
-      order: [["id", "DESC"]],
-      include: [
-        { model: User, as: "user" },
-        { model: User, as: "twit_user" },
-      ],
-      limit: limit,
-      offset: offset,
-    });
+      const twits = await Twits.findAll({
+        order: [["id", "DESC"]],
+        include: [
+          { model: User, as: "user" },
+          { model: User, as: "twit_user" },
+        ],
+        limit: limit,
+        offset: offset,
+      });
 
-    const presenter = new TwitsPresenterForPublicPage(twits);
+      const presenter = new TwitsPresenterForPublicPage(twits);
 
-    return response.json(presenter.toJSON());
+      return response.json(presenter.toJSON());
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
   async getTwitsForAuthUser(request, response, next) {
-    const Op = Sequelize.Op;
-    const { userId } = request.params;
-    const user = decodeUser(request);
-    const userIdToken = user.id;
+    try {
+      const Op = Sequelize.Op;
+      const { userId } = request.params;
+      const user = decodeUser(request);
+      const userIdToken = user.id;
 
-    let { limit, list } = request.query;
+      let { limit, list } = request.query;
 
-    limit = limit || 7;
-    list = list || 1;
-    let offset = list * limit - limit;
-    let order = `ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
+      limit = limit || 7;
+      list = list || 1;
+      let offset = list * limit - limit;
+      let order = `ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
-    const twits = await dbRequestTwitsForAuthUser(decodeUser, request, order);
+      const twits = await dbRequestTwitsForAuthUser(decodeUser, request, order);
 
-    const presenter = new TwitsPresenter(twits);
+      const presenter = new TwitsPresenter(twits);
 
-    return response.json(presenter.toJSON());
+      return response.json(presenter.toJSON());
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
   async getFavoriteTwitByUser(request, response, next) {
@@ -295,7 +307,6 @@ class TwitsController {
       const presenter = new CommentsPresenter(coments);
 
       return response.json(presenter.toJSON());
-
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }

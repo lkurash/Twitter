@@ -1,19 +1,10 @@
 import { NavLink } from "react-router-dom";
 
-const ButtonMenu = ({
-  classNameButtonImg,
-  buttonName,
-  nav,
-  alt,
-  img,
-  id,
-}) => {
+const MenuButton = ({ classNameButtonImg, buttonName, nav, alt, img, id }) => {
   return (
     <NavLink
       className={({ isActive }) =>
-        isActive
-          ? `menu-button active-menu-button`
-          : `menu-button notactive`
+        isActive ? `menu-button active-menu-button` : `menu-button notactive`
       }
       type="button"
       to={nav}
@@ -26,4 +17,4 @@ const ButtonMenu = ({
   );
 };
 
-export default ButtonMenu;
+export default MenuButton;

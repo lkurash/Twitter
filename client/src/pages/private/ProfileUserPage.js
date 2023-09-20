@@ -9,7 +9,6 @@ import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 import ContentUserProfilePage from "../../components/ContentUserProfilePage";
-import SidebarContent from "../../components/SidebarContent";
 
 const ProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
@@ -34,7 +33,6 @@ const ProfileUserPage = observer(({ loadingPage }) => {
         userClient.checkFollowing(id).then((following) => {
           usersFollowingsStore.setStartFollowUser(following);
         });
-        
       } else {
         userClient
           .getUserProfile(authUserID)
@@ -48,12 +46,7 @@ const ProfileUserPage = observer(({ loadingPage }) => {
   });
   return (
     <>
-      <div className="main-wrapper">
-        <main className="main">
-          <ContentUserProfilePage />
-        </main>
-      </div>
-      <SidebarContent />
+      <ContentUserProfilePage />
     </>
   );
 });

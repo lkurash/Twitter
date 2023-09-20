@@ -1,12 +1,12 @@
-import trendClient from "../../http/trendClient";
-
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
+import { observer } from "mobx-react-lite";
+
+import trendClient from "../../http/trendClient";
+
 import getAuthUserID from "../../utils/getAuthUserID";
 
-const { observer } = require("mobx-react-lite");
-
-const ButtonShowMoreTrendsTwits = observer(({ trend }) => {
+const ShowMoreTrendsTwitsButton = observer(({ trend }) => {
   const { twitsStore } = useContext(Context);
   const authUserID = getAuthUserID();
   const [showMoreTwits, setShowMoreTwits] = useState(false);
@@ -61,4 +61,4 @@ const ButtonShowMoreTrendsTwits = observer(({ trend }) => {
   );
 });
 
-export default ButtonShowMoreTrendsTwits;
+export default ShowMoreTrendsTwitsButton;

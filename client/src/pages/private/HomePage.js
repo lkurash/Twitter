@@ -2,12 +2,12 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "../..";
 
-import SidebarContent from "../../components/SidebarContent";
-import ContentHomePage from "../../components/ContentHomePage";
+import userClient from "../../http/userClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
-import userClient from "../../http/userClient";
+
+import ContentHomePage from "../../components/ContentHomePage";
 
 const HomePage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
@@ -20,7 +20,7 @@ const HomePage = observer(({ loadingPage }) => {
       userClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
-        
+
       userClient
         .getFollowingsUser(authUserID)
         .then((followings) =>
@@ -34,7 +34,6 @@ const HomePage = observer(({ loadingPage }) => {
   return (
     <>
       <ContentHomePage />
-      <SidebarContent />
     </>
   );
 });

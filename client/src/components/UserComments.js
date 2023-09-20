@@ -1,13 +1,15 @@
 import { observer } from "mobx-react-lite";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
+
 import spinner from "../utils/spinner";
 
-import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
-import TwitDesc from "./TwitDesc";
 import twitClient from "../http/twitClient";
-import UserName from "./UserName";
-import UserPhoto from "./UserPhoto";
+
+import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
+import TwitDesc from "./Twit/TwitDesc";
+import UserName from "./Twit/UserName";
+import UserPhoto from "./Twit/UserPhoto";
 
 const UserComments = observer(() => {
   const { twitsStore } = useContext(Context);
@@ -33,12 +35,12 @@ const UserComments = observer(() => {
                 <div className="content-block">
                   <div className="user-block-comment">
                     <div className="comment-twit-info-block-connection-photo">
-                      <UserPhoto user={Twit.user} />
+                      <UserPhoto user={Twit.userOriginalTwits} />
                       <div className="comment-line" />
                       <UserPhoto user={Comment.user} />
                     </div>
                     <div className="comment-desc">
-                      <UserName user={Twit.user} />
+                      <UserName user={Twit.userOriginalTwits} />
                       <TwitDesc twit={Twit} />
                       {!Twit.img && (
                         <div className="comment-twit-info-block-connection-text" />
@@ -53,7 +55,7 @@ const UserComments = observer(() => {
             </Fragment>
           ))}
           {twitsStore.twits.length >= 7 && (
-            <ButtonShowMoreTwits
+            <ShowMoreTwitsButton
               getTwits={twitClient.getCommentsByUser}
               userId={usersStore.userPage.id}
               store={twitsStore}

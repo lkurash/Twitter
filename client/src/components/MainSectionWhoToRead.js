@@ -6,7 +6,7 @@ import userClient from "../http/userClient";
 
 import getAuthUserID from "../utils/getAuthUserID";
 
-import ListWhoReadUserHomePage from "./ListWhoReadUserHomePage";
+import ListWhoReadUserHomePage from "../components/ListWhoReadUserHomePage";
 
 const MainSectionWhoToRead = observer((props) => {
   const { usersStore } = useContext(Context);

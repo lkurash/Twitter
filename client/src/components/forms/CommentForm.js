@@ -7,20 +7,25 @@ import twitClient from "../../http/twitClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
 
-import ButtonEmoji from "../buttons/ButtonEmoji";
+import EmojiButton from "../buttons/EmojiButton";
 
-import close from "../Img/x_icon.png";
+import close from "../Imgs/x_icon.png";
 
 const CommentForm = observer(({ twit }) => {
   const { usersStore } = useContext(Context);
   const { commentsStore } = useContext(Context);
+  const { infoMessageStore } = useContext(Context);
+
   const [commentText, setCommentText] = useState("");
-  const authUserID = getAuthUserID(usersStore);
+
+  const authUserID = getAuthUserID();
 
   const createComment = async (twitId) => {
     await twitClient.createCommentTwitByUser(authUserID, twitId, commentText);
     commentsStore.setActiveComment({});
     await twitClient.getCountComments(twitId);
+    infoMessageStore.setTextMessage("Comment has been sent.");
+    infoMessageStore.setInfoMessageVisible(true);
   };
 
   if (commentText.length > 255) {
@@ -42,15 +47,15 @@ const CommentForm = observer(({ twit }) => {
         </div>
         <div className="comment-wrapper-user-info-block">
           <div className="comment-user-info-block">
-            <img alt="User" src={getUserPhoto(twit.user)} />
+            <img alt="User" src={getUserPhoto(twit.userOriginalTwits)} />
             <div className="comment-line" />
             <img src={getUserPhoto(usersStore.user)} alt="User" />
           </div>
           <div className="comment-wrapper-twit-info-block">
             <div className="comment-twit-info-block">
               <div className="comment-info-username-and-date">
-                <h4>{twit.user.user_name}</h4>
-                <p className="comment-twit-info-block-desc">{`@${twit.user.user_name}`}</p>
+                <h4>{twit.userOriginalTwits.user_name}</h4>
+                <p className="comment-twit-info-block-desc">{`@${twit.userOriginalTwits.user_name}`}</p>
                 <p className="comment-twit-info-block-desc">
                   {twit.twit_createDate}
                 </p>
@@ -68,7 +73,7 @@ const CommentForm = observer(({ twit }) => {
           </div>
         </div>
         <div className="comment-panel">
-          <ButtonEmoji addEmojiInTwitText={addEmojiInTwitText} />
+          <EmojiButton addEmojiInTwitText={addEmojiInTwitText} />
           <button onClick={() => createComment(twit.id)}>
             <span>Answer</span>
           </button>

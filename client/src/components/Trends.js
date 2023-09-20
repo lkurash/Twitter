@@ -5,7 +5,7 @@ import { Context } from "..";
 
 import { TRENDS_PAGE_PATH, PUBLIC_TRENDS_PAGE_PATH } from "../utils/constans";
 
-import ButtonOnTrend from "./buttons/ButtonOnTrend";
+import NotInterestingTrendButton from "./buttons/NotInterestingTrendButton";
 
 const Trends = observer(({ topic }) => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Trends = observer(({ topic }) => {
         <h4 className="trends-item-body">{topic.title}</h4>
         <p className="trends-item-footer">{topic.count_twits} posts</p>
       </div>
-      <ButtonOnTrend trend={topic} />
+      <NotInterestingTrendButton trend={topic} />
     </div>
   );
 });

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../..";
 import { observer } from "mobx-react-lite";
+
 import path from "../../utils/path";
 import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../utils/constans";
 import getUserPhoto from "../../utils/getUserPhoto";

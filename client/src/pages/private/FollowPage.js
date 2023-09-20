@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 import { Context } from "../..";
 
 import userClient from "../../http/userClient";
+
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import ContentFollowPage from "../../components/ContentFollowPage";
-import SidebarContent from "../../components/SidebarContent";
 
 const FollowPage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -44,14 +44,7 @@ const FollowPage = observer(() => {
 
   return (
     <>
-      <div className="main-wrapper">
-        <main className="main">
-          <div className="main-content">
-            <ContentFollowPage />
-          </div>
-        </main>
-      </div>
-      <SidebarContent />
+      <ContentFollowPage />
     </>
   );
 });

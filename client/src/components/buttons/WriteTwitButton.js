@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import PopUpWriteTwit from "../PopUpWriteTwit";
 
-import tweetIcon from "../Img/feather_icon.png";
+import tweetIcon from "../Imgs/feather_icon.png";
 
-const ButtonWriteTwit = () => {
+const WriteTwitButton = () => {
   const [twitFormVisible, setTwitFormVisible] = useState(false);
   return (
     <>
@@ -25,4 +25,4 @@ const ButtonWriteTwit = () => {
     </>
   );
 };
-export default ButtonWriteTwit;
+export default WriteTwitButton;

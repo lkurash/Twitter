@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { EDIT_PROFILE_PAGE_PATH } from "../../utils/constans";
 
-const ButtonEditProfile = observer(({ usersStore }) => {
+const EditProfileButton = observer(({ usersStore }) => {
   const navigate = useNavigate();
 
   return (
@@ -17,4 +17,4 @@ const ButtonEditProfile = observer(({ usersStore }) => {
   );
 });
 
-export default ButtonEditProfile;
+export default EditProfileButton;

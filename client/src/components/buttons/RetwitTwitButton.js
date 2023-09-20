@@ -8,10 +8,10 @@ import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
-import activeRetwit from "../Img/active_retweet_icon.png";
-import notactiveRetwit from "../Img/notactive_retweet_icon.png";
+import activeRetwit from "../Imgs/active_retweet_icon.png";
+import notactiveRetwit from "../Imgs/notactive_retweet_icon.png";
 
-const ButtonRetwitOnTwit = observer(({ twit }) => {
+const RetwitTwitButton = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
@@ -35,6 +35,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
     if (twit.img) {
       formData.append("img", twit.img);
     }
+
     await twitClient
       .createRetwitByUser(authUserID, twit.id, formData)
       .then((retwit) => {
@@ -82,7 +83,7 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
 
   return (
     <div className="twit-action-retwit">
-      {(twit.retwit && twit.userId === authUserID) || twit.retwitsAuthUser ? (
+      {(twit.retwit && twit.userId === authUserID) || twit.authUserRetwits ? (
         <div
           className="twit-action-button-retwit"
           key={twit.id}
@@ -138,4 +139,4 @@ const ButtonRetwitOnTwit = observer(({ twit }) => {
   );
 });
 
-export default ButtonRetwitOnTwit;
+export default RetwitTwitButton;

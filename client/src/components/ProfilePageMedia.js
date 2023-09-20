@@ -1,13 +1,12 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
 import twitClient from "../http/twitClient";
-
 import spinner from "../utils/spinner";
 
-import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
-import Twit from "./Twit";
+import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
+import Twits from "./Twits";
 
 const ProfilePageMedia = observer(() => {
   const { usersStore } = useContext(Context);
@@ -26,24 +25,16 @@ const ProfilePageMedia = observer(() => {
   if (usersStore.userPage.length === 0 || loadingPage) return spinner();
 
   return (
-    <div className="twits">
-      {twitsStore.twits ? (
-        <>
-          {twitsStore.twits.map((twit) => (
-            <Twit twit={twit} key={twit.id} />
-          ))}
-          {twitsStore.twits.length >= 4 && (
-            <ButtonShowMoreTwits
-              getTwits={twitClient.getUserTwitsWithMedia}
-              userId={usersStore.userPage.id}
-              store={twitsStore}
-            />
-          )}
-        </>
-      ) : (
-        <p className="twit-hint-about-lack-twits">No twits</p>
+    <Fragment>
+      <Twits />
+      {twitsStore.twits.length >= 4 && (
+        <ShowMoreTwitsButton
+          getTwits={twitClient.getUserTwitsWithMedia}
+          userId={usersStore.userPage.id}
+          store={twitsStore}
+        />
       )}
-    </div>
+    </Fragment>
   );
 });
 

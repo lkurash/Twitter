@@ -4,7 +4,7 @@ import { Context } from "..";
 
 import getAuthUserID from "../utils/getAuthUserID";
 
-import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
+import FollowButton from "./buttons/FollowButton";
 import UserInList from "./common/UserInList";
 
 const UserFollowingList = observer(() => {
@@ -22,7 +22,7 @@ const UserFollowingList = observer(() => {
                 <UserInList profile={profile} />
 
                 {profile.id !== authUserID && (
-                  <ButtonFollowInFollowList
+                  <FollowButton
                     profile={profile}
                     following={profile.following}
                     classButton="button-follow-follow-list"

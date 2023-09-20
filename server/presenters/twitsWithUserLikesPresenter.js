@@ -18,12 +18,12 @@ class twitsWithUserLikesPresenter {
         twitId: like.twit.twitId,
         twitUserId: like.twit.twitUserId,
         userId: like.twit.userId,
-        user: {
+        userOriginalTwits: {
           id: like.twit.user.id,
           user_name: like.twit.user.user_name,
           photo: like.twit.user.photo,
         },
-        twit_user: {
+        userRetwits: {
           id: like.twit.twit_user.id,
           user_name: like.twit.twit_user.user_name,
           photo: like.twit.twit_user.photo,

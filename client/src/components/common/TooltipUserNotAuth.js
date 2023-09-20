@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { LOGIN_PAGE_PATH, SIGNUP_PAGE_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
-import bookmarkImg from "../Img/tooltip_bookmark_heart_icon.png";
-import likeImg from "../Img/active_like.png";
-import retwitImg from "../Img/tooltip_retweet_icon.png";
-import commentImg from "../Img/tooltip_comment_icon.png";
-import logo from "../Img/logo_icon.png";
-import close from "../Img/x_icon.png";
+import bookmarkImg from "../Imgs/tooltip_bookmark_heart_icon.png";
+import likeImg from "../Imgs/active_like.png";
+import retwitImg from "../Imgs/tooltip_retweet_icon.png";
+import commentImg from "../Imgs/tooltip_comment_icon.png";
+import logo from "../Imgs/logo_icon.png";
+import close from "../Imgs/x_icon.png";
 
 function TooltipUserNotAuth({
   tooltipUserNotAuth,
@@ -26,6 +26,7 @@ function TooltipUserNotAuth({
   useOutsideClick(tooltipRef, onCloseTooltip, tooltipUserNotAuth);
 
   if (!tooltipUserNotAuth) return false;
+
   return (
     <div className="wrapper-tooltip-notauth-user">
       <div ref={tooltipRef} className="tooltip-notauth-user wrapper-border">

@@ -6,7 +6,6 @@ import userClient from "../../http/userClient";
 
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
-import SidebarContent from "../../components/SidebarContent";
 import ContentMessagesPage from "../../components/ContentMessagesPage";
 
 const MessagesPage = observer(() => {
@@ -23,14 +22,7 @@ const MessagesPage = observer(() => {
 
   return (
     <>
-      <main className="main-wrapper">
-        <div className="main">
-          <div className="main-content">
-            <ContentMessagesPage />
-          </div>
-        </div>
-      </main>
-      <SidebarContent />
+      <ContentMessagesPage />
     </>
   );
 });

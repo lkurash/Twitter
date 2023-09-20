@@ -3,18 +3,21 @@ import { useContext, useState } from "react";
 import { Context } from "../..";
 
 import twitClient from "../../http/twitClient";
+
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
-import activeBookmark from "../Img/active_bookmark_icon.png";
-import notactiveBookmark from "../Img/notactive_bookmark_icon.png";
-import hoverBookmark from "../Img/hover_bookmark.png";
+import activeBookmark from "../Imgs/active_bookmark_icon.png";
+import notactiveBookmark from "../Imgs/notactive_bookmark_icon.png";
+import hoverBookmark from "../Imgs/hover_bookmark.png";
 
-const ButtonBookmarkOnTwit = observer(({ twit }) => {
+const BookmarkButton = observer(({ twit }) => {
   const { favoriteTwitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
+  const { infoMessageStore } = useContext(Context);
+
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const authUserID = getAuthUserID(usersStore);
 
@@ -24,6 +27,9 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
       .then((bookmark) => {
         twitsStore.addFavoriteTwit(twit, bookmark);
       });
+
+    infoMessageStore.setTextMessage("Bookmarked.");
+    infoMessageStore.setInfoMessageVisible(true);
   };
 
   const hoverAndActiveButtonBookmark = (twit) => {
@@ -103,4 +109,4 @@ const ButtonBookmarkOnTwit = observer(({ twit }) => {
   );
 });
 
-export default ButtonBookmarkOnTwit;
+export default BookmarkButton;

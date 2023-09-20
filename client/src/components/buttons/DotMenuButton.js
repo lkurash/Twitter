@@ -1,6 +1,6 @@
-import dotMenu from "../Img/more_dots_icon.png";
+import dotMenu from "../Imgs/more_dots_icon.png";
 
-const ButtonDotMenu = (props) => {
+const DotMenuButton = (props) => {
   return (
     <div className={props.class}>
       <div className="dotmenu">
@@ -10,4 +10,4 @@ const ButtonDotMenu = (props) => {
   );
 };
 
-export default ButtonDotMenu;
+export default DotMenuButton;

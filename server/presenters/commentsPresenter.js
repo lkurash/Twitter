@@ -21,13 +21,13 @@ class CommentsPresenter {
           twitId: comment.Twit.twitId,
           twitUserId: comment.Twit.twitUserId,
           userId: comment.Twit.userId,
-          user: {
+          userOriginalTwits: {
             id: comment.Twit.user.id,
             user_name: comment.Twit.user.user_name,
             photo: comment.Twit.user.photo,
             about: comment.Twit.user.about,
           },
-          twit_user: comment.Twit.twit_user && {
+          userRetwits: comment.Twit.twit_user && {
             id: comment.Twit.twit_user.id,
             user_name: comment.Twit.twit_user.user_name,
             photo: comment.Twit.twit_user.photo,

@@ -10,10 +10,10 @@ import { PROFILE_PAGE_USER_PATH } from "../../utils/constans";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import BirthForm from "./BirthForm";
-import ButtonClose from "../buttons/ButtonClose";
+import CloseButton from "../buttons/CloseButton";
 
-import buttonEditPhoto from "../Img/add_photo_icon.png";
-import undefinedUserPhoto from "../Img/user_photo.jpeg";
+import buttonEditPhoto from "../Imgs/add_photo_icon.png";
+import undefinedUserPhoto from "../Imgs/user_photo.jpeg";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 const EditProfileForm = observer(() => {
@@ -77,7 +77,7 @@ const EditProfileForm = observer(() => {
     <div className="edit-profile-form wrapper-border">
       <header className="edit-profile-form-header">
         <div className="edit-profile-form-header-title">
-          <ButtonClose nav={-1} />
+          <CloseButton nav={-1} />
           <h4 className="edit-profile-title">Edit Profile</h4>
         </div>
         <button

@@ -1,7 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useContext } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Context } from "..";
+
+import path from "../utils/path";
 
 import {
   FOLLOWERS_PAGE_PATH,
@@ -13,25 +15,15 @@ import {
 import UserFollowersList from "./UserFollowersList";
 import UserFollowingList from "./UserFollowingList";
 
-import arrowLeft from "./Img/arrow_left_icon.png";
-import path from "../utils/path";
-
 const ContentFollowPage = observer(() => {
   const { usersStore } = useContext(Context);
-  const navigate = useNavigate();
   const location = useLocation().pathname;
   const pathHomeProfileUser = location.includes("home");
 
   return (
-    <div>
+    <>
       <div className="follow-page-header">
         <div className="follow-page-header-main-page-name">
-          <div
-            className="main-search-block-button-return"
-            onClick={() => navigate(-1)}
-          >
-            <img src={arrowLeft} alt="Button return" />
-          </div>
           {usersStore.userPage.user_name && (
             <div className="follow-page-header-user-name">
               <h2>{usersStore.userPage.user_name}</h2>
@@ -74,7 +66,7 @@ const ContentFollowPage = observer(() => {
       </div>
       {location.includes("following") && <UserFollowingList />}
       {location.includes("followers") && <UserFollowersList />}
-    </div>
+    </>
   );
 });
 

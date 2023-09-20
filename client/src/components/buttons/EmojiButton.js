@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 import Emoji from "../common/Emoji";
-import imgEmoji from "../Img/emoji_icon.png";
+import imgEmoji from "../Imgs/emoji_icon.png";
 
-const ButtonEmoji = ({ addEmojiInTwitText }) => {
+const EmojiButton = ({ addEmojiInTwitText }) => {
   const [emojiVisible, setEmojiVisible] = useState(false);
 
   const onClosePopUpEmoji = () => {
@@ -28,4 +28,4 @@ const ButtonEmoji = ({ addEmojiInTwitText }) => {
     </div>
   );
 };
-export default ButtonEmoji;
+export default EmojiButton;

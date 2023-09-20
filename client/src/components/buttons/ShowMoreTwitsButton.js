@@ -4,7 +4,7 @@ import getMoreTwits from "../../utils/getMoreTwits";
 
 const { observer } = require("mobx-react-lite");
 
-const ButtonShowMoreTwits = observer(({ getTwits, userId, store }) => {
+const ShowMoreTwitsButton = observer(({ getTwits, userId, store }) => {
   const [showMoreTwits, setShowMoreTwits] = useState(false);
   const [itemListTwits, setItemListTwits] = useState(1);
   const [buttonMoreTwitsVisible, setButtonMoreTwitsVisible] = useState(true);
@@ -37,4 +37,4 @@ const ButtonShowMoreTwits = observer(({ getTwits, userId, store }) => {
   );
 });
 
-export default ButtonShowMoreTwits;
+export default ShowMoreTwitsButton;

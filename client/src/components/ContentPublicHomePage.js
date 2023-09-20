@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
+import spinner from "../utils/spinner";
+
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
 import MainSearchBlock from "./MainSearchBlock";
-
-import spinner from "../utils/spinner";
 
 const ContentPublicHomePage = observer(() => {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,20 +17,18 @@ const ContentPublicHomePage = observer(() => {
   }, []);
 
   return (
-    <main className="main-wrapper">
-      <div className="main">
-        <MainSearchBlock classNameForm="main-search-form-explore" />
-        {isLoading ? (
-          spinner()
-        ) : (
-          <div className="main-content">
-            <MainSectionTrends className="section section-public-page trends" />
-            <div className="main-line" />
-            <MainSectionWhoToRead className="section section-public-page happen" />
-          </div>
-        )}
-      </div>
-    </main>
+    <>
+      <MainSearchBlock classNameForm="main-search-form-explore" />
+      {isLoading ? (
+        spinner()
+      ) : (
+        <>
+          <MainSectionTrends className="section section-public-page trends" />
+          <div className="main-line" />
+          <MainSectionWhoToRead className="section section-public-page happen" />
+        </>
+      )}
+    </>
   );
 });
 

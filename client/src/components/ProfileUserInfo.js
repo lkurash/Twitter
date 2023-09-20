@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { Context } from "..";
 
@@ -11,18 +11,17 @@ import {
   PROFILE_PAGE_USER_PATH,
 } from "../utils/constans";
 import getUserPhoto from "../utils/getUserPhoto";
+import path from "../utils/path";
+import getAuthUserID from "../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
-import ButtonEditProfile from "./buttons/ButtonEditProfile";
+import EditProfileButton from "./buttons/EditProfileButton";
+import FollowButton from "./buttons/FollowButton";
 
-import birthdateIcon from "./Img/birthday_icon.png";
-import webSiteIcon from "./Img/url_web_icon.png";
-import registrationIcon from "./Img/month_icon.png";
-import undefinedUserPhoto from "./Img/user_photo.jpeg";
-import getAuthUserID from "../utils/getAuthUserID";
-import path from "../utils/path";
-import userClient from "../http/userClient";
-import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
+import birthdateIcon from "./Imgs/birthday_icon.png";
+import webSiteIcon from "./Imgs/url_web_icon.png";
+import registrationIcon from "./Imgs/month_icon.png";
+import undefinedUserPhoto from "./Imgs/user_photo.jpeg";
 
 const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const { usersStore } = useContext(Context);
@@ -67,11 +66,11 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
             <>
               {(location === PROFILE_PAGE_USER_PATH ||
                 authUserID === usersStore.userPage.id) && (
-                <ButtonEditProfile usersStore={usersStore} />
+                <EditProfileButton usersStore={usersStore} />
               )}
               {location !== PROFILE_PAGE_USER_PATH &&
                 authUserID !== usersStore.userPage.id && (
-                  <ButtonFollowInFollowList
+                  <FollowButton
                     profile={usersFollowingsStore.startFollowUser}
                     following={usersFollowingsStore.startFollowUser.following}
                     classButton="button-follow-user-profile"

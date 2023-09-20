@@ -124,7 +124,7 @@
   background-color: #1d9bf0;
 }
 
-.comment{
+.comment {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -138,7 +138,7 @@
   border-left: 2px solid rgb(174 174 174 / 55.8%);
 }
 
-.comment-desc{
+.comment-desc {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -179,5 +179,5 @@
   margin-top: 2px;
   margin-left: 5px;
   font-size: 15px;
-  color: grey;
+  color: rgb(113, 118, 123);
 }
