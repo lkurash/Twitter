@@ -38,7 +38,6 @@ import {
   PROFILE_PAGE_USER_MEDIA_PATH,
   SIGNUP_PAGE_PATH,
   ROOT_PAGE_PATH,
-  LOGIN_REDIRECT_PAGE_PATH,
   ROOT_PRIVATE_PAGE_PATH,
   PUBLIC_HOME_PAGE_PATH,
   HOME_PAGE_PATH,
@@ -87,10 +86,6 @@ export const authRoutes = {
   element: <LayoutLoginAndSignUpPage />,
   loader: redirectLoader,
   children: [
-    {
-      path: LOGIN_REDIRECT_PAGE_PATH,
-      element: <LoginPage />,
-    },
     {
       path: LOGIN_PAGE_PATH,
       element: <LoginPage />,

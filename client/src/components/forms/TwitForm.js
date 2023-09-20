@@ -68,6 +68,7 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
         <form className="twit-form">
           <div className="twit-form-input">
             <textarea
+              name="twitInputForm"
               value={text}
               autoFocus={twitFormVisible}
               className="twit-input-text"

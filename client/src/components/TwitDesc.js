@@ -55,6 +55,7 @@ const TwitDesc = ({ twit }) => {
             {twit.user.user_name}
           </h4>
           <p className="profile-name">{`@${twit.user.user_name}`}</p>
+          <p className="twit-date">{twit.twit_createDate}</p>
         </div>
       )}
       <p className="twit-text">{twit.text}</p>

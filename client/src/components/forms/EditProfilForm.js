@@ -97,6 +97,7 @@ const EditProfileForm = observer(() => {
             )}
             <div className="edit-profile-form-photo-button">
               <input
+                name="editProfileFormInputBackground"
                 type="file"
                 accept=".jpg, .jpeg, .png"
                 id="input-file-background"
@@ -115,6 +116,7 @@ const EditProfileForm = observer(() => {
             )}
             <div className="edit-profile-form-photo-button">
               <input
+                name="editProfileFormInputPhoto"
                 type="file"
                 accept=".jpg, .jpeg, .png"
                 id="input-file"
@@ -140,6 +142,7 @@ const EditProfileForm = observer(() => {
           >
             <h4>Name</h4>
             <input
+              name="editProfileFormInputName"
               value={name || usersStore.user.user_name || ""}
               onChange={(e) => setName(e.target.value.trim())}
             />
@@ -159,6 +162,7 @@ const EditProfileForm = observer(() => {
           >
             <h4>About me</h4>
             <textarea
+              name="editProfileFormInputAbout"
               value={about || usersStore.user.about || ""}
               onChange={(e) => setAbout(e.target.value)}
             />
@@ -176,6 +180,7 @@ const EditProfileForm = observer(() => {
           >
             <h4>Web site</h4>
             <input
+              name="editProfileFormInputWebSite"
               value={textWebSiteUrl || usersStore.user.web_site_url || ""}
               onChange={(e) => setTextWebSiteUrl(e.target.value)}
             />
