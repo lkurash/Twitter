@@ -1,21 +1,19 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
+import twitClient from "../http/twitClient";
+
+import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
 
-import Twit from "./Twit";
-
-import arrowLeft from "./Img/arrow_left_icon.png";
-import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
-import twitClient from "../http/twitClient";
-import getAuthUserID from "../utils/getAuthUserID";
+import Twits from "./Twits";
+import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
 
 const ContentBookmarksPage = observer(() => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
-  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
 
   const authUserID = getAuthUserID(usersStore);
@@ -27,14 +25,8 @@ const ContentBookmarksPage = observer(() => {
   });
 
   return (
-    <div className="main-content-block">
+    <>
       <div className="main-stiky-panel users-page-stiky-panel">
-        <div
-          className="main-search-block-button-return"
-          onClick={() => navigate(-1)}
-        >
-          <img src={arrowLeft} alt="Button return" />
-        </div>
         <div className="main-page-name">
           <h2>Bookmarks</h2>
           <p>@{usersStore.user.user_name}</p>
@@ -44,17 +36,9 @@ const ContentBookmarksPage = observer(() => {
         spinner()
       ) : (
         <>
-          <div className="twits">
-            {twitsStore.twits ? (
-              twitsStore.twits.map((bookmark) => (
-                <Twit twit={bookmark} key={bookmark.id} />
-              ))
-            ) : (
-              <p className="twit-hint-about-lack-twits">No twits</p>
-            )}
-          </div>
+          <Twits />
           {twitsStore.twits.length >= 7 && (
-            <ButtonShowMoreTwits
+            <ShowMoreTwitsButton
               getTwits={twitClient.getFavoriteTwits}
               userId={authUserID}
               store={twitsStore}
@@ -62,7 +46,7 @@ const ContentBookmarksPage = observer(() => {
           )}
         </>
       )}
-    </div>
+    </>
   );
 });
 

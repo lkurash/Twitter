@@ -7,10 +7,10 @@ import {
   PROFILE_PAGE_USER_PATH,
 } from "../utils/constans";
 
-import home from "./Img/home_icon.png";
-import bookmark from "./Img/bookmark_icon.png";
-import profile from "./Img/profile_icon.png";
-import tweetIcon from "./Img/feather_icon.png";
+import home from "./Imgs/home_icon.png";
+import bookmark from "./Imgs/bookmark_icon.png";
+import profile from "./Imgs/profile_icon.png";
+import tweetIcon from "./Imgs/feather_icon.png";
 import PopUpWriteTwit from "./PopUpWriteTwit";
 
 import "./footer.css";

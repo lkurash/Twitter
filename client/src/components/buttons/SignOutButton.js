@@ -1,12 +1,13 @@
 import { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../..";
-import useOutsideClick from "../../utils/useOutsideClickFunction";
 
+import useOutsideClick from "../../utils/useOutsideClickFunction";
 import { ROOT_PAGE_PATH } from "../../utils/constans";
+
 const Cookies = require("js-cookie");
 
-function ButtonSignOut({ buttonSignOutVisible, onClose }) {
+function SignOutButton({ buttonSignOutVisible, onClose }) {
   const { usersStore } = useContext(Context);
   const { retwitsStore } = useContext(Context);
   const { favoriteTwitsStore } = useContext(Context);
@@ -36,4 +37,4 @@ function ButtonSignOut({ buttonSignOutVisible, onClose }) {
   );
 }
 
-export default ButtonSignOut;
+export default SignOutButton;

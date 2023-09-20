@@ -1,9 +1,9 @@
-import hashtag from "../components/Img/hashtag_icon.png";
-import bookmark from "../components/Img/bookmark_icon.png";
-import notification from "../components/Img/notification_icon.png";
-import profile from "../components/Img/profile_icon.png";
-import home from "../components/Img/home_icon.png";
-import message from "../components/Img/message_icon.png";
+import hashtag from "../components/Imgs/hashtag_icon.png";
+import bookmark from "../components/Imgs/bookmark_icon.png";
+import notification from "../components/Imgs/notification_icon.png";
+import profile from "../components/Imgs/profile_icon.png";
+import home from "../components/Imgs/home_icon.png";
+import message from "../components/Imgs/message_icon.png";
 import {
   EXPLORE_PAGE_PATH,
   BOOKMARKS_PAGE_PATH,

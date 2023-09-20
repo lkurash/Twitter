@@ -6,6 +6,7 @@ import { useContext } from "react";
 
 import userClient from "../../http/userClient";
 import { HOME_PAGE_PATH } from "../../utils/constans";
+
 import LocalAuthClient from "../../store/LocalAuthClient";
 
 const PreviewRegistrationForm = observer(({ checkUserInfo }) => {
@@ -33,7 +34,7 @@ const PreviewRegistrationForm = observer(({ checkUserInfo }) => {
   return (
     <main className="signup-form-main">
       <h2>Create your account</h2>
-      
+
       <div className="signup-form-input">
         <p className="signup-user-info">Name</p>
         <p className="signup-user-name">{usersStore.userRegistrationName}</p>

@@ -7,8 +7,8 @@ import userClient from "../http/userClient";
 import Logo from "./common/Logo";
 import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 
-import logo from "./Img/logo_icon.png";
-import searchIcon from "./Img/zoom__icon.png";
+import logo from "./Imgs/logo_icon.png";
+import searchIcon from "./Imgs/zoom__icon.png";
 
 const MainSearchBlock = observer(({ classNameForm }) => {
   const { usersStore } = useContext(Context);

@@ -1,13 +1,23 @@
 import { observer } from "mobx-react-lite";
+import { useContext } from "react";
+import { Context } from "../..";
+import { useNavigate } from "react-router-dom";
+
+import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../utils/constans";
+import path from "../../utils/path";
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
-import ButtonFollowInFollowList from "../buttons/ButtonFollowInFollowList";
-import { useContext} from "react";
-import { Context } from "../..";
+import FollowButton from "../buttons/FollowButton";
+
 
 const PreviewUserOnTwit = observer(({ user, setShowProfileUser }) => {
-  const authUserID = getAuthUserID();
   const { usersFollowingsStore } = useContext(Context);
+  const { usersStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+
+  const navigate = useNavigate();
+
+  const authUserID = getAuthUserID();
 
   return (
     <div
@@ -16,20 +26,32 @@ const PreviewUserOnTwit = observer(({ user, setShowProfileUser }) => {
         setShowProfileUser(true);
       }}
       onMouseLeave={() => {
-        console.log(1);
         setShowProfileUser(false);
 
         usersFollowingsStore.setStartFollowUser({});
       }}
     >
       <>
-        <div className="preview-user">
+        <div
+          className="preview-user"
+          onClick={() => {
+            if (usersStore.isAuth) {
+              usersStore.setUserPage({});
+              twitsStore.setUserTwits([]);
+              navigate(path(USER_PAGE_PATH, user.id));
+            } else {
+              usersStore.setUserPage({});
+              twitsStore.setUserTwits([]);
+              navigate(path(PUBLIC_USER_PAGE_PATH, user.id));
+            }
+          }}
+        >
           <div className="preview-user-header">
-            <div className="user-info-photo">
+            <div className="user-info-photo preview-user-photo">
               <img alt="User" src={getUserPhoto(user)} />
             </div>
             {authUserID !== user.id && authUserID && (
-              <ButtonFollowInFollowList
+              <FollowButton
                 profile={usersFollowingsStore.startFollowUser}
                 following={usersFollowingsStore.startFollowUser.following}
                 classButton="button-follow-follow-list"

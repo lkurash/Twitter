@@ -1,4 +1,4 @@
-import undefinedUserPhoto from "../components/Img/user_photo.jpeg";
+import undefinedUserPhoto from "../components/Imgs/user_photo.jpeg";
 
 export default function getUserPhoto(user) {
   if (user.photo) {

@@ -3,9 +3,10 @@ import { useContext } from "react";
 import { Context } from "../..";
 
 import userClient from "../../http/userClient";
+
 import getAuthUserID from "../../utils/getAuthUserID";
 
-const ButtonFollowInFollowList = observer(
+const FollowButton = observer(
   ({ profile, userFollowingIds, following, classButton }) => {
     const { usersStore } = useContext(Context);
     const { usersFollowingsStore } = useContext(Context);
@@ -77,4 +78,4 @@ const ButtonFollowInFollowList = observer(
   }
 );
 
-export default ButtonFollowInFollowList;
+export default FollowButton;

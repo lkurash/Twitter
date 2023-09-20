@@ -6,10 +6,9 @@ import userClient from "../../http/userClient";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
-
-import SidebarContent from "../../components/SidebarContent";
-import ContentBookmarksPage from "../../components/ContentBookmarksPage";
 import twitClient from "../../http/twitClient";
+
+import ContentBookmarksPage from "../../components/ContentBookmarksPage";
 
 const BookmarksPage = observer(() => {
   const { usersStore } = useContext(Context);
@@ -36,14 +35,7 @@ const BookmarksPage = observer(() => {
 
   return (
     <>
-      <div className="main-wrapper">
-        <main className="main">
-          <div className="main-content">
-            <ContentBookmarksPage />
-          </div>
-        </main>
-      </div>
-      <SidebarContent />
+      <ContentBookmarksPage />
     </>
   );
 });

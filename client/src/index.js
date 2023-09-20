@@ -12,6 +12,7 @@ import RetwitsStore from "./store/RetwitStore";
 import TwitsStore from "./store/TwitsStore";
 import UserStore from "./store/UserStore";
 import TrendsStore from "./store/TrendsStore";
+import InfoMessageStore from "./store/InfoMessageStore";
 
 export const Context = createContext(null);
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -26,6 +27,7 @@ root.render(
       retwitsStore: new RetwitsStore(),
       favoriteTwitsStore: new FavoriteTwitsStore(),
       usersFollowingsStore: new UsersFollowStore(),
+      infoMessageStore: new InfoMessageStore(),
     }}
   >
     <CookiesProvider>

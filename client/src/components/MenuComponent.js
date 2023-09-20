@@ -6,13 +6,13 @@ import getFlagIsAuth from "../utils/getFlagIsAuth";
 import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/constans";
 import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 
-import ButtonMenu from "./buttons/ButtonMenu";
+import MenuButton from "./buttons/MenuButton";
 import UserInfoAndButtonSignOut from "./UserInfoAndButtonSignOut";
-import ButtonWriteTwit from "./buttons/ButtonWriteTwit";
+import WriteTwitButton from "./buttons/WriteTwitButton";
 
 import "./menu.css";
 import Logo from "./common/Logo";
-import hashtag from "../components/Img/hashtag_icon.png";
+import hashtag from "../components/Imgs/hashtag_icon.png";
 
 const MenuComponent = observer(() => {
   const { usersStore } = useContext(Context);
@@ -26,7 +26,7 @@ const MenuComponent = observer(() => {
         {usersStore.isAuth || getFlagIsAuth() ? (
           <div>
             {buttonsAuthUser.map((button) => (
-              <ButtonMenu
+              <MenuButton
                 key={button.id}
                 img={button.img}
                 id={button.id}
@@ -36,12 +36,12 @@ const MenuComponent = observer(() => {
                 nav={button.nav}
               />
             ))}
-            <ButtonWriteTwit />
+            <WriteTwitButton />
             <UserInfoAndButtonSignOut />
           </div>
         ) : (
           <div>
-            <ButtonMenu
+            <MenuButton
               type="button"
               img={hashtag}
               alt="Explore"

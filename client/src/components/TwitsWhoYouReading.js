@@ -1,13 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
-import twitClient from "../http/twitClient";
-import getAuthUserID from "../utils/getAuthUserID";
 
+import twitClient from "../http/twitClient";
+
+import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
 
-import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
-import Twit from "./Twit";
+import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
+import Twits from "./Twits";
 
 const TwitsWhoYouRead = observer(() => {
   const { twitsStore } = useContext(Context);
@@ -15,9 +16,11 @@ const TwitsWhoYouRead = observer(() => {
   const authUserID = getAuthUserID();
 
   useEffect(() => {
-    twitClient
-      .getTwitsByFollowingsUsers(authUserID)
-      .then((twits) => twitsStore.setTwits(twits));
+    if (authUserID) {
+      twitClient
+        .getTwitsByFollowingsUsers(authUserID)
+        .then((twits) => twitsStore.setTwits(twits));
+    }
 
     setTimeout(() => {
       setIsLoading(false);
@@ -29,24 +32,16 @@ const TwitsWhoYouRead = observer(() => {
   }
 
   return (
-    <div className="twits">
-      {twitsStore.twits ? (
-        <>
-          {twitsStore.twits.map((twit) => (
-            <Twit key={twit.id} twit={twit} />
-          ))}
-          {twitsStore.twits.length >= 7 && (
-            <ButtonShowMoreTwits
-              getTwits={twitClient.getTwitsByFollowingsUsers}
-              userId={authUserID}
-              store={twitsStore}
-            />
-          )}
-        </>
-      ) : (
-        <p className="twit-hint-about-lack-twits">No twits</p>
+    <Fragment>
+      <Twits />
+      {twitsStore.twits.length >= 7 && (
+        <ShowMoreTwitsButton
+          getTwits={twitClient.getTwitsByFollowingsUsers}
+          userId={authUserID}
+          store={twitsStore}
+        />
       )}
-    </div>
+    </Fragment>
   );
 });
 

@@ -58,6 +58,7 @@ class TwitsStore {
   }
 
   addRetwitTwit(retwit) {
+    console.log(retwit);
     this._twits.map((twit) => {
       if (twit.id === retwit.id) {
         twit.retwitsAuthUser = true;

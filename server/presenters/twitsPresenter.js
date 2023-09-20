@@ -24,18 +24,19 @@ class TwitsPresenter {
         twitId: twit.twitId,
         twitUserId: twit.twitUserId,
         userId: twit.userId,
-        user: {
+        userOriginalTwits: {
           id: twit.user.id,
           user_name: twit.user.user_name,
           photo: twit.user.photo,
           about: twit.user.about,
         },
-        twit_user: twit.twit_user && {
+        userRetwits: twit.twit_user && {
           id: twit.twit_user.id,
           user_name: twit.twit_user.user_name,
           photo: twit.twit_user.photo,
           about: twit.twit_user.about,
         },
+
         twit_createDate: this.createTwitDate(twit.createdAt),
         authUserFavorite: twit.favorite_twits && twit.favorite_twits.id != null,
         authUserLike: twit.likes && twit.likes.id != null,

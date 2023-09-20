@@ -8,6 +8,8 @@ import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
 import UserInList from "./common/UserInList";
 
+import UserInList from "./common/UserInList";
+
 const ListWhoReadUserHomePage = observer(({ users }) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);

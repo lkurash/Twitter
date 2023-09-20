@@ -134,7 +134,7 @@ h2 {
 
 .profile-panel-user-name p {
   margin-top: 2px;
-  color: grey;
+  color: rgb(113, 118, 123);
 }
 
 .profile-panel-about-user {
@@ -155,7 +155,7 @@ h2 {
   margin-top: 15px;
   margin-left: 20px;
   font-size: 16px;
-  color: grey;
+  color: rgb(113, 118, 123);
 }
 
 .profile-button-panel-followers a {
@@ -171,7 +171,7 @@ h2 {
 }
 
 .profile-panel-button-text-followers {
-  color: grey;
+  color: rgb(113, 118, 123);
   cursor: pointer;
 }
 
@@ -179,7 +179,7 @@ h2 {
   margin: 15px 20px;
   display: flex;
   flex-wrap: wrap;
-  color: grey;
+  color: rgb(113, 118, 123);
   font-size: 16px;
   font-weight: 100;
   letter-spacing: 0.3px;
@@ -294,7 +294,7 @@ h2 {
   margin-top: 5px;
   margin-left: 8px;
   font-size: 12px;
-  color: grey;
+  color: rgb(113, 118, 123);
 }
 
 .edit-form-input p {
@@ -422,7 +422,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: grey;
+  color: rgb(113, 118, 123);
   font-size: 15px;
   font-weight: bold;
   border: none;

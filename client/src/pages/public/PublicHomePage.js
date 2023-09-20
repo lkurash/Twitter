@@ -4,7 +4,6 @@ import { Context } from "../..";
 
 import twitClient from "../../http/twitClient";
 
-import SidebarContent from "../../components/SidebarContent";
 import ContentPublicHomePage from "../../components/ContentPublicHomePage";
 
 const PublicHomePage = observer(() => {
@@ -22,7 +21,6 @@ const PublicHomePage = observer(() => {
   return (
     <>
       <ContentPublicHomePage />
-      <SidebarContent />
     </>
   );
 });

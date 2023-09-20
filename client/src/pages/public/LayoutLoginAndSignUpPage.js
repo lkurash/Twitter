@@ -1,13 +1,14 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import backgroundAuthPage from "../../components/Img/twitter-banner.png";
-import logoAuthPage from "../../components/Img/auth_twitter_icon.png";
+import backgroundAuthPage from "../../components/Imgs/twitter-banner.png";
+import logoAuthPage from "../../components/Imgs/auth_twitter_icon.png";
 
-import "../../components/forms/loginAndRegistretionForm.css";
 import {
   LOGIN_PAGE_PATH,
   PUBLIC_EXPLORE_PAGE_PATH,
   SIGNUP_PAGE_PATH,
 } from "../../utils/constans";
+
+import "../../components/forms/loginAndRegistretionForm.css";
 
 const LayoutLoginAndSignUpPage = () => {
   const navigate = useNavigate();

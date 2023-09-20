@@ -3,14 +3,12 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
-import { HOME_PAGE_PATH } from "../utils/constans";
-
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
 
 import ProfileButtonPanel from "./ProfileButtonPanel";
 import ProfileUserInfo from "./ProfileUserInfo";
 
-import arrowLeft from "./Img/arrow_left_icon.png";
+import arrowLeft from "./Imgs/arrow_left_icon.png";
 
 const ContentUserProfilePage = observer(({ pathHomeProfileUser }) => {
   const navigate = useNavigate();
@@ -30,11 +28,11 @@ const ContentUserProfilePage = observer(({ pathHomeProfileUser }) => {
   }
 
   return (
-    <div className="main-content-block">
+    <>
       <div className="main-stiky-panel users-page-stiky-panel">
         <div
           className="main-search-block-button-return"
-          onClick={() => navigate(HOME_PAGE_PATH)}
+          onClick={() => navigate(-1)}
         >
           <img src={arrowLeft} alt="Button return" />
         </div>
@@ -50,7 +48,7 @@ const ContentUserProfilePage = observer(({ pathHomeProfileUser }) => {
         </div>
         <Outlet />
       </>
-    </div>
+    </>
   );
 });
 

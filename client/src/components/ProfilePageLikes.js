@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
+
 import twitClient from "../http/twitClient";
 import getAuthUserID from "../utils/getAuthUserID";
-
 import spinner from "../utils/spinner";
 
-import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
-import Twit from "./Twit";
+import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
+import Twits from "./Twits";
 
 const ProfilePageLikes = observer(() => {
   const { twitsStore } = useContext(Context);
@@ -30,24 +30,16 @@ const ProfilePageLikes = observer(() => {
   if (usersStore.userPage.length === 0 || loadingPage) return spinner();
 
   return (
-    <div className="twits">
-      {twitsStore.twits ? (
-        <>
-          {twitsStore.twits.map((like) => (
-            <Twit twit={like} key={like.id} />
-          ))}
-          {twitsStore.twits.length >= 7 && (
-            <ButtonShowMoreTwits
-              getTwits={twitClient.getTwitsWithUserLikes}
-              userId={usersStore.userPage.id}
-              store={twitsStore}
-            />
-          )}
-        </>
-      ) : (
-        <p className="twit-hint-about-lack-twits">No twits</p>
+    <Fragment>
+      <Twits />
+      {twitsStore.twits.length >= 7 && (
+        <ShowMoreTwitsButton
+          getTwits={twitClient.getTwitsWithUserLikes}
+          userId={usersStore.userPage.id}
+          store={twitsStore}
+        />
       )}
-    </div>
+    </Fragment>
   );
 });
 

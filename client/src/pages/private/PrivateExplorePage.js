@@ -8,7 +8,6 @@ import twitClient from "../../http/twitClient";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
 
-import SidebarContent from "../../components/SidebarContent";
 import ContentExplorePageAllTwits from "../../components/ContentExplorePageAllTwits";
 
 const PrivateExplorePage = observer(() => {
@@ -37,7 +36,6 @@ const PrivateExplorePage = observer(() => {
   return (
     <>
       <ContentExplorePageAllTwits />
-      <SidebarContent />
     </>
   );
 });

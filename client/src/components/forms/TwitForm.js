@@ -5,25 +5,31 @@ import { Context } from "../..";
 import twitClient from "../../http/twitClient";
 
 import getUserPhoto from "../../utils/getUserPhoto";
-import ButtonEmoji from "../buttons/ButtonEmoji";
+import EmojiButton from "../buttons/EmojiButton";
 
-import imgFile from "../Img/file.png";
-import close from "../Img/x_icon.png";
+import imgFile from "../Imgs/file.png";
+import close from "../Imgs/x_icon.png";
 
 const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
+  const { infoMessageStore } = useContext(Context);
   const [text, setText] = useState("");
   const [imgs, setImgs] = useState([]);
   const [changesImgsList, setChangesImgsList] = useState(false);
 
   const getSelectedImgFile = (e) => {
     let arr = [];
-    for (let index = 0; index < e.target.files.length; index++) {
-      arr.push(e.target.files[index]);
-      setImgs(arr);
+    if (e.target.files.length > 4) {
+      infoMessageStore.setTextMessage("Select up to 4 photos.");
+      infoMessageStore.setInfoMessageVisible(true);
+    } else {
+      for (let index = 0; index < e.target.files.length; index++) {
+        arr.push(e.target.files[index]);
+        setImgs(arr);
+      }
+      setChangesImgsList(true);
     }
-    setChangesImgsList(true);
   };
 
   const deleteSelectedImg = (img) => {
@@ -31,6 +37,24 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
     imgs.splice(img, 1);
     setImgs(imgs);
     document.getElementById("input-file").value = "";
+  };
+
+  const getClassName = (imgs) => {
+    if (imgs.length === 1) {
+      return "wrapper-twit-one-img";
+    }
+
+    if (imgs.length === 2) {
+      return "wrapper-two-imgs";
+    }
+
+    if (imgs.length === 3) {
+      return "wrapper-three-imgs";
+    }
+
+    if (imgs.length === 4) {
+      return "wrapper-four-imgs";
+    }
   };
 
   useEffect(() => {
@@ -54,6 +78,9 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
             twitsStore.setTwits(newTwit.twit);
           }
         });
+
+        infoMessageStore.setTextMessage("Twit has been sent.");
+        infoMessageStore.setInfoMessageVisible(true);
 
         setText("");
         setImgs([]);
@@ -92,16 +119,9 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
           </div>
         </form>
         {imgs.length > 0 && (
-          <div className="wrapper-twit-imgs">
+          <div className={getClassName(imgs)}>
             {imgs.map((img) => (
-              <div
-                className={
-                  imgs.length > 1
-                    ? "wrapper-twit-img max-size-img"
-                    : "wrapper-twit-img"
-                }
-                key={imgs.indexOf(img)}
-              >
+              <div className="wrapper-twit-img" key={imgs.indexOf(img)}>
                 <div
                   className="twit-form-button-delete"
                   onClick={() => deleteSelectedImg(imgs.indexOf(img))}
@@ -131,9 +151,10 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
             <label htmlFor="input-file" className="twit-form-input-file">
               <img src={imgFile} alt="File" />
             </label>
-            <ButtonEmoji addEmojiInTwitText={addEmojiInTwitText} />
+            <EmojiButton addEmojiInTwitText={addEmojiInTwitText} />
           </div>
           <button
+            className="twit-panel-button-tweet"
             type="button"
             onClick={() => {
               if (twitFormVisible) {

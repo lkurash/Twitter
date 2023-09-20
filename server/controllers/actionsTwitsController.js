@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const Sequelize = require("sequelize");
 const uuid = require("uuid");
 const path = require("path");
+const TwitsPresenter = require("../presenters/twitsPresenter");
 
 const models = require("../models/index");
 const ApiError = require("../error/ApiError");
@@ -171,7 +172,9 @@ class ActionsTwitsController {
           where: { id: retwit.id },
         });
 
-        return response.json([twit]);
+        const presenter = new TwitsPresenter([twit]);
+
+        return response.json(presenter.toJSON());
       }
     } catch (error) {
       next(ApiError.badRequest("Check userId or twit.id"));

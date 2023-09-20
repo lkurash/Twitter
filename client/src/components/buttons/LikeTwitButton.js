@@ -2,15 +2,17 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import activeLike from "../Img/active_like.png";
-import notactiveLike from "../Img/notactive_like.png";
-import hoverLike from "../Img/hover_like.png";
-
 import twitClient from "../../http/twitClient";
-import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
+
 import getAuthUserID from "../../utils/getAuthUserID";
 
-const ButtonLikeOnTwit = observer(({ twit }) => {
+import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
+
+import activeLike from "../Imgs/active_like.png";
+import notactiveLike from "../Imgs/notactive_like.png";
+import hoverLike from "../Imgs/hover_like.png";
+
+const LikeTwitButton = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
@@ -102,4 +104,4 @@ const ButtonLikeOnTwit = observer(({ twit }) => {
   );
 });
 
-export default ButtonLikeOnTwit;
+export default LikeTwitButton;

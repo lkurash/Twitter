@@ -1,13 +1,16 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "..";
+import { Context } from "../..";
 
-import { USER_PAGE_PATH, PUBLIC_USER_PAGE_PATH } from "../utils/constans";
-import getUserPhoto from "../utils/getUserPhoto";
-import path from "../utils/path";
-import PreviewUserOnTwit from "./common/PreviewUserOnTwit";
-import userClient from "../http/userClient";
+import userClient from "../../http/userClient";
+
+import { USER_PAGE_PATH, PUBLIC_USER_PAGE_PATH } from "../../utils/constans";
+import getUserPhoto from "../../utils/getUserPhoto";
+import path from "../../utils/path";
+
+import PreviewUserOnTwit from "../common/PreviewUserOnTwit";
+
 
 const UserPhoto = observer(({ twit, user }) => {
   const { usersStore } = useContext(Context);
@@ -38,16 +41,18 @@ const UserPhoto = observer(({ twit, user }) => {
 
   return (
     <div className="user-info">
-      <div className="user-info-photo">
+      <div
+        className="user-info-photo"
+        onMouseEnter={() => {
+          onMouseEnter(user);
+        }}
+        onMouseLeave={() => {
+          onMouseLeave();
+        }}
+      >
         <img
           alt="User"
           src={getUserPhoto(user)}
-          onMouseEnter={() => {
-            onMouseEnter(user);
-          }}
-          onMouseLeave={() => {
-            onMouseLeave();
-          }}
           onClick={() => {
             if (usersStore.isAuth) {
               usersStore.setUserPage({});

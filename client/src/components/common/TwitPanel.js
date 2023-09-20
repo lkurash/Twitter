@@ -1,4 +1,4 @@
-import imgFile from "../Img/file.png";
+import imgFile from "../Imgs/file.png";
 
 function TwitPanel(props) {
   return (

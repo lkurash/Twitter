@@ -56,13 +56,15 @@ import {
   TRENDS_PAGE_PATH,
   PUBLIC_USER_PAGE_PATH,
 } from "./utils/constans";
+import RootBoundary from "./utils/RootBoundary";
 
 export const publicRoutes = {
-  path: ROOT_PAGE_PATH,
+  path: PUBLIC_HOME_PAGE_PATH,
   element: <AppLayout />,
+  errorElement: <RootBoundary />,
   children: [
     {
-      path: PUBLIC_HOME_PAGE_PATH,
+      path: "/twitter",
       element: <PublicHomePage />,
       loader: redirectLoader,
     },
@@ -82,10 +84,19 @@ export const publicRoutes = {
 };
 
 export const authRoutes = {
-  path: AUTH_PAGE_PATH,
+  path: ROOT_PAGE_PATH,
   element: <LayoutLoginAndSignUpPage />,
   loader: redirectLoader,
+  errorElement: <RootBoundary />,
   children: [
+    {
+      path: AUTH_PAGE_PATH,
+      loader: redirectLoader,
+    },
+    {
+      path: PUBLIC_HOME_PAGE_PATH,
+      loader: redirectLoader,
+    },
     {
       path: LOGIN_PAGE_PATH,
       element: <LoginPage />,
@@ -101,6 +112,7 @@ export const privateRoutes = {
   path: ROOT_PRIVATE_PAGE_PATH,
   element: <AppLayout />,
   loader: authenticate,
+  errorElement: <RootBoundary />,
   children: [
     {
       path: HOME_PAGE_PATH,
@@ -166,6 +178,7 @@ export const privateUserPageRoutes = {
   path: USER_PAGE_PATH,
   element: <AppLayout />,
   loader: authenticate,
+  errorElement: <RootBoundary />,
   children: [
     {
       path: USER_PAGE_PATH,

@@ -18,12 +18,12 @@ class TwitsPresenterForPublicPage {
         twitId: twit.twitId,
         twitUserId: twit.twitUserId,
         userId: twit.userId,
-        user: {
+        userOriginalTwits: {
           id: twit.user.id,
           user_name: twit.user.user_name,
           photo: twit.user.photo,
         },
-        twit_user: {
+        userRetwits: {
           id: twit.twit_user ? twit.twit_user.id : null,
           user_name: twit.twit_user ? twit.twit_user.user_name : null,
           photo: twit.twit_user ? twit.twit_user.photo : null,

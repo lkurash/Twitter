@@ -1,17 +1,17 @@
 import { observer } from "mobx-react-lite";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
+import { useParams } from "react-router-dom";
 
+import twitClient from "../http/twitClient";
+
+import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
-import getMoreTwits from "../utils/getMoreTwits";
 
-import Twit from "./Twit";
-import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
+import Twits from "./Twits";
+import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
 
 import "./main.css";
-import twitClient from "../http/twitClient";
-import getAuthUserID from "../utils/getAuthUserID";
-import { useParams } from "react-router-dom";
 
 const UserTwits = observer(() => {
   const { usersStore } = useContext(Context);
@@ -41,24 +41,20 @@ const UserTwits = observer(() => {
     return <div className="twits">{spinner()}</div>;
 
   return (
-    <div className="twits">
-      {twitsStore.twits ? (
-        <>
-          {twitsStore.twits.map((twit) => (
-            <Twit twit={twit} key={twit.id} />
-          ))}
-          {twitsStore.twits.length >= 7 && (
-            <ButtonShowMoreTwits
-              getTwits={twitClient.getTwitsByUser}
-              userId={usersStore.userPage.id || id}
-              store={twitsStore}
-            />
-          )}
-        </>
-      ) : (
-        <p className="twit-hint-about-lack-twits">No twits</p>
+    <Fragment>
+      <Twits />
+      {twitsStore.twits.length >= 7 && (
+        <ShowMoreTwitsButton
+          getTwits={
+            authUserID
+              ? twitClient.getTwitsByUser
+              : twitClient.getPublicTwitsByUser
+          }
+          userId={usersStore.userPage.id || id}
+          store={twitsStore}
+        />
       )}
-    </div>
+    </Fragment>
   );
 });
 

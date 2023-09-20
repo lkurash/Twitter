@@ -228,13 +228,17 @@ class UserController {
   }
 
   async getAllUsers(request, response, next) {
-    let { limit } = request.query;
-    limit = limit || 5;
-    const users = await User.findAll({
-      limit: limit,
-    });
+    try {
+      let { limit } = request.query;
+      limit = limit || 5;
+      const users = await User.findAll({
+        limit: limit,
+      });
 
-    return response.json(users);
+      return response.json(users);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
   async getSearchUsers(request, response, next) {
@@ -384,74 +388,82 @@ class UserController {
   }
 
   async checkFollowingsUser(request, response, next) {
-    const user = decodeUser(request);
+    try {
+      const user = decodeUser(request);
 
-    const { id } = request.params;
+      const { id } = request.params;
 
-    let following = false;
+      let following = false;
 
-    const followingsUsers = await Following.count({
-      where: { userId: +id },
-    });
-
-    const followersUsers = await Following.count({
-      where: { followUserId: +id },
-    });
-
-    if (user) {
-      following = await Following.findOne({
-        where: { followUserId: +id, userId: user.id },
+      const followingsUsers = await Following.count({
+        where: { userId: +id },
       });
-    }
 
-    if (following) {
-      return response.json({
-        id: +id,
-        following: true,
-        followersUsers,
-        followingsUsers,
+      const followersUsers = await Following.count({
+        where: { followUserId: +id },
       });
-    } else {
-      return response.json({
-        id: +id,
-        following: false,
-        followersUsers,
-        followingsUsers,
-      });
+
+      if (user) {
+        following = await Following.findOne({
+          where: { followUserId: +id, userId: user.id },
+        });
+      }
+
+      if (following) {
+        return response.json({
+          id: +id,
+          following: true,
+          followersUsers,
+          followingsUsers,
+        });
+      } else {
+        return response.json({
+          id: +id,
+          following: false,
+          followersUsers,
+          followingsUsers,
+        });
+      }
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
     }
   }
 
   async getWhoNotReadingUsers(request, response, next) {
-    const Op = Sequelize.Op;
-    const { id } = request.params;
-    let { limit } = request.query;
-    limit = limit || 5;
+    try {
+      const Op = Sequelize.Op;
+      const { id } = request.params;
+      let { limit } = request.query;
+      limit = limit || 5;
 
-    const followingUserId = await Following.findAll({
-      attributes: ["followUserId"],
-      where: { userId: id },
-      raw: true,
-    });
-
-    const ids = [id];
-
-    if (followingUserId) {
-      followingUserId.map((item) => {
-        return ids.push(item.followUserId);
+      const followingUserId = await Following.findAll({
+        attributes: ["followUserId"],
+        where: { userId: id },
+        raw: true,
       });
-    }
 
-    const whoNotReadingList = await User.findAll({
-      where: { id: { [Op.notIn]: ids } },
-      include: [
-        {
-          model: Following,
-          as: "followings_user",
-        },
-      ],
-      limit: limit,
-    });
-    return response.json(whoNotReadingList);
+      const ids = [id];
+
+      if (followingUserId) {
+        followingUserId.map((item) => {
+          return ids.push(item.followUserId);
+        });
+      }
+
+      const whoNotReadingList = await User.findAll({
+        where: { id: { [Op.notIn]: ids } },
+        include: [
+          {
+            model: Following,
+            as: "followings_user",
+          },
+        ],
+        limit: limit,
+      });
+      return response.json(whoNotReadingList);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 }
 

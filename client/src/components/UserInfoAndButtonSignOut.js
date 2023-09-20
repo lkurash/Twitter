@@ -4,9 +4,9 @@ import { Context } from "..";
 
 import getUserPhoto from "../utils/getUserPhoto";
 
-import ButtonSignOut from "./buttons/ButtonSignOut";
+import SignOutButton from "./buttons/SignOutButton";
 
-import dotMenu from "./Img/more_dots_icon.png";
+import dotMenu from "./Imgs/more_dots_icon.png";
 
 const UserInfoAndButtonSignOut = observer(() => {
   const { usersStore } = useContext(Context);
@@ -19,7 +19,7 @@ const UserInfoAndButtonSignOut = observer(() => {
   return (
     <div className="user-block-menu">
       {buttonSignOutVisible && (
-        <ButtonSignOut
+        <SignOutButton
           buttonSignOutVisible={buttonSignOutVisible}
           onClose={onClose}
         />

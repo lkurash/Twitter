@@ -1,5 +1,5 @@
 export const ROOT_PAGE_PATH =                 "/";
-export const PUBLIC_HOME_PAGE_PATH =          "";
+export const PUBLIC_HOME_PAGE_PATH =          "/twitter";
 export const PUBLIC_EXPLORE_PAGE_PATH =       "/twitter/explore";
 export const PUBLIC_USER_PAGE_PATH =          "/twitter/user/:id";
 export const PUBLIC_TRENDS_PAGE_PATH =        "/twitter/trends";

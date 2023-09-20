@@ -4,18 +4,21 @@ import { useState } from "react";
 import { AUTH_PAGE_PATH } from "../../utils/constans";
 
 import SignUpForm from "../../components/forms/SignUpForm";
-import ButtonClose from "../../components/buttons/ButtonClose";
+import CloseButton from "../../components/buttons/CloseButton";
 import Logo from "../../components/common/Logo";
 import PreviewRegistrationForm from "../../components/forms/PreviewRegistrationForm";
 
-const SignUpPage = observer(() => {
+const SignUpPage = observer(({ setSignUpPageVisible }) => {
   const [checkUserInfo, setCheckUserInfo] = useState(false);
 
   return (
     <div className="background-auth-form">
       <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
-          <ButtonClose nav={AUTH_PAGE_PATH} />
+          <CloseButton
+            nav={AUTH_PAGE_PATH}
+            pageVisible={setSignUpPageVisible}
+          />
           <Logo class="logo-icon-form" />
         </header>
         {!checkUserInfo ? (

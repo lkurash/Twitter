@@ -8,7 +8,7 @@ import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 import ContentUserProfilePage from "../../components/ContentUserProfilePage";
-import SidebarContent from "../../components/SidebarContent";
+
 import { useParams } from "react-router-dom";
 
 const HomeProfileUserPage = observer(({ loadingPage }) => {
@@ -44,12 +44,7 @@ const HomeProfileUserPage = observer(({ loadingPage }) => {
 
   return (
     <>
-      <div className="main-wrapper">
-        <main className="main">
-          <ContentUserProfilePage pathHomeProfileUser />
-        </main>
-      </div>
-      <SidebarContent />
+      <ContentUserProfilePage pathHomeProfileUser />
     </>
   );
 });
