@@ -73,6 +73,12 @@ class UserClient {
     return followings.data;
   }
 
+  async checkFollowing(id) {
+    const followings = await $authClient.get(`api/users/${id}/following`);
+
+    return followings.data;
+  }
+
   async getFollowersUser(id) {
     const followers = await $authClient.get(`api/users/${id}/followers`);
 

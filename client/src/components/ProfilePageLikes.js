@@ -4,7 +4,6 @@ import { Context } from "..";
 import twitClient from "../http/twitClient";
 import getAuthUserID from "../utils/getAuthUserID";
 
-import getMoreTwitsWithLike from "../utils/getMoreTwitsWithLike";
 import spinner from "../utils/spinner";
 
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
@@ -39,7 +38,8 @@ const ProfilePageLikes = observer(() => {
           ))}
           {twitsStore.twits.length >= 7 && (
             <ButtonShowMoreTwits
-              getMoreTwits={getMoreTwitsWithLike}
+              getTwits={twitClient.getTwitsWithUserLikes}
+              userId={usersStore.userPage.id}
               store={twitsStore}
             />
           )}

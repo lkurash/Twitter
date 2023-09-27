@@ -13,6 +13,7 @@ router.get("/:id", userController.getUserById);
 router.post("/:id/followings", userController.createFollowing);
 router.delete("/:id/unfollow/:unfollowedId", userController.deleteFollowing);
 router.get("/:id/followings", userController.getFollowingUsers);
+router.get("/:id/following", userController.checkFollowingsUser);
 router.get("/:id/followers", userController.getFollowerUsers);
 router.get("/:id/nofollowings", userController.getWhoNotReadingUsers);
 

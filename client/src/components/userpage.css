@@ -323,10 +323,6 @@ h2 {
   color: rgb(59 179 244);
 }
 
-/* .active {
-  border: 1px solid rgb(59 179 244);
-} */
-
 .edit-profile-background {
   height: 180px;
 }
@@ -388,13 +384,6 @@ h2 {
   cursor: pointer;
 }
 
-.button-for-edit-profile-form {
-  border: none;
-  background-color: black;
-  color: aliceblue;
-  cursor: pointer;
-}
-
 .edit-form-input-birth {
   margin-top: 20px;
   margin-bottom: 10px;
@@ -447,7 +436,6 @@ h2 {
 }
 
 .follow-page-main-button-following {
-  width: 80px;
   height: 36px;
   margin-top: 10px;
   margin-right: 20px;
@@ -457,8 +445,17 @@ h2 {
   border: 1px solid rgb(110 110 110);
   font-weight: bold;
   letter-spacing: 0.5px;
-  font-size: 11px;
   cursor: pointer;
+}
+
+.button-follow-follow-list {
+  width: 80px;
+  font-size: 11px;
+}
+
+.button-follow-user-profile {
+  width: 114px;
+  font-size: 15px;
 }
 
 .section-whoyouread-button-follow {
@@ -476,10 +473,6 @@ h2 {
   cursor: pointer;
 }
 
-/* .follow-page-main-button-following:hover {
-  color: rgb(168 42 42);
-} */
-
 .button-following-hover:hover {
   color: rgb(168 42 42);
 }
@@ -492,7 +485,11 @@ h2 {
   list-style-type: none;
 }
 
-.section-whoyouread-user-info {
+.user-follow-list {
+  padding-left: 10px;
+}
+
+.user-info-in-user-list {
   display: flex;
   justify-content: space-around;
   align-items: center;

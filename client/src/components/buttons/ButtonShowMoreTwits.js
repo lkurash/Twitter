@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+
+import getMoreTwits from "../../utils/getMoreTwits";
 
 const { observer } = require("mobx-react-lite");
 
-const ButtonShowMoreTwits = observer(({ getMoreTwits, store }) => {
-  const { id } = useParams();
-
+const ButtonShowMoreTwits = observer(({ getTwits, userId, store }) => {
   const [showMoreTwits, setShowMoreTwits] = useState(false);
   const [itemListTwits, setItemListTwits] = useState(1);
   const [buttonMoreTwitsVisible, setButtonMoreTwitsVisible] = useState(true);
@@ -13,11 +12,12 @@ const ButtonShowMoreTwits = observer(({ getMoreTwits, store }) => {
   useEffect(() => {
     getMoreTwits(
       showMoreTwits,
+      getTwits,
       itemListTwits,
       store,
       setShowMoreTwits,
       setButtonMoreTwitsVisible,
-      id
+      userId
     );
   }, [itemListTwits]);
 

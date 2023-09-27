@@ -9,7 +9,7 @@ class twitsWithUserLikesPresenter {
     this.likes.forEach((like) => {
       this.twit = {
         id: like.twit.id,
-        img: like.twit.img,
+        img: like.twit.img ? like.twit.img.split(",") : like.twit.img,
         countLikes: like.twit.countLikes,
         countRetwits: like.twit.countRetwits,
         countComments: like.twit.countComments,
@@ -33,7 +33,6 @@ class twitsWithUserLikesPresenter {
         authUserRetwits: like.twit.retwits.id != null,
       };
       this.twitsWithUserLikesPresenter.push(this.twit);
-
     });
     return this.twitsWithUserLikesPresenter;
   }

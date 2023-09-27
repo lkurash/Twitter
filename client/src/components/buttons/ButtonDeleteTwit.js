@@ -7,10 +7,12 @@ import twitClient from "../../http/twitClient";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import dotMenu from "../Img/more_dots_icon.png";
+import deleteIcon from "../Img/delete_trash_icon.png";
 
 const ButtonDeleteTwit = observer(({ twit }) => {
   const { twitsStore } = useContext(Context);
   const [deleteButtonVisible, setDeleteButtonVisible] = useState(false);
+  const [deleteMessageVisible, setDeleteMessageVisible] = useState(false);
   const tooltipDeleteTwit = useRef(null);
 
   const deleteTwit = async (twit) => {
@@ -26,6 +28,7 @@ const ButtonDeleteTwit = observer(({ twit }) => {
   };
   const onClose = () => {
     setDeleteButtonVisible(false);
+    setDeleteMessageVisible(false);
   };
 
   useOutsideClick(tooltipDeleteTwit, onClose, deleteButtonVisible);
@@ -36,10 +39,14 @@ const ButtonDeleteTwit = observer(({ twit }) => {
         <div
           ref={tooltipDeleteTwit}
           className="tooltip-delete-twit"
-          onClick={() => deleteTwit(twit)}
+          onClick={() => {
+            setDeleteButtonVisible(false);
+            setDeleteMessageVisible(true);
+          }}
         >
           <button className="button-delete-twit" type="reset">
-            <span>Delete Twit</span>
+            <img alt="Delete" src={deleteIcon} className="delete-icon" />
+            <span>Delete</span>
           </button>
         </div>
       )}
@@ -51,6 +58,40 @@ const ButtonDeleteTwit = observer(({ twit }) => {
       >
         <img src={dotMenu} alt="dot menu" className="dotmenu-icon" />
       </div>
+      {deleteMessageVisible && (
+        <div className="message-page-delete-twit">
+          <div
+            className="message-delete-twit wrapper-border"
+            ref={tooltipDeleteTwit}
+          >
+            <span className="message-delete-twit-title">Delete post?</span>
+            <p className="message-delete-twit-text">
+              This action cannot be undone and the post will be permanently
+              removed from your profile, all your followers' feeds, and search
+              results.
+            </p>
+            <div className="message-delete-twit-buttons">
+              <button
+                type="button"
+                className="message-delete-twit-button button-delete"
+                onClick={() => {
+                  deleteTwit(twit);
+                  setDeleteMessageVisible(false);
+                }}
+              >
+                Delete
+              </button>
+              <button
+                type="button"
+                className="message-delete-twit-button button-cancel"
+                onClick={() => setDeleteMessageVisible(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 });

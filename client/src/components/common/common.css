@@ -22,52 +22,6 @@
   width: 30px;
 }
 
-.menu-button {
-  width: 200px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  border-radius: 35px;
-  cursor: pointer;
-}
-
-.menu-button:hover {
-  background-color: rgb(128 128 128 / 34.7%);
-}
-
-.hashtag-icon {
-  height: 33px;
-  width: 33px;
-  margin-left: 12px;
-}
-
-.button-icon-menu {
-  height: 25px;
-  width: 25px;
-  margin-left: 12px;
-}
-
-.home-icon {
-  height: 27px;
-  width: 27px;
-  margin-left: 10px;
-}
-
-.menu-button-name {
-  font-size: 20px;
-  margin-left: 20px;
-}
-
-.main-button-settings:hover {
-  background-color: #6473827e;
-}
-
-.main-settings-icon {
-  width: 20px;
-  height: 20px;
-}
-
 .button-login {
   display: flex;
   justify-content: center;
@@ -127,14 +81,16 @@
 .tooltip-delete-twit {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: -20px;
+  justify-content: flex-start;
+  margin-top: 30px;
   margin-left: -95px;
-  width: 130px;
-  height: 40px;
+  padding-left: 10px;
+  width: 120px;
+  height: 50px;
   position: absolute;
   border: 0.1px solid rgb(88 88 88);
-  border-radius: 15px;
+  box-shadow: 0 0 3px rgb(245 245 245 / 54.1%);
+  border-radius: 5px;
   background-color: black;
 }
 
@@ -160,28 +116,38 @@
   cursor: pointer;
 }
 
-.button-notinteresting-trend-text{
- display: flex;
- align-items: center;
+.button-notinteresting-trend-text {
+  display: flex;
+  align-items: center;
 }
 
-.button-notinteresting-trend-text img{
+.button-notinteresting-trend-text img {
   margin-right: 10px;
 }
 
 .button-delete-twit {
+  display: flex;
+  align-items: center;
   border: none;
   font-size: 15px;
-  color: aliceblue;
+  color: #de0000;
   background-color: #000;
   cursor: pointer;
+}
+
+.button-delete-twit:hover {
+  color: #de0000ca;
+}
+
+.button-delete-twit span{
+  margin-top: 2px;
 }
 
 .button-dotmenu-twit {
   margin-right: 10px;
 }
 
-.button-dotmenu-twit img {
+.dotmenu-icon {
   width: 15px;
   height: 15px;
 }
@@ -266,24 +232,6 @@
 .tooltip-notauth-user-img {
   width: 60px;
   height: 60px;
-}
-
-@media (width <= 1245px) {
-  .menu-button {
-    width: 50px;
-    justify-content: center;
-    align-self: center;
-  }
-
-  .menu-button-name {
-    display: none;
-  }
-
-  .hashtag-icon,
-  .home-icon,
-  .button-icon-menu {
-    margin-left: 0;
-  }
 }
 
 @media (width <= 700px) {

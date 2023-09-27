@@ -4,7 +4,6 @@ import { Context } from "..";
 
 import twitClient from "../http/twitClient";
 
-import getMoreTwitsWithMedia from "../utils/getMoreTwitsWithMedia";
 import spinner from "../utils/spinner";
 
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
@@ -35,7 +34,8 @@ const ProfilePageMedia = observer(() => {
           ))}
           {twitsStore.twits.length >= 4 && (
             <ButtonShowMoreTwits
-              getMoreTwits={getMoreTwitsWithMedia}
+              getTwits={twitClient.getUserTwitsWithMedia}
+              userId={usersStore.userPage.id}
               store={twitsStore}
             />
           )}

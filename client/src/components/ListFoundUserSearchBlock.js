@@ -33,7 +33,10 @@ const ListFoundUserSearchBlock = observer(
                 }}
               >
                 <img src={getUserPhoto(profile)} alt="User" />
-                <p>{profile.user_name}</p>
+                <div>
+                  <p>{profile.user_name}</p>
+                  <p className="profile-name">{`@${profile.user_name}`}</p>
+                </div>
               </li>
             ))}
           </ul>

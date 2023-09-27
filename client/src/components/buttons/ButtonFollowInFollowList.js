@@ -6,7 +6,7 @@ import userClient from "../../http/userClient";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 const ButtonFollowInFollowList = observer(
-  ({ profile, userFollowingIds, following }) => {
+  ({ profile, userFollowingIds, following, classButton }) => {
     const { usersStore } = useContext(Context);
     const { usersFollowingsStore } = useContext(Context);
     const authUserID = getAuthUserID(usersStore);
@@ -16,6 +16,10 @@ const ButtonFollowInFollowList = observer(
         .deleteFollowings(authUserID, userFollowId)
         .then((unfollowUser) => {
           usersFollowingsStore.deleteFollowUserInFollowList(unfollowUser);
+          usersFollowingsStore.setStartFollowUser({
+            id: userFollowId,
+            following: false,
+          });
         })
         .catch((error) => console.log(error.response.data.message));
     };
@@ -25,6 +29,10 @@ const ButtonFollowInFollowList = observer(
         .createFollowings(authUserID, userFollowId)
         .then((followingUser) => {
           usersFollowingsStore.createFollowUserInFollowList(followingUser);
+          usersFollowingsStore.setStartFollowUser({
+            id: userFollowId,
+            following: true,
+          });
         })
         .catch((error) => {
           console.log(error.response.data.message);
@@ -36,11 +44,13 @@ const ButtonFollowInFollowList = observer(
         {following ? (
           <button
             key={profile.id}
-            className="follow-page-main-button-following button-following-hover"
+            className={`follow-page-main-button-following ${classButton} button-following-hover`}
             onMouseEnter={() => {
               usersFollowingsStore.setHoverFollowUser(profile.id);
             }}
-            onMouseLeave={() => usersFollowingsStore.setHoverFollowUser({})}
+            onMouseLeave={() => {
+              usersFollowingsStore.setHoverFollowUser({});
+            }}
             onClick={() => {
               deleteFollowAndgetUsers(profile.id);
             }}
@@ -54,10 +64,9 @@ const ButtonFollowInFollowList = observer(
         ) : (
           <button
             type="submit"
-            className="follow-page-main-button-following"
+            className={`follow-page-main-button-following ${classButton} `}
             onClick={() => {
               createFollowAndgetUsers(profile.id);
-              usersFollowingsStore.setStartFollowUser(profile);
             }}
           >
             <span>Follow</span>

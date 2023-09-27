@@ -13,6 +13,7 @@ import SidebarContent from "../../components/SidebarContent";
 
 const ProfileUserPage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
 
   const { id } = useParams();
   const authUserID = getAuthUserID();
@@ -29,6 +30,11 @@ const ProfileUserPage = observer(({ loadingPage }) => {
         userClient
           .getUserProfile(id)
           .then((userById) => usersStore.setUserPage(userById));
+
+        userClient.checkFollowing(id).then((following) => {
+          usersFollowingsStore.setStartFollowUser(following);
+        });
+        
       } else {
         userClient
           .getUserProfile(authUserID)

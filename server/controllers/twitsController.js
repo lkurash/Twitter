@@ -9,6 +9,7 @@ const { QueryTypes } = require("sequelize");
 const db = require("../models/index.js");
 
 const TwitsPresenter = require("../presenters/twitsPresenter");
+const CommentsPresenter = require("../presenters/commentsPresenter");
 const TwitsWithUserLikesPresenter = require("../presenters/twitsWithUserLikesPresenter");
 const models = require("../models/index");
 const ApiError = require("../error/ApiError");
@@ -45,29 +46,48 @@ const checkUsersAuth = (request, userId, next) => {
 class TwitsController {
   async createTwitByUser(text, file, userId, request, response) {
     try {
-      if (file) {
-        const { img } = request.files;
-        let fileName = uuid.v4() + ".jpg";
+    if (file) {
+      const { imgs } = request.files;
+      let twitImgs = [];
 
-        img.mv(path.resolve(__dirname, "..", "static", fileName));
-        const newTwit = await Twits.create({ text, img: fileName, userId });
-
-        const twit = await Twits.findOne({
-          include: [{ model: User, as: "user" }],
-          where: { id: newTwit.id },
+      if (Array.isArray(imgs)) {
+        imgs.forEach((twitImg) => {
+          let fileName = uuid.v4() + ".jpg";
+          twitImg.mv(path.resolve(__dirname, "..", "static", fileName));
+          twitImgs.push(fileName);
         });
-
-        return [twit];
       } else {
-        const newTwit = await Twits.create({ text, userId });
-
-        const twit = await Twits.findOne({
-          include: [{ model: User, as: "user" }],
-          where: { id: newTwit.id },
-        });
-
-        return [twit];
+        let fileName = uuid.v4() + ".jpg";
+        imgs.mv(path.resolve(__dirname, "..", "static", fileName));
+        twitImgs.push(fileName);
       }
+
+      const newTwit = await Twits.create({
+        text,
+        img: twitImgs.toString(),
+        userId,
+      });
+
+      const twit = await Twits.findOne({
+        include: [{ model: User, as: "user" }],
+        where: { id: newTwit.id },
+      });
+
+      const presenter = new TwitsPresenter([twit]);
+
+      return presenter.toJSON();
+    } else {
+      const newTwit = await Twits.create({ text, userId });
+
+      const twit = await Twits.findOne({
+        include: [{ model: User, as: "user" }],
+        where: { id: newTwit.id },
+      });
+
+      const presenter = new TwitsPresenter([twit]);
+
+      return presenter.toJSON();
+    }
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
@@ -249,7 +269,7 @@ class TwitsController {
       const { userId } = request.params;
       let { limit, list } = request.query;
 
-      limit = limit || 4;
+      limit = limit || 7;
       list = list || 1;
       let offset = list * limit - limit;
 
@@ -272,7 +292,10 @@ class TwitsController {
         offset: offset,
       });
 
-      return response.json(coments);
+      const presenter = new CommentsPresenter(coments);
+
+      return response.json(presenter.toJSON());
+
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
@@ -309,7 +332,7 @@ class TwitsController {
       const { userId } = request.params;
 
       let { limit, list } = request.query;
-      limit = limit || 4;
+      limit = limit || 7;
       list = list || 1;
       let offset = list * limit - limit;
 
@@ -343,7 +366,7 @@ class TwitsController {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const params = `ORDER BY "Likes"."id" DESC LIMIT 7 OFFSET 0`;
+      const params = `ORDER BY "Likes"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
       const twitsWithLikes = await dbRequestTwitsWithUserLikes(
         decodeUser,

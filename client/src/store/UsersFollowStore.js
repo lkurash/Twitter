@@ -42,6 +42,7 @@ class UsersFollowStore {
         following.following = false;
       }
     });
+    
     this._userFollowing.forEach((following) => {
       if (following.id === followingUserId) {
         following.following = false;
@@ -55,6 +56,7 @@ class UsersFollowStore {
         following.following = true;
       }
     });
+
     this._userFollowing.forEach((following) => {
       if (following.id === followingUserId) {
         following.following = true;

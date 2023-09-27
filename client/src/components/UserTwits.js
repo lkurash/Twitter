@@ -3,10 +3,9 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
 import spinner from "../utils/spinner";
-import getMoreUserTwits from "../utils/getMoreUserTwits";
+import getMoreTwits from "../utils/getMoreTwits";
 
 import Twit from "./Twit";
-import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 
 import "./main.css";
@@ -46,16 +45,12 @@ const UserTwits = observer(() => {
       {twitsStore.twits ? (
         <>
           {twitsStore.twits.map((twit) => (
-            <Fragment key={twit.id}>
-              {twit.retwit && (
-                <TooltipRetwitOnTwit retwit={twit} key={`tooltip-${twit.id}`} />
-              )}
-              <Twit twit={twit} key={twit.id} />
-            </Fragment>
+            <Twit twit={twit} key={twit.id} />
           ))}
           {twitsStore.twits.length >= 7 && (
             <ButtonShowMoreTwits
-              getMoreTwits={getMoreUserTwits}
+              getTwits={twitClient.getTwitsByUser}
+              userId={usersStore.userPage.id || id}
               store={twitsStore}
             />
           )}

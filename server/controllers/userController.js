@@ -383,6 +383,44 @@ class UserController {
     }
   }
 
+  async checkFollowingsUser(request, response, next) {
+    const user = decodeUser(request);
+
+    const { id } = request.params;
+
+    let following = false;
+
+    const followingsUsers = await Following.count({
+      where: { userId: +id },
+    });
+
+    const followersUsers = await Following.count({
+      where: { followUserId: +id },
+    });
+
+    if (user) {
+      following = await Following.findOne({
+        where: { followUserId: +id, userId: user.id },
+      });
+    }
+
+    if (following) {
+      return response.json({
+        id: +id,
+        following: true,
+        followersUsers,
+        followingsUsers,
+      });
+    } else {
+      return response.json({
+        id: +id,
+        following: false,
+        followersUsers,
+        followingsUsers,
+      });
+    }
+  }
+
   async getWhoNotReadingUsers(request, response, next) {
     const Op = Sequelize.Op;
     const { id } = request.params;
