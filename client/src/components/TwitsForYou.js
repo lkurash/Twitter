@@ -2,10 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
 
-import getTwitsForAuthUser from "../utils/getTwitsForAuthUser";
-
 import Twit from "./Twit";
-import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 
 import "./main.css";
@@ -38,14 +35,12 @@ const TwitsForYou = observer(() => {
       {twitsStore.twits ? (
         <>
           {twitsStore.twits.map((twit) => (
-            <Fragment key={twit.id}>
-              {twit.retwit && <TooltipRetwitOnTwit retwit={twit} />}
-              <Twit key={twit.id} twit={twit} />
-            </Fragment>
+            <Twit key={twit.id} twit={twit} />
           ))}
           {twitsStore.twits.length >= 7 && (
             <ButtonShowMoreTwits
-              getMoreTwits={getTwitsForAuthUser}
+              getTwits={twitClient.getTwitsForAuthUser}
+              userId={authUserID}
               store={twitsStore}
             />
           )}

@@ -4,7 +4,7 @@ const loadSectionWhoRead = () => {
       <h2 className="main-section-name" />
       <ul className="users">
         <li className="user">
-          <div className="section-whoyouread-user-info load-page">
+          <div className="user-info-in-user-list load-page">
             <div className="wrapper-follow-user-img" />
             <div className="section-whoyouread-user-name load-page">
               <p className="user-name" />

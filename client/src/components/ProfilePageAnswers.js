@@ -8,17 +8,17 @@ import UserComments from "./UserComments";
 
 const ProfilePageAnswers = observer(() => {
   const { usersStore } = useContext(Context);
-  const { commentsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
 
   useEffect(() => {
     twitClient
       .getCommentsByUser(usersStore.userPage.id)
-      .then((commentsByUser) => commentsStore.setComments(commentsByUser));
+      .then((commentsByUser) => twitsStore.setTwits(commentsByUser));
   });
 
   return (
     <div className="twits">
-      <UserComments />
+      <UserComments/>
     </div>
   );
 });

@@ -9,13 +9,16 @@ import Twit from "./Twit";
 
 import arrowLeft from "./Img/arrow_left_icon.png";
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
-import getMoreFavoriteTwits from "../utils/getMoreFavoriteTwits";
+import twitClient from "../http/twitClient";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const ContentBookmarksPage = observer(() => {
   const { usersStore } = useContext(Context);
-  const { favoriteTwitsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+
+  const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
     setTimeout(() => {
@@ -37,23 +40,24 @@ const ContentBookmarksPage = observer(() => {
           <p>@{usersStore.user.user_name}</p>
         </div>
       </div>
-      {isLoading || favoriteTwitsStore.favoriteTwits.length === 0 ? (
+      {isLoading || twitsStore.twits.length === 0 ? (
         spinner()
       ) : (
         <>
           <div className="twits">
-            {favoriteTwitsStore.favoriteTwits ? (
-              favoriteTwitsStore.favoriteTwits.map((bookmark) => (
+            {twitsStore.twits ? (
+              twitsStore.twits.map((bookmark) => (
                 <Twit twit={bookmark} key={bookmark.id} />
               ))
             ) : (
               <p className="twit-hint-about-lack-twits">No twits</p>
             )}
           </div>
-          {favoriteTwitsStore.favoriteTwits.length >= 7 && (
+          {twitsStore.twits.length >= 7 && (
             <ButtonShowMoreTwits
-              getMoreTwits={getMoreFavoriteTwits}
-              store={favoriteTwitsStore}
+              getTwits={twitClient.getFavoriteTwits}
+              userId={authUserID}
+              store={twitsStore}
             />
           )}
         </>

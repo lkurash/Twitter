@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 
 import twitClient from "../../http/twitClient";
@@ -14,24 +14,38 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
   const { usersStore } = useContext(Context);
   const { twitsStore } = useContext(Context);
   const [text, setText] = useState("");
-  const [img, setImg] = useState("");
+  const [imgs, setImgs] = useState([]);
+  const [changesImgsList, setChangesImgsList] = useState(false);
 
   const getSelectedImgFile = (e) => {
-    setImg(e.target.files[0]);
+    let arr = [];
+    for (let index = 0; index < e.target.files.length; index++) {
+      arr.push(e.target.files[index]);
+      setImgs(arr);
+    }
+    setChangesImgsList(true);
   };
 
-  const deleteSelectedImg = () => {
-    setImg("");
+  const deleteSelectedImg = (img) => {
+    setChangesImgsList(true);
+    imgs.splice(img, 1);
+    setImgs(imgs);
     document.getElementById("input-file").value = "";
   };
 
+  useEffect(() => {
+    setChangesImgsList(false);
+  }, [changesImgsList]);
+
   const createTwits = async () => {
     try {
-      if (img || text.length > 0) {
+      if (imgs.length > 0 || text.length > 0) {
         const formData = new FormData();
 
         formData.append("text", text);
-        formData.append("img", img);
+        imgs.forEach((img) => {
+          formData.append("imgs", img);
+        });
 
         await twitClient.createTwitByUser(formData).then((newTwit) => {
           if (twitsStore.twits) {
@@ -42,7 +56,7 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
         });
 
         setText("");
-        setImg("");
+        setImgs([]);
       }
     } catch (error) {
       console.log(error.response.data.message);
@@ -59,13 +73,13 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
 
   return (
     <>
-      <div className="user-block-twit">
-        <div className="user-info">
-          <div className="user-info-photo">
-            <img alt="User" src={getUserPhoto(usersStore.user)} />
-          </div>
-        </div>
+      <div className="twit-fotrm-block">
         <form className="twit-form">
+          <div className="user-info">
+            <div className="user-info-photo">
+              <img alt="User" src={getUserPhoto(usersStore.user)} />
+            </div>
+          </div>
           <div className="twit-form-input">
             <textarea
               name="twitInputForm"
@@ -76,52 +90,61 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
               placeholder="What's happening?"
             />
           </div>
-          {img && (
-            <div className="wrapper-twit-form-img">
+        </form>
+        {imgs.length > 0 && (
+          <div className="wrapper-twit-imgs">
+            {imgs.map((img) => (
               <div
-                className="twit-form-button-delete"
-                onClick={deleteSelectedImg}
+                className={
+                  imgs.length > 1
+                    ? "wrapper-twit-img max-size-img"
+                    : "wrapper-twit-img"
+                }
+                key={imgs.indexOf(img)}
               >
-                <img src={close} alt="close-icon" className="close-icon" />
-              </div>
-              <div className="wrapper-twit-img twit-form-img">
+                <div
+                  className="twit-form-button-delete"
+                  onClick={() => deleteSelectedImg(imgs.indexOf(img))}
+                >
+                  <img src={close} alt="close-icon" className="close-icon" />
+                </div>
                 <img
                   src={URL.createObjectURL(img)}
                   alt="SelectPhoto"
                   className="twit-img"
                 />
               </div>
-            </div>
-          )}
-          <div className="twit-panel">
-            <div className="twit-panel-img">
-              <input
-                type="file"
-                multiple
-                accept=".jpg, .jpeg, .png"
-                id="input-file"
-                onChange={(e) => {
-                  getSelectedImgFile(e);
-                }}
-              />
-              <label htmlFor="input-file" className="twit-form-input-file">
-                <img src={imgFile} alt="File" />
-              </label>
-              <ButtonEmoji addEmojiInTwitText={addEmojiInTwitText} />
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                if (twitFormVisible) {
-                  setTwitFormVisible(false);
-                }
-                createTwits();
-              }}
-            >
-              <span>Tweet</span>
-            </button>
+            ))}
           </div>
-        </form>
+        )}
+        <div className="twit-panel">
+          <div className="twit-panel-img">
+            <input
+              type="file"
+              multiple
+              accept=".jpg, .jpeg, .png"
+              id="input-file"
+              onChange={(e) => {
+                getSelectedImgFile(e);
+              }}
+            />
+            <label htmlFor="input-file" className="twit-form-input-file">
+              <img src={imgFile} alt="File" />
+            </label>
+            <ButtonEmoji addEmojiInTwitText={addEmojiInTwitText} />
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (twitFormVisible) {
+                setTwitFormVisible(false);
+              }
+              createTwits();
+            }}
+          >
+            <span>Tweet</span>
+          </button>
+        </div>
       </div>
     </>
   );

@@ -9,7 +9,7 @@ class TwitsPresenterForPublicPage {
     this.twits.forEach((twit) => {
       this.twit = {
         id: twit.id,
-        img: twit.img,
+        img: twit.img ? twit.img.split(",") : twit.img,
         countLikes: twit.countLikes,
         countRetwits: twit.countRetwits,
         countComments: twit.countComments,

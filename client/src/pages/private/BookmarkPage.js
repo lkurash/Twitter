@@ -13,7 +13,7 @@ import twitClient from "../../http/twitClient";
 
 const BookmarksPage = observer(() => {
   const { usersStore } = useContext(Context);
-  const { favoriteTwitsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
   const authUserID = getAuthUserID(usersStore);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const BookmarksPage = observer(() => {
           .then((userInfo) => usersStore.setUser(userInfo));
 
         twitClient.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
-          favoriteTwitsStore.setFavoriteTwits(favoriteTwitsByUser);
+          twitsStore.setTwits(favoriteTwitsByUser);
         });
       }
 

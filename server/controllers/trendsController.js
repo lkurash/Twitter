@@ -171,7 +171,7 @@ class TrendsController {
             text: { [Op.substring]: word },
           },
         });
-        console.log(countTwits);
+
         const checkTrends = await models.Trends.findOne({
           where: { title: word },
         });

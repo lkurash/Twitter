@@ -4,11 +4,9 @@ import { Context } from "..";
 import twitClient from "../http/twitClient";
 import getAuthUserID from "../utils/getAuthUserID";
 
-import getMoreWhoYouReadingTwits from "../utils/getMoreWhoYouReadingTwits";
 import spinner from "../utils/spinner";
 
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
-import TooltipRetwitOnTwit from "./common/TolltipRetwitOnTwit";
 import Twit from "./Twit";
 
 const TwitsWhoYouRead = observer(() => {
@@ -35,14 +33,12 @@ const TwitsWhoYouRead = observer(() => {
       {twitsStore.twits ? (
         <>
           {twitsStore.twits.map((twit) => (
-            <Fragment key={twit.id}>
-              {twit.retwit && <TooltipRetwitOnTwit retwit={twit} />}
-              <Twit key={twit.id} twit={twit} />
-            </Fragment>
+            <Twit key={twit.id} twit={twit} />
           ))}
           {twitsStore.twits.length >= 7 && (
             <ButtonShowMoreTwits
-              getMoreTwits={getMoreWhoYouReadingTwits}
+              getTwits={twitClient.getTwitsByFollowingsUsers}
+              userId={authUserID}
               store={twitsStore}
             />
           )}

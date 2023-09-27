@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { Context } from "..";
 
 import {
@@ -14,7 +14,6 @@ import getUserPhoto from "../utils/getUserPhoto";
 
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 import ButtonEditProfile from "./buttons/ButtonEditProfile";
-import ButtonFollowingUsersProfile from "./buttons/ButtonFollowingUsersProfile";
 
 import birthdateIcon from "./Img/birthday_icon.png";
 import webSiteIcon from "./Img/url_web_icon.png";
@@ -22,12 +21,16 @@ import registrationIcon from "./Img/month_icon.png";
 import undefinedUserPhoto from "./Img/user_photo.jpeg";
 import getAuthUserID from "../utils/getAuthUserID";
 import path from "../utils/path";
+import userClient from "../http/userClient";
+import ButtonFollowInFollowList from "./buttons/ButtonFollowInFollowList";
 
 const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const { usersStore } = useContext(Context);
   const { usersFollowingsStore } = useContext(Context);
 
   const location = useLocation().pathname;
+
+  const { id } = useParams();
 
   const authUserID = getAuthUserID();
 
@@ -68,9 +71,10 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
               )}
               {location !== PROFILE_PAGE_USER_PATH &&
                 authUserID !== usersStore.userPage.id && (
-                  <ButtonFollowingUsersProfile
-                    user={usersStore}
-                    usersFollow={usersFollowingsStore}
+                  <ButtonFollowInFollowList
+                    profile={usersFollowingsStore.startFollowUser}
+                    following={usersFollowingsStore.startFollowUser.following}
+                    classButton="button-follow-user-profile"
                   />
                 )}
             </>

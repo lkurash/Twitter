@@ -8,16 +8,18 @@ import {
 } from "react";
 import { Context } from "..";
 
-import getTwitsForAuthUser from "../utils/getTwitsForAuthUser";
 import spinner from "../utils/spinner";
 
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import Twit from "./Twit";
+import twitClient from "../http/twitClient";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const ContentExplorePageAllTwits = observer(() => {
   const { twitsStore } = useContext(Context);
   const ref = useRef();
   const [isLoading, setIsLoading] = useState(true);
+  const authUserID = getAuthUserID();
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
@@ -49,7 +51,12 @@ const ContentExplorePageAllTwits = observer(() => {
                   ))}
                   {twitsStore.twits.length >= 7 && (
                     <ButtonShowMoreTwits
-                      getMoreTwits={getTwitsForAuthUser}
+                      getTwits={
+                        authUserID
+                          ? twitClient.getTwitsForAuthUser
+                          : twitClient.getAllTwits
+                      }
+                      userId={authUserID}
                       store={twitsStore}
                     />
                   )}

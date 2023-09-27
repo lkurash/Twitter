@@ -11,6 +11,7 @@ import userClient from "../../http/userClient";
 
 const HomePage = observer(({ loadingPage }) => {
   const { usersStore } = useContext(Context);
+  const { usersFollowingsStore } = useContext(Context);
 
   const authUserID = getAuthUserID();
 
@@ -19,6 +20,12 @@ const HomePage = observer(({ loadingPage }) => {
       userClient
         .getUserProfile(authUserID)
         .then((userInfo) => usersStore.setUser(userInfo));
+        
+      userClient
+        .getFollowingsUser(authUserID)
+        .then((followings) =>
+          usersFollowingsStore.setuserFollowing(followings)
+        );
     }
 
     usersStore.setAuth(getFlagIsAuth());

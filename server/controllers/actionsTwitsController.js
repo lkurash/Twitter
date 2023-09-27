@@ -204,7 +204,7 @@ class ActionsTwitsController {
             retwit: retwitWithRetwitId.id,
           },
         ]);
-        
+
       } else if (retwitWithOriginalTwitId) {
         await Twits.destroy({
           where: { twitId: retwitId, userId: userId },

@@ -8,7 +8,7 @@
   padding-top: 10px;
 }
 
-.active-menu-button{
+.active-menu-button {
   font-weight: 700;
 }
 
@@ -127,9 +127,71 @@
   display: none;
 }
 
+.menu-button {
+  width: 200px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 35px;
+  cursor: pointer;
+}
+
+.menu-button:hover {
+  background-color: rgb(128 128 128 / 34.7%);
+}
+
+.hashtag-icon {
+  height: 33px;
+  width: 33px;
+  margin-left: 12px;
+}
+
+.button-icon-menu {
+  height: 25px;
+  width: 25px;
+  margin-left: 12px;
+}
+
+.home-icon {
+  height: 27px;
+  width: 27px;
+  margin-left: 10px;
+}
+
+.menu-button-name {
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+.main-button-settings:hover {
+  background-color: #6473827e;
+}
+
+.main-settings-icon {
+  width: 20px;
+  height: 20px;
+}
+
 @media (width <= 1245px) {
   .menu {
     width: 75px;
+  }
+
+  .menu-button {
+    width: 50px;
+    justify-content: center;
+    align-self: center;
+  }
+
+  .menu-button-name {
+    display: none;
+  }
+
+  .hashtag-icon,
+  .home-icon,
+  .button-icon-menu {
+    margin-left: 0;
   }
 
   .button-twit {

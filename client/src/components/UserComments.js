@@ -1,16 +1,18 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Context } from "..";
-
-import getMoreComments from "../utils/getMoreComments";
 import spinner from "../utils/spinner";
 
 import ButtonShowMoreTwits from "./buttons/ButtonShowMoreTwits";
 import TwitDesc from "./TwitDesc";
+import twitClient from "../http/twitClient";
+import UserName from "./UserName";
 import UserPhoto from "./UserPhoto";
 
 const UserComments = observer(() => {
-  const { commentsStore } = useContext(Context);
+  const { twitsStore } = useContext(Context);
+  const { usersStore } = useContext(Context);
+
   const [loadingPage, setIsLoadingPage] = useState(true);
 
   useEffect(() => {
@@ -19,37 +21,42 @@ const UserComments = observer(() => {
     }, 250);
   }, []);
 
-  if (commentsStore.comments.length === 0 || loadingPage) return spinner();
+  if (twitsStore.twits.length === 0 || loadingPage) return spinner();
 
   return (
     <>
-      {commentsStore.comments ? (
+      {twitsStore.twits ? (
         <>
-          {commentsStore.comments.map((comment) => (
-            <div className="twit" key={comment.id}>
-              <div className="content-block">
-                <div className="user-block-twit">
-                  <div className="comment-twit-info-block-connection-photo">
-                    <UserPhoto twit={comment.Twit} />
-                    <div className="comment-line" />
-                    <UserPhoto twit={comment} />
-                  </div>
-                  <div className="comment-desc">
-                    <TwitDesc twit={comment.Twit} />
-                    {!comment.Twit.img && (
-                      <div className="comment-twit-info-block-connection-text" />
-                    )}
-                    <TwitDesc twit={comment} />
+          {twitsStore.twits.map(({ Comment, Twit }) => (
+            <Fragment key={Comment.id}>
+              <div className="twit" key={Comment.id}>
+                <div className="content-block">
+                  <div className="user-block-comment">
+                    <div className="comment-twit-info-block-connection-photo">
+                      <UserPhoto user={Twit.user} />
+                      <div className="comment-line" />
+                      <UserPhoto user={Comment.user} />
+                    </div>
+                    <div className="comment-desc">
+                      <UserName user={Twit.user} />
+                      <TwitDesc twit={Twit} />
+                      {!Twit.img && (
+                        <div className="comment-twit-info-block-connection-text" />
+                      )}
+                      <UserName user={Comment.user} />
+                      <TwitDesc twit={Comment} />
+                    </div>
                   </div>
                 </div>
               </div>
               <div className="main-line" />
-            </div>
+            </Fragment>
           ))}
-          {commentsStore.comments.length >= 4 && (
+          {twitsStore.twits.length >= 7 && (
             <ButtonShowMoreTwits
-              getMoreTwits={getMoreComments}
-              store={commentsStore}
+              getTwits={twitClient.getCommentsByUser}
+              userId={usersStore.userPage.id}
+              store={twitsStore}
             />
           )}
         </>
