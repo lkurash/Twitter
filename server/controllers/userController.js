@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 const jwt = require("jsonwebtoken");
 const uuid = require("uuid");
 const path = require("path");
+const Op = Sequelize.Op;
 
 const FollowersUserPresenter = require("../presenters/followersUserPresenter");
 const FollowingsUserPresenter = require("../presenters/followingsUserPresenter");
@@ -17,6 +18,7 @@ const ApiError = require("../error/ApiError");
 const models = require("../models/index");
 const UserPresenter = require("../presenters/userPresenter");
 const dbRequestFollowers = require("../sql/dbRequestFollowers");
+const dbRequestFollowings = require("../sql/dbRequestFollowings");
 
 const Twits = models.Twits;
 const User = models.User;
@@ -44,6 +46,15 @@ const decodeUser = (request) => {
   const decodeUser = jwt.decode(token);
 
   return decodeUser;
+};
+
+const checkUsersAuth = (request, userId, next) => {
+  const user = decodeUser(request);
+  const userIdToken = user.id;
+
+  if (userIdToken !== parseInt(userId)) {
+    next(ApiError.badRequest(`Check authentication ${userId}`));
+  }
 };
 
 class UserController {
@@ -126,14 +137,14 @@ class UserController {
   async updateUserProfile(request, response, next) {
     const { name, birthdate, web_site_url, about } = request.body;
 
-    const { id } = request.params;
+    const { userId } = request.params;
 
     const user = decodeUser(request);
-    const userId = user.id;
+    const tokenUserId = user.id;
 
     const file = request.files;
 
-    if (userId !== parseInt(id)) {
+    if (tokenUserId !== parseInt(userId)) {
       next(ApiError.badRequest("Check authentication"));
     }
     if (file) {
@@ -222,9 +233,23 @@ class UserController {
         }
       );
     }
-    const updateUserProfile = await User.findOne({ where: { id: userId } });
+    const updateUserProfile = await User.findOne({
+      where: { id: userId },
+      include: [
+        {
+          model: Following,
+          as: "followings_user",
+        },
+        {
+          model: Following,
+          as: "followers_user",
+        },
+      ],
+    });
 
-    return response.json(updateUserProfile);
+    const presenter = new UserPresenter(updateUserProfile);
+
+    return response.json(presenter.toJSON());
   }
 
   async getAllUsers(request, response, next) {
@@ -242,7 +267,6 @@ class UserController {
   }
 
   async getSearchUsers(request, response, next) {
-    const Op = Sequelize.Op;
     const { name } = request.params;
 
     const users = await User.findAll({
@@ -254,13 +278,13 @@ class UserController {
     return response.json(users);
   }
 
-  async getUserById(request, response, next) {
+  async getUserProfile(request, response, next) {
     try {
-      const { id } = request.params;
+      const { userId } = request.params;
 
-      if (id) {
+      if (userId) {
         const user = await User.findOne({
-          where: { id },
+          where: { id: userId },
           include: [
             {
               model: Following,
@@ -284,15 +308,11 @@ class UserController {
 
   async createFollowing(request, response, next) {
     try {
-      const { id } = request.params;
+      const { userId } = request.params;
       const { followUserId } = request.body;
 
-      const user = decodeUser(request);
-      const userId = user.id;
+      checkUsersAuth(request, userId, next);
 
-      if (userId !== parseInt(id)) {
-        next(ApiError.badRequest(`Check authentication ${id}`));
-      }
       const followings = await Following.findOne({
         where: { userId: userId, followUserId: followUserId },
       });
@@ -316,15 +336,10 @@ class UserController {
 
   async deleteFollowing(request, response, next) {
     try {
-      const id = request.params.id;
+      const { userId } = request.params;
       const followUserId = request.params.unfollowedId;
 
-      const user = decodeUser(request);
-      const userId = user.id;
-
-      if (userId !== parseInt(id)) {
-        next(ApiError.badRequest(`Check authentication ${id}`));
-      }
+      checkUsersAuth(request, userId, next);
 
       const following = await Following.findOne({
         where: { followUserId: +followUserId, userId: userId },
@@ -342,43 +357,26 @@ class UserController {
     }
   }
 
-  async getFollowingUsers(request, response, next) {
+  async getUserFollowings(request, response, next) {
     try {
-      const Op = Sequelize.Op;
-
+      const { userId } = request.params;
       const user = decodeUser(request);
-      const userIdToken = user.id;
 
-      const { id } = request.params;
-
-      const users = await Following.findAll({
-        where: {
-          userId: id,
-        },
-        include: {
-          model: User,
-          as: "user",
-        },
-      });
+      const users = await dbRequestFollowings(decodeUser, request);
 
       let presenter = new FollowingsUserPresenter(users);
-
       return response.json(presenter.toJSON(users));
     } catch (error) {
       next(ApiError.badRequest("Check user.id"));
     }
   }
 
-  async getFollowerUsers(request, response, next) {
+  async getUserFollowers(request, response, next) {
     try {
-      const Op = Sequelize.Op;
+      const { userId } = request.params;
       const user = decodeUser(request);
-      const userIdToken = user.id;
-
-      const { id } = request.params;
 
       const users = await dbRequestFollowers(decodeUser, request);
-
       let presenter = new FollowersUserPresenter(users);
 
       return response.json(presenter.toJSON(users));
@@ -387,38 +385,37 @@ class UserController {
     }
   }
 
-  async checkFollowingsUser(request, response, next) {
+  async getPreviewProfileAndCheckFollow(request, response, next) {
     try {
-      const user = decodeUser(request);
-
-      const { id } = request.params;
+      const { userId } = request.params;
+      const { authUserId } = request.query;
 
       let following = false;
 
       const followingsUsers = await Following.count({
-        where: { userId: +id },
+        where: { userId: +userId },
       });
 
       const followersUsers = await Following.count({
-        where: { followUserId: +id },
+        where: { followUserId: +userId },
       });
 
-      if (user) {
+      if (authUserId) {
         following = await Following.findOne({
-          where: { followUserId: +id, userId: user.id },
+          where: { followUserId: +userId, userId: authUserId },
         });
       }
 
       if (following) {
         return response.json({
-          id: +id,
+          id: +userId,
           following: true,
           followersUsers,
           followingsUsers,
         });
       } else {
         return response.json({
-          id: +id,
+          id: +userId,
           following: false,
           followersUsers,
           followingsUsers,
@@ -431,18 +428,17 @@ class UserController {
 
   async getWhoNotReadingUsers(request, response, next) {
     try {
-      const Op = Sequelize.Op;
-      const { id } = request.params;
+      const { userId } = request.params;
       let { limit } = request.query;
       limit = limit || 5;
 
       const followingUserId = await Following.findAll({
         attributes: ["followUserId"],
-        where: { userId: id },
+        where: { userId: userId },
         raw: true,
       });
 
-      const ids = [id];
+      const ids = [userId];
 
       if (followingUserId) {
         followingUserId.map((item) => {

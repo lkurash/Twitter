@@ -1,35 +1,33 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Context } from "..";
 
 import TwitForm from "./forms/TwitForm";
 import TwitsForYou from "./TwitsForYou";
 import TwitsWhoYouRead from "./TwitsWhoYouReading";
+import { useDispatch } from "react-redux";
+import getAuthUserID from "../utils/getAuthUserID";
+import { twitsStore } from "../redux/tweet/tweet.selectors";
+import { tweetActions } from "../redux/tweet/tweet.actions";
 
 const ContentHomePage = observer(() => {
-  const { twitsStore } = useContext(Context);
+  const dispatch = useDispatch();
   const [cookies, setCookie, removeCookie] = useCookies(["twitsWhoReading"]);
+  const authUserID = getAuthUserID();
 
-  const [twitsForYouVisible, setTwitsForYouVisible] = useState("true");
-  const [twitsWhoReadingVisible, setTwitsWhoReadingVisible] = useState("");
-
-  const setCookieTwitsForYou = (show) => {
-    removeCookie("twitsWhoReading");
-    setCookie("twitsWhoReading", show);
-  };
+  const [twitsForYouVisible, setTwitsForYouVisible] = useState(true);
+  const [twitsWhoReadingVisible, setTwitsWhoReadingVisible] = useState(false);
 
   useEffect(() => {
-    const checkCookieTwitsForYou = () => {
-      if (cookies.twitsWhoReading === "true") {
-        setTwitsForYouVisible(false);
-        return setTwitsWhoReadingVisible(true);
-      } else {
-        setTwitsForYouVisible(true);
-        return setTwitsWhoReadingVisible(false);
-      }
-    };
-    checkCookieTwitsForYou();
+    if (cookies.twitsWhoReading === "true") {
+      setTwitsWhoReadingVisible(true);
+      setTwitsForYouVisible(false);
+
+      dispatch(tweetActions.getTweetsByFollowingUsers(authUserID));
+    }
+    if (cookies.twitsWhoReading === "false" && twitsForYouVisible) {
+      dispatch(tweetActions.getTweetsForAuthUser(authUserID));
+    }
   }, [cookies.twitsWhoReading]);
 
   return (
@@ -46,7 +44,9 @@ const ContentHomePage = observer(() => {
               type="button"
               className="main-button-foryou"
               onClick={() => {
-                setCookieTwitsForYou(false);
+                setCookie("twitsWhoReading", "false");
+                setTwitsWhoReadingVisible(false);
+                setTwitsForYouVisible(true);
               }}
             >
               <span>For you</span>
@@ -64,7 +64,9 @@ const ContentHomePage = observer(() => {
               type="button"
               className="main-button-whoyouread"
               onClick={() => {
-                setCookieTwitsForYou(true);
+                setCookie("twitsWhoReading", "true");
+                setTwitsForYouVisible(false);
+                setTwitsWhoReadingVisible(true);
               }}
             >
               <span> You are reading</span>
@@ -87,7 +89,7 @@ const ContentHomePage = observer(() => {
       <>
         {twitsForYouVisible && <TwitsForYou />}
 
-        {twitsWhoReadingVisible && (
+        {(twitsWhoReadingVisible || !twitsForYouVisible) && (
           <TwitsWhoYouRead userTwits={twitsStore.userTwits} />
         )}
       </>

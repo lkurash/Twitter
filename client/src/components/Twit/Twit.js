@@ -16,6 +16,14 @@ import dot from "../Imgs/dot_icon.png";
 const Twit = ({ twit, userInfo, retwit }) => {
   const authUserID = getAuthUserID();
 
+  const isRetweet = (twit) => {
+    if (twit.retwit && twit.userId === authUserID) {
+      return true;
+    } else {
+      return twit.authUserRetwits;
+    }
+  };
+
   return (
     <>
       <div className="twit">
@@ -41,7 +49,7 @@ const Twit = ({ twit, userInfo, retwit }) => {
             <DeleteTwitButton twit={twit} key={`button-${twit.id}`} />
           )}
         </div>
-        <TwitActions twit={twit} />
+        <TwitActions twit={twit} retweet={isRetweet(twit)} />
       </div>
       <div className="main-line" />
     </>

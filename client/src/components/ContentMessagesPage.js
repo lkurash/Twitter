@@ -1,20 +1,20 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
-import { Context } from "..";
+import { useState } from "react";
 
 import NewMessageComponent from "./NewMessageComponent";
+import { userProfile } from "../redux/user/user.selectors";
+import { useSelector } from "react-redux";
 
 const ContentMessagesPage = observer(() => {
-  const { usersStore } = useContext(Context);
+  const { profile } = useSelector(userProfile);
   const [writeMessage, setWriteMessage] = useState(false);
-
   return (
     <>
       <div className="main-stiky-panel">
         <div className="main-page-name-wrapper">
           <div className="main-page-name">
             <h2>Messages</h2>
-            <p>@{usersStore.user.user_name}</p>
+            <p>@{profile.user_name}</p>
           </div>
         </div>
       </div>

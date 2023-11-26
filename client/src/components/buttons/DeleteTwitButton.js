@@ -2,30 +2,27 @@ import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
 import { Context } from "../..";
 
-import trendClient from "../../http/trendClient";
-import twitClient from "../../http/twitClient";
+import { useDispatch } from "react-redux";
+import { tweetOptionsActions } from "../../redux/tweetOptions/tweetOptions.actions";
+
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import dotMenu from "../Imgs/more_dots_icon.png";
 import deleteIcon from "../Imgs/delete_trash_icon.png";
 
 const DeleteTwitButton = observer(({ twit }) => {
-  const { twitsStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const { infoMessageStore } = useContext(Context);
   const [deleteButtonVisible, setDeleteButtonVisible] = useState(false);
   const [deleteMessageVisible, setDeleteMessageVisible] = useState(false);
   const tooltipDeleteTwit = useRef(null);
 
-  const deleteTwit = async (twit) => {
-    await twitClient.deleteTwitByUser(twit.id).then((deleteTwit) => {
-      twitsStore.deleteTwit(deleteTwit);
-    });
-    if (twit.twitId) {
-      await twitClient.getCountLikes(twit.twitId);
-      await twitClient.getCountRetwits(twit.twitId);
-    }
-
-    await trendClient.getCountTrends(twit);
+  const deleteTwit = (twit) => {
+    dispatch(tweetOptionsActions.deleteTweet(twit.id));
+    infoMessageStore.setTextMessage("Tweet has been deleted.");
+    infoMessageStore.setInfoMessageVisible(true);
   };
+
   const onClose = () => {
     setDeleteButtonVisible(false);
     setDeleteMessageVisible(false);

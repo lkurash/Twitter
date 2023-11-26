@@ -1,37 +1,29 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
-import { Context } from "../..";
-
-import userClient from "../../http/userClient";
+import { useEffect } from "react";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
-import twitClient from "../../http/twitClient";
 
 import ContentBookmarksPage from "../../components/ContentBookmarksPage";
+import { useDispatch, useSelector } from "react-redux";
+import { visibilityPageActions } from "../../redux/visibilityPage/visibilityPage.actions";
+import { visibility } from "../../redux/visibilityPage/visibilityPage.selectors";
+import { tweetActions } from "../../redux/tweet/tweet.actions";
 
 const BookmarksPage = observer(() => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
-  const authUserID = getAuthUserID(usersStore);
+  const { loadingStatus } = useSelector(visibility);
+  const dispatch = useDispatch();
+  const authUserID = getAuthUserID();
 
   useEffect(() => {
-    try {
-      if (authUserID) {
-        userClient
-          .getUserProfile(authUserID)
-          .then((userInfo) => usersStore.setUser(userInfo));
-
-        twitClient.getFavoriteTwits(authUserID).then((favoriteTwitsByUser) => {
-          twitsStore.setTwits(favoriteTwitsByUser);
-        });
-      }
-
-      usersStore.setAuth(getFlagIsAuth());
-    } catch (error) {
-      console.log(error.response.data.message);
+    if (loadingStatus === "COMPLETE") {
+      dispatch(tweetActions.getFavoriteTweets(authUserID));
     }
-  });
+  }, [loadingStatus]);
+
+  if (loadingStatus !== "COMPLETE") {
+    return null;
+  }
 
   return (
     <>

@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import {
-  authRoutes,
   privateRoutes,
   privateUserPageRoutes,
   publicRoutes,
@@ -13,7 +12,6 @@ const App = observer(() => {
     privateRoutes,
     privateUserPageRoutes,
     publicRoutes,
-    authRoutes,
   ]);
 
   return <RouterProvider router={router}></RouterProvider>;

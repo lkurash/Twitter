@@ -11,7 +11,7 @@ import {
   MESSAGE_PAGE_PATH,
   NOTIFICATIONS_PAGE_PATH,
   PROFILE_PAGE_USER_PATH,
-} from "./constans";
+} from "./routs";
 
 export const menuButtonsAuthUser = (user) => {
   const buttons = [

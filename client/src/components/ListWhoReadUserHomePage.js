@@ -1,58 +1,46 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Context } from "..";
+import { Fragment, useEffect, useState } from "react";
 
-import userClient from "../http/userClient";
-
-import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
-import UserInList from "./common/UserInList";
 
 import UserInList from "./common/UserInList";
+import { useSelector } from "react-redux";
+import { auth, userListWhoNotReading } from "../redux/user/user.selectors";
+import FollowButton from "./buttons/FollowButton";
 
 const ListWhoReadUserHomePage = observer(({ users }) => {
-  const { usersStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
+  const { loadingStatus } = useSelector(userListWhoNotReading);
+  const { isAuth } = useSelector(auth);
+
   const [isLoading, setIsLoading] = useState(true);
-  const authUserID = getAuthUserID();
-
-  const createUserFollowings = async (profile) => {
-    await userClient.createFollowings(authUserID, profile.id);
-
-    await userClient
-      .getWhoNotReadingUsers(authUserID)
-      .then((users) => usersStore.setUsersWhoToReadUsers(users));
-  };
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 400);
+    if (loadingStatus === "PENDING" || isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 400);
+    }
   }, []);
 
-  if (isLoading || usersStore.allUsers.length === 0) {
+  if (isLoading) {
     return spinner();
   }
 
+
   return (
     <ul className="users">
-      {usersStore.allUsers ? (
+      {users ? (
         <>
           {users.map((profile) => (
             <li className="user" key={profile.id}>
               <Fragment>
                 <UserInList profile={profile} />
 
-                {usersStore.isAuth && (
-                  <button
-                    className="section-whoyouread-button-follow"
-                    onClick={() => {
-                      usersFollowingsStore.setStartFollowUser(profile);
-                      createUserFollowings(profile);
-                    }}
-                  >
-                    <span>Follow</span>
-                  </button>
+                {isAuth && (
+                  <FollowButton
+                    profile={profile}
+                    classButton="section-whoyouread-button-follow"
+                  />
                 )}
               </Fragment>
             </li>

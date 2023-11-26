@@ -1,6 +1,6 @@
 import spinner from "../../utils/spinner";
 
-const loadPageUserInfo = () => {
+const loadPageUserInfo = (isAuth) => {
   return (
     <>
       <div className="main-content-block">
@@ -18,10 +18,12 @@ const loadPageUserInfo = () => {
                 <div className="profile-panel-background-user" />
                 <div className="profile-panel-block-photo-button">
                   <div className="profile-panel-photo-user load-page" />
-                  <button
-                    type="button"
-                    className="button-edit-profile"
-                  ></button>
+                  {isAuth && (
+                    <button
+                      type="button"
+                      className="button-edit-profile"
+                    ></button>
+                  )}
                 </div>
               </div>
               <div className="load-page-user-name">

@@ -1,32 +1,23 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
-
-import twitClient from "../../http/twitClient";
-
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
 import activeRetwit from "../Imgs/active_retweet_icon.png";
 import notactiveRetwit from "../Imgs/notactive_retweet_icon.png";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../../redux/user/user.selectors";
+import { tweetOptionsActions } from "../../redux/tweetOptions/tweetOptions.actions";
 
-const RetwitTwitButton = observer(({ twit }) => {
-  const { twitsStore } = useContext(Context);
+const RetwitTwitButton = observer(({ twit, retweet }) => {
+  const { isAuth } = useSelector(auth);
+  const dispatch = useDispatch();
   const { retwitsStore } = useContext(Context);
-  const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
-  const authUserID = getAuthUserID(usersStore);
-
-  const getCountRetwits = async (originalTwitId, retwitId) => {
-    await twitClient.getCountRetwits(originalTwitId).then((retwit) => {
-      if (retwit) {
-        twitsStore.addRetwitTwit(retwit);
-        twitsStore.deleteRetwit(originalTwitId, retwitId);
-      }
-    });
-  };
+  const authUserID = getAuthUserID();
 
   const createRetwitTwit = async (twit) => {
     const formData = new FormData();
@@ -36,42 +27,23 @@ const RetwitTwitButton = observer(({ twit }) => {
       formData.append("img", twit.img);
     }
 
-    await twitClient
-      .createRetwitByUser(authUserID, twit.id, formData)
-      .then((retwit) => {
-        if (retwit) {
-          twitsStore.setTwits(retwit.concat(twitsStore.twits));
-          twitsStore.setTwitsWhoReading(
-            retwit.concat(twitsStore.twitsWhoReading)
-          );
-        }
-      });
-
-    await twitClient.getCountRetwits(twit.id).then((retwit) => {
-      if (retwit) {
-        twitsStore.addRetwitTwit(retwit);
-      }
-    });
+    dispatch(tweetOptionsActions.createRetweet(authUserID, twit.id, formData));
   };
 
   const deleteRetwit = async (twit) => {
-    twitClient.deleteRetwit(twit.id, authUserID).then((deleteTwit) => {
-      getCountRetwits(deleteTwit[0].originalTwit, deleteTwit[0].retwit);
-    });
+    dispatch(tweetOptionsActions.deleteRetweet(twit.id, authUserID));
   };
 
-  const hoverAndActiveButtonRetwit = (twit) => {
+  const imgOnTweet = (twit) => {
     if (twit.id === retwitsStore.hoverTwitRetwit.id) {
       return activeRetwit;
     }
-    if (twit.id === retwitsStore.retwitTwit.id) {
-      return activeRetwit;
-    }
+
     return notactiveRetwit;
   };
 
-  const deleteActiveRetwitButtonImg = (twit) => {
-    if (twit.id === retwitsStore.deleteRetwit.id) {
+  const imgOnRetweetedTweet = (twit) => {
+    if (twit.id === retwitsStore.hoverTwitRetwit.id) {
       return notactiveRetwit;
     }
     return activeRetwit;
@@ -83,57 +55,37 @@ const RetwitTwitButton = observer(({ twit }) => {
 
   return (
     <div className="twit-action-retwit">
-      {(twit.retwit && twit.userId === authUserID) || twit.authUserRetwits ? (
-        <div
-          className="twit-action-button-retwit"
-          key={twit.id}
-          onMouseEnter={() => {
-            retwitsStore.sethoverTwitRetwit(twit);
-          }}
-          onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
-          onClick={() => {
-            retwitsStore.setDeleteRetwit(twit);
-            deleteRetwit(twit);
-            retwitsStore.setRetwitTwit({});
-          }}
-        >
-          <img
-            src={deleteActiveRetwitButtonImg(twit)}
-            alt="button retwit"
-            className="twit-action-retwit-img"
-          />
-        </div>
-      ) : (
-        <>
-          <TooltipUserNotAuth
-            tooltipUserNotAuth={tooltipUserNotAuth}
-            onCloseTooltip={onCloseTooltip}
-            retwit
-          />
-          <div
-            className="twit-action-button-retwit"
-            key={twit.id}
-            onClick={() => {
-              if (usersStore.isAuth) {
-                retwitsStore.setRetwitTwit(twit);
-                createRetwitTwit(twit);
-              } else {
-                setTooltipUserNotAuth(true);
-              }
-            }}
-            onMouseEnter={() => {
-              retwitsStore.sethoverTwitRetwit(twit);
-            }}
-            onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
-          >
-            <img
-              src={hoverAndActiveButtonRetwit(twit)}
-              alt="button retwit"
-              className="twit-action-retwit-img"
-            />
-          </div>
-        </>
-      )}
+      <TooltipUserNotAuth
+        tooltipUserNotAuth={tooltipUserNotAuth}
+        onCloseTooltip={onCloseTooltip}
+        retwit
+      />
+      <div
+        className="twit-action-button-retwit"
+        key={twit.id}
+        onClick={() => {
+          if (isAuth) {
+            if (retweet) {
+              deleteRetwit(twit);
+            } else {
+              createRetwitTwit(twit);
+            }
+          } else {
+            setTooltipUserNotAuth(true);
+          }
+        }}
+        onMouseEnter={() => {
+          retwitsStore.sethoverTwitRetwit(twit);
+        }}
+        onMouseLeave={() => retwitsStore.sethoverTwitRetwit({})}
+      >
+        <img
+          src={retweet ? imgOnRetweetedTweet(twit) : imgOnTweet(twit)}
+          alt="button retwit"
+          className="twit-action-retwit-img"
+        />
+      </div>
+
       {twit.countRetwits > 0 && <p>{twit.countRetwits}</p>}
     </div>
   );

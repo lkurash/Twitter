@@ -1,24 +1,22 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../..";
 
-import { HOME_PAGE_PATH, ROOT_PAGE_PATH } from "../../utils/constans";
+import { HOME_PAGE_PATH, ROOT_PAGE_PATH } from "../../utils/routs";
 
 import logo from "../Imgs/logo_icon.png";
+import { useSelector } from "react-redux";
+import { auth } from "../../redux/user/user.selectors";
 
 const Logo = observer((props) => {
+  const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
 
   return (
     <div>
-      {usersStore.isAuth ? (
+      {isAuth ? (
         <div
           className={props.class}
           onClick={() => {
-            usersStore.setUserPage({});
             navigate(`/${HOME_PAGE_PATH}`);
           }}
         >
@@ -28,8 +26,6 @@ const Logo = observer((props) => {
         <div
           className={props.class}
           onClick={() => {
-            usersStore.setUserPage({});
-            twitsStore.setUserTwits([]);
             navigate(ROOT_PAGE_PATH);
           }}
         >

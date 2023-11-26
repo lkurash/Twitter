@@ -104,6 +104,8 @@ class TrendsController {
   async getTrendsTwitsForAuthUser(request, response, next) {
     try {
       const Op = Sequelize.Op;
+      const user = decodeUser(request);
+      const authUserId = user.id;
 
       const { trend } = request.params;
       let { limit, list } = request.query;
@@ -115,14 +117,23 @@ class TrendsController {
       const params = `WHERE "Twits"."text" LIKE '%${trend}%' ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
       const trends = await dbRequestTwitsForAuthUser(
-        decodeUser,
-        request,
+        authUserId,
+        authUserId,
         params
       );
 
+      const countTweets = await Twits.count({
+        where: { text: { [Op.substring]: trend } },
+      });
+
+      let isTwitsOnNextPage = countTweets - limit * list;
+
       const presenter = new TwitsPresenter(trends);
 
-      return response.json(presenter.toJSON());
+      return response.json({
+        tweets: presenter.toJSON(),
+        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+      });
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
@@ -150,9 +161,18 @@ class TrendsController {
         offset: offset,
       });
 
+      const countTweets = await Twits.count({
+        where: { text: { [Op.substring]: trend } },
+      });
+
+      let isTwitsOnNextPage = countTweets - limit * list;
+
       const presenter = new TwitsPresenterForPublicPage(trends);
 
-      return response.json(presenter.toJSON());
+      return response.json({
+        tweets: presenter.toJSON(),
+        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+      });
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
@@ -178,10 +198,9 @@ class TrendsController {
     }
   }
 
-  async getCountTrends(request, response, next) {
+  async getCountTrends(text) {
     try {
       const Op = Sequelize.Op;
-      const { text } = request.body;
 
       const words = text.split(" ");
 
@@ -210,7 +229,7 @@ class TrendsController {
         }
       });
 
-      return response.json(text);
+      return text;
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }

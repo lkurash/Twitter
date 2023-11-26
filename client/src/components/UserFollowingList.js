@@ -1,22 +1,42 @@
-import { observer } from "mobx-react-lite";
-import { Fragment, useContext } from "react";
-import { Context } from "..";
+import { Fragment, useEffect, useState } from "react";
 
 import getAuthUserID from "../utils/getAuthUserID";
 
 import FollowButton from "./buttons/FollowButton";
 import UserInList from "./common/UserInList";
+import { useDispatch, useSelector } from "react-redux";
+import { userFollowings } from "../redux/user/user.selectors";
+import spinner from "../utils/spinner";
+import { userActions } from "../redux/user/user.actions";
+import { useParams } from "react-router-dom";
 
-const UserFollowingList = observer(() => {
-  const { usersStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
-  const authUserID = getAuthUserID(usersStore);
+const UserFollowingList = () => {
+  const dispatch = useDispatch();
+  const { followings, loadingStatus } = useSelector(userFollowings);
+  const authUserID = getAuthUserID();
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    dispatch(userActions.getFollowings(id || authUserID));
+    if (loadingStatus === "PENDING" || isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 400);
+    }
+  }, []);
+
+  if (isLoading) {
+    return spinner();
+  }
 
   return (
     <div className="user-follow-list">
-      {usersFollowingsStore.userFollowing.length > 0 ? (
+      {followings.length > 0 ? (
         <ul className="users">
-          {usersFollowingsStore.userFollowing.map((profile) => (
+          {followings.map((profile) => (
             <li key={profile.id} className="user">
               <Fragment>
                 <UserInList profile={profile} />
@@ -24,7 +44,7 @@ const UserFollowingList = observer(() => {
                 {profile.id !== authUserID && (
                   <FollowButton
                     profile={profile}
-                    following={profile.following}
+                    follow={profile.following}
                     classButton="button-follow-follow-list"
                   />
                 )}
@@ -39,6 +59,6 @@ const UserFollowingList = observer(() => {
       )}
     </div>
   );
-});
+};
 
 export default UserFollowingList;

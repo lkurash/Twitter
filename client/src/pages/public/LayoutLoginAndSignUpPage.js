@@ -6,7 +6,7 @@ import {
   LOGIN_PAGE_PATH,
   PUBLIC_EXPLORE_PAGE_PATH,
   SIGNUP_PAGE_PATH,
-} from "../../utils/constans";
+} from "../../utils/routs";
 
 import "../../components/forms/loginAndRegistretionForm.css";
 

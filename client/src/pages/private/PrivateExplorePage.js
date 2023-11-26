@@ -1,37 +1,28 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { Context } from "../..";
 
-import userClient from "../../http/userClient";
-import twitClient from "../../http/twitClient";
+import { visibilityPageActions } from "../../redux/visibilityPage/visibilityPage.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { visibility } from "../../redux/visibilityPage/visibilityPage.selectors";
 
-import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import ContentExplorePageAllTwits from "../../components/ContentExplorePageAllTwits";
 
 const PrivateExplorePage = observer(() => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
-  const authUserID = getAuthUserID(usersStore);
+  const dispatch = useDispatch();
+  const { loadingStatus } = useSelector(visibility);
+  const authUserID = getAuthUserID();
 
   useEffect(() => {
-    try {
-      if (authUserID) {
-        twitClient.getTwitsForAuthUser(authUserID).then((twits) => {
-          twitsStore.setTwits(twits);
-        });
-
-        userClient
-          .getUserProfile(authUserID)
-          .then((userInfo) => usersStore.setUser(userInfo));
-      }
-
-      usersStore.setAuth(getFlagIsAuth());
-    } catch (error) {
-      console.log(error.response.data.message);
+    if (loadingStatus === "COMPLETE") {
+      dispatch(visibilityPageActions.getVisibilityTwitsForAuthUser(authUserID));
     }
-  }, []);
+  }, [loadingStatus]);
+
+  if (loadingStatus !== "COMPLETE") {
+    return null;
+  }
 
   return (
     <>

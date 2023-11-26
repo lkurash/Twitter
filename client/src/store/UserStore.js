@@ -2,21 +2,44 @@ import { makeAutoObservable } from "mobx";
 
 class UserStore {
   constructor() {
-    this._auth = false;
-    this._user = [];
+    this._name = null;
+    this._about = null;
+    this._webSite = null;
+    this._photo = null;
+    this._background = null;
     this._userRegistrationName = "";
     this._userRegistrationEmail = "";
     this._userRegistrationPassword = "";
     this._birthDate = "";
-    this._allUsers = [];
-    this._usersWhoToReadUsers = [];
-    this._userPage = [];
-    this._foundUsers = [];
     makeAutoObservable(this);
   }
 
-  setAuth(bool) {
-    this._auth = bool;
+  setUserInfo(profile) {
+    this.setName(profile.user_name);
+    this.setPhoto(profile.photo);
+    this.setBackground(profile.background);
+    this.setAbout(profile.about);
+    this.setWebSite(profile.web_site_url);
+  }
+
+  setName(name) {
+    this._name = name;
+  }
+
+  setPhoto(photo) {
+    this._photo = photo;
+  }
+
+  setBackground(background) {
+    this._background = background;
+  }
+
+  setAbout(about) {
+    this._about = about;
+  }
+
+  setWebSite(webSite) {
+    this._webSite = webSite;
   }
 
   setUserRegistrationName(name) {
@@ -45,44 +68,28 @@ class UserStore {
     }
   }
 
-  setUser(user) {
-    this._user = user;
-  }
-
-  setAllUsers(users) {
-    if (users.length !== 0) {
-      this._allUsers = users;
-    } else {
-      this._allUsers = false;
-    }
-  }
-
-  setUserPage(user) {
-    this._userPage = user;
-  }
-
   setBirthDate(birthDate) {
     this._birthDate = birthDate;
   }
 
-  setFoundUsers(users) {
-    if (users.length !== 0) {
-      this._foundUsers = users;
-    } else {
-      this._foundUsers = false;
-    }
+  get name() {
+    return this._name;
   }
 
-  setUsersWhoToReadUsers(users) {
-    this._usersWhoToReadUsers = users;
+  getPhoto() {
+    return this._photo;
   }
 
-  get isAuth() {
-    return this._auth;
+  getBackground() {
+    return this._background;
   }
 
-  get user() {
-    return this._user;
+  get about() {
+    return this._about;
+  }
+
+  get webSite() {
+    return this._webSite;
   }
 
   get userRegistrationName() {
@@ -97,23 +104,8 @@ class UserStore {
     return this._userRegistrationPassword;
   }
 
-  get allUsers() {
-    return this._allUsers;
-  }
-
-  get userPage() {
-    return this._userPage;
-  }
-
   get birthDate() {
     return this._birthDate;
-  }
-  get foundUsers() {
-    return this._foundUsers;
-  }
-
-  get usersWhoToReadUsers() {
-    return this._usersWhoToReadUsers;
   }
 }
 export default UserStore;

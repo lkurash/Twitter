@@ -1,22 +1,26 @@
 import { observer } from "mobx-react-lite";
-import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { Context } from "../..";
-
-import userClient from "../../http/userClient";
-
-import { HOME_PAGE_PATH } from "../../utils/constans";
+import { useContext, useEffect, useState } from "react";
 
 import LocalAuthClient from "../../store/LocalAuthClient";
 
 import LoginPasswordForm from "./LoginPasswordForm";
 import LoginEmailForm from "./LoginEmailForm";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../redux/user/user.actions";
+import { auth } from "../../redux/user/user.selectors";
+import spinner from "../../utils/spinner";
+import { Context } from "../..";
+import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 const LoginForm = observer(() => {
-  const { usersStore } = useContext(Context);
-  const navigate = useNavigate();
+  const { visiblePopUpStore } = useContext(Context);
+  const { token } = useSelector(auth);
+  const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [passwordFieldVisible, setPasswordFieldVisible] = useState(false);
   const [emailFieldVisible, setEmailFieldVisible] = useState(true);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -26,25 +30,31 @@ const LoginForm = observer(() => {
     }
   };
 
-  const signIn = async () => {
-    try {
-      if (email && password) {
-        const authenticationResult = await userClient.authentication(
-          email,
-          password
-        );
+  const signIn = () => {
+    if (email && password) {
+      dispatch(userActions.authentication(email, password));
 
-        usersStore.setUser(authenticationResult.user);
-        usersStore.setAuth(true);
-
-        LocalAuthClient.setAccessToken(authenticationResult.token);
-
-        return navigate(HOME_PAGE_PATH);
-      }
-    } catch (e) {
-      alert(e.response.data.message);
+      setPasswordFieldVisible(false);
+      setEmailFieldVisible(false);
+      setIsLoading(true);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      LocalAuthClient.setAccessToken(token);
+      LocalAuthClient.setCookiesTweets(false);
+      setTimeout(() => {
+        setIsLoading(false);
+        dispatch(userActions.getAuth(getFlagIsAuth()));
+        visiblePopUpStore.setLoginPageVisible(false);
+      }, 500);
+    }
+  }, [token]);
+
+  if (isLoading) {
+    return <div className="load-login">{spinner()}</div>;
+  }
 
   return (
     <>

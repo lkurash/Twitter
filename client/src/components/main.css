@@ -76,6 +76,8 @@
 
 .main-search-list-found-message {
   margin-top: 13px;
+  margin-left: 10px;
+  font-size: 16px
 }
 
 .main-search-wrapper-found-users {

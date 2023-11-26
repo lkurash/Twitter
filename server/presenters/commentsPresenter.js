@@ -8,8 +8,8 @@ class CommentsPresenter {
   toJSON() {
     this.comments.forEach((comment) => {
       this.comment = {
-        Twit: {
-          id: comment.Twit.id,
+        Twit: comment.Twit && {
+          id: comment.twitId,
           img: comment.Twit.img
             ? comment.Twit.img.split(",")
             : comment.Twit.img,

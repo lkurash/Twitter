@@ -1,7 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { Context } from "..";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 import path from "../utils/path";
 
@@ -10,13 +8,13 @@ import {
   FOLLOWINGS_PAGE_PATH,
   USER_FOLLOWER_PAGE_PATH,
   USER_FOLLOWING_PAGE_PATH,
-} from "../utils/constans";
+} from "../utils/routs";
 
-import UserFollowersList from "./UserFollowersList";
-import UserFollowingList from "./UserFollowingList";
+import { useSelector } from "react-redux";
+import { userProfileById } from "../redux/user/user.selectors";
 
 const ContentFollowPage = observer(() => {
-  const { usersStore } = useContext(Context);
+  const { profile } = useSelector(userProfileById);
   const location = useLocation().pathname;
   const pathHomeProfileUser = location.includes("home");
 
@@ -24,10 +22,10 @@ const ContentFollowPage = observer(() => {
     <>
       <div className="follow-page-header">
         <div className="follow-page-header-main-page-name">
-          {usersStore.userPage.user_name && (
+          {profile.user_name && (
             <div className="follow-page-header-user-name">
-              <h2>{usersStore.userPage.user_name}</h2>
-              <p>@{usersStore.userPage.user_name}</p>
+              <h2>{profile.user_name}</h2>
+              <p>@{profile.user_name}</p>
             </div>
           )}
         </div>
@@ -42,7 +40,7 @@ const ContentFollowPage = observer(() => {
             to={
               pathHomeProfileUser
                 ? FOLLOWINGS_PAGE_PATH
-                : path(USER_FOLLOWING_PAGE_PATH, usersStore.userPage.id)
+                : path(USER_FOLLOWING_PAGE_PATH, profile.id)
             }
             end
           >
@@ -57,15 +55,14 @@ const ContentFollowPage = observer(() => {
             to={
               pathHomeProfileUser
                 ? FOLLOWERS_PAGE_PATH
-                : path(USER_FOLLOWER_PAGE_PATH, usersStore.userPage.id)
+                : path(USER_FOLLOWER_PAGE_PATH, profile.id)
             }
           >
             <span>Followers</span>
           </NavLink>
         </div>
       </div>
-      {location.includes("following") && <UserFollowingList />}
-      {location.includes("followers") && <UserFollowersList />}
+      <Outlet />
     </>
   );
 });

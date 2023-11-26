@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { SIGNUP_PAGE_PATH } from "../../utils/constans";
+import { SIGNUP_PAGE_PATH } from "../../utils/routs";
 
 const LoginEmailForm = ({
   email,

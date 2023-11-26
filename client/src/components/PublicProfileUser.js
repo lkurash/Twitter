@@ -5,10 +5,14 @@ import { Context } from "..";
 import ProfileUserInfo from "./ProfileUserInfo";
 import UserTwits from "./UserTwits";
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
+import { userProfileById } from "../redux/user/user.selectors";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const PublicProfileUser = observer(() => {
+  const { profile } = useSelector(userProfileById);
+  const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const { usersStore } = useContext(Context);
 
   useEffect(() => {
     setIsLoading(true);
@@ -16,9 +20,9 @@ const PublicProfileUser = observer(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 250);
-  }, [usersStore.userPage.id]);
+  }, [id]);
 
-  if (isLoading || !usersStore.userPage.id) {
+  if (isLoading || !profile.id) {
     return loadPageUserInfo();
   }
 

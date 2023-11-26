@@ -1,24 +1,38 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
-import { Context } from "..";
-
-import twitClient from "../http/twitClient";
+import { useEffect, useState } from "react";
 
 import UserComments from "./UserComments";
+import { useDispatch, useSelector } from "react-redux";
+import { twitsStore } from "../redux/tweet/tweet.selectors";
+import spinner from "../utils/spinner";
+import { userProfileById } from "../redux/user/user.selectors";
+import { useParams } from "react-router-dom";
+import { tweetActions } from "../redux/tweet/tweet.actions";
 
 const ProfilePageAnswers = observer(() => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const { profile } = useSelector(userProfileById);
+  const { id } = useParams();
+  const { loadingStatus } = useSelector(twitsStore);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    twitClient
-      .getCommentsByUser(usersStore.userPage.id)
-      .then((commentsByUser) => twitsStore.setTwits(commentsByUser));
-  });
+    dispatch(tweetActions.getAnswers(profile.id));
+
+    if (loadingStatus === "PENDING" || isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+    }
+  }, [id]);
+
+  if (isLoading) {
+    return <div className="twits">{spinner()}</div>;
+  }
 
   return (
     <div className="twits">
-      <UserComments/>
+      <UserComments />
     </div>
   );
 });

@@ -7,6 +7,6 @@ export default function getAuthUserID(user) {
     const { id } = jwt_decode(token);
     return id;
   } else {
-    return false;
+    return null;
   }
 }

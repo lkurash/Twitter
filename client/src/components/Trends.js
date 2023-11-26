@@ -3,20 +3,22 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "..";
 
-import { TRENDS_PAGE_PATH, PUBLIC_TRENDS_PAGE_PATH } from "../utils/constans";
+import { TRENDS_PAGE_PATH, PUBLIC_TRENDS_PAGE_PATH } from "../utils/routs";
 
 import NotInterestingTrendButton from "./buttons/NotInterestingTrendButton";
+import { useSelector } from "react-redux";
+import { auth } from "../redux/user/user.selectors";
 
 const Trends = observer(({ topic }) => {
+  const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
-  const { usersStore } = useContext(Context);
 
   return (
     <div className="main-trends-item">
       <div
         className="trends-item"
         onClick={() => {
-          if (usersStore.isAuth) {
+          if (isAuth) {
             navigate({
               pathname: `${TRENDS_PAGE_PATH}`,
               search: `trend=${topic.title}`,

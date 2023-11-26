@@ -1,42 +1,27 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Context } from "..";
+import { useRef } from "react";
 
-import { USER_PAGE_PATH, PUBLIC_USER_PAGE_PATH } from "../utils/constans";
-import getUserPhoto from "../utils/getUserPhoto";
-import path from "../utils/path";
+import { useSelector } from "react-redux";
+import { searchUsers } from "../redux/userOptions/userOptions.selectors";
+
 import useOutsideClick from "../utils/useOutsideClickFunction";
+
+import UserInList from "./common/UserInList";
 
 const ListFoundUserSearchBlock = observer(
   ({ listFoundUsersVisible, onClose, loadListUsers }) => {
-    const { usersStore } = useContext(Context);
-    const navigate = useNavigate();
     const listUsersRef = useRef(null);
+    const { users } = useSelector(searchUsers);
 
     useOutsideClick(listUsersRef, onClose, listFoundUsersVisible);
 
     return (
       <div className="main-search-wrapper-found-users" ref={listUsersRef}>
-        {usersStore.foundUsers ? (
+        {users.length > 0 ? (
           <ul className="main-search-list-found-users">
-            {usersStore.foundUsers.map((profile) => (
-              <li
-                key={profile.id}
-                className="main-search-found-list-user"
-                onClick={() => {
-                  if (usersStore.isAuth) {
-                    navigate(path(USER_PAGE_PATH, profile.id));
-                  } else {
-                    navigate(path(PUBLIC_USER_PAGE_PATH, profile.id));
-                  }
-                }}
-              >
-                <img src={getUserPhoto(profile)} alt="User" />
-                <div>
-                  <p>{profile.user_name}</p>
-                  <p className="profile-name">{`@${profile.user_name}`}</p>
-                </div>
+            {users.map((profile) => (
+              <li className="main-search-found-list-user" key={profile.id}>
+                <UserInList profile={profile} />
               </li>
             ))}
           </ul>

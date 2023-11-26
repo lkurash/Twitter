@@ -1,35 +1,24 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Context } from "..";
-
-import spinner from "../utils/spinner";
-
-import twitClient from "../http/twitClient";
+import { Fragment } from "react";
 
 import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
 import TwitDesc from "./Twit/TwitDesc";
 import UserName from "./Twit/UserName";
 import UserPhoto from "./Twit/UserPhoto";
+import { twitsStore } from "../redux/tweet/tweet.selectors";
+import { useSelector } from "react-redux";
+import { tweetActions } from "../redux/tweet/tweet.actions";
+import { userProfileById } from "../redux/user/user.selectors";
 
 const UserComments = observer(() => {
-  const { twitsStore } = useContext(Context);
-  const { usersStore } = useContext(Context);
-
-  const [loadingPage, setIsLoadingPage] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoadingPage(false);
-    }, 250);
-  }, []);
-
-  if (twitsStore.twits.length === 0 || loadingPage) return spinner();
+  const { twits } = useSelector(twitsStore);
+  const { profile } = useSelector(userProfileById);
 
   return (
     <>
-      {twitsStore.twits ? (
+      {twits ? (
         <>
-          {twitsStore.twits.map(({ Comment, Twit }) => (
+          {twits.map(({ Comment, Twit }) => (
             <Fragment key={Comment.id}>
               <div className="twit" key={Comment.id}>
                 <div className="content-block">
@@ -54,11 +43,10 @@ const UserComments = observer(() => {
               <div className="main-line" />
             </Fragment>
           ))}
-          {twitsStore.twits.length >= 7 && (
+          {twits && twits.length >= 7 && (
             <ShowMoreTwitsButton
-              getTwits={twitClient.getCommentsByUser}
-              userId={usersStore.userPage.id}
-              store={twitsStore}
+              getTwits={tweetActions.getMoreAnswers}
+              userId={profile.id}
             />
           )}
         </>
