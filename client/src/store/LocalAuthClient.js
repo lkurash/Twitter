@@ -6,6 +6,10 @@ class LocalAuthClient {
     this.refreshToken = "";
   }
 
+  setCookiesTweets(visibile) {
+    return Cookies.set("twitsWhoReading", visibile, { expires: 1 / 24 });
+  }
+
   setAccessToken(accessToken) {
     return Cookies.set("token", accessToken, { expires: 1 });
   }

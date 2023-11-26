@@ -1,17 +1,14 @@
-import { Context } from "..";
-import { useContext, useState } from "react";
-import { observer } from "mobx-react-lite";
-
-import userClient from "../http/userClient";
-
 import Logo from "./common/Logo";
 import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 
 import logo from "./Imgs/logo_icon.png";
 import searchIcon from "./Imgs/zoom__icon.png";
+import { useDispatch } from "react-redux";
+import { userOptionsActions } from "../redux/userOptions/userOptions.actions";
+import { useState } from "react";
 
-const MainSearchBlock = observer(({ classNameForm }) => {
-  const { usersStore } = useContext(Context);
+const MainSearchBlock = ({ classNameForm }) => {
+  const dispatch = useDispatch();
   const [userName, setUserName] = useState("");
   const [listFoundUsersVisible, setListFoundUsersVisible] = useState(false);
   const [activeInput, setActiveInput] = useState(false);
@@ -22,10 +19,10 @@ const MainSearchBlock = observer(({ classNameForm }) => {
   };
 
   const searchUsers = (name) => {
+    setListFoundUsersVisible(false);
+    dispatch(userOptionsActions.getSearchedUsers(name));
     setTimeout(() => {
-      userClient.getSearchUsers(name).then((users) => {
-        usersStore.setFoundUsers(users);
-      });
+      setListFoundUsersVisible(true);
     }, 500);
   };
 
@@ -50,10 +47,8 @@ const MainSearchBlock = observer(({ classNameForm }) => {
               placeholder="Search User"
               value={userName}
               onClick={() => {
+                setListFoundUsersVisible(true)
                 setActiveInput(true);
-                if (userName) {
-                  setListFoundUsersVisible(true);
-                }
               }}
               onChange={(e) => {
                 if (e.target.value.length > 0) {
@@ -62,7 +57,6 @@ const MainSearchBlock = observer(({ classNameForm }) => {
                   searchUsers(null);
                 }
                 setUserName(e.target.value.slice(0, 20));
-                setListFoundUsersVisible(true);
               }}
             />
           </div>
@@ -77,6 +71,6 @@ const MainSearchBlock = observer(({ classNameForm }) => {
       </div>
     </div>
   );
-});
+};
 
 export default MainSearchBlock;

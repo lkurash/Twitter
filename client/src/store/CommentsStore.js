@@ -2,18 +2,9 @@ import { makeAutoObservable } from "mobx";
 
 class CommentsStore {
   constructor() {
-    this._comments = [];
     this._hoverButtonComment = {};
     this._activeComment = {};
     makeAutoObservable(this);
-  }
-
-  setComments(comments) {
-    if (comments.length !== 0) {
-      this._comments = comments;
-    } else {
-      this._comments = false;
-    }
   }
 
   setHoverButtonComment(twit) {
@@ -22,10 +13,6 @@ class CommentsStore {
 
   setActiveComment(twit) {
     this._activeComment = twit;
-  }
-
-  get comments() {
-    return this._comments;
   }
 
   get hoverButtonComment() {

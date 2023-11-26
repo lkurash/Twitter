@@ -1,23 +1,33 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Context } from "../..";
 import { useNavigate } from "react-router-dom";
 
-import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../utils/constans";
+import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../utils/routs";
 import path from "../../utils/path";
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
 import FollowButton from "../buttons/FollowButton";
-
+import { auth } from "../../redux/user/user.selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { userPreview } from "../../redux/userOptions/userOptions.selectors";
+import { userOptionsActions } from "../../redux/userOptions/userOptions.actions";
 
 const PreviewUserOnTwit = observer(({ user, setShowProfileUser }) => {
+  const dispatch = useDispatch();
+  const { isAuth } = useSelector(auth);
+  const { userInfo } = useSelector(userPreview);
   const { usersFollowingsStore } = useContext(Context);
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
 
   const navigate = useNavigate();
 
   const authUserID = getAuthUserID();
+
+  useEffect(() => {
+    dispatch(userOptionsActions.getPreviewProfile(user.id, authUserID));
+  }, [user.id]);
+
+  if (!userInfo) return false;
 
   return (
     <div
@@ -35,13 +45,9 @@ const PreviewUserOnTwit = observer(({ user, setShowProfileUser }) => {
         <div
           className="preview-user"
           onClick={() => {
-            if (usersStore.isAuth) {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
+            if (isAuth) {
               navigate(path(USER_PAGE_PATH, user.id));
             } else {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
               navigate(path(PUBLIC_USER_PAGE_PATH, user.id));
             }
           }}
@@ -52,8 +58,8 @@ const PreviewUserOnTwit = observer(({ user, setShowProfileUser }) => {
             </div>
             {authUserID !== user.id && authUserID && (
               <FollowButton
-                profile={usersFollowingsStore.startFollowUser}
-                following={usersFollowingsStore.startFollowUser.following}
+                profile={user}
+                follow={userInfo.following}
                 classButton="button-follow-follow-list"
               />
             )}
@@ -65,11 +71,11 @@ const PreviewUserOnTwit = observer(({ user, setShowProfileUser }) => {
           <p className="preview-user-about">{user.about}</p>
           <div className="preview-user-follow-info">
             <span className="preview-user-count-follow">
-              {usersFollowingsStore.startFollowUser.followersUsers}
+              {userInfo.followersUsers}
             </span>
             <p>followers</p>
             <span className="preview-user-count-follow">
-              {usersFollowingsStore.startFollowUser.followingsUsers}
+              {userInfo.followingsUsers}
             </span>
             <p className="preview-user-follow-info-followings">followings</p>
           </div>

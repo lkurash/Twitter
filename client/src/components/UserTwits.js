@@ -1,57 +1,57 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Context } from "..";
+import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-import twitClient from "../http/twitClient";
-
-import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
 
 import Twits from "./Twits";
 import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
 
 import "./main.css";
+import { useDispatch, useSelector } from "react-redux";
+import { twitsStore } from "../redux/tweet/tweet.selectors";
+import { auth, userProfileById } from "../redux/user/user.selectors";
+import { tweetActions } from "../redux/tweet/tweet.actions";
+import getAuthUserID from "../utils/getAuthUserID";
 
 const UserTwits = observer(() => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
-  const authUserID = getAuthUserID();
+  const dispatch = useDispatch();
+  const { profile } = useSelector(userProfileById);
+  const { twits } = useSelector(twitsStore);
+  const { loadingStatus } = useSelector(twitsStore);
+  const { isAuth } = useSelector(auth);
   const { id } = useParams();
+  const authUserID = getAuthUserID();
 
-  const [loadingPage, setIsLoadingPage] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (authUserID) {
-      twitClient
-        .getTwitsByUser(usersStore.userPage.id)
-        .then((usersTwits) => twitsStore.setTwits(usersTwits));
+    setIsLoading(true);
+    if (isAuth) {
+      dispatch(tweetActions.getTweetsByUser(profile.id));
     } else {
-      twitClient
-        .getPublicTwitsByUser(id)
-        .then((usersTwits) => twitsStore.setTwits(usersTwits));
+      dispatch(tweetActions.getPublicTweetsByUser(profile.id));
     }
 
-    setTimeout(() => {
-      setIsLoadingPage(false);
-    }, 250);
-  }, []);
+    if (loadingStatus === "PENDING" || isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+    }
+  }, [id]);
 
-  if (usersStore.userPage.length === 0 || loadingPage)
-    return <div className="twits">{spinner()}</div>;
+  if (isLoading) return <div className="twits">{spinner()}</div>;
 
   return (
     <Fragment>
       <Twits />
-      {twitsStore.twits.length >= 7 && (
+      {twits && twits.length >= 7 && (
         <ShowMoreTwitsButton
           getTwits={
             authUserID
-              ? twitClient.getTwitsByUser
-              : twitClient.getPublicTwitsByUser
+              ? tweetActions.getMoreUserTweets
+              : tweetActions.getMoreUserPublicTweets
           }
-          userId={usersStore.userPage.id || id}
-          store={twitsStore}
+          userId={profile.id}
         />
       )}
     </Fragment>

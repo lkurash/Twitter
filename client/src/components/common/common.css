@@ -119,9 +119,6 @@
 .button-notinteresting-trend-text {
   display: flex;
   align-items: center;
-.button-notinteresting-trend-text {
-  display: flex;
-  align-items: center;
 }
 
 .sad-smile-icon {
@@ -152,7 +149,6 @@
   margin-right: 10px;
 }
 
-.dotmenu-icon {
 .dotmenu-icon {
   width: 15px;
   height: 15px;

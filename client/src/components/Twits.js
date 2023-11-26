@@ -1,17 +1,18 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext } from "react";
-import { Context } from "..";
+import { Fragment } from "react";
 import Twit from "./Twit/Twit";
+import { useSelector } from "react-redux";
+import { twitsStore } from "../redux/tweet/tweet.selectors";
 
 const Twits = observer(() => {
-  const { twitsStore } = useContext(Context);
+  const { twits } = useSelector(twitsStore);
 
   return (
     <Fragment>
       <div className="twits">
-        {twitsStore.twits ? (
+        {twits ? (
           <>
-            {twitsStore.twits.map((twit) => (
+            {twits.map((twit) => (
               <Twit
                 twit={twit}
                 key={twit.id}

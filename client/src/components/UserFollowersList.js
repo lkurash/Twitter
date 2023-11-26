@@ -1,21 +1,43 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext } from "react";
-import { Context } from "..";
+import { Fragment, useEffect, useState } from "react";
 
 import getAuthUserID from "../utils/getAuthUserID";
 
 import FollowButton from "./buttons/FollowButton";
 import UserInList from "./common/UserInList";
+import { useDispatch, useSelector } from "react-redux";
+import { userFollowers } from "../redux/user/user.selectors";
+import { userActions } from "../redux/user/user.actions";
+import { useParams } from "react-router-dom";
+import spinner from "../utils/spinner";
 
 const UserFollowersList = observer(() => {
-  const { usersFollowingsStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const { followers, loadingStatus } = useSelector(userFollowers);
   const authUserID = getAuthUserID();
+  const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    dispatch(userActions.getFollowers(id || authUserID));
+    if (loadingStatus === "PENDING" || isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 400);
+    }
+  }, []);
+
+  if (isLoading) {
+    return spinner();
+  }
 
   return (
     <div className="user-follow-list">
-      {usersFollowingsStore.userFollowers.length > 0 ? (
+      {followers.length > 0 ? (
         <ul className="users">
-          {usersFollowingsStore.userFollowers.map((profile) => (
+          {followers.map((profile) => (
             <li className="user" key={profile.id}>
               <Fragment>
                 <UserInList profile={profile} />
@@ -23,7 +45,7 @@ const UserFollowersList = observer(() => {
                 {profile.id !== authUserID && (
                   <FollowButton
                     profile={profile}
-                    following={profile.following}
+                    follow={profile.following}
                     classButton="button-follow-follow-list"
                   />
                 )}

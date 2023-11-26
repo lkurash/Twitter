@@ -8,8 +8,11 @@
   width: 100vw;
   height: 100vh;
   position: fixed;
+  z-index: 3;
   padding: 0;
+  left: 0;
   top: 0;
+  background-color: black;
   display: flex;
   align-items: center;
 }
@@ -29,6 +32,10 @@
 }
 
 .right-side-bar {
+  /* position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 4; */
   height: 100%;
   width: 42%;
   padding: 130px 10px 0px 80px;
@@ -98,7 +105,7 @@
 }
 
 .background-auth-form {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -448,16 +455,16 @@
 }
 
 .signup-birth-form-month {
-  width: 200px;
+  width: 95%;
 }
 
 .signup-birth-form-day {
-  width: 90px;
+  width: 95%;
   margin-right: 10px;
 }
 
 .signup-birth-form-year {
-  width: 115px;
+  width: 95%;
 }
 
 .signup-form-button {

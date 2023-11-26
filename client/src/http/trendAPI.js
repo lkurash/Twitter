@@ -1,6 +1,6 @@
 import { $authClient, $client } from "./clients";
 
-class TrendClient {
+class TrendAPI {
   async getAllTrends(userId, limit) {
     const trends = await $client.get("api/twitter/trends", {
       params: { userId, limit },
@@ -9,13 +9,7 @@ class TrendClient {
     return trends.data;
   }
 
-  async createTrends(text) {
-    const trends = await $client.post("api/twitter/trends", text);
-
-    return trends.data;
-  }
-
-  async getTrendsTwitsForAuthUser(trend, userId, limit, list) {
+  async getTrendsTwitsForAuthUser(trend, limit, list) {
     const twits = await $authClient.get(`api/twitter/auth/trends/${trend}`, {
       params: { limit, list },
     });
@@ -38,13 +32,7 @@ class TrendClient {
 
     return trend.data;
   }
-
-  async getCountTrends(text) {
-    const trends = await $client.put("api/twitter/trends/countTrends", text);
-
-    return trends.data;
-  }
 }
-const trendClient = new TrendClient();
+const trendAPI = new TrendAPI();
 
-export default trendClient;
+export default trendAPI;

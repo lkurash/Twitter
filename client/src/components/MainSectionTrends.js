@@ -1,41 +1,43 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
-import { Context } from "..";
+import { useEffect, useState } from "react";
 
-import trendClient from "../http/trendClient";
+import { useSelector } from "react-redux";
+import { trendStore } from "../redux/trend/trend.selectors";
 
-import getAuthUserID from "../utils/getAuthUserID";
+import spinner from "../utils/spinner";
 
 import loadSectionTrends from "./loadComponents/loadSectionTrends";
 import Trends from "./Trends";
 
-const MainSectionTrends = observer((props) => {
-  const { trendsStore } = useContext(Context);
-  const authUserID = getAuthUserID();
+const MainSectionTrends = ({ mainBlock, className }) => {
+  const { trends, loadingStatus } = useSelector(trendStore);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (authUserID) {
-      trendClient
-        .getAllTrends(authUserID)
-        .then((allTrends) => trendsStore.setTrends(allTrends));
-    } else {
-      trendClient
-        .getAllTrends()
-        .then((allTrends) => trendsStore.setTrends(allTrends));
+    if (loadingStatus === "PENDING" || isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
     }
-  }, []);
+  }, [loadingStatus]);
 
-  if (trendsStore.trends.length === 0) {
-    return loadSectionTrends();
+  if (isLoading) {
+    if (mainBlock) {
+      return (
+        <div className="section section-public-page trends load-trends-main-block">
+          <h2 className="main-section-name">Trends for you</h2>
+          {spinner()}
+        </div>
+      );
+    } else {
+      return loadSectionTrends();
+    }
   }
 
   return (
-    <section className={props.className}>
+    <section className={className}>
       <h2 className="main-section-name">Trends for you</h2>
-      {trendsStore.trends ? (
-        trendsStore.trends.map((trend) => (
-          <Trends key={trend.id} topic={trend} />
-        ))
+      {trends ? (
+        trends.map((trend) => <Trends key={trend.id} topic={trend} />)
       ) : (
         <p className="section-whoyouread-hint-about-lack-section">
           {" "}
@@ -44,6 +46,6 @@ const MainSectionTrends = observer((props) => {
       )}
     </section>
   );
-});
+};
 
 export default MainSectionTrends;

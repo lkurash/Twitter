@@ -19,6 +19,7 @@ const dbRequestTwitsWithUserLikes = require("../sql/dbRequestTwitsWithUserLikes.
 const dbRequestTwitsByFollowingUsers = require("../sql/dbRequestTwitsByFollowingUsers.js");
 
 const trendsController = require("../controllers/trendsController");
+const actionsTwitsController = require("./actionsTwitsController.js");
 
 const Twits = models.Twits;
 const User = models.User;
@@ -44,7 +45,7 @@ const checkUsersAuth = (request, userId, next) => {
 };
 
 class TwitsController {
-  async createTwitByUser(text, file, userId, request, response) {
+  async createTwitByUser(text, file, userId, request, response, next) {
     try {
       if (file) {
         const { imgs } = request.files;
@@ -68,10 +69,10 @@ class TwitsController {
           userId,
         });
 
-      const twit = await Twits.findOne({
-        include: [{ model: User, as: "user" }],
-        where: { id: newTwit.id },
-      });
+        const twit = await Twits.findOne({
+          include: [{ model: User, as: "user" }],
+          where: { id: newTwit.id },
+        });
 
         const presenter = new TwitsPresenter([twit]);
 
@@ -79,10 +80,10 @@ class TwitsController {
       } else {
         const newTwit = await Twits.create({ text, userId });
 
-      const twit = await Twits.findOne({
-        include: [{ model: User, as: "user" }],
-        where: { id: newTwit.id },
-      });
+        const twit = await Twits.findOne({
+          include: [{ model: User, as: "user" }],
+          where: { id: newTwit.id },
+        });
 
         const presenter = new TwitsPresenter([twit]);
 
@@ -109,6 +110,7 @@ class TwitsController {
         response,
         next
       );
+
       const trend = await trendsController.createTrends(text, response, next);
 
       return response.json({ twit, trend });
@@ -117,199 +119,225 @@ class TwitsController {
     }
   }
 
-  async getTwitsByUser(request, response, next) {
+  async createLikeOnTwit(request, response, next) {
     try {
-      const Op = Sequelize.Op;
+      const { twitId } = request.params;
       const { userId } = request.params;
-
-      let { limit, list } = request.query;
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
-
-      const params = `WHERE "Twits"."userId" = ${userId} ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
-
-      const twits = await dbRequestTwitsForAuthUser(
-        decodeUser,
-        request,
-        params
-      );
-
-      const presenter = new TwitsPresenter(twits);
-
-      return response.json(presenter.toJSON());
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
-    }
-  }
-
-  async getPublicTwitsByUser(request, response, next) {
-    try {
-      const Op = Sequelize.Op;
-      const { userId } = request.params;
-
-      let { limit, list } = request.query;
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
-
-      const twits = await Twits.findAll({
-        order: [["id", "DESC"]],
-        where: { userId: userId },
-        include: [
-          { model: User, as: "user" },
-          { model: User, as: "twit_user" },
-        ],
-        limit: limit,
-        offset: offset,
-      });
-
-      const presenter = new TwitsPresenterForPublicPage(twits);
-
-      return response.json(presenter.toJSON());
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
-    }
-  }
-
-  async getTwitsByFollowingUsers(request, response, next) {
-    try {
-      const Op = Sequelize.Op;
-      const { userId } = request.params;
-      let { limit, list } = request.query;
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
-
-      const params = `DESC LIMIT ${limit} OFFSET ${offset}`;
-
-      const twits = await dbRequestTwitsByFollowingUsers(
-        decodeUser,
-        request,
-        params
-      );
-
-      const presenter = new TwitsPresenter(twits);
-
-      return response.json(presenter.toJSON());
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
-    }
-  }
-
-  async gelAllTwits(request, response) {
-    try {
-      let { limit, list } = request.query;
-
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
-
-      const twits = await Twits.findAll({
-        order: [["id", "DESC"]],
-        include: [
-          { model: User, as: "user" },
-          { model: User, as: "twit_user" },
-        ],
-        limit: limit,
-        offset: offset,
-      });
-
-      const presenter = new TwitsPresenterForPublicPage(twits);
-
-      return response.json(presenter.toJSON());
-    } catch (error) {
-      next(ApiError.badRequest(error.message));
-    }
-  }
-
-  async getTwitsForAuthUser(request, response, next) {
-    try {
-      const Op = Sequelize.Op;
-      const { userId } = request.params;
-      const user = decodeUser(request);
-      const userIdToken = user.id;
-
-      let { limit, list } = request.query;
-
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
-      let order = `ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
-
-      const twits = await dbRequestTwitsForAuthUser(decodeUser, request, order);
-
-      const presenter = new TwitsPresenter(twits);
-
-      return response.json(presenter.toJSON());
-    } catch (error) {
-      next(ApiError.badRequest(error.message));
-    }
-  }
-
-  async getFavoriteTwitByUser(request, response, next) {
-    try {
-      const Op = Sequelize.Op;
-
-      const { userId } = request.params;
-      let { limit, list } = request.query;
-
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
 
       checkUsersAuth(request, userId, next);
 
-      const params = `WHERE "favorite_twits"."userId" = ${userId} ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
+      const like = await actionsTwitsController.likeTwitByUser(twitId, userId);
 
-      const favoriteTwits = await dbRequestTwitsForAuthUser(
-        decodeUser,
-        request,
-        params
+      const twitWithLike = await actionsTwitsController.getCountLikes(
+        like.twitId,
+        userId
       );
-
-      const presenter = new TwitsPresenter(favoriteTwits);
-
-      return response.json(presenter.toJSON());
+      return response.json(twitWithLike);
     } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
+      next(ApiError.badRequest(error.message));
     }
   }
 
-  async getCommentsByUser(request, response, next) {
+  async deleteLikeOnTwit(request, response, next) {
     try {
+      const { twitId } = request.params;
       const { userId } = request.params;
-      let { limit, list } = request.query;
 
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
+      checkUsersAuth(request, userId, next);
 
-      const coments = await Comments.findAll({
-        where: { userId: userId },
-        include: [
-          {
-            model: Twits,
-            include: [
-              { model: User, as: "user" },
-              { model: User, as: "twit_user" },
-            ],
-          },
-          {
-            model: User,
-            as: "user",
-          },
-        ],
-        limit: limit,
-        offset: offset,
-      });
+      const disLike = await actionsTwitsController.deleteLike(twitId, userId);
 
-      const presenter = new CommentsPresenter(coments);
+      const dislikedTwit = await actionsTwitsController.getCountLikes(
+        disLike.twitId,
+        userId
+      );
 
-      return response.json(presenter.toJSON());
+      return response.json(dislikedTwit);
     } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
+      next(ApiError.badRequest(error.message));
     }
+  }
+
+  async createAnswer(request, response, next) {
+    const { twitId } = request.params;
+    const { userId } = request.params;
+    const { text } = request.body;
+
+    checkUsersAuth(request, userId, next);
+
+    const answer = await actionsTwitsController.createCommentByUser(
+      twitId,
+      userId,
+      text
+    );
+
+    const twitWithAnswer = await actionsTwitsController.getCountComments(
+      twitId
+    );
+
+    return response.json(twitWithAnswer);
+  }
+
+  async createRetwitTweet(request, response, next) {
+    const { twitId } = request.params;
+    const { userId } = request.params;
+    const { twitUserId } = request.body;
+    const { text } = request.body;
+    const { img } = request.body;
+
+    checkUsersAuth(request, userId, next);
+
+    const retweet = await actionsTwitsController.createRetwitByUser(
+      twitId,
+      userId,
+      twitUserId,
+      text,
+      img
+    );
+
+    const countRetweet = await actionsTwitsController.getCountRetwits(twitId);
+
+    const retwitTweet = await Twits.findOne({
+      include: [
+        { model: User, as: "user" },
+        { model: User, as: "twit_user" },
+        { model: Likes, as: "likes" },
+        { model: Twits, as: "retwits" },
+        { model: Favorite_twits, as: "favorite_twits" },
+        { model: Comments },
+      ],
+      where: { id: retweet.id },
+    });
+
+    const presenter = new TwitsPresenter([retwitTweet]);
+
+    return response.json(presenter.toJSON());
+  }
+
+  async deleteRetweetTweet(request, response, next) {
+    const { retwitId } = request.params;
+    const { userId } = request.params;
+    checkUsersAuth(request, userId, next);
+
+    const deletedRetwit = await actionsTwitsController.deleteRetwitByUser(
+      retwitId,
+      userId
+    );
+
+    const countRetweet = await actionsTwitsController.getCountRetwits(
+      deletedRetwit.twitId
+    );
+
+    return response.json({
+      tweet: deletedRetwit,
+      count: countRetweet.countRetwits,
+    });
+  }
+
+  async getTwitsByUser(userId, authUserId, limit, offset) {
+    const params = `WHERE "Twits"."userId" = ${userId} ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    const twits = await dbRequestTwitsForAuthUser(userId, authUserId, params);
+
+    const presenter = new TwitsPresenter(twits);
+
+    return presenter.toJSON();
+  }
+
+  async getPublicTwitsByUser(userId, limit, offset) {
+    const tweets = await Twits.findAll({
+      order: [["id", "DESC"]],
+      where: { userId: userId },
+      include: [
+        { model: User, as: "user" },
+        { model: User, as: "twit_user" },
+      ],
+      limit: limit,
+      offset: offset,
+    });
+
+    const presenter = new TwitsPresenterForPublicPage(tweets);
+
+    return presenter.toJSON();
+  }
+
+  async getTwitsByFollowingUsers(userId, authUserId, limit, offset) {
+    const params = `DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    const twits = await dbRequestTwitsByFollowingUsers(
+      userId,
+      authUserId,
+      params
+    );
+
+    const presenter = new TwitsPresenter(twits);
+
+    return presenter.toJSON();
+  }
+
+  async gelAllTwits(limit, offset) {
+    const twits = await Twits.findAll({
+      order: [["id", "DESC"]],
+      include: [
+        { model: User, as: "user" },
+        { model: User, as: "twit_user" },
+      ],
+      limit: limit,
+      offset: offset,
+    });
+
+    const presenter = new TwitsPresenterForPublicPage(twits);
+
+    return presenter.toJSON();
+  }
+
+  async getTwitsForAuthUser(userId, authUserId, limit, offset) {
+    let order = `ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    const twits = await dbRequestTwitsForAuthUser(userId, authUserId, order);
+
+    const presenter = new TwitsPresenter(twits);
+
+    return presenter.toJSON();
+  }
+
+  async getFavoriteTwitByUser(userId, authUserId, limit, offset) {
+    const params = `WHERE "favorite_twits"."userId" = ${userId} ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
+
+    const favoriteTwits = await dbRequestTwitsForAuthUser(
+      userId,
+      authUserId,
+      params
+    );
+
+    const presenter = new TwitsPresenter(favoriteTwits);
+
+    return presenter.toJSON();
+  }
+
+  async getCommentsByUser(userId, limit, offset) {
+    const coments = await Comments.findAll({
+      where: { userId: userId },
+      include: [
+        {
+          model: Twits,
+          include: [
+            { model: User, as: "user" },
+            { model: User, as: "twit_user" },
+          ],
+        },
+        {
+          model: User,
+          as: "user",
+        },
+      ],
+      limit: limit,
+      offset: offset,
+    });
+
+    const presenter = new CommentsPresenter(coments);
+
+    return presenter.toJSON();
   }
 
   async deleteTwit(request, response, next) {
@@ -330,6 +358,18 @@ class TwitsController {
 
         await Favorite_twits.destroy({ where: { twitId: twitId } });
 
+        const countRetweet = await actionsTwitsController.getCountRetwits(
+          twitId
+        );
+
+        const countLikes = await actionsTwitsController.getCountLikes(twitId);
+
+        const countAnswers = await actionsTwitsController.getCountComments(
+          twitId
+        );
+
+        const countTrends = await trendsController.getCountTrends(twit.text);
+
         return response.json(twit);
       }
     } catch (error) {
@@ -337,60 +377,28 @@ class TwitsController {
     }
   }
 
-  async getUserTwitsWithMedia(request, response, next) {
-    try {
-      const Op = Sequelize.Op;
-      const { userId } = request.params;
+  async getUserTwitsWithMedia(userId, authUserId, limit, offset) {
+    const params = `WHERE "Twits"."userId" = ${userId} AND "Twits"."img" IS NOT NULL ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
-      let { limit, list } = request.query;
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
+    const twits = await dbRequestTwitsForAuthUser(userId, authUserId, params);
 
-      const params = `WHERE "Twits"."userId" = ${userId} AND "Twits"."img" IS NOT NULL ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
+    const presenter = new TwitsPresenter(twits);
 
-      const twits = await dbRequestTwitsForAuthUser(
-        decodeUser,
-        request,
-        params
-      );
-
-      const presenter = new TwitsPresenter(twits);
-
-      return response.json(presenter.toJSON());
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
-    }
+    return presenter.toJSON();
   }
 
-  async getTwitsWithUserLikes(request, response, next) {
-    try {
-      const Op = Sequelize.Op;
-      const user = decodeUser(request);
-      const userIdToken = user.id;
+  async getTwitsWithUserLikes(userId, authUserId, limit, offset) {
+    const params = `ORDER BY "Likes"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
-      const { userId } = request.params;
+    const twitsWithLikes = await dbRequestTwitsWithUserLikes(
+      userId,
+      authUserId,
+      params
+    );
 
-      let { limit, list } = request.query;
+    const presenter = new TwitsWithUserLikesPresenter(twitsWithLikes);
 
-      limit = limit || 7;
-      list = list || 1;
-      let offset = list * limit - limit;
-
-      const params = `ORDER BY "Likes"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
-
-      const twitsWithLikes = await dbRequestTwitsWithUserLikes(
-        decodeUser,
-        request,
-        params
-      );
-
-      const presenter = new TwitsWithUserLikesPresenter(twitsWithLikes);
-
-      return response.json(presenter.toJSON());
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
-    }
+    return presenter.toJSON();
   }
 }
 

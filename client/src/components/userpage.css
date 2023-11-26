@@ -4,6 +4,10 @@ h2 {
   margin: 0;
 }
 
+.load-login {
+  margin-top: 30px;
+}
+
 .load-page p {
   width: 70px;
   height: 19px;
@@ -61,6 +65,10 @@ h2 {
   border-radius: 20px;
   cursor: pointer;
   border: none;
+}
+
+.load-trends-main-block {
+  height: 355px;
 }
 
 .main-content-profile-panel {
@@ -316,7 +324,7 @@ h2 {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   border: none;
   font-size: 18px;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
 .active h4 {
@@ -498,6 +506,11 @@ h2 {
 .section-whoyouread-user-name p {
   word-wrap: break-word;
   width: 80px;
+}
+
+.user-name-list {
+  font-size: 18px;
+  margin-left: 3px;
 }
 
 .wrapper-follow-user-img {

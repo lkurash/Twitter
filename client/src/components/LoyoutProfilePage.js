@@ -1,7 +1,5 @@
-import { observer } from "mobx-react-lite";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { Context } from "..";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
 
@@ -9,22 +7,26 @@ import ProfileButtonPanel from "./ProfileButtonPanel";
 import ProfileUserInfo from "./ProfileUserInfo";
 
 import arrowLeft from "./Imgs/arrow_left_icon.png";
+import { auth, userProfileById } from "../redux/user/user.selectors";
+import { useSelector } from "react-redux";
 
-const ContentUserProfilePage = observer(({ pathHomeProfileUser }) => {
+const LoyoutProfilePage = ({ pathHomeProfileUser }) => {
+  const { profile, loadingStatus } = useSelector(userProfileById);
+    const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const { usersStore } = useContext(Context);
 
   useEffect(() => {
     setIsLoading(true);
+    if (loadingStatus === "PENDING") {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 250);
+    }
+  }, [loadingStatus]);
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 250);
-  }, [usersStore.userPage.id]);
-
-  if (isLoading || !usersStore.userPage.id) {
-    return loadPageUserInfo();
+  if (isLoading) {
+    return loadPageUserInfo(isAuth);
   }
 
   return (
@@ -37,10 +39,11 @@ const ContentUserProfilePage = observer(({ pathHomeProfileUser }) => {
           <img src={arrowLeft} alt="Button return" />
         </div>
         <div className="main-page-name">
-          <h2>{usersStore.userPage.user_name}</h2>
-          <p>@{usersStore.userPage.user_name}</p>
+          <h2>{profile.user_name}</h2>
+          <p>@{profile.user_name}</p>
         </div>
       </div>
+
       <>
         <div className="main-content-profile-panel">
           <ProfileUserInfo pathHomeProfileUser={pathHomeProfileUser} />
@@ -50,6 +53,6 @@ const ContentUserProfilePage = observer(({ pathHomeProfileUser }) => {
       </>
     </>
   );
-});
+};
 
-export default ContentUserProfilePage;
+export default LoyoutProfilePage;

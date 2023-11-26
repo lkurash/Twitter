@@ -1,13 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-import { SIGNUP_PAGE_PATH } from "../../utils/constans";
+import { SIGNUP_PAGE_PATH } from "../../utils/routs";
 
-const LoginPasswordForm = ({
-  email,
-  password,
-  setPassword,
-  signIn,
-}) => {
+const LoginPasswordForm = ({ email, password, setPassword, signIn }) => {
   const navigate = useNavigate();
 
   const signInKeyDown = (event) => {

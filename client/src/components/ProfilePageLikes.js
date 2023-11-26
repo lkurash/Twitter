@@ -1,42 +1,42 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Context } from "..";
-
-import twitClient from "../http/twitClient";
-import getAuthUserID from "../utils/getAuthUserID";
+import { Fragment, useEffect, useState } from "react";
 import spinner from "../utils/spinner";
 
 import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
 import Twits from "./Twits";
+import { useDispatch, useSelector } from "react-redux";
+import { twitsStore } from "../redux/tweet/tweet.selectors";
+import { userProfileById } from "../redux/user/user.selectors";
+import { useParams } from "react-router-dom";
+import { tweetActions } from "../redux/tweet/tweet.actions";
 
 const ProfilePageLikes = observer(() => {
-  const { twitsStore } = useContext(Context);
-  const { usersStore } = useContext(Context);
-  const [loadingPage, setIsLoadingPage] = useState(true);
+  const dispatch = useDispatch();
+  const { profile } = useSelector(userProfileById);
+  const { twits } = useSelector(twitsStore);
+  const { id } = useParams();
+  const { loadingStatus } = useSelector(twitsStore);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const authUserID = getAuthUserID();
+    dispatch(tweetActions.getTweetsWithLikes(profile.id));
 
-    if (authUserID) {
-      twitClient.getTwitsWithUserLikes(usersStore.userPage.id).then((twits) => {
-        twitsStore.setTwits(twits);
-      });
+    if (loadingStatus === "PENDING" || isLoading) {
       setTimeout(() => {
-        setIsLoadingPage(false);
-      }, 250);
+        setIsLoading(false);
+      }, 300);
     }
-  }, []);
+  }, [id]);
 
-  if (usersStore.userPage.length === 0 || loadingPage) return spinner();
+  if (isLoading) return <div className="twits">{spinner()}</div>;
 
   return (
     <Fragment>
       <Twits />
-      {twitsStore.twits.length >= 7 && (
+      {twits && twits.length >= 7 && (
         <ShowMoreTwitsButton
-          getTwits={twitClient.getTwitsWithUserLikes}
-          userId={usersStore.userPage.id}
-          store={twitsStore}
+          getTwits={tweetActions.getMoreTweetsWithLikes}
+          userId={profile.id}
         />
       )}
     </Fragment>

@@ -1,61 +1,48 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Context } from "../..";
 
-import twitClient from "../../http/twitClient";
+import { useDispatch, useSelector } from "react-redux";
+import { tweetActions } from "../../redux/tweet/tweet.actions";
+import { twitsStore } from "../../redux/tweet/tweet.selectors";
 
-import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import spinner from "../../utils/spinner";
-import getAuthUserID from "../../utils/getAuthUserID";
 
 import Twits from "../../components/Twits";
 import MainSectionTrends from "../../components/MainSectionTrends";
 import ShowMoreTwitsButton from "../../components/buttons/ShowMoreTwitsButton";
 
 const PublicExplorePage = observer(() => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const { loadingStatus, twits } = useSelector(twitsStore);
+
   const [isLoading, setIsLoading] = useState(true);
 
-  const authUserID = getAuthUserID();
-
   useEffect(() => {
-    try {
-      twitClient
-        .getAllTwits()
-        .then((alltwits) => twitsStore.setTwits(alltwits));
-      usersStore.setAuth(getFlagIsAuth());
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
+    dispatch(tweetActions.getTweets());
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
+    if (loadingStatus === "PENDING" || isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+    }
   }, []);
 
   return (
     <div className="main-content">
-      {isLoading ? (
-        spinner()
-      ) : (
-        <MainSectionTrends className="section section-public-page trends" />
-      )}
+      <MainSectionTrends
+        className="section section-public-page trends"
+        mainBlock={true}
+      />
+
       <div className="main-line" />
       {isLoading ? (
-        spinner()
+        <div className="twits">{spinner()}</div>
       ) : (
         <>
           <Twits />
-          {twitsStore.twits.length >= 7 && !isLoading && (
+          {twits && twits.length >= 7 && (
             <ShowMoreTwitsButton
-              getTwits={
-                authUserID
-                  ? twitClient.getTwitsForAuthUser
-                  : twitClient.getAllTwits
-              }
-              userId={authUserID}
-              store={twitsStore}
+              getTwits={tweetActions.getMoreTweets}
             />
           )}
         </>

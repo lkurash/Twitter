@@ -1,47 +1,26 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Context } from "../..";
-
-import userClient from "../../http/userClient";
-
-import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import ContentFollowPage from "../../components/ContentFollowPage";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../redux/user/user.actions";
+import { userProfileById } from "../../redux/user/user.selectors";
 
 const FollowPage = observer(() => {
-  const { usersStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const { loadingStatus } = useSelector(userProfileById);
   const { id } = useParams();
   const authUserID = getAuthUserID();
 
   useEffect(() => {
-    try {
-      if (authUserID) {
-        userClient
-          .getUserProfile(id || authUserID)
-          .then((userById) => usersStore.setUserPage(userById));
+    dispatch(userActions.getUserProfileById(id || authUserID));
+  }, []);
 
-        userClient
-          .getFollowingsUser(id || authUserID)
-          .then((followings) =>
-            usersFollowingsStore.setuserFollowing(followings)
-          );
-
-        userClient
-          .getFollowersUser(id || authUserID)
-          .then((followers) =>
-            usersFollowingsStore.setuserFollowers(followers)
-          );
-      }
-
-      usersStore.setAuth(getFlagIsAuth());
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
-  });
-
+  if (loadingStatus !== "COMPLETE") {
+    return null;
+  }
   return (
     <>
       <ContentFollowPage />

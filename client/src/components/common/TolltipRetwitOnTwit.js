@@ -2,29 +2,29 @@ import { useContext, useState } from "react";
 import { Context } from "../..";
 import { useNavigate } from "react-router-dom";
 
-import userClient from "../../http/userClient";
+import userAPI from "../../http/userAPI";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import path from "../../utils/path";
-import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../utils/constans";
+import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../utils/routs";
 
 import PreviewUserOnTwit from "./PreviewUserOnTwit";
 
 import retwitIcon from "../Imgs/notactive_retweet_icon.png";
+import { auth } from "../../redux/user/user.selectors";
+import { useSelector } from "react-redux";
 
 const TooltipRetwitOnTwit = ({ retwit, user }) => {
-  const { usersStore } = useContext(Context);
+  const { isAuth } = useSelector(auth);
   const { usersFollowingsStore } = useContext(Context);
 
   const [showProfileUser, setShowProfileUser] = useState(false);
   const navigate = useNavigate();
 
-  const checkFollowing = async (id) => {
-    await userClient.checkFollowing(id).then((following) => {
-      usersFollowingsStore.setStartFollowUser(following);
-    });
-  };
+  // const checkFollowing = async (id) => {
+  //  dispatch(userOptionsActions.getPreviewProfile(id, authUserID));
+  // };
 
   const onMouseLeave = () => {
     setTimeout(() => {
@@ -33,7 +33,7 @@ const TooltipRetwitOnTwit = ({ retwit, user }) => {
   };
 
   const onMouseEnter = () => {
-    checkFollowing(user.id);
+    // checkFollowing(user.id);
     setTimeout(() => {
       setShowProfileUser(true);
     }, 200);
@@ -43,7 +43,7 @@ const TooltipRetwitOnTwit = ({ retwit, user }) => {
     <>
       {retwit && (
         <>
-          {retwit.userId === getAuthUserID(usersStore) ? (
+          {retwit.userId === getAuthUserID() ? (
             <div className="twit-hint-about-retwit">
               <div className="twit-hint-about-retwit-img-text">
                 <img
@@ -68,7 +68,7 @@ const TooltipRetwitOnTwit = ({ retwit, user }) => {
                 <div
                   className="twit-hint-about-retwit-img-text"
                   onClick={() => {
-                    if (usersStore.isAuth) {
+                    if (isAuth) {
                       navigate(path(USER_PAGE_PATH, user.id));
                     } else {
                       navigate(path(PUBLIC_USER_PAGE_PATH, user.id));

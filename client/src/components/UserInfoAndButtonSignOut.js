@@ -1,16 +1,28 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
-import { Context } from "..";
+import { useEffect, useState } from "react";
 
 import getUserPhoto from "../utils/getUserPhoto";
 
 import SignOutButton from "./buttons/SignOutButton";
 
 import dotMenu from "./Imgs/more_dots_icon.png";
+import { useSelector } from "react-redux";
+import { userProfile } from "../redux/user/user.selectors";
 
 const UserInfoAndButtonSignOut = observer(() => {
-  const { usersStore } = useContext(Context);
+  const { profile, loadingStatus } = useSelector(userProfile);
+  const [isLoading, setIsLoading] = useState(true);
   const [buttonSignOutVisible, setButtonSignOutVisible] = useState(false);
+
+  useEffect(() => {
+    if (loadingStatus !== "PENDING") {
+      setIsLoading(false);
+    }
+  }, [loadingStatus]);
+
+  if (isLoading) {
+    return null;
+  }
 
   const onClose = () => {
     setButtonSignOutVisible(false);
@@ -31,11 +43,11 @@ const UserInfoAndButtonSignOut = observer(() => {
       >
         <div className="button-user-desc">
           <div className="button-user-photo">
-            <img src={getUserPhoto(usersStore.user)} alt="User" />
+            <img src={getUserPhoto(profile)} alt="User" />
           </div>
           <div className="button-user-name">
-            <span>{usersStore.user.user_name}</span>
-            <p>@{usersStore.user.user_name}</p>
+            <span>{profile.user_name}</span>
+            <p>@{profile.user_name}</p>
           </div>
         </div>
         <img

@@ -1,6 +1,6 @@
 import { $authClient, $client } from "./clients";
 
-class TwitClient {
+class TwitAPI {
   async createTwitByUser(twit) {
     const newTwit = await $authClient.post("api/twits/twit", twit);
 
@@ -64,12 +64,18 @@ class TwitClient {
     return favoriteTwit.data;
   }
 
+  async deleteFavoriteTwitByUser(userId, twitId) {
+    const deletedBookmark = await $authClient.post(
+      `api/twits/bookmarks/twit/${twitId}/user/${userId}`
+    );
+
+    return deletedBookmark.data;
+  }
+
   async createCommentTwitByUser(userId, twitId, text) {
     const comment = await $authClient.post(
       `api/twits/twit/${twitId}/user/${userId}/comments`,
-      {
-        text,
-      }
+      { text }
     );
 
     return comment.data;
@@ -105,10 +111,11 @@ class TwitClient {
     return countRetwits.data;
   }
 
-  async getCountLikes(twitId) {
-    const countLikes = await $authClient.put(`api/twits/twit/${twitId}/likes`);
-
-    return countLikes.data;
+  async deleteLike(userId, twitId) {
+    const dislikedTwit = await $authClient.put(
+      `api/twits/twit/${twitId}/likes/user/${userId}`
+    );
+    return dislikedTwit.data;
   }
 
   async getCountComments(twitId) {
@@ -157,6 +164,6 @@ class TwitClient {
     return twits.data;
   }
 }
-const twitClient = new TwitClient();
+const twitAPI = new TwitAPI();
 
-export default twitClient;
+export default twitAPI;

@@ -1,15 +1,16 @@
 import Cookies from "js-cookie";
 import { redirect } from "react-router-dom";
-import userClient from "../http/userClient";
+import userAPI from "../http/userAPI";
 import LocalAuthClient from "../store/LocalAuthClient";
 
 const authenticate = async () => {
-  const token = await userClient
+  const token = await userAPI
     .createRefreshToken()
     .then((result) => LocalAuthClient.setRefreshToken(result.token))
     .catch((error) => {
       console.log(error.response.data.message);
     });
+
   if (token) {
     return null;
   } else {

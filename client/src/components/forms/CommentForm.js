@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import twitClient from "../../http/twitClient";
+import twitAPI from "../../http/twitAPI";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
@@ -10,9 +10,11 @@ import getUserPhoto from "../../utils/getUserPhoto";
 import EmojiButton from "../buttons/EmojiButton";
 
 import close from "../Imgs/x_icon.png";
+import { useSelector } from "react-redux";
+import { userProfile } from "../../redux/user/user.selectors";
 
 const CommentForm = observer(({ twit }) => {
-  const { usersStore } = useContext(Context);
+  const { profile } = useSelector(userProfile);
   const { commentsStore } = useContext(Context);
   const { infoMessageStore } = useContext(Context);
 
@@ -21,11 +23,13 @@ const CommentForm = observer(({ twit }) => {
   const authUserID = getAuthUserID();
 
   const createComment = async (twitId) => {
-    await twitClient.createCommentTwitByUser(authUserID, twitId, commentText);
-    commentsStore.setActiveComment({});
-    await twitClient.getCountComments(twitId);
+    await twitAPI.createCommentTwitByUser(authUserID, twitId, commentText);
+
+    // await twitAPI.getCountComments(twitId);
+
     infoMessageStore.setTextMessage("Comment has been sent.");
     infoMessageStore.setInfoMessageVisible(true);
+    commentsStore.setActiveComment({});
   };
 
   if (commentText.length > 255) {
@@ -49,7 +53,7 @@ const CommentForm = observer(({ twit }) => {
           <div className="comment-user-info-block">
             <img alt="User" src={getUserPhoto(twit.userOriginalTwits)} />
             <div className="comment-line" />
-            <img src={getUserPhoto(usersStore.user)} alt="User" />
+            <img src={getUserPhoto(profile)} alt="User" />
           </div>
           <div className="comment-wrapper-twit-info-block">
             <div className="comment-twit-info-block">

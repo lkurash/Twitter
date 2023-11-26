@@ -1,14 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "..";
 
 import { USER_PAGE_PATH, PUBLIC_USER_PAGE_PATH } from "../utils/constans";
 import path from "../utils/path";
+import { auth } from "../redux/user/user.selectors";
+import { useSelector } from "react-redux";
 
 const UserName = observer(({ twit, user }) => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
+  const { isAuth } = useSelector(auth);
 
   const navigate = useNavigate();
 
@@ -18,15 +17,9 @@ const UserName = observer(({ twit, user }) => {
         <h4
           className="twit-user-name"
           onClick={() => {
-            if (usersStore.isAuth) {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
-
+            if (isAuth) {
               navigate(path(USER_PAGE_PATH, user.id));
             } else {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
-
               navigate(path(PUBLIC_USER_PAGE_PATH, twit.user.id));
             }
           }}

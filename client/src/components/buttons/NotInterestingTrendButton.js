@@ -1,18 +1,16 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useRef, useState } from "react";
-import { Context } from "../..";
-
-import trendClient from "../../http/trendClient";
+import { useRef, useState } from "react";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import dotMenu from "../Imgs/more_dots_icon.png";
 import sad_smile from "../Imgs/sad_smiley_icon.png";
+import { useDispatch } from "react-redux";
+import { trendActions } from "../../redux/trend/trend.actions";
 
 const NotInterestingTrendButton = observer(({ trend }) => {
-  const { trendsStore } = useContext(Context);
-  const { infoMessageStore } = useContext(Context);
+  const dispatch = useDispatch();
 
   const tooltip = useRef(null);
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -22,14 +20,8 @@ const NotInterestingTrendButton = observer(({ trend }) => {
     setTooltipVisible(false);
   };
 
-  const createNotInterestingTrend = async (trendId) => {
-    await trendClient.createNotInterestingTrend(trendId, authUserID);
-    await trendClient
-      .getAllTrends(authUserID)
-      .then((allTrends) => trendsStore.setTrends(allTrends));
-
-    infoMessageStore.setTextMessage("Not interested in the trend.");
-    infoMessageStore.setInfoMessageVisible(true);
+  const createNotInterestingTrend = (trendId) => {
+    dispatch(trendActions.createNotInterestingTrend(trendId, authUserID));
   };
 
   useOutsideClick(tooltip, onClose, tooltipVisible);

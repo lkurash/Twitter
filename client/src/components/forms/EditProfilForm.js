@@ -1,12 +1,15 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
 
-import userClient from "../../http/userClient";
+import { useDispatch, useSelector } from "react-redux";
+import { userProfile } from "../../redux/user/user.selectors";
+import { userActions } from "../../redux/user/user.actions";
 
 import getUserPhoto from "../../utils/getUserPhoto";
-import { PROFILE_PAGE_USER_PATH } from "../../utils/constans";
+import { PROFILE_PAGE_USER_PATH } from "../../utils/routs";
+import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import BirthForm from "./BirthForm";
@@ -14,33 +17,35 @@ import CloseButton from "../buttons/CloseButton";
 
 import buttonEditPhoto from "../Imgs/add_photo_icon.png";
 import undefinedUserPhoto from "../Imgs/user_photo.jpeg";
-import getAuthUserID from "../../utils/getAuthUserID";
 
 const EditProfileForm = observer(() => {
-  const { usersStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const { profile } = useSelector(userProfile);
+  const { userStore } = useContext(Context);
   const navigate = useNavigate();
   const authUserID = getAuthUserID();
   const divRef = useRef(null);
-  const [name, setName] = useState("");
-  const [about, setAbout] = useState("");
-  const [textWebSiteUrl, setTextWebSiteUrl] = useState("");
-  const [photo, setPhoto] = useState("");
-  const [background, setBackground] = useState("");
+  const [newPhoto, setNewPhoto] = useState("");
+  const [newBackground, setNewBackground] = useState("");
   const [activInputName, setActivInputName] = useState(false);
   const [activInputAbout, setActivInputAbout] = useState(false);
   const [activInputSite, setActivInputSite] = useState(false);
 
+  useEffect(() => {
+    userStore.setUserInfo(profile);
+  }, []);
+
   const selectedFilePhoto = (e) => {
-    setPhoto(e.target.files[0]);
+    setNewPhoto(e.target.files[0]);
   };
 
   const selectedFileBackground = (e) => {
-    setBackground(e.target.files[0]);
+    setNewBackground(e.target.files[0]);
   };
 
   const getUserBackground = () => {
-    if (usersStore.user.background) {
-      return `http://localhost:5500/${usersStore.user.background}`;
+    if (profile.background) {
+      return `http://localhost:5500/${profile.background}`;
     }
     return undefinedUserPhoto;
   };
@@ -48,23 +53,21 @@ const EditProfileForm = observer(() => {
   const updateProfile = async () => {
     const formData = new FormData();
 
-    formData.append("photo", photo);
-    formData.append("background", background);
-    formData.append("name", name);
-    formData.append("birthdate", usersStore.birthDate);
-    formData.append("web_site_url", textWebSiteUrl.trim());
-    formData.append("about", about.trim());
+    formData.append("photo", newPhoto);
+    formData.append("background", newBackground);
+    formData.append("name", userStore.name);
+    formData.append("birthdate", userStore.birthDate);
+    formData.append(
+      "web_site_url",
+      userStore.webSite && userStore.webSite.trim()
+    );
+    formData.append("about", userStore.about && userStore.about.trim());
 
-    await userClient.updateUserProfile(authUserID, formData).catch((error) => {
-      console.log(error.response.data.message);
-    });
-
-    await userClient.getUserProfile(authUserID).then((userInfo) => {
-      usersStore.setUserPage(userInfo);
-    });
+    dispatch(userActions.updateProfile(authUserID, formData));
 
     navigate(PROFILE_PAGE_USER_PATH);
   };
+
   const onClose = () => {
     setActivInputName(false);
     setActivInputAbout(false);
@@ -90,8 +93,8 @@ const EditProfileForm = observer(() => {
       <main className="edit-profile-form-main">
         <div className="edit-profile-background">
           <div className="edit-profile-background-photo">
-            {background ? (
-              <img src={URL.createObjectURL(background)} alt="background" />
+            {newBackground ? (
+              <img src={URL.createObjectURL(newBackground)} alt="background" />
             ) : (
               <img src={getUserBackground()} alt="background" />
             )}
@@ -109,10 +112,10 @@ const EditProfileForm = observer(() => {
             </div>
           </div>
           <div className="edit-profile-form-photo">
-            {!photo ? (
-              <img src={getUserPhoto(usersStore.user)} alt="user" />
+            {newPhoto ? (
+              <img src={URL.createObjectURL(newPhoto)} alt="user" />
             ) : (
-              <img src={URL.createObjectURL(photo)} alt="user" />
+              <img src={getUserPhoto(profile)} alt="user" />
             )}
             <div className="edit-profile-form-photo-button">
               <input
@@ -143,8 +146,8 @@ const EditProfileForm = observer(() => {
             <h4>Name</h4>
             <input
               name="editProfileFormInputName"
-              value={name || usersStore.user.user_name || ""}
-              onChange={(e) => setName(e.target.value.trim())}
+              value={userStore.name || ""}
+              onChange={(e) => userStore.setName(e.target.value)}
             />
           </div>
           <div
@@ -163,8 +166,10 @@ const EditProfileForm = observer(() => {
             <h4>About me</h4>
             <textarea
               name="editProfileFormInputAbout"
-              value={about || usersStore.user.about || ""}
-              onChange={(e) => setAbout(e.target.value)}
+              value={userStore.about || ""}
+              onChange={(e) => {
+                userStore.setAbout(e.target.value);
+              }}
             />
           </div>
           <div
@@ -181,14 +186,14 @@ const EditProfileForm = observer(() => {
             <h4>Web site</h4>
             <input
               name="editProfileFormInputWebSite"
-              value={textWebSiteUrl || usersStore.user.web_site_url || ""}
-              onChange={(e) => setTextWebSiteUrl(e.target.value)}
+              value={userStore.webSite || ""}
+              onChange={(e) => userStore.setWebSite(e.target.value)}
             />
           </div>
         </div>
         <div className="signup-birth-form">
           <h4 className="edit-form-input-birth">Date of birth:</h4>
-          <BirthForm user={usersStore.user} />
+          <BirthForm user={profile} />
         </div>
       </main>
     </div>

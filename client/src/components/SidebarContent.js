@@ -1,35 +1,19 @@
 import { observer } from "mobx-react-lite";
-import { useContext } from "react";
-import { useLocation } from "react-router-dom";
-import { Context } from "..";
-
-import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/constans";
-import getFlagIsAuth from "../utils/getFlagIsAuth";
 
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
 
 const SidebarContent = observer(() => {
-  const { usersStore } = useContext(Context);
-  const location = useLocation().pathname;
-
-  const userAuth = getFlagIsAuth();
-
   return (
     <aside className="side-bar">
-      {(userAuth || location === PUBLIC_EXPLORE_PAGE_PATH) && (
-        <>
-          <MainSearchBlock classNameForm="main-search-form-home section-background" />
-          <div className="main-content">
-            <MainSectionTrends className="section trends-home section-background" />
-            <MainSectionWhoToRead
-              className="section happen-home section-background"
-              user={usersStore}
-            />
-          </div>
-        </>
-      )}
+      <>
+        <MainSearchBlock classNameForm="main-search-form-home section-background" />
+        <div className="main-content">
+          <MainSectionTrends className="section trends-home section-background" />
+          <MainSectionWhoToRead className="section happen-home section-background" />
+        </div>
+      </>
     </aside>
   );
 });

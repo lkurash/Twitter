@@ -2,47 +2,28 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "../..";
 
-import userClient from "../../http/userClient";
-
 import getAuthUserID from "../../utils/getAuthUserID";
+import { useDispatch } from "react-redux";
+import { userOptionsActions } from "../../redux/userOptions/userOptions.actions";
 
 const FollowButton = observer(
-  ({ profile, userFollowingIds, following, classButton }) => {
-    const { usersStore } = useContext(Context);
-    const { usersFollowingsStore } = useContext(Context);
-    const authUserID = getAuthUserID(usersStore);
+  ({ follow, profile, userFollowingIds, classButton }) => {
+    const dispatch = useDispatch();
 
-    const deleteFollowAndgetUsers = async (userFollowId) => {
-      await userClient
-        .deleteFollowings(authUserID, userFollowId)
-        .then((unfollowUser) => {
-          usersFollowingsStore.deleteFollowUserInFollowList(unfollowUser);
-          usersFollowingsStore.setStartFollowUser({
-            id: userFollowId,
-            following: false,
-          });
-        })
-        .catch((error) => console.log(error.response.data.message));
+    const { usersFollowingsStore } = useContext(Context);
+    const authUserID = getAuthUserID();
+
+    const deleteFollow = (userFollowId) => {
+      dispatch(userOptionsActions.deleteFollowing(authUserID, userFollowId));
     };
 
-    const createFollowAndgetUsers = async (userFollowId) => {
-      await userClient
-        .createFollowings(authUserID, userFollowId)
-        .then((followingUser) => {
-          usersFollowingsStore.createFollowUserInFollowList(followingUser);
-          usersFollowingsStore.setStartFollowUser({
-            id: userFollowId,
-            following: true,
-          });
-        })
-        .catch((error) => {
-          console.log(error.response.data.message);
-        });
+    const createFollow = (userFollowId) => {
+      dispatch(userOptionsActions.createFollowing(authUserID, userFollowId));
     };
 
     return (
       <>
-        {following ? (
+        {follow ? (
           <button
             key={profile.id}
             className={`follow-page-main-button-following ${classButton} button-following-hover`}
@@ -53,7 +34,7 @@ const FollowButton = observer(
               usersFollowingsStore.setHoverFollowUser({});
             }}
             onClick={() => {
-              deleteFollowAndgetUsers(profile.id);
+              deleteFollow(profile.id);
             }}
           >
             <span>
@@ -67,7 +48,7 @@ const FollowButton = observer(
             type="submit"
             className={`follow-page-main-button-following ${classButton} `}
             onClick={() => {
-              createFollowAndgetUsers(profile.id);
+              createFollow(profile.id);
             }}
           >
             <span>Follow</span>

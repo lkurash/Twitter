@@ -1,37 +1,44 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Context } from "..";
+import { Fragment, useEffect, useState } from "react";
 
-import twitClient from "../http/twitClient";
 import spinner from "../utils/spinner";
 
 import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
 import Twits from "./Twits";
+import { useDispatch, useSelector } from "react-redux";
+import { twitsStore } from "../redux/tweet/tweet.selectors";
+
+import { userProfileById } from "../redux/user/user.selectors";
+import { useParams } from "react-router-dom";
+import { tweetActions } from "../redux/tweet/tweet.actions";
 
 const ProfilePageMedia = observer(() => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
-  const [loadingPage, setIsLoadingPage] = useState(true);
+  const dispatch = useDispatch();
+  const { profile } = useSelector(userProfileById);
+  const { twits } = useSelector(twitsStore);
+  const { id } = useParams();
+  const { loadingStatus } = useSelector(twitsStore);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    twitClient.getUserTwitsWithMedia(usersStore.userPage.id).then((twits) => {
-      twitsStore.setTwits(twits);
-    });
-    setTimeout(() => {
-      setIsLoadingPage(false);
-    }, 250);
-  }, []);
+    dispatch(tweetActions.getTweetsWithMedia(profile.id));
 
-  if (usersStore.userPage.length === 0 || loadingPage) return spinner();
+    if (loadingStatus === "PENDING" || isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+    }
+  }, [id]);
+
+  if (isLoading) return <div className="twits">{spinner()}</div>;
 
   return (
     <Fragment>
       <Twits />
-      {twitsStore.twits.length >= 4 && (
+      {twits && twits.length >= 4 && (
         <ShowMoreTwitsButton
-          getTwits={twitClient.getUserTwitsWithMedia}
-          userId={usersStore.userPage.id}
-          store={twitsStore}
+          getTwits={tweetActions.getMoreTweetsWithMedia}
+          userId={profile.id}
         />
       )}
     </Fragment>

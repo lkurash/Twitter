@@ -39,68 +39,71 @@ const deleteActions = async (twitId) => {
 };
 
 class ActionsTwitsController {
-  async createLikeTwitByUser(request, response, next) {
-    try {
-      const { twitId } = request.params;
-      const { userId } = request.params;
+  
+  async getCountLikes(twitId) {
+    const count = await Likes.count({
+      where: { twitId: twitId },
+    });
 
-      checkUsersAuth(request, userId, next);
+    const countLikes = await Twits.update(
+      {
+        countLikes: +count,
+      },
+      {
+        where: { id: twitId },
+      }
+    );
 
-      const checkLike = await Likes.findOne({
+    const twit = await Twits.findOne({
+      where: { id: twitId },
+    });
+
+    return twit;
+  }
+
+  async likeTwitByUser(twitId, userId) {
+    const likedTweet = await Likes.create({
+      userId: userId,
+      twitId: twitId,
+      like: true,
+    });
+
+    return likedTweet;
+  }
+
+  async deleteLike(twitId, userId) {
+    const dislikeTweet = await Likes.findOne({
+      where: { twitId: twitId, userId: userId },
+    });
+
+    if (dislikeTweet) {
+      const disLike = await Likes.destroy({
         where: { twitId: twitId, userId: userId },
       });
 
-      if (checkLike) {
-        const disLike = await Likes.destroy({
-          where: { twitId: twitId, userId: userId },
-        });
+      return dislikeTweet;
+    }
+  }
 
-        response.json(null);
-      }
-      if (!checkLike) {
-        const like = await Likes.create({
-          userId: userId,
-          twitId: twitId,
-          like: true,
-        });
+  async createFavoriteTwitByUser(request, response, next) {
+    try {
+      const { twitId } = request.params;
+      const { userId } = request.params;
+      checkUsersAuth(request, userId, next);
 
-        return response.json(like);
-      }
+      const favoriteTwit = await Favorite_twits.create({
+        userId: userId,
+        twitId: twitId,
+        bookmark: true,
+      });
+
+      return response.json(favoriteTwit);
     } catch (error) {
       next(ApiError.badRequest("Check user.id or twit.id"));
     }
   }
 
-  async getCountLikes(request, response, next) {
-    try {
-      const { twitId } = request.params;
-
-      if (twitId) {
-        const count = await Likes.count({
-          where: { twitId: twitId },
-        });
-
-        const countLikes = await Twits.update(
-          {
-            countLikes: +count,
-          },
-          {
-            where: { id: twitId },
-          }
-        );
-
-        const twit = await Twits.findOne({
-          where: { id: twitId },
-        });
-
-        return response.json(twit);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check twit.id"));
-    }
-  }
-
-  async createFavoriteTwitByUser(request, response, next) {
+  async deleteBookmark(request, response, next) {
     try {
       const { twitId } = request.params;
       const { userId } = request.params;
@@ -116,200 +119,109 @@ class ActionsTwitsController {
           where: { twitId: twitId, userId: userId },
         });
 
-        response.json(null);
-      }
-      if (!checkFavoriteTwits) {
-        const favoriteTwit = await Favorite_twits.create({
-          userId: userId,
-          twitId: twitId,
-          bookmark: true,
-        });
-
-        return response.json(favoriteTwit);
+        response.json(checkFavoriteTwits);
       }
     } catch (error) {
       next(ApiError.badRequest("Check user.id or twit.id"));
     }
   }
 
-  async createRetwitByUser(request, response, next) {
-    try {
-      const { twitId } = request.params;
-      const { userId } = request.params;
-      const { twitUserId } = request.body;
-      const { text } = request.body;
-      const { img } = request.body;
+  async createRetwitByUser(twitId, userId, twitUserId, text, img) {
+    const retweet = await Twits.create({
+      userId: userId,
+      twitId: twitId,
+      text,
+      img,
+      retwit: true,
+      twitUserId: twitUserId,
+    });
+    return retweet;
+  }
 
-      checkUsersAuth(request, userId, next);
+  async deleteRetwitByUser(retwitId, userId) {
+    const retwitFoundId = await Twits.findOne({
+      where: { id: +retwitId, userId: +userId, retwit: true },
+    });
+    const retwitFoundTwitId = await Twits.findOne({
+      where: { twitId: +retwitId, userId: +userId, retwit: true },
+    });
 
-      const retweetedTwit = await Twits.findOne({
-        where: { twitId: twitId, userId: userId, retwit: true },
+    if (retwitFoundId) {
+      await Twits.destroy({
+        where: { id: retwitId, userId: userId, retwit: true },
       });
 
-      const retwit = await Twits.findOne({
-        where: { id: twitId, userId: userId, retwit: true },
+      return retwitFoundId;
+    } else if (retwitFoundTwitId) {
+      await Twits.destroy({
+        where: { twitId: retwitId, userId: userId },
       });
-
-      if (!retweetedTwit) {
-        const retwit = await Twits.create({
-          userId: userId,
-          twitId: twitId,
-          text,
-          img,
-          retwit: true,
-          twitUserId: twitUserId,
-        });
-
-        const twit = await Twits.findOne({
-          include: [
-            { model: User, as: "user" },
-            { model: User, as: "twit_user" },
-            { model: Likes, as: "likes" },
-            { model: Twits, as: "retwits" },
-            { model: Favorite_twits, as: "favorite_twits" },
-            { model: Comments },
-          ],
-          where: { id: retwit.id },
-        });
-
-        const presenter = new TwitsPresenter([twit]);
-
-        return response.json(presenter.toJSON());
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check userId or twit.id"));
+      return retwitFoundTwitId;
     }
   }
 
-  async deleteRetwitByUser(request, response, next) {
-    try {
-      const { retwitId } = request.params;
-      const { userId } = request.params;
+  async getCountRetwits(twitId) {
+    const Op = Sequelize.Op;
 
-      checkUsersAuth(request, userId, next);
-
-      const retwitWithRetwitId = await Twits.findOne({
-        where: { id: +retwitId, userId: +userId, retwit: true },
-      });
-      const retwitWithOriginalTwitId = await Twits.findOne({
-        where: { twitId: +retwitId, userId: +userId },
+    if (twitId) {
+      const count = await Twits.count({
+        where: { twitId: twitId, retwit: true },
       });
 
-      if (retwitWithRetwitId) {
-        await Twits.destroy({
-          where: { id: retwitId, userId: userId, retwit: true },
-        });
-
-        return response.json([
-          {
-            originalTwit: retwitWithRetwitId.twitId,
-
-            retwit: retwitWithRetwitId.id,
-          },
-        ]);
-
-      } else if (retwitWithOriginalTwitId) {
-        await Twits.destroy({
-          where: { twitId: retwitId, userId: userId },
-        });
-        return response.json([
-          {
-            originalTwit: retwitWithOriginalTwitId.twitId,
-
-            retwit: retwitWithOriginalTwitId.id,
-          },
-        ]);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check userId or twit.id"));
-    }
-  }
-
-  async getCountRetwits(request, response, next) {
-    try {
-      const Op = Sequelize.Op;
-
-      const { twitId } = request.params;
-
-      if (twitId) {
-        const count = await Twits.count({
-          where: { twitId: twitId, retwit: true },
-        });
-
-        await Twits.update(
-          {
-            countRetwits: +count,
-          },
-          {
-            where: { id: twitId, retwit: false },
-          }
-        );
-
-        await Twits.update(
-          {
-            countRetwits: +count,
-          },
-          {
-            where: { twitId: twitId, retwit: true },
-          }
-        );
-
-        const twit = await Twits.findOne({
+      await Twits.update(
+        {
+          countRetwits: +count,
+        },
+        {
           where: { id: twitId, retwit: false },
-        });
+        }
+      );
 
-        return response.json(twit);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check twit.id"));
+      await Twits.update(
+        {
+          countRetwits: +count,
+        },
+        {
+          where: { twitId: twitId, retwit: true },
+        }
+      );
+
+      const twit = await Twits.findOne({
+        where: { id: twitId, retwit: false },
+      });
+
+      return twit;
     }
   }
 
-  async createCommentByUser(request, response, next) {
-    try {
-      const { twitId } = request.params;
-      const { userId } = request.params;
+  async createCommentByUser(twitId, userId, text) {
+    if (text) {
+      const comment = await Comments.create({
+        userId: userId,
+        twitId: twitId,
+        text,
+      });
 
-      checkUsersAuth(request, userId, next);
-
-      const { text } = request.body;
-
-      if (text) {
-        const comment = await Comments.create({
-          userId: userId,
-          twitId: twitId,
-          text,
-        });
-
-        return response.json(comment);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check user.id or twit.id"));
+      return comment;
     }
   }
 
-  async getCountComments(request, response, next) {
-    try {
-      const { twitId } = request.params;
+  async getCountComments(twitId) {
+    if (twitId) {
+      const count = await Comments.count({
+        where: { twitId: twitId },
+      });
 
-      if (twitId) {
-        const count = await Comments.count({
-          where: { twitId: twitId },
-        });
+      const countComments = await Twits.update(
+        {
+          countComments: +count,
+        },
+        {
+          where: { id: twitId },
+        }
+      );
 
-        const countComments = await Twits.update(
-          {
-            countComments: +count,
-          },
-          {
-            where: { id: twitId },
-          }
-        );
-
-        return response.json(countComments);
-      }
-    } catch (error) {
-      next(ApiError.badRequest("Check twit.id"));
+      return { countComments: +count };
     }
   }
 }

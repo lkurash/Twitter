@@ -1,43 +1,39 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Context } from "..";
+import { Fragment, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { twitsStore } from "../redux/tweet/tweet.selectors";
 
-import twitClient from "../http/twitClient";
-
-import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
 
 import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
 import Twits from "./Twits";
+import { userProfile } from "../redux/user/user.selectors";
+import { tweetActions } from "../redux/tweet/tweet.actions";
 
 const TwitsWhoYouRead = observer(() => {
-  const { twitsStore } = useContext(Context);
+  const { twits, loadingStatus } = useSelector(twitsStore);
+  const { profile } = useSelector(userProfile);
   const [isLoading, setIsLoading] = useState(true);
-  const authUserID = getAuthUserID();
 
   useEffect(() => {
-    if (authUserID) {
-      twitClient
-        .getTwitsByFollowingsUsers(authUserID)
-        .then((twits) => twitsStore.setTwits(twits));
+    if (loadingStatus === "PENDING") {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 400);
     }
+  }, [loadingStatus]);
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 400);
-  }, []);
-
-  if (twitsStore.twits.length === 0 || isLoading) {
+  if (isLoading) {
     return spinner();
   }
 
   return (
     <Fragment>
       <Twits />
-      {twitsStore.twits.length >= 7 && (
+      {twits && twits.length >= 7 && (
         <ShowMoreTwitsButton
-          getTwits={twitClient.getTwitsByFollowingsUsers}
-          userId={authUserID}
+          getTwits={tweetActions.getMoreTweetsWhoYouReading}
+          userId={profile.id}
           store={twitsStore}
         />
       )}

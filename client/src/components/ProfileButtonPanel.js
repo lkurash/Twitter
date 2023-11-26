@@ -9,7 +9,7 @@ import {
   PROFILE_PAGE_USER_LIKES_PATH,
   PROFILE_PAGE_USER_MEDIA_PATH,
   PROFILE_PAGE_USER_TWITS_PATH,
-} from "../utils/constans";
+} from "../utils/routs";
 import path from "../utils/path";
 
 const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {

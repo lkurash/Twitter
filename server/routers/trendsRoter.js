@@ -11,6 +11,5 @@ router.put(
   "/trends/trend/:trendId/user/:userId",
   trendsController.createNotInterestingTrend
 );
-router.put("/trends/countTrends", trendsController.getCountTrends);
 
 module.exports = router;

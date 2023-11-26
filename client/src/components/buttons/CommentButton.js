@@ -7,10 +7,12 @@ import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
 import activeComment from "../Imgs/active_comment_icon.png";
 import notactiveComment from "../Imgs/notactive_comment_icon.png";
+import { useSelector } from "react-redux";
+import { auth } from "../../redux/user/user.selectors";
 
 const CommentButton = observer(({ twit }) => {
+  const { isAuth } = useSelector(auth);
   const { commentsStore } = useContext(Context);
-  const { usersStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
   const imgButtonComment = (twit) => {
@@ -38,7 +40,7 @@ const CommentButton = observer(({ twit }) => {
         className="twit-action-button-comments"
         key={twit.id}
         onClick={() => {
-          if (usersStore.isAuth) {
+          if (isAuth) {
             commentsStore.setActiveComment(twit);
           } else {
             setTooltipUserNotAuth(true);

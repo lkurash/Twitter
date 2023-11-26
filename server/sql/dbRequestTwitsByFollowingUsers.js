@@ -2,12 +2,11 @@ const Sequelize = require("sequelize");
 const { QueryTypes } = require("sequelize");
 const db = require("../models/index.js");
 
-const dbRequestTwitsByFollowingUsers = async (decodeUser, request, anyParams) => {
-  const { userId } = request.params;
-
-  const user = decodeUser(request);
-  const userIdToken = user.id;
-
+const dbRequestTwitsByFollowingUsers = async (
+  userId,
+  authUserId,
+  anyParams
+) => {
   const twits = await db.sequelize.query(
     `SELECT "Twits"."id", "Twits"."text", "Twits"."img", "Twits"."userId", "Twits"."retwit", "Twits"."twitId", "Twits"."twitUserId", "Twits"."countRetwits", "Twits"."countLikes", "Twits"."countComments", "Twits"."createdAt", "Twits"."updatedAt", "likes"."id"
       AS "likes.id", "likes"."like" AS "likes.like", "likes"."userId"

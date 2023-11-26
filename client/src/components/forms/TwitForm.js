@@ -2,17 +2,18 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 
-import twitClient from "../../http/twitClient";
-
 import getUserPhoto from "../../utils/getUserPhoto";
 import EmojiButton from "../buttons/EmojiButton";
 
 import imgFile from "../Imgs/file.png";
 import close from "../Imgs/x_icon.png";
+import { useDispatch, useSelector } from "react-redux";
+import { userProfile } from "../../redux/user/user.selectors";
+import { tweetOptionsActions } from "../../redux/tweetOptions/tweetOptions.actions";
 
 const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const { profile } = useSelector(userProfile);
   const { infoMessageStore } = useContext(Context);
   const [text, setText] = useState("");
   const [imgs, setImgs] = useState([]);
@@ -61,32 +62,29 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
     setChangesImgsList(false);
   }, [changesImgsList]);
 
-  const createTwits = async () => {
-    try {
-      if (imgs.length > 0 || text.length > 0) {
-        const formData = new FormData();
+  const createTwits = () => {
+    if (imgs.length > 0 || text.length > 0) {
+      const formData = new FormData();
 
-        formData.append("text", text);
-        imgs.forEach((img) => {
-          formData.append("imgs", img);
-        });
+      formData.append("text", text);
+      imgs.forEach((img) => {
+        formData.append("imgs", img);
+      });
 
-        await twitClient.createTwitByUser(formData).then((newTwit) => {
-          if (twitsStore.twits) {
-            twitsStore.setTwits(newTwit.twit.concat(twitsStore.twits));
-          } else {
-            twitsStore.setTwits(newTwit.twit);
-          }
-        });
+      dispatch(tweetOptionsActions.createTweet(formData));
+      // await twitAPI.createTwitByUser(formData).then((newTwit) => {
+      //   if (twitsStore.twits) {
+      //     twitsStore.setTwits(newTwit.twit.concat(twitsStore.twits));
+      //   } else {
+      //     twitsStore.setTwits(newTwit.twit);
+      //   }
+      // });
 
-        infoMessageStore.setTextMessage("Twit has been sent.");
-        infoMessageStore.setInfoMessageVisible(true);
+      infoMessageStore.setTextMessage("Twit has been sent.");
+      infoMessageStore.setInfoMessageVisible(true);
 
-        setText("");
-        setImgs([]);
-      }
-    } catch (error) {
-      console.log(error.response.data.message);
+      setText("");
+      setImgs([]);
     }
   };
 
@@ -104,7 +102,7 @@ const TwitForm = observer(({ twitFormVisible, setTwitFormVisible }) => {
         <form className="twit-form">
           <div className="user-info">
             <div className="user-info-photo">
-              <img alt="User" src={getUserPhoto(usersStore.user)} />
+              <img alt="User" src={getUserPhoto(profile)} />
             </div>
           </div>
           <div className="twit-form-input">

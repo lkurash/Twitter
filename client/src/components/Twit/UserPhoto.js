@@ -1,30 +1,20 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../..";
 
-import userClient from "../../http/userClient";
-
-import { USER_PAGE_PATH, PUBLIC_USER_PAGE_PATH } from "../../utils/constans";
+import { USER_PAGE_PATH, PUBLIC_USER_PAGE_PATH } from "../../utils/routs";
 import getUserPhoto from "../../utils/getUserPhoto";
 import path from "../../utils/path";
 
 import PreviewUserOnTwit from "../common/PreviewUserOnTwit";
-
+import { useSelector } from "react-redux";
+import { auth } from "../../redux/user/user.selectors";
 
 const UserPhoto = observer(({ twit, user }) => {
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
+  const { isAuth } = useSelector(auth);
   const [showProfileUser, setShowProfileUser] = useState(false);
 
   const navigate = useNavigate();
-
-  const checkFollowing = async (id) => {
-    await userClient.checkFollowing(id).then((following) => {
-      usersFollowingsStore.setStartFollowUser(following);
-    });
-  };
 
   const onMouseLeave = () => {
     setTimeout(() => {
@@ -33,7 +23,6 @@ const UserPhoto = observer(({ twit, user }) => {
   };
 
   const onMouseEnter = () => {
-    checkFollowing(user.id);
     setTimeout(() => {
       setShowProfileUser(true);
     }, 200);
@@ -54,13 +43,9 @@ const UserPhoto = observer(({ twit, user }) => {
           alt="User"
           src={getUserPhoto(user)}
           onClick={() => {
-            if (usersStore.isAuth) {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
+            if (isAuth) {
               navigate(path(USER_PAGE_PATH, user.id));
             } else {
-              usersStore.setUserPage({});
-              twitsStore.setUserTwits([]);
               navigate(path(PUBLIC_USER_PAGE_PATH, user.id));
             }
           }}

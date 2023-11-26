@@ -2,8 +2,6 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
-import twitClient from "../../http/twitClient";
-
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -11,38 +9,42 @@ import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 import activeBookmark from "../Imgs/active_bookmark_icon.png";
 import notactiveBookmark from "../Imgs/notactive_bookmark_icon.png";
 import hoverBookmark from "../Imgs/hover_bookmark.png";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../../redux/user/user.selectors";
+import { tweetOptionsActions } from "../../redux/tweetOptions/tweetOptions.actions";
 
 const BookmarkButton = observer(({ twit }) => {
+  const { isAuth } = useSelector(auth);
+  const dispatch = useDispatch();
   const { favoriteTwitsStore } = useContext(Context);
-  const { usersStore } = useContext(Context);
-  const { twitsStore } = useContext(Context);
   const { infoMessageStore } = useContext(Context);
 
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
-  const authUserID = getAuthUserID(usersStore);
+  const authUserID = getAuthUserID();
 
   const createFavoriteTwits = async (twit) => {
-    await twitClient
-      .createFavoriteTwitByUser(authUserID, twit.id)
-      .then((bookmark) => {
-        twitsStore.addFavoriteTwit(twit, bookmark);
-      });
+    dispatch(tweetOptionsActions.createBookmark(authUserID, twit.id));
 
-    infoMessageStore.setTextMessage("Bookmarked.");
+    infoMessageStore.setTextMessage("Added to your Bookmarks.");
     infoMessageStore.setInfoMessageVisible(true);
   };
 
-  const hoverAndActiveButtonBookmark = (twit) => {
+  const deleteBookmark = async (twit) => {
+    dispatch(tweetOptionsActions.deleteBookmark(authUserID, twit.id));
+
+    infoMessageStore.setTextMessage("Removed from your Bookmarks.");
+    infoMessageStore.setInfoMessageVisible(true);
+  };
+
+  const imgOnTwit = (twit) => {
     if (twit.id === favoriteTwitsStore.hoverTwitBookmark.id) {
       return hoverBookmark;
-    } else if (twit.id === favoriteTwitsStore.newTwitBookmark.id) {
-      return activeBookmark;
     }
     return notactiveBookmark;
   };
 
-  const notActiveButtonBookmark = (twit) => {
-    if (twit.id === favoriteTwitsStore.setNotActiveFavoriteTwit.id) {
+  const imgOnBookmark = (twit) => {
+    if (twit.id === favoriteTwitsStore.hoverTwitBookmark.id) {
       return notactiveBookmark;
     }
     return activeBookmark;
@@ -65,8 +67,7 @@ const BookmarkButton = observer(({ twit }) => {
             className="twit-action-button-bookmark"
             key={twit.id}
             onClick={() => {
-              if (usersStore.isAuth) {
-                favoriteTwitsStore.setNewTwitBookmark(twit);
+              if (isAuth) {
                 createFavoriteTwits(twit);
               } else {
                 setTooltipUserNotAuth(true);
@@ -78,7 +79,7 @@ const BookmarkButton = observer(({ twit }) => {
             onMouseLeave={() => favoriteTwitsStore.setHoverTwitBookmark({})}
           >
             <img
-              src={hoverAndActiveButtonBookmark(twit)}
+              src={imgOnTwit(twit)}
               alt="Bookmark"
               className="twit-action-bookmark-img"
             />
@@ -89,9 +90,7 @@ const BookmarkButton = observer(({ twit }) => {
           className="twit-action-button-bookmark"
           key={twit.id}
           onClick={() => {
-            favoriteTwitsStore.setNotActiveFavoriteTwit(twit);
-            favoriteTwitsStore.setNewTwitBookmark({});
-            createFavoriteTwits(twit);
+            deleteBookmark(twit);
           }}
           onMouseEnter={() => {
             favoriteTwitsStore.setHoverTwitBookmark(twit);
@@ -99,7 +98,7 @@ const BookmarkButton = observer(({ twit }) => {
           onMouseLeave={() => favoriteTwitsStore.setHoverTwitBookmark({})}
         >
           <img
-            src={notActiveButtonBookmark(twit)}
+            src={imgOnBookmark(twit)}
             alt="Bookmark"
             className="twit-action-bookmark-img"
           />

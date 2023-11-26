@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
-import { EDIT_PROFILE_PAGE_PATH } from "../../utils/constans";
+import { EDIT_PROFILE_PAGE_PATH } from "../../utils/routs";
 
-const EditProfileButton = observer(({ usersStore }) => {
+const EditProfileButton = observer(({ userStore }) => {
   const navigate = useNavigate();
 
   return (

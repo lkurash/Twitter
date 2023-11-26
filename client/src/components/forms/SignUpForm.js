@@ -8,7 +8,7 @@ import SignUpFormInput from "../SignUpFormInput";
 import BirthForm from "./BirthForm";
 
 const SignUpForm = observer(({ setCheckUserInfo }) => {
-  const { usersStore } = useContext(Context);
+  const { userStore } = useContext(Context);
 
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,31 +30,31 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
 
   const checkUserInfo = () => {
     if (
-      usersStore.userRegistrationName &&
-      usersStore.userRegistrationEmail &&
-      usersStore.userRegistrationPassword &&
-      usersStore.birthDate
+      userStore.userRegistrationName &&
+      userStore.userRegistrationEmail &&
+      userStore.userRegistrationPassword &&
+      userStore.birthDate
     ) {
       setCheckUserInfo(true);
     } else {
-      setCheckName(usersStore.userRegistrationName);
-      setCheckEmail(usersStore.userRegistrationEmail);
-      setCheckPassword(usersStore.userRegistrationPassword);
+      setCheckName(userStore.userRegistrationName);
+      setCheckEmail(userStore.userRegistrationEmail);
+      setCheckPassword(userStore.userRegistrationPassword);
     }
   };
 
   const createRegistrationUserInfo = () => {
-    if (userName && email && password && usersStore.birthDate) {
-      usersStore.setUserRegistrationName(userName);
-      usersStore.setUserRegistrationEmail(email);
-      usersStore.setUserRegistrationPassword(password);
+    if (userName && email && password && userStore.birthDate) {
+      userStore.setUserRegistrationName(userName);
+      userStore.setUserRegistrationEmail(email);
+      userStore.setUserRegistrationPassword(password);
 
       checkUserInfo();
     }
   };
 
   const checkActiveButtonNext = () => {
-    if (!userName || !email || !password || !usersStore.birthDate) {
+    if (!userName || !email || !password || !userStore.birthDate) {
       return "signup-form-button";
     } else {
       return "signup-form-button signup-form-button-active";

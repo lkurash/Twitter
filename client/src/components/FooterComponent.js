@@ -1,12 +1,10 @@
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useContext } from "react";
 
-import LoginPage from "../pages/public/LoginPage";
-import SignUpPage from "../pages/public/SignUpPage";
+import { observer } from "mobx-react-lite";
+import { Context } from "..";
 
-const FooterComponent = () => {
-  const [loginPageVisible, setLoginPageVisible] = useState(false);
-  const [signUpPageVisible, setSignUpPageVisible] = useState(false);
+const FooterComponent = observer(() => {
+  const { visiblePopUpStore } = useContext(Context);
 
   return (
     <>
@@ -16,27 +14,21 @@ const FooterComponent = () => {
           <p>People on Twitter are the first to know.</p>
         </div>
         <div className="footer-buttons">
-          <NavLink
+          <button
             className="button-login"
-            onClick={() => setLoginPageVisible(true)}
+            onClick={() => visiblePopUpStore.setLoginPageVisible(true)}
           >
             Log in
-          </NavLink>
-          <NavLink
+          </button>
+          <button
             className="button-singup"
-            onClick={() => setSignUpPageVisible(true)}
+            onClick={() => visiblePopUpStore.setSignPageUpVisible(true)}
           >
             Sing up
-          </NavLink>
+          </button>
         </div>
       </footer>
-      {loginPageVisible && (
-        <LoginPage setLoginPageVisible={setLoginPageVisible} />
-      )}
-      {signUpPageVisible && (
-        <SignUpPage setSignUpPageVisible={setSignUpPageVisible} />
-      )}
     </>
   );
-};
+});
 export default FooterComponent;

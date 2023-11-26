@@ -1,42 +1,31 @@
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../..";
-import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
 
-import trendClient from "../../http/trendClient";
+import { useDispatch, useSelector } from "react-redux";
+import { tweetActions } from "../../redux/tweet/tweet.actions";
 
 import getAuthUserID from "../../utils/getAuthUserID";
+import { twitsStore } from "../../redux/tweet/tweet.selectors";
 
-const ShowMoreTrendsTwitsButton = observer(({ trend }) => {
-  const { twitsStore } = useContext(Context);
+const ShowMoreTrendsTwitsButton = ({ trend }) => {
+  const dispatch = useDispatch();
   const authUserID = getAuthUserID();
+  const { moreTweets } = useSelector(twitsStore);
   const [showMoreTwits, setShowMoreTwits] = useState(false);
   const [itemListTwits, setItemListTwits] = useState(1);
-  const [buttonMoreTwitsVisible, setButtonMoreTwitsVisible] = useState(true);
 
-  async function getMoreTrendsTwits() {
+  function getMoreTrendsTwits() {
     if (showMoreTwits) {
       if (authUserID) {
-        await trendClient
-          .getTrendsTwitsForAuthUser(trend, authUserID, 7, itemListTwits)
-          .then((trendstTwits) => {
-            twitsStore.setTwits(twitsStore.twits.concat(trendstTwits));
-            setShowMoreTwits(false);
-
-            if (trendstTwits.length < 7) {
-              setButtonMoreTwitsVisible(false);
-            }
-          });
+        dispatch(
+          tweetActions.getMoreTweetsForTrends(
+            trend,
+            7,
+            itemListTwits,
+            authUserID
+          )
+        );
       } else {
-        await trendClient
-          .getPublicTrendsTwits(trend, 7, itemListTwits)
-          .then((trendstTwits) => {
-            twitsStore.setTwits(twitsStore.twits.concat(trendstTwits));
-            setShowMoreTwits(false);
-
-            if (trendstTwits.length < 7) {
-              setButtonMoreTwitsVisible(false);
-            }
-          });
+        dispatch(tweetActions.getMoreTweetsForTrends(trend, 7, itemListTwits));
       }
     }
   }
@@ -45,7 +34,9 @@ const ShowMoreTrendsTwitsButton = observer(({ trend }) => {
     getMoreTrendsTwits();
   }, [itemListTwits]);
 
-  if (!buttonMoreTwitsVisible) return false;
+  if (!moreTweets) {
+    return false;
+  }
 
   return (
     <button
@@ -59,6 +50,6 @@ const ShowMoreTrendsTwitsButton = observer(({ trend }) => {
       Show more
     </button>
   );
-});
+};
 
 export default ShowMoreTrendsTwitsButton;

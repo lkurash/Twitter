@@ -1,41 +1,15 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
-import { Context } from "../..";
-
-import userClient from "../../http/userClient";
-
-import getAuthUserID from "../../utils/getAuthUserID";
-import getFlagIsAuth from "../../utils/getFlagIsAuth";
 
 import ContentHomePage from "../../components/ContentHomePage";
+import { useSelector } from "react-redux";
+import { visibility } from "../../redux/visibilityPage/visibilityPage.selectors";
+import { auth } from "../../redux/user/user.selectors";
 
-const HomePage = observer(({ loadingPage }) => {
-  const { usersStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
+const HomePage = observer(() => {
+  const { isAuth } = useSelector(auth);
+  const { visibilityPage } = useSelector(visibility);
 
-  const authUserID = getAuthUserID();
-
-  useEffect(() => {
-    if (authUserID) {
-      userClient
-        .getUserProfile(authUserID)
-        .then((userInfo) => usersStore.setUser(userInfo));
-
-      userClient
-        .getFollowingsUser(authUserID)
-        .then((followings) =>
-          usersFollowingsStore.setuserFollowing(followings)
-        );
-    }
-
-    usersStore.setAuth(getFlagIsAuth());
-  });
-
-  return (
-    <>
-      <ContentHomePage />
-    </>
-  );
+  return <>{visibilityPage === true && isAuth && <ContentHomePage />}</>;
 });
 
 export default HomePage;

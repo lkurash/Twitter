@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
 import getFlagIsAuth from "../utils/getFlagIsAuth";
-import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/constans";
+import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/routs";
 import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 
 import MenuButton from "./buttons/MenuButton";
@@ -14,16 +14,16 @@ import "./menu.css";
 import Logo from "./common/Logo";
 import hashtag from "../components/Imgs/hashtag_icon.png";
 
-const MenuComponent = observer(() => {
-  const { usersStore } = useContext(Context);
+const MenuComponent = observer(({ page }) => {
+  const { userStore } = useContext(Context);
 
-  const buttonsAuthUser = menuButtonsAuthUser(usersStore);
+  const buttonsAuthUser = menuButtonsAuthUser(userStore);
 
   return (
     <aside className="menu">
       <Logo class="logo" />
       <nav className="nav">
-        {usersStore.isAuth || getFlagIsAuth() ? (
+        {page === "privatePage" && (
           <div>
             {buttonsAuthUser.map((button) => (
               <MenuButton
@@ -39,7 +39,8 @@ const MenuComponent = observer(() => {
             <WriteTwitButton />
             <UserInfoAndButtonSignOut />
           </div>
-        ) : (
+        )}
+        {page === "publicPage" && (
           <div>
             <MenuButton
               type="button"

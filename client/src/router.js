@@ -1,5 +1,5 @@
 import authenticate from "./utils/authenticate";
-import redirectLoader from "./utils/redirectLoader";
+import redirectToHomePage from "./utils/redirectToHomePage";
 
 import AppLayout from "./pages/public/AppLayout";
 import LayoutLoginAndSignUpPage from "./pages/public/LayoutLoginAndSignUpPage";
@@ -55,55 +55,51 @@ import {
   PUBLIC_TRENDS_PAGE_PATH,
   TRENDS_PAGE_PATH,
   PUBLIC_USER_PAGE_PATH,
-} from "./utils/constans";
+} from "./utils/routs";
 import RootBoundary from "./utils/RootBoundary";
+import PrivateLoyout from "./pages/private/PrivateLoyout";
+import UserFollowersList from "./components/UserFollowersList";
+import UserFollowingList from "./components/UserFollowingList";
 
 export const publicRoutes = {
-  path: PUBLIC_HOME_PAGE_PATH,
+  path: ROOT_PAGE_PATH,
   element: <AppLayout />,
   errorElement: <RootBoundary />,
   children: [
     {
-      path: "/twitter",
+      path: PUBLIC_HOME_PAGE_PATH,
+      loader: redirectToHomePage,
       element: <PublicHomePage />,
-      loader: redirectLoader,
     },
     {
       path: PUBLIC_EXPLORE_PAGE_PATH,
+      loader: redirectToHomePage,
       element: <PublicExplorePage />,
     },
     {
       path: PUBLIC_TRENDS_PAGE_PATH,
       element: <TrendsPage />,
+      loader: redirectToHomePage,
     },
     {
       path: PUBLIC_USER_PAGE_PATH,
       element: <PublicProfilePageUser />,
     },
-  ],
-};
-
-export const authRoutes = {
-  path: ROOT_PAGE_PATH,
-  element: <LayoutLoginAndSignUpPage />,
-  loader: redirectLoader,
-  errorElement: <RootBoundary />,
-  children: [
     {
       path: AUTH_PAGE_PATH,
-      loader: redirectLoader,
-    },
-    {
-      path: PUBLIC_HOME_PAGE_PATH,
-      loader: redirectLoader,
-    },
-    {
-      path: LOGIN_PAGE_PATH,
-      element: <LoginPage />,
-    },
-    {
-      path: SIGNUP_PAGE_PATH,
-      element: <SignUpPage />,
+      element: <LayoutLoginAndSignUpPage />,
+      errorElement: <RootBoundary />,
+      loader: redirectToHomePage,
+      children: [
+        {
+          path: LOGIN_PAGE_PATH,
+          element: <LoginPage />,
+        },
+        {
+          path: SIGNUP_PAGE_PATH,
+          element: <SignUpPage />,
+        },
+      ],
     },
   ],
 };
@@ -160,12 +156,18 @@ export const privateRoutes = {
       ],
     },
     {
-      path: FOLLOWINGS_PAGE_PATH,
+      path: HOME_PAGE_PATH,
       element: <FollowPage />,
-    },
-    {
-      path: FOLLOWERS_PAGE_PATH,
-      element: <FollowPage />,
+      children: [
+        {
+          path: FOLLOWINGS_PAGE_PATH,
+          element: <UserFollowingList />,
+        },
+        {
+          path: FOLLOWERS_PAGE_PATH,
+          element: <UserFollowersList />,
+        },
+      ],
     },
     {
       path: TRENDS_PAGE_PATH,
@@ -203,12 +205,18 @@ export const privateUserPageRoutes = {
       ],
     },
     {
-      path: USER_FOLLOWER_PAGE_PATH,
+      path: "",
       element: <FollowPage />,
-    },
-    {
-      path: USER_FOLLOWING_PAGE_PATH,
-      element: <FollowPage />,
+      children: [
+        {
+          path: USER_FOLLOWER_PAGE_PATH,
+          element: <UserFollowersList />,
+        },
+        {
+          path: USER_FOLLOWING_PAGE_PATH,
+          element: <UserFollowingList />,
+        },
+      ],
     },
   ],
 };

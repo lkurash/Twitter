@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useParams } from "react-router-dom";
 import { Context } from "..";
 
@@ -9,7 +9,7 @@ import {
   USER_FOLLOWER_PAGE_PATH,
   USER_FOLLOWING_PAGE_PATH,
   PROFILE_PAGE_USER_PATH,
-} from "../utils/constans";
+} from "../utils/routs";
 import getUserPhoto from "../utils/getUserPhoto";
 import path from "../utils/path";
 import getAuthUserID from "../utils/getAuthUserID";
@@ -22,27 +22,31 @@ import birthdateIcon from "./Imgs/birthday_icon.png";
 import webSiteIcon from "./Imgs/url_web_icon.png";
 import registrationIcon from "./Imgs/month_icon.png";
 import undefinedUserPhoto from "./Imgs/user_photo.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import { auth, userProfileById } from "../redux/user/user.selectors";
+import { userPreview } from "../redux/userOptions/userOptions.selectors";
+import { userOptionsActions } from "../redux/userOptions/userOptions.actions";
 
 const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
-  const { usersStore } = useContext(Context);
-  const { usersFollowingsStore } = useContext(Context);
-
-  const location = useLocation().pathname;
-
+  const dispatch = useDispatch();
+  const { profile } = useSelector(userProfileById);
+  const { isAuth } = useSelector(auth);
+  const { userInfo, loadingStatus } = useSelector(userPreview);
   const { id } = useParams();
+
+  const { userStore } = useContext(Context);
+  const location = useLocation().pathname;
 
   const authUserID = getAuthUserID();
 
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
-  const getRegistrationDate = new Date(usersStore.userPage.createdAt)
-    .toString()
-    .split(" ");
+  const getRegistrationDate = new Date(profile.createdAt).toString().split(" ");
   const registrationDate = `${getRegistrationDate[1]}, ${getRegistrationDate[3]}`;
 
   const getUserBackground = () => {
-    if (usersStore.userPage.background) {
-      return `http://localhost:5500/${usersStore.userPage.background}`;
+    if (profile.background) {
+      return `http://localhost:5500/${profile.background}`;
     }
     return undefinedUserPhoto;
   };
@@ -50,6 +54,12 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const onCloseTooltip = () => {
     setTooltipUserNotAuth(false);
   };
+
+  useEffect(() => {
+    if (id) {
+      dispatch(userOptionsActions.getPreviewProfile(id, authUserID));
+    }
+  }, []);
 
   return (
     <>
@@ -59,34 +69,33 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
         </div>
         <div className="profile-panel-block-photo-button">
           <div className="profile-panel-photo-user">
-            <img src={getUserPhoto(usersStore.userPage)} alt="User" />
+            <img src={getUserPhoto(profile)} alt="User" />
           </div>
 
-          {usersStore.isAuth && (
+          {isAuth && (
             <>
               {(location === PROFILE_PAGE_USER_PATH ||
-                authUserID === usersStore.userPage.id) && (
-                <EditProfileButton usersStore={usersStore} />
+                authUserID === profile.id) && (
+                <EditProfileButton userStore={userStore} />
               )}
-              {location !== PROFILE_PAGE_USER_PATH &&
-                authUserID !== usersStore.userPage.id && (
-                  <FollowButton
-                    profile={usersFollowingsStore.startFollowUser}
-                    following={usersFollowingsStore.startFollowUser.following}
-                    classButton="button-follow-user-profile"
-                  />
-                )}
+              {loadingStatus === "COMPLETE" && authUserID !== profile.id && (
+                <FollowButton
+                  follow={userInfo.following}
+                  profile={profile}
+                  classButton="button-follow-user-profile"
+                />
+              )}
             </>
           )}
         </div>
       </div>
       <div>
         <div className="profile-panel-user-name">
-          <h2>{usersStore.userPage.user_name}</h2>
-          <p>@{usersStore.userPage.user_name}</p>
+          <h2>{profile.user_name}</h2>
+          <p>@{profile.user_name}</p>
         </div>
         <article className="profile-panel-about-user">
-          <p>{usersStore.userPage.about}</p>
+          <p>{profile.about}</p>
         </article>
         <div className="profile-button-panel-followers">
           <NavLink
@@ -99,13 +108,13 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
               authUserID
                 ? pathHomeProfileUser && authUserID
                   ? FOLLOWINGS_PAGE_PATH
-                  : path(USER_FOLLOWING_PAGE_PATH, usersStore.userPage.id)
+                  : path(USER_FOLLOWING_PAGE_PATH, profile.id)
                 : ""
             }
             id="following"
           >
             <span className="profile-panel-button-text-followers">
-              {usersStore.userPage.following} Following
+              {profile.following} Following
             </span>
           </NavLink>
           <NavLink
@@ -119,13 +128,13 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
               authUserID
                 ? authUserID && pathHomeProfileUser
                   ? FOLLOWERS_PAGE_PATH
-                  : path(USER_FOLLOWER_PAGE_PATH, usersStore.userPage.id)
+                  : path(USER_FOLLOWER_PAGE_PATH, profile.id)
                 : ""
             }
             id="followers"
           >
             <span className="profile-panel-button-text-followers">
-              {usersStore.userPage.followers} Followers
+              {profile.followers} Followers
             </span>
           </NavLink>
           <TooltipUserNotAuth
@@ -135,20 +144,17 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
           />
         </div>
         <div className="profile-panel-info-user">
-          {usersStore.userPage.web_site_url && (
+          {profile.web_site_url && (
             <div className="profile-panel-info-user-web-site">
               <img src={webSiteIcon} className="info-icon" alt="Info" />
-              <a
-                className="link"
-                href={`https://${usersStore.userPage.web_site_url}`}
-              >
-                {usersStore.userPage.web_site_url}
+              <a className="link" href={`https://${profile.web_site_url}`}>
+                {profile.web_site_url}
               </a>
             </div>
           )}
           <div className="profile-panel-info-user-birthdate">
             <img src={birthdateIcon} className="info-icon" alt="Info" />
-            <p>{`Date of birth: ${usersStore.userPage.birthdate}`}</p>
+            <p>{`Date of birth: ${profile.birthdate}`}</p>
           </div>
           <div className="profile-panel-info-user-registration">
             <img src={registrationIcon} className="info-icon" alt="Info" />
