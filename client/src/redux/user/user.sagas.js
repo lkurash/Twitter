@@ -21,11 +21,11 @@ import {
   GET_USER_PROFILE_BY_ID,
   REGISTRATION,
   UPDATE_PROFILE,
-} from "../../utils/consts";
-import { userErrorActions } from "./user.error.actions";
+} from "../user/consts";
+import { userLoadingActions } from "./user.loading.actions";
 
 export function* register(action) {
-  yield put(userErrorActions.requestAuthenticationStarted());
+  yield put(userLoadingActions.requestAuthenticationStarted());
 
   try {
     const authenticationResult = yield call(
@@ -38,12 +38,12 @@ export function* register(action) {
 
     yield put(userActions.setAuth(true, authenticationResult.token));
   } catch (error) {
-    yield put(userErrorActions.requestAuthenticationFailed(error));
+    yield put(userLoadingActions.requestAuthenticationFailed(error));
   }
 }
 
 export function* authentication(action) {
-  yield put(userErrorActions.requestAuthenticationStarted());
+  yield put(userLoadingActions.requestAuthenticationStarted());
 
   try {
     const authenticationResult = yield call(
@@ -54,7 +54,7 @@ export function* authentication(action) {
 
     yield put(userActions.setAuth(true, authenticationResult.token));
   } catch (error) {
-    yield put(userErrorActions.requestAuthenticationFailed(error));
+    yield put(userLoadingActions.requestAuthenticationFailed(error));
   }
 }
 
@@ -74,30 +74,30 @@ export function* fetchUser(action) {
 }
 
 export function* fetchUserProfile(action) {
-  yield put(userErrorActions.requestUserProfileStarted());
+  yield put(userLoadingActions.requestUserProfileStarted());
   try {
     const userProfile = yield call(userAPI.getUserProfile, action.userId);
 
     yield put(userActions.setUserProfile(userProfile));
   } catch (error) {
-    yield put(userErrorActions.requestUserProfileFailed(error));
+    yield put(userLoadingActions.requestUserProfileFailed(error));
   }
 }
 
 export function* fetchUserProfileById(action) {
-  yield put(userErrorActions.requestUserProfileByIdStarted());
+  yield put(userLoadingActions.requestUserProfileByIdStarted());
 
   try {
     const userProfile = yield call(userAPI.getUserProfile, action.userId);
 
     yield put(userActions.setUserProfileById(userProfile));
   } catch (error) {
-    yield put(userErrorActions.requestUserProfileByIdFailed(error));
+    yield put(userLoadingActions.requestUserProfileByIdFailed(error));
   }
 }
 
 export function* updateProfile(action) {
-  yield put(userErrorActions.requestUserProfileByIdStarted());
+  yield put(userLoadingActions.requestUserProfileByIdStarted());
   try {
     const userProfile = yield call(
       userAPI.updateUserProfile,
@@ -106,35 +106,36 @@ export function* updateProfile(action) {
     );
 
     yield put(userActions.setUserProfileById(userProfile));
+    yield put(userActions.setUserProfile(userProfile));
   } catch (error) {
-    yield put(userErrorActions.requestUserProfileByIdFailed(error));
+    yield put(userLoadingActions.requestUserProfileByIdFailed(error));
   }
 }
 
 export function* fetchFollowers(action) {
-  yield put(userErrorActions.requestFollowersStarted());
+  yield put(userLoadingActions.requestFollowersStarted());
   try {
     const followers = yield call(userAPI.getFollowersUser, action.userId);
 
     yield put(userActions.setFollowers(followers));
   } catch (error) {
-    yield put(userErrorActions.requestFollowersFailed(error));
+    yield put(userLoadingActions.requestFollowersFailed(error));
   }
 }
 
 export function* fetchFollowings(action) {
-  yield put(userErrorActions.requestFollowingsStarted());
+  yield put(userLoadingActions.requestFollowingsStarted());
   try {
     const followings = yield call(userAPI.getFollowingsUser, action.userId);
 
     yield put(userActions.setFollowings(followings));
   } catch (error) {
-    yield put(userErrorActions.requestFollowingsFailed(error));
+    yield put(userLoadingActions.requestFollowingsFailed(error));
   }
 }
 
 export function* fetchListWhoNotReading(action) {
-  yield put(userErrorActions.requestListWhoNotReadingStarted());
+  yield put(userLoadingActions.requestListWhoNotReadingStarted());
   try {
     const listWhoNotReading = yield call(
       userAPI.getWhoNotReadingUsers,
@@ -143,18 +144,18 @@ export function* fetchListWhoNotReading(action) {
 
     yield put(userActions.setListWhoNotReading(listWhoNotReading));
   } catch (error) {
-    yield put(userErrorActions.requestListWhoNotReadingFailed(error));
+    yield put(userLoadingActions.requestListWhoNotReadingFailed(error));
   }
 }
 
 export function* fetchListWhoToFollow(action) {
-  yield put(userErrorActions.requestListWhoNotReadingStarted());
+  yield put(userLoadingActions.requestListWhoNotReadingStarted());
   try {
     const listWhoNotReading = yield call(userAPI.getUsers);
 
     yield put(userActions.setListWhoToFollow(listWhoNotReading));
   } catch (error) {
-    yield put(userErrorActions.requestListWhoNotReadingFailed(error));
+    yield put(userLoadingActions.requestListWhoNotReadingFailed(error));
   }
 }
 

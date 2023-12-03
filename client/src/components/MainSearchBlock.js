@@ -4,8 +4,8 @@ import ListFoundUserSearchBlock from "./ListFoundUserSearchBlock";
 import logo from "./Imgs/logo_icon.png";
 import searchIcon from "./Imgs/zoom__icon.png";
 import { useDispatch } from "react-redux";
-import { userOptionsActions } from "../redux/userOptions/userOptions.actions";
 import { useState } from "react";
+import { userOptionsActions } from "../redux/user/userOptions/userOptions.actions";
 
 const MainSearchBlock = ({ classNameForm }) => {
   const dispatch = useDispatch();
@@ -47,8 +47,10 @@ const MainSearchBlock = ({ classNameForm }) => {
               placeholder="Search User"
               value={userName}
               onClick={() => {
-                setListFoundUsersVisible(true)
                 setActiveInput(true);
+                if (userName) {
+                  setListFoundUsersVisible(true);
+                }
               }}
               onChange={(e) => {
                 if (e.target.value.length > 0) {
@@ -64,6 +66,7 @@ const MainSearchBlock = ({ classNameForm }) => {
         {listFoundUsersVisible && (
           <ListFoundUserSearchBlock
             userName={userName}
+            setUserName={setUserName}
             listFoundUsersVisible={listFoundUsersVisible}
             onClose={onClose}
           />

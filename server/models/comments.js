@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   class Comments extends Model {
     static associate(models) {
       Comments.belongsTo(models.User, { as: "user", foreignKey: "userId" });
-      Comments.belongsTo(models.Twits, {
-        foreignKey: "twitId",
+      Comments.belongsTo(models.Tweets, {
+        foreignKey: "tweetId",
       });
     }
   }
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       text: DataTypes.STRING,
       userId: DataTypes.INTEGER,
-      twitId: DataTypes.INTEGER,
+      tweetId: DataTypes.INTEGER,
     },
     {
       sequelize,

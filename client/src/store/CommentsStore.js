@@ -7,12 +7,12 @@ class CommentsStore {
     makeAutoObservable(this);
   }
 
-  setHoverButtonComment(twit) {
-    this._hoverButtonComment = twit;
+  setHoverButtonComment(tweet) {
+    this._hoverButtonComment = tweet;
   }
 
-  setActiveComment(twit) {
-    this._activeComment = twit;
+  setActiveComment(tweet) {
+    this._activeComment = tweet;
   }
 
   get hoverButtonComment() {

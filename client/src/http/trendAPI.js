@@ -2,32 +2,32 @@ import { $authClient, $client } from "./clients";
 
 class TrendAPI {
   async getAllTrends(userId, limit) {
-    const trends = await $client.get("api/twitter/trends", {
+    const trends = await $client.get("api/tweetter/trends", {
       params: { userId, limit },
     });
 
     return trends.data;
   }
 
-  async getTrendsTwitsForAuthUser(trend, limit, list) {
-    const twits = await $authClient.get(`api/twitter/auth/trends/${trend}`, {
+  async getTrendsTweetsForAuthUser(trend, limit, list) {
+    const tweets = await $authClient.get(`api/tweetter/auth/trends/${trend}`, {
       params: { limit, list },
     });
 
-    return twits.data;
+    return tweets.data;
   }
 
-  async getPublicTrendsTwits(trend, limit, list) {
-    const twits = await $client.get(`api/twitter/trends/${trend}`, {
+  async getPublicTrendsTweets(trend, limit, list) {
+    const tweets = await $client.get(`api/tweetter/trends/${trend}`, {
       params: { limit, list },
     });
 
-    return twits.data;
+    return tweets.data;
   }
 
   async createNotInterestingTrend(trendId, userId) {
     const trend = await $client.put(
-      `api/twitter/trends/trend/${trendId}/user/${userId}`
+      `api/tweetter/trends/trend/${trendId}/user/${userId}`
     );
 
     return trend.data;

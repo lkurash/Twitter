@@ -5,12 +5,12 @@ import { tweetReducer } from "../tweet/tweet.reducer";
 import { userReducer } from "../user/user.reducer";
 import { visibilityPageReducer } from "../visibilityPage/visibilityPage.reducer";
 import { trendReducer } from "../trend/trend.reducer";
-import { userOptionsReducer } from "../userOptions/userOptions.reducer";
+import { userOptionsReducer } from "../user/userOptions/userOptions.reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const appReducer = combineReducers({
-  twitsStore: tweetReducer,
+  tweetsStore: tweetReducer,
   userStore: userReducer,
   userPreview: userOptionsReducer,
   trendStore: trendReducer,

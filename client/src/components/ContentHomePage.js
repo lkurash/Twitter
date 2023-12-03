@@ -2,33 +2,35 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-import TwitForm from "./forms/TwitForm";
-import TwitsForYou from "./TwitsForYou";
-import TwitsWhoYouRead from "./TwitsWhoYouReading";
-import { useDispatch } from "react-redux";
-import getAuthUserID from "../utils/getAuthUserID";
-import { twitsStore } from "../redux/tweet/tweet.selectors";
+import { tweetsStore } from "../redux/tweet/tweet.selectors";
 import { tweetActions } from "../redux/tweet/tweet.actions";
+import { useDispatch } from "react-redux";
+
+import getAuthUserID from "../utils/getAuthUserID";
+
+import TweetForm from "./forms/TweetForm";
+import TweetsForYou from "./Tweets/TweetsForYou";
+import TweetsWhoYouRead from "./Tweets/TweetsWhoYouReading";
 
 const ContentHomePage = observer(() => {
   const dispatch = useDispatch();
-  const [cookies, setCookie, removeCookie] = useCookies(["twitsWhoReading"]);
+  const [cookies, setCookie] = useCookies();
   const authUserID = getAuthUserID();
 
-  const [twitsForYouVisible, setTwitsForYouVisible] = useState(true);
-  const [twitsWhoReadingVisible, setTwitsWhoReadingVisible] = useState(false);
+  const [tweetsForYouVisible, setTweetsForYouVisible] = useState(true);
+  const [tweetsWhoReadingVisible, setTweetsWhoReadingVisible] = useState(false);
 
   useEffect(() => {
-    if (cookies.twitsWhoReading === "true") {
-      setTwitsWhoReadingVisible(true);
-      setTwitsForYouVisible(false);
+    if (cookies.tweetsWhoReading === "true") {
+      setTweetsWhoReadingVisible(true);
+      setTweetsForYouVisible(false);
 
       dispatch(tweetActions.getTweetsByFollowingUsers(authUserID));
     }
-    if (cookies.twitsWhoReading === "false" && twitsForYouVisible) {
+    if (cookies.tweetsWhoReading === "false" && tweetsForYouVisible) {
       dispatch(tweetActions.getTweetsForAuthUser(authUserID));
     }
-  }, [cookies.twitsWhoReading]);
+  }, [cookies.tweetsWhoReading]);
 
   return (
     <>
@@ -44,16 +46,16 @@ const ContentHomePage = observer(() => {
               type="button"
               className="main-button-foryou"
               onClick={() => {
-                setCookie("twitsWhoReading", "false");
-                setTwitsWhoReadingVisible(false);
-                setTwitsForYouVisible(true);
+                setCookie("tweetsWhoReading", "false");
+                setTweetsWhoReadingVisible(false);
+                setTweetsForYouVisible(true);
               }}
             >
               <span>For you</span>
             </button>
             <div
               className={
-                twitsForYouVisible
+                tweetsForYouVisible
                   ? "main-button-active"
                   : "main-button-notactive"
               }
@@ -64,16 +66,16 @@ const ContentHomePage = observer(() => {
               type="button"
               className="main-button-whoyouread"
               onClick={() => {
-                setCookie("twitsWhoReading", "true");
-                setTwitsForYouVisible(false);
-                setTwitsWhoReadingVisible(true);
+                setCookie("tweetsWhoReading", "true");
+                setTweetsForYouVisible(false);
+                setTweetsWhoReadingVisible(true);
               }}
             >
               <span> You are reading</span>
             </button>
             <div
               className={
-                twitsWhoReadingVisible
+                tweetsWhoReadingVisible
                   ? "main-button-active"
                   : "main-button-notactive"
               }
@@ -81,16 +83,16 @@ const ContentHomePage = observer(() => {
           </div>
         </div>
       </div>
-      <div className="main-line" />
       <div className="main-content-block main-content-block-mobile">
-        <TwitForm />
+        <div className="main-line" />
+        <TweetForm />
       </div>
       <div className="main-line" />
       <>
-        {twitsForYouVisible && <TwitsForYou />}
+        {tweetsForYouVisible && <TweetsForYou />}
 
-        {(twitsWhoReadingVisible || !twitsForYouVisible) && (
-          <TwitsWhoYouRead userTwits={twitsStore.userTwits} />
+        {(tweetsWhoReadingVisible || !tweetsForYouVisible) && (
+          <TweetsWhoYouRead userTweets={tweetsStore.userTweets} />
         )}
       </>
     </>

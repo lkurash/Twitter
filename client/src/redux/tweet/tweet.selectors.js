@@ -1,8 +1,8 @@
 import { createSelector } from "reselect";
 
-const selectTwitsStore = (state) => state.twitsStore;
+const selectTweetsStore = (state) => state.tweetsStore;
 
-export const twitsStore = createSelector(
-  [selectTwitsStore],
+export const tweetsStore = createSelector(
+  [selectTweetsStore],
   (state) => state
 );

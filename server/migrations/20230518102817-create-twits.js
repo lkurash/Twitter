@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Twits", {
+    await queryInterface.createTable("Tweets", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,19 +18,19 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
       },
-      retwit: {
+      retweet: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
-      twitId: {
+      tweetId: {
         type: Sequelize.INTEGER,
         defaultValue: null,
       },
-      twitUserId: {
+      tweetUserId: {
         type: Sequelize.INTEGER,
         defaultValue: null,
       },
-      countRetwits: {
+      countRetweets: {
         type: Sequelize.INTEGER,
         defaultValue: null,
       },
@@ -53,6 +53,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Twits");
+    await queryInterface.dropTable("Tweets");
   },
 };

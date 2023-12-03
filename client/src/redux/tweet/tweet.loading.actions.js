@@ -3,95 +3,95 @@ import {
   REQUEST_ANSWERS_STARTED,
   REQUEST_BOOKMARKS_FAILED,
   REQUEST_BOOKMARKS_STARTED,
-  REQUEST_TWITS_FAILED,
-  REQUEST_TWITS_FOR_AUTH_USER_FAILED,
-  REQUEST_TWITS_FOR_AUTH_USER_STARTED,
-  REQUEST_TWITS_FOR_TRENDS_FAILED,
-  REQUEST_TWITS_FOR_TRENDS_STARTED,
-  REQUEST_TWITS_STARTED,
-  REQUEST_TWITS_WHO_YOU_READING_FAILED,
-  REQUEST_TWITS_WHO_YOU_READING_STARTED,
-  REQUEST_TWITS_WITH_LIKES_FAILED,
-  REQUEST_TWITS_WITH_LIKES_STARTED,
-  REQUEST_TWITS_WITH_MEDIA_FAILED,
-  REQUEST_TWITS_WITH_MEDIA_STARTED,
-  REQUEST_USER_TWITS_FAILED,
-  REQUEST_USER_TWITS_STARTED,
+  REQUEST_TWEETS_FAILED,
+  REQUEST_TWEETS_FOR_AUTH_USER_FAILED,
+  REQUEST_TWEETS_FOR_AUTH_USER_STARTED,
+  REQUEST_TWEETS_FOR_TRENDS_FAILED,
+  REQUEST_TWEETS_FOR_TRENDS_STARTED,
+  REQUEST_TWEETS_STARTED,
+  REQUEST_TWEETS_WHO_YOU_READING_FAILED,
+  REQUEST_TWEETS_WHO_YOU_READING_STARTED,
+  REQUEST_TWEETS_WITH_LIKES_FAILED,
+  REQUEST_TWEETS_WITH_LIKES_STARTED,
+  REQUEST_TWEETS_WITH_MEDIA_FAILED,
+  REQUEST_TWEETS_WITH_MEDIA_STARTED,
+  REQUEST_USER_TWEETS_FAILED,
+  REQUEST_USER_TWEETS_STARTED,
 } from "./const";
 
 class TweetLoadingActions {
-  requestStartedTwits() {
+  requestStartedTweets() {
     return {
-      type: REQUEST_TWITS_STARTED,
+      type: REQUEST_TWEETS_STARTED,
     };
   }
 
-  requestFailedTwits(error) {
+  requestFailedTweets(error) {
     return {
-      type: REQUEST_TWITS_FAILED,
+      type: REQUEST_TWEETS_FAILED,
       error,
     };
   }
 
-  requestStartedTwitsAuthUser() {
+  requestStartedTweetsAuthUser() {
     return {
-      type: REQUEST_TWITS_FOR_AUTH_USER_STARTED,
+      type: REQUEST_TWEETS_FOR_AUTH_USER_STARTED,
     };
   }
 
-  requestFailedTwitsAuthUser(error) {
+  requestFailedTweetsAuthUser(error) {
     return {
-      type: REQUEST_TWITS_FOR_AUTH_USER_FAILED,
+      type: REQUEST_TWEETS_FOR_AUTH_USER_FAILED,
       error,
     };
   }
 
-  requestStartedTwitsWhoYouReading() {
+  requestStartedTweetsWhoYouReading() {
     return {
-      type: REQUEST_TWITS_WHO_YOU_READING_STARTED,
+      type: REQUEST_TWEETS_WHO_YOU_READING_STARTED,
     };
   }
 
-  requestFailedTwitsWhoYouReading(error) {
+  requestFailedTweetsWhoYouReading(error) {
     return {
-      type: REQUEST_TWITS_WHO_YOU_READING_FAILED,
+      type: REQUEST_TWEETS_WHO_YOU_READING_FAILED,
       error,
     };
   }
 
-  requestStartedUserTwits() {
+  requestStartedUserTweets() {
     return {
-      type: REQUEST_USER_TWITS_STARTED,
+      type: REQUEST_USER_TWEETS_STARTED,
     };
   }
 
-  requestFailedUserTwits(error) {
+  requestFailedUserTweets(error) {
     return {
-      type: REQUEST_USER_TWITS_FAILED,
+      type: REQUEST_USER_TWEETS_FAILED,
       error,
     };
   }
-  requestStartedTwitsWithLikes() {
+  requestStartedTweetsWithLikes() {
     return {
-      type: REQUEST_TWITS_WITH_LIKES_STARTED,
+      type: REQUEST_TWEETS_WITH_LIKES_STARTED,
     };
   }
 
-  requestFailedTwitsWithLikes(error) {
+  requestFailedTweetsWithLikes(error) {
     return {
-      type: REQUEST_TWITS_WITH_LIKES_FAILED,
+      type: REQUEST_TWEETS_WITH_LIKES_FAILED,
       error,
     };
   }
-  requestStartedTwitsWithMedia() {
+  requestStartedTweetsWithMedia() {
     return {
-      type: REQUEST_TWITS_WITH_MEDIA_STARTED,
+      type: REQUEST_TWEETS_WITH_MEDIA_STARTED,
     };
   }
 
-  requestFailedTwitsWithMedia(error) {
+  requestFailedTweetsWithMedia(error) {
     return {
-      type: REQUEST_TWITS_WITH_MEDIA_FAILED,
+      type: REQUEST_TWEETS_WITH_MEDIA_FAILED,
       error,
     };
   }
@@ -122,15 +122,15 @@ class TweetLoadingActions {
     };
   }
 
-  requestStartedTwitsForTrends() {
+  requestStartedTweetsForTrends() {
     return {
-      type: REQUEST_TWITS_FOR_TRENDS_STARTED,
+      type: REQUEST_TWEETS_FOR_TRENDS_STARTED,
     };
   }
 
-  requestFailedTwitsForTrends(error) {
+  requestFailedTweetsForTrends(error) {
     return {
-      type: REQUEST_TWITS_FOR_TRENDS_FAILED,
+      type: REQUEST_TWEETS_FOR_TRENDS_FAILED,
       error,
     };
   }

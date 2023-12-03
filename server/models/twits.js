@@ -2,52 +2,52 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Twits extends Model {
+  class Tweets extends Model {
     static associate(models) {
-      Twits.hasMany(models.Favorite_twits, {
-        as: "favorite_twits",
-        foreignKey: "twitId",
+      Tweets.hasMany(models.Favorite_tweets, {
+        as: "favorite_tweets",
+        foreignKey: "tweetId",
       });
-      Twits.belongsTo(models.User, { as: "user", foreignKey: "userId" });
+      Tweets.belongsTo(models.User, { as: "user", foreignKey: "userId" });
 
-      Twits.hasMany(models.Twits, {
-        as: "retwits",
-        foreignKey: "twitId",
+      Tweets.hasMany(models.Tweets, {
+        as: "retweets",
+        foreignKey: "tweetId",
       });
 
-      Twits.belongsTo(models.User, {
-        as: "twit_user",
-        foreignKey: "twitUserId",
+      Tweets.belongsTo(models.User, {
+        as: "tweet_user",
+        foreignKey: "tweetUserId",
       });
-      Twits.hasMany(models.Likes, { as: "likes", foreignKey: "twitId" });
-      Twits.hasMany(models.Likes, {
+      Tweets.hasMany(models.Likes, { as: "likes", foreignKey: "tweetId" });
+      Tweets.hasMany(models.Likes, {
         as: "likes_another_user",
-        foreignKey: "twitId",
+        foreignKey: "tweetId",
       });
-      Twits.hasMany(models.Comments, { foreignKey: "id" });
+      Tweets.hasMany(models.Comments, { foreignKey: "id" });
     }
   }
 
-  Twits.init(
+  Tweets.init(
     {
       text: DataTypes.STRING,
       img: {
         type: DataTypes.STRING,
       },
       userId: DataTypes.INTEGER,
-      retwit: {
+      retweet: {
         type: Boolean,
         defaultValue: false,
       },
-      twitId: {
+      tweetId: {
         type: DataTypes.INTEGER,
         defaultValue: null,
       },
-      twitUserId: {
+      tweetUserId: {
         type: DataTypes.INTEGER,
         defaultValue: null,
       },
-      countRetwits: {
+      countRetweets: {
         type: DataTypes.INTEGER,
         defaultValue: null,
       },
@@ -62,8 +62,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Twits",
+      modelName: "Tweets",
     }
   );
-  return Twits;
+  return Tweets;
 };

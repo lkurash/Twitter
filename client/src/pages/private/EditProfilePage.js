@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite";
 
 import EditProfileForm from "../../components/forms/EditProfilForm";
-import UserTwits from "../../components/UserTwits";
+import UserTweets from "../../components/Tweets/UserTweets";
 
 const EditProfilePage = observer(() => {
   return (
     <>
-      <UserTwits />
+      <UserTweets />
       <div className="edit-profile-page">
         <EditProfileForm />
       </div>

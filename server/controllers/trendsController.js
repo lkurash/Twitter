@@ -3,17 +3,17 @@ const Sequelize = require("sequelize");
 const uuid = require("uuid");
 const path = require("path");
 const models = require("../models/index");
-const dbRequestTwitsForAuthUser = require("../sql/dbRequestTwitsForAuthUser ");
-const Twits = models.Twits;
+const dbRequestTweetsForAuthUser = require("../sql/dbRequestTweetsForAuthUser ");
+const Tweets = models.Tweets;
 const Trends = models.Trends;
 const User = models.User;
 const Likes = models.Likes;
 const Comments = models.Comments;
-const Favorite_twits = models.Favorite_twits;
+const Favorite_tweets = models.Favorite_tweets;
 const Following = models.Following;
 const jwt = require("jsonwebtoken");
-const TwitsPresenter = require("../presenters/twitsPresenter");
-const TwitsPresenterForPublicPage = require("../presenters/twitsPresenterForPublicPage");
+const TweetsPresenter = require("../presenters/tweetsPresenter");
+const TweetsPresenterForPublicPage = require("../presenters/tweetsPresenterForPublicPage");
 
 const decodeUser = (request) => {
   const token = request.headers.authorization.split(" ")[1];
@@ -30,7 +30,7 @@ class TrendsController {
 
       words.forEach(async (word) => {
         if (word.length >= 4) {
-          const countTwits = await Twits.count({
+          const countTweets = await Tweets.count({
             where: {
               text: { [Op.substring]: word },
             },
@@ -44,11 +44,11 @@ class TrendsController {
             const trend = await models.Trends.create({
               trend: "Trend all over the world",
               title: word,
-              count_twits: countTwits,
+              count_tweets: countTweets,
             });
           } else {
             await models.Trends.update(
-              { count_twits: countTwits },
+              { count_tweets: countTweets },
               { where: { title: word } }
             );
           }
@@ -82,7 +82,7 @@ class TrendsController {
             model: models.NotInteresting_trends,
             as: "notInteresting_trends",
           },
-          order: [["count_twits", "DESC"]],
+          order: [["count_tweets", "DESC"]],
           limit: limit,
           subQuery: false,
         });
@@ -91,7 +91,7 @@ class TrendsController {
       } else {
         const trends = await models.Trends.findAll({
           limit: limit,
-          order: [["count_twits", "DESC"]],
+          order: [["count_tweets", "DESC"]],
         });
 
         return response.json(trends);
@@ -101,7 +101,7 @@ class TrendsController {
     }
   }
 
-  async getTrendsTwitsForAuthUser(request, response, next) {
+  async getTrendsTweetsForAuthUser(request, response, next) {
     try {
       const Op = Sequelize.Op;
       const user = decodeUser(request);
@@ -114,32 +114,32 @@ class TrendsController {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const params = `WHERE "Twits"."text" LIKE '%${trend}%' ORDER BY "Twits"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
+      const params = `WHERE "Tweets"."text" LIKE '%${trend}%' ORDER BY "Tweets"."id" DESC LIMIT ${limit} OFFSET ${offset}`;
 
-      const trends = await dbRequestTwitsForAuthUser(
+      const trends = await dbRequestTweetsForAuthUser(
         authUserId,
         authUserId,
         params
       );
 
-      const countTweets = await Twits.count({
+      const countTweets = await Tweets.count({
         where: { text: { [Op.substring]: trend } },
       });
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
-      const presenter = new TwitsPresenter(trends);
+      const presenter = new TweetsPresenter(trends);
 
       return response.json({
         tweets: presenter.toJSON(),
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
   }
 
-  async getPublicTrendsTwits(request, response, next) {
+  async getPublicTrendsTweets(request, response, next) {
     try {
       const Op = Sequelize.Op;
 
@@ -150,28 +150,28 @@ class TrendsController {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const trends = await Twits.findAll({
+      const trends = await Tweets.findAll({
         where: { text: { [Op.substring]: trend } },
         include: [
           { model: User, as: "user" },
-          { model: User, as: "twit_user" },
+          { model: User, as: "tweet_user" },
         ],
         order: [["id", "DESC"]],
         limit: limit,
         offset: offset,
       });
 
-      const countTweets = await Twits.count({
+      const countTweets = await Tweets.count({
         where: { text: { [Op.substring]: trend } },
       });
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
-      const presenter = new TwitsPresenterForPublicPage(trends);
+      const presenter = new TweetsPresenterForPublicPage(trends);
 
       return response.json({
         tweets: presenter.toJSON(),
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -206,7 +206,7 @@ class TrendsController {
 
       words.forEach(async (word) => {
         if (word.length >= 4) {
-          const countTwits = await Twits.count({
+          const countTweets = await Tweets.count({
             where: {
               text: { [Op.substring]: word },
             },
@@ -217,11 +217,11 @@ class TrendsController {
           });
 
           if (checkTrends) {
-            if (countTwits === 0) {
+            if (countTweets === 0) {
               await models.Trends.destroy({ where: { title: word } });
             } else {
               await models.Trends.update(
-                { count_twits: countTwits },
+                { count_tweets: countTweets },
                 { where: { title: word } }
               );
             }

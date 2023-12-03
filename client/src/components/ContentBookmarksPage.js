@@ -3,15 +3,16 @@ import { useEffect, useState } from "react";
 
 import spinner from "../utils/spinner";
 
-import Twits from "./Twits";
-import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
 import { useSelector } from "react-redux";
-import { twitsStore } from "../redux/tweet/tweet.selectors";
+import { tweetsStore } from "../redux/tweet/tweet.selectors";
 import { userProfile } from "../redux/user/user.selectors";
 import { tweetActions } from "../redux/tweet/tweet.actions";
 
+import Tweets from "./Tweets/Tweets";
+import ShowMoreTweetsButton from "./buttons/ShowMoreTweetsButton";
+
 const ContentBookmarksPage = observer(() => {
-  const { twits, loadingStatus } = useSelector(twitsStore);
+  const { tweets, loadingStatus } = useSelector(tweetsStore);
   const { profile } = useSelector(userProfile);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -36,12 +37,19 @@ const ContentBookmarksPage = observer(() => {
         spinner()
       ) : (
         <>
-          <Twits />
-          {twits && twits.length >= 7 && (
-            <ShowMoreTwitsButton
-              getTwits={tweetActions.getMoreBookmarks}
+          <Tweets
+            message={
+              <div className="lack-tweets-message">
+                <h2>Save posts for later.</h2>{" "}
+                <p>Bookmark posts to easily find them again in the future.</p>
+              </div>
+            }
+          />
+          {tweets && tweets.length >= 7 && (
+            <ShowMoreTweetsButton
+              getTweets={tweetActions.getMoreBookmarks}
               userId={profile.id}
-              store={twitsStore}
+              store={tweetsStore}
             />
           )}
         </>

@@ -78,7 +78,7 @@
   cursor: pointer;
 }
 
-.tooltip-delete-twit {
+.tooltip-delete-tweet {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -127,7 +127,7 @@
   width: 15px;
 }
 
-.button-delete-twit {
+.button-delete-tweet {
   display: flex;
   align-items: center;
   border: none;
@@ -137,16 +137,18 @@
   cursor: pointer;
 }
 
-.button-delete-twit:hover {
+.button-delete-tweet:hover {
   color: #de0000ca;
 }
 
-.button-delete-twit span {
+.button-delete-tweet span {
   margin-top: 2px;
 }
 
-.button-dotmenu-twit {
+.button-dotmenu-tweet {
   margin-right: 10px;
+  width: 35px;
+  height: 35px;
 }
 
 .dotmenu-icon {

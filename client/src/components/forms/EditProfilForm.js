@@ -27,6 +27,9 @@ const EditProfileForm = observer(() => {
   const divRef = useRef(null);
   const [newPhoto, setNewPhoto] = useState("");
   const [newBackground, setNewBackground] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newAbout, setNewAbout] = useState("");
+  const [newWebSiteUrl, setNewWebSiteUrl] = useState("");
   const [activInputName, setActivInputName] = useState(false);
   const [activInputAbout, setActivInputAbout] = useState(false);
   const [activInputSite, setActivInputSite] = useState(false);
@@ -53,18 +56,27 @@ const EditProfileForm = observer(() => {
   const updateProfile = async () => {
     const formData = new FormData();
 
-    formData.append("photo", newPhoto);
-    formData.append("background", newBackground);
-    formData.append("name", userStore.name);
+    if (newPhoto) {
+      formData.append("photo", newPhoto);
+    }
+    if (newBackground) {
+      formData.append("background", newBackground);
+    }
+    if (newName) {
+      formData.append("name", userStore.name);
+    }
+    if (newWebSiteUrl) {
+      formData.append(
+        "web_site_url",
+        userStore.webSite && userStore.webSite.trim()
+      );
+    }
+    if (newAbout) {
+      formData.append("about", userStore.about && userStore.about.trim());
+    }
     formData.append("birthdate", userStore.birthDate);
-    formData.append(
-      "web_site_url",
-      userStore.webSite && userStore.webSite.trim()
-    );
-    formData.append("about", userStore.about && userStore.about.trim());
 
     dispatch(userActions.updateProfile(authUserID, formData));
-
     navigate(PROFILE_PAGE_USER_PATH);
   };
 
@@ -147,7 +159,10 @@ const EditProfileForm = observer(() => {
             <input
               name="editProfileFormInputName"
               value={userStore.name || ""}
-              onChange={(e) => userStore.setName(e.target.value)}
+              onChange={(e) => {
+                userStore.setName(e.target.value);
+                setNewName(true);
+              }}
             />
           </div>
           <div
@@ -169,6 +184,7 @@ const EditProfileForm = observer(() => {
               value={userStore.about || ""}
               onChange={(e) => {
                 userStore.setAbout(e.target.value);
+                setNewAbout(true);
               }}
             />
           </div>
@@ -187,7 +203,10 @@ const EditProfileForm = observer(() => {
             <input
               name="editProfileFormInputWebSite"
               value={userStore.webSite || ""}
-              onChange={(e) => userStore.setWebSite(e.target.value)}
+              onChange={(e) => {
+                userStore.setWebSite(e.target.value);
+                setNewWebSiteUrl(true);
+              }}
             />
           </div>
         </div>

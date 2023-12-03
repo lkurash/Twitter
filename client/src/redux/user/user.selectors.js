@@ -4,10 +4,7 @@ const selectUserStore = (state) => state.userStore;
 
 export const userStore = createSelector([selectUserStore], (state) => state);
 
-export const auth = createSelector(
-  [selectUserStore],
-  (state) => state.isAuth
-);
+export const auth = createSelector([selectUserStore], (state) => state.isAuth);
 
 export const userProfile = createSelector(
   [selectUserStore],
@@ -33,13 +30,3 @@ export const userProfileById = createSelector(
   [selectUserStore],
   (state) => state.userProfileById
 );
-
-// export const selectAuthLoadingState = createSelector(
-//   [selectUser],
-//   (auth) => auth.loading
-// );
-
-// export const selectAuthErrors = createSelector(
-//   [selectUser],
-//   (auth) => auth.error
-// );

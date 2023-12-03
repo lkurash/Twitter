@@ -4,7 +4,7 @@
   color: #dcdcdc;
   position: sticky;
   top: 0;
-  z-index: 3;
+  z-index: 1;
   padding-top: 10px;
 }
 
@@ -12,7 +12,7 @@
   font-weight: 700;
 }
 
-.button-twit {
+.button-tweet {
   width: 230px;
   height: 50px;
   display: flex;
@@ -25,7 +25,7 @@
   background-color: #1d9cf0ed;
 }
 
-.button-twit:hover {
+.button-tweet:hover {
   background-color: #1d9cf0e8;
 }
 
@@ -74,7 +74,7 @@
   background-color: #1f1f1f;
 }
 
-.button-twit span {
+.button-tweet span {
   font-size: 20px;
   font-weight: 800;
   margin: 0 auto;
@@ -98,7 +98,7 @@
 }
 
 .button-user:focus,
-.button-twit:focus {
+.button-tweet:focus {
   border: none;
 }
 
@@ -194,13 +194,13 @@
     margin-left: 0;
   }
 
-  .button-twit {
+  .button-tweet {
     width: 50px;
     justify-content: center;
     align-self: center;
   }
 
-  .button-twit span {
+  .button-tweet span {
     display: none;
   }
 

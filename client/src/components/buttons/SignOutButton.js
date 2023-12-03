@@ -13,7 +13,7 @@ function SignOutButton({ buttonSignOutVisible, onClose }) {
   const logout = () => {
     Cookies.remove("refreshToken");
     Cookies.remove("token");
-    Cookies.remove("twitsWhoReading");
+    Cookies.remove("tweetsWhoReading");
     navigate(AUTH_PAGE_PATH);
   };
 

@@ -3,7 +3,7 @@ import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import bookmarkImg from "../Imgs/tooltip_bookmark_heart_icon.png";
 import likeImg from "../Imgs/active_like.png";
-import retwitImg from "../Imgs/tooltip_retweet_icon.png";
+import retweetImg from "../Imgs/tooltip_retweet_icon.png";
 import commentImg from "../Imgs/tooltip_comment_icon.png";
 import logo from "../Imgs/logo_icon.png";
 import close from "../Imgs/x_icon.png";
@@ -16,7 +16,7 @@ const TooltipUserNotAuth = observer(
     onCloseTooltip,
     bookmark,
     like,
-    retwit,
+    retweet,
     comment,
     follow,
   }) => {
@@ -49,10 +49,10 @@ const TooltipUserNotAuth = observer(
               className="tooltip-notauth-user-img"
             />
           )}
-          {retwit && (
+          {retweet && (
             <img
-              src={retwitImg}
-              alt="Retwit"
+              src={retweetImg}
+              alt="Retweet"
               className="tooltip-notauth-user-img"
             />
           )}
@@ -74,23 +74,23 @@ const TooltipUserNotAuth = observer(
             {bookmark && (
               <>
                 <h2>Bookmark a Tweet to save it.</h2>
-                <p>Join Twitter now</p>
+                <p>Join Tweetter now</p>
               </>
             )}
             {like && (
               <>
                 <h2>Like a Tweet to share the love.</h2>
                 <p>
-                  Join Twitter now to let internet hall of fame know you like
+                  Join Tweetter now to let internet hall of fame know you like
                   their Tweet.
                 </p>
               </>
             )}
-            {retwit && (
+            {retweet && (
               <>
                 <h2>Retweet to spread the word.</h2>
                 <p>
-                  When you join Twitter, you can share internet hall of fame’s
+                  When you join Tweetter, you can share internet hall of fame’s
                   Tweet with your followers.
                 </p>
               </>
@@ -99,7 +99,7 @@ const TooltipUserNotAuth = observer(
               <>
                 <h2>Reply to join the conversation.</h2>
                 <p>
-                  Once you’ve joined Twitter, you’ll be able to respond to
+                  Once you’ve joined Tweetter, you’ll be able to respond to
                   internet hall of fame’s Tweet.
                 </p>
               </>
@@ -107,7 +107,7 @@ const TooltipUserNotAuth = observer(
             {follow && (
               <>
                 <h2>Don’t miss what’s happening.</h2>
-                <p>People on Twitter are the first to know.</p>
+                <p>People on Tweetter are the first to know.</p>
               </>
             )}
           </div>

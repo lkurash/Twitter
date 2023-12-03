@@ -2,13 +2,12 @@ import { useContext } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
-import getFlagIsAuth from "../utils/getFlagIsAuth";
 import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/routs";
 import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
 
 import MenuButton from "./buttons/MenuButton";
 import UserInfoAndButtonSignOut from "./UserInfoAndButtonSignOut";
-import WriteTwitButton from "./buttons/WriteTwitButton";
+import WriteTweetButton from "./buttons/WriteTweetButton";
 
 import "./menu.css";
 import Logo from "./common/Logo";
@@ -36,7 +35,7 @@ const MenuComponent = observer(({ page }) => {
                 nav={button.nav}
               />
             ))}
-            <WriteTwitButton />
+            <WriteTweetButton />
             <UserInfoAndButtonSignOut />
           </div>
         )}

@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic");
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap");
 
-/* page create comment for twit */
+/* page create comment for tweet */
 
 .comment-form-wrapper {
   width: 100%;
@@ -46,14 +46,14 @@
   border-radius: 30px;
 }
 
-.comment-wrapper-twit-info-block {
+.comment-wrapper-tweet-info-block {
   margin: 0 auto;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
-.comment-twit-info-block {
+.comment-tweet-info-block {
   width: 470px;
   margin-top: 10px;
   min-height: 100px;
@@ -70,7 +70,7 @@
   margin-bottom: 5px;
 }
 
-.comment-twit-text {
+.comment-tweet-text {
   overflow-wrap: break-word;
   hyphens: auto;
   line-height: 20px;
@@ -145,12 +145,12 @@
   margin-left: 10px;
 }
 
-.comment-twit-info-block-connection-photo {
+.comment-tweet-info-block-connection-photo {
   display: flex;
   flex-direction: column;
 }
 
-.comment-twit-info-block-connection-text {
+.comment-tweet-info-block-connection-text {
   display: flex;
   align-items: flex-end;
   min-height: 80px;
@@ -175,7 +175,7 @@
   height: 15px;
 }
 
-.comment-twit-info-block-desc {
+.comment-tweet-info-block-desc {
   margin-top: 2px;
   margin-left: 5px;
   font-size: 15px;

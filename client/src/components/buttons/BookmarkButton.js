@@ -2,6 +2,10 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../../redux/user/user.selectors";
+import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
+
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -9,42 +13,43 @@ import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 import activeBookmark from "../Imgs/active_bookmark_icon.png";
 import notactiveBookmark from "../Imgs/notactive_bookmark_icon.png";
 import hoverBookmark from "../Imgs/hover_bookmark.png";
-import { useDispatch, useSelector } from "react-redux";
-import { auth } from "../../redux/user/user.selectors";
-import { tweetOptionsActions } from "../../redux/tweetOptions/tweetOptions.actions";
 
-const BookmarkButton = observer(({ twit }) => {
+const BookmarkButton = observer(({ tweet, bookmark }) => {
   const { isAuth } = useSelector(auth);
   const dispatch = useDispatch();
-  const { favoriteTwitsStore } = useContext(Context);
+  const { favoriteTweetsStore } = useContext(Context);
   const { infoMessageStore } = useContext(Context);
 
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const authUserID = getAuthUserID();
 
-  const createFavoriteTwits = async (twit) => {
-    dispatch(tweetOptionsActions.createBookmark(authUserID, twit.id));
+  const createFavoriteTweets = async (tweet) => {
+    dispatch(tweetOptionsActions.createBookmark(authUserID, tweet.id));
 
     infoMessageStore.setTextMessage("Added to your Bookmarks.");
     infoMessageStore.setInfoMessageVisible(true);
   };
 
-  const deleteBookmark = async (twit) => {
-    dispatch(tweetOptionsActions.deleteBookmark(authUserID, twit.id));
+  const deleteBookmark = async (tweet) => {
+    dispatch(tweetOptionsActions.deleteBookmark(authUserID, tweet.id));
 
     infoMessageStore.setTextMessage("Removed from your Bookmarks.");
     infoMessageStore.setInfoMessageVisible(true);
   };
 
-  const imgOnTwit = (twit) => {
-    if (twit.id === favoriteTwitsStore.hoverTwitBookmark.id) {
+  const imgOnTweet = (tweet) => {
+    if (tweet.id === favoriteTweetsStore.hoverTweetBookmark.id) {
       return hoverBookmark;
     }
     return notactiveBookmark;
   };
 
-  const imgOnBookmark = (twit) => {
-    if (twit.id === favoriteTwitsStore.hoverTwitBookmark.id) {
+  const imgOnBookmark = (tweet) => {
+    if (tweet.id === favoriteTweetsStore.tweetBookmark.id) {
+      return activeBookmark;
+    }
+
+    if (tweet.id === favoriteTweetsStore.hoverTweetBookmark.id) {
       return notactiveBookmark;
     }
     return activeBookmark;
@@ -55,8 +60,8 @@ const BookmarkButton = observer(({ twit }) => {
   };
 
   return (
-    <div className="twit-action-bookmark">
-      {!twit.authUserFavorite ? (
+    <div className="tweet-action-bookmark">
+      {!bookmark ? (
         <>
           <TooltipUserNotAuth
             tooltipUserNotAuth={tooltipUserNotAuth}
@@ -64,43 +69,44 @@ const BookmarkButton = observer(({ twit }) => {
             bookmark
           />
           <div
-            className="twit-action-button-bookmark"
-            key={twit.id}
+            className="tweet-action-button-bookmark"
+            key={tweet.id}
             onClick={() => {
               if (isAuth) {
-                createFavoriteTwits(twit);
+                favoriteTweetsStore.setTweetBookmark(tweet);
+                createFavoriteTweets(tweet);
               } else {
                 setTooltipUserNotAuth(true);
               }
             }}
             onMouseEnter={() => {
-              favoriteTwitsStore.setHoverTwitBookmark(twit);
+              favoriteTweetsStore.setHoverTweetBookmark(tweet);
             }}
-            onMouseLeave={() => favoriteTwitsStore.setHoverTwitBookmark({})}
+            onMouseLeave={() => favoriteTweetsStore.setHoverTweetBookmark({})}
           >
             <img
-              src={imgOnTwit(twit)}
+              src={imgOnTweet(tweet)}
               alt="Bookmark"
-              className="twit-action-bookmark-img"
+              className="tweet-action-bookmark-img"
             />
           </div>
         </>
       ) : (
         <div
-          className="twit-action-button-bookmark"
-          key={twit.id}
+          className="tweet-action-button-bookmark"
+          key={tweet.id}
           onClick={() => {
-            deleteBookmark(twit);
+            deleteBookmark(tweet);
           }}
           onMouseEnter={() => {
-            favoriteTwitsStore.setHoverTwitBookmark(twit);
+            favoriteTweetsStore.setHoverTweetBookmark(tweet);
           }}
-          onMouseLeave={() => favoriteTwitsStore.setHoverTwitBookmark({})}
+          onMouseLeave={() => favoriteTweetsStore.setHoverTweetBookmark({})}
         >
           <img
-            src={imgOnBookmark(twit)}
+            src={imgOnBookmark(tweet)}
             alt="Bookmark"
-            className="twit-action-bookmark-img"
+            className="tweet-action-bookmark-img"
           />
         </div>
       )}

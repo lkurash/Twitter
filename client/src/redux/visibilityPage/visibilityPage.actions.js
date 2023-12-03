@@ -1,52 +1,27 @@
 import {
-  GET_MAIN_CONTENT,
+  GET_MAIN_CONTENT_FOR_AUTH_USER,
   GET_MAIN_CONTENT_FOR_NOT_AUTH_USER,
-  GET_VISIBILITY_ANSWERS,
-  GET_VISIBILITY_BOOKMARKS,
-  GET_VISIBILITY_TWEETS_BY_USER,
-  GET_VISIBILITY_TWEETS_FOR_AUTH_USER,
-  GET_VISIBILITY_TWEETS_WHO_YOU_READ,
-  GET_VISIBILITY_TWEETS_WITH_LIKES,
-  GET_VISIBILITY_TWEETS_WITH_MEDIA,
-  REQUEST_DATA_FAILED,
-  REQUEST_DATA_STARTED,
-  SET_MAIN_CONTENT,
+  REQUEST_CONTENT_FOR_AUTH_USER_FAILED,
+  REQUEST_CONTENT_FOR_AUTH_USER_STARTED,
+  REQUEST_CONTENT_FOR_NOT_AUTH_FAILED,
+  REQUEST_CONTENT_FOR_NOT_AUTH_STARTED,
+  SET_MAIN_CONTENT_FOR_AUTH_USER,
   SET_MAIN_CONTENT_FOR_NOT_AUTH_USER,
-  SET_VISIBILITY_ANSWERS,
-  SET_VISIBILITY_BOOKMARKS,
-  SET_VISIBILITY_TWEETS_BY_USER,
-  SET_VISIBILITY_TWEETS_FOR_AUTH_USER,
-  SET_VISIBILITY_TWEETS_WHO_YOU_READ,
-  SET_VISIBILITY_TWEETS_WITH_LIKES,
-  SET_VISIBILITY_TWEETS_WITH_MEDIA,
-} from "../../utils/consts";
+} from "../visibilityPage/consts";
 
 class VisibilityPageActions {
-  requestStarted() {
+  getContentForAuthUser(userId, limit, list) {
     return {
-      type: REQUEST_DATA_STARTED,
-    };
-  }
-
-  requestFailed(error) {
-    return {
-      type: REQUEST_DATA_FAILED,
-      error,
-    };
-  }
-
-  getContent(userId, limit, list) {
-    return {
-      type: GET_MAIN_CONTENT,
+      type: GET_MAIN_CONTENT_FOR_AUTH_USER,
       userId,
       limit,
       list,
     };
   }
 
-  setContent() {
+  setContentForAuthUser() {
     return {
-      type: SET_MAIN_CONTENT,
+      type: SET_MAIN_CONTENT_FOR_AUTH_USER,
     };
   }
 
@@ -64,108 +39,29 @@ class VisibilityPageActions {
     };
   }
 
-  getVisibilityBookmarks(userId, limit, list) {
+  requestStartedForAuthUser() {
     return {
-      type: GET_VISIBILITY_BOOKMARKS,
-      userId,
-      limit,
-      list,
+      type: REQUEST_CONTENT_FOR_AUTH_USER_STARTED,
     };
   }
 
-  setVisibilityBookmarks() {
+  requestFailedForAuthUser(error) {
     return {
-      type: SET_VISIBILITY_BOOKMARKS,
+      type: REQUEST_CONTENT_FOR_AUTH_USER_FAILED,
+      error,
     };
   }
 
-  getVisibilityTwitsForAuthUser(userId, limit, list) {
+  requestStartedForNotAuthUser() {
     return {
-      type: GET_VISIBILITY_TWEETS_FOR_AUTH_USER,
-      userId,
-      limit,
-      list,
+      type: REQUEST_CONTENT_FOR_NOT_AUTH_STARTED,
     };
   }
 
-  setVisibilityTwitsForAuthUser() {
+  requestFailedForNotAuthUser(error) {
     return {
-      type: SET_VISIBILITY_TWEETS_FOR_AUTH_USER,
-    };
-  }
-
-  getVisibilityTwitsWhoYouRead(userId, limit, list) {
-    return {
-      type: GET_VISIBILITY_TWEETS_WHO_YOU_READ,
-      userId,
-      limit,
-      list,
-    };
-  }
-
-  setVisibilityTwitsWhoYouRead() {
-    return {
-      type: SET_VISIBILITY_TWEETS_WHO_YOU_READ,
-    };
-  }
-
-  getVisibilityTweetsByUser(userId, limit, list) {
-    return {
-      type: GET_VISIBILITY_TWEETS_BY_USER,
-      userId,
-      limit,
-      list,
-    };
-  }
-
-  setVisibilityTweetsByUser() {
-    return {
-      type: SET_VISIBILITY_TWEETS_BY_USER,
-    };
-  }
-
-  getVisibilityTweetsWithMedia(userId, limit, list) {
-    return {
-      type: GET_VISIBILITY_TWEETS_WITH_MEDIA,
-      userId,
-      limit,
-      list,
-    };
-  }
-
-  setVisibilityTweetsWithMedia() {
-    return {
-      type: SET_VISIBILITY_TWEETS_WITH_MEDIA,
-    };
-  }
-
-  getVisibilityTweetsWithLikes(userId, limit, list) {
-    return {
-      type: GET_VISIBILITY_TWEETS_WITH_LIKES,
-      userId,
-      limit,
-      list,
-    };
-  }
-
-  setVisibilityTweetsWithLikes() {
-    return {
-      type: SET_VISIBILITY_TWEETS_WITH_LIKES,
-    };
-  }
-
-  getVisibilityAnswers(userId, limit, list) {
-    return {
-      type: GET_VISIBILITY_ANSWERS,
-      userId,
-      limit,
-      list,
-    };
-  }
-
-  setVisibilityAnswers() {
-    return {
-      type: SET_VISIBILITY_ANSWERS,
+      type: REQUEST_CONTENT_FOR_NOT_AUTH_FAILED,
+      error,
     };
   }
 }

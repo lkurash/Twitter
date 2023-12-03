@@ -33,10 +33,11 @@ const MainSectionTrends = ({ mainBlock, className }) => {
     }
   }
 
+
   return (
     <section className={className}>
       <h2 className="main-section-name">Trends for you</h2>
-      {trends ? (
+      {trends.length > 0 ? (
         trends.map((trend) => <Trends key={trend.id} topic={trend} />)
       ) : (
         <p className="section-whoyouread-hint-about-lack-section">

@@ -1,22 +1,22 @@
 const db = require("../models");
-const twitsController = require("./twitsController");
+const tweetsController = require("./tweetsController");
 const { QueryTypes } = require("sequelize");
 const ApiError = require("../error/ApiError");
 const Sequelize = require("sequelize");
 const uuid = require("uuid");
 const path = require("path");
 const models = require("../models/index");
-const dbRequestTwitsForAuthUser = require("../sql/dbRequestTwitsForAuthUser ");
-const Twits = models.Twits;
+const dbRequestTweetsForAuthUser = require("../sql/dbRequestTweetsForAuthUser ");
+const Tweets = models.Tweets;
 const Trends = models.Trends;
 const User = models.User;
 const Likes = models.Likes;
 const Comments = models.Comments;
-const Favorite_twits = models.Favorite_twits;
+const Favorite_tweets = models.Favorite_tweets;
 const Following = models.Following;
 const jwt = require("jsonwebtoken");
-const TwitsPresenter = require("../presenters/twitsPresenter");
-const TwitsPresenterForPublicPage = require("../presenters/twitsPresenterForPublicPage");
+const TweetsPresenter = require("../presenters/tweetsPresenter");
+const TweetsPresenterForPublicPage = require("../presenters/tweetsPresenterForPublicPage");
 
 const decodeUser = (request) => {
   const token = request.headers.authorization.split(" ")[1];
@@ -44,19 +44,19 @@ class TweetsConstructor {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const tweets = await twitsController.getPublicTwitsByUser(
+      const tweets = await tweetsController.getPublicTweetsByUser(
         userId,
         limit,
         offset
       );
 
-      const countTweets = await db.Twits.count({ where: { userId: userId } });
+      const countTweets = await db.Tweets.count({ where: { userId: userId } });
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
       return response.json({
         tweets: tweets,
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -75,27 +75,27 @@ class TweetsConstructor {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const tweets = await twitsController.getTwitsForAuthUser(
+      const tweets = await tweetsController.getTweetsForAuthUser(
         userId,
         authUserId,
         limit,
         offset
       );
 
-      const countTweets = await db.Twits.count();
+      const countTweets = await db.Tweets.count();
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
       return response.json({
         tweets: tweets,
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
   }
 
-  async favoriteTwits(request, response, next) {
+  async favoriteTweets(request, response, next) {
     try {
       const { userId } = request.params;
       let { limit, list } = request.query;
@@ -108,22 +108,22 @@ class TweetsConstructor {
 
       checkUsersAuth(request, userId, next);
 
-      const favorite_twits = await twitsController.getFavoriteTwitByUser(
+      const favorite_tweets = await tweetsController.getFavoriteTweetByUser(
         userId,
         authUserId,
         limit,
         offset
       );
 
-      const countTweets = await db.Favorite_twits.count({
+      const countTweets = await db.Favorite_tweets.count({
         where: { userId: userId },
       });
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
       return response.json({
-        tweets: favorite_twits,
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        tweets: favorite_tweets,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -140,39 +140,38 @@ class TweetsConstructor {
     list = list || 1;
     let offset = list * limit - limit;
 
-    const tweets = await twitsController.getTwitsByUser(
+    const tweets = await tweetsController.getTweetsByUser(
       userId,
       authUserId,
       limit,
       offset
     );
-    const countTweets = await Twits.count({ where: { userId: userId } });
+    const countTweets = await Tweets.count({ where: { userId: userId } });
 
-    let isTwitsOnNextPage = countTweets - limit * list;
+    let isTweetsOnNextPage = countTweets - limit * list;
 
     return response.json({
       tweets: tweets,
-      moreTwits: true ? isTwitsOnNextPage > 0 : false,
+      moreTweets: true ? isTweetsOnNextPage > 0 : false,
     });
   }
 
   async publicTweets(request, response, next) {
     try {
       let { limit, list } = request.query;
-
       limit = limit || 7;
       list = list || 1;
       let offset = list * limit - limit;
 
-      const tweets = await twitsController.gelAllTwits(limit, offset);
+      const tweets = await tweetsController.gelAllTweets(limit, offset);
 
-      const countTweets = await Twits.count();
+      const countTweets = await Tweets.count();
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
       return response.json({
         tweets: tweets,
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -190,7 +189,7 @@ class TweetsConstructor {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const tweets = await twitsController.getTwitsWithUserLikes(
+      const tweets = await tweetsController.getTweetsWithUserLikes(
         userId,
         authUserId,
         limit,
@@ -201,11 +200,11 @@ class TweetsConstructor {
         where: { userId: userId },
       });
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
       return response.json({
         tweets: tweets,
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -223,7 +222,7 @@ class TweetsConstructor {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const tweets = await twitsController.getTwitsByFollowingUsers(
+      const tweets = await tweetsController.getTweetsByFollowingUsers(
         userId,
         authUserId,
         limit,
@@ -231,25 +230,25 @@ class TweetsConstructor {
       );
 
       const countTweets = await db.sequelize.query(
-        `SELECT count("Twits"."id") AS "count"
-      FROM "Twits" AS "Twits"
-      LEFT OUTER JOIN "Users" AS "user" ON "Twits"."userId" = "user"."id"
+        `SELECT count("Tweets"."id") AS "count"
+      FROM "Tweets" AS "Tweets"
+      LEFT OUTER JOIN "Users" AS "user" ON "Tweets"."userId" = "user"."id"
       LEFT OUTER JOIN "Followings" AS "user->followings_user" ON ("user"."id" = "user->followings_user"."followUserId"
       and "user->followings_user"."userId" = ${userId})
-      LEFT OUTER JOIN "Twits" AS "retwits" ON ("Twits"."id" = "retwits"."twitId" and "retwits"."userId" = ${userId})
-      LEFT OUTER JOIN "Users" AS "twit_user" ON "Twits"."twitUserId" = "twit_user"."id"
-      WHERE "user->followings_user"."userId" = ${userId} or "Twits"."userId" = ${userId} `,
+      LEFT OUTER JOIN "Tweets" AS "retweets" ON ("Tweets"."id" = "retweets"."tweetId" and "retweets"."userId" = ${userId})
+      LEFT OUTER JOIN "Users" AS "tweet_user" ON "Tweets"."tweetUserId" = "tweet_user"."id"
+      WHERE "user->followings_user"."userId" = ${userId} or "Tweets"."userId" = ${userId} `,
         {
           type: QueryTypes.SELECT,
           nest: true,
         }
       );
 
-      let isTwitsOnNextPage = countTweets[0].count - limit * list;
+      let isTweetsOnNextPage = countTweets[0].count - limit * list;
 
       return response.json({
         tweets: tweets,
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -265,7 +264,7 @@ class TweetsConstructor {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const answers = await twitsController.getCommentsByUser(
+      const answers = await tweetsController.getCommentsByUser(
         userId,
         limit,
         offset
@@ -275,11 +274,11 @@ class TweetsConstructor {
         where: { userId: userId },
       });
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
       return response.json({
         tweets: answers,
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -298,22 +297,22 @@ class TweetsConstructor {
       list = list || 1;
       let offset = list * limit - limit;
 
-      const tweets = await twitsController.getUserTwitsWithMedia(
+      const tweets = await tweetsController.getUserTweetsWithMedia(
         userId,
         authUserId,
         limit,
         offset
       );
 
-      const countTweets = await db.Twits.count({
+      const countTweets = await db.Tweets.count({
         where: { userId: userId, img: { [Op.ne]: null } },
       });
 
-      let isTwitsOnNextPage = countTweets - limit * list;
+      let isTweetsOnNextPage = countTweets - limit * list;
 
       return response.json({
         tweets: tweets,
-        moreTwits: true ? isTwitsOnNextPage > 0 : false,
+        moreTweets: true ? isTweetsOnNextPage > 0 : false,
       });
     } catch (error) {
       next(ApiError.badRequest(error.message));

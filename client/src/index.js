@@ -7,10 +7,10 @@ import { CookiesProvider } from "react-cookie";
 
 import reportWebVitals from "./reportWebVitals";
 import CommentsStore from "./store/CommentsStore";
-import FavoriteTwitsStore from "./store/FavoriteTwitsStore";
+import FavoriteTweetsStore from "./store/FavoriteTweetsStore";
 import UsersFollowStore from "./store/UsersFollowStore";
-import RetwitsStore from "./store/RetwitStore";
-import TwitsStore from "./store/TwitsStore";
+import RetweetsStore from "./store/RetweetStore";
+import TweetsStore from "./store/TweetsStore";
 import UserStore from "./store/UserStore";
 import InfoMessageStore from "./store/InfoMessageStore";
 import { store } from "./redux/store";
@@ -24,10 +24,10 @@ root.render(
     <Context.Provider
       value={{
         userStore: new UserStore(),
-        twitsStore: new TwitsStore(),
+        tweetsStore: new TweetsStore(),
         commentsStore: new CommentsStore(),
-        retwitsStore: new RetwitsStore(),
-        favoriteTwitsStore: new FavoriteTwitsStore(),
+        retweetsStore: new RetweetsStore(),
+        favoriteTweetsStore: new FavoriteTweetsStore(),
         usersFollowingsStore: new UsersFollowStore(),
         infoMessageStore: new InfoMessageStore(),
         visiblePopUpStore: new VisiblePopUpStore(),

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Favorite_twits", {
+    await queryInterface.createTable("Favorite_tweets", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,7 +15,7 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
       },
-      twitId: {
+      tweetId: {
         type: Sequelize.INTEGER,
       },
       createdAt: {
@@ -29,6 +29,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Favorite_twits");
+    await queryInterface.dropTable("Favorite_tweets");
   },
 };

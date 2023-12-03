@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING,
         unique: true,
       },
-      count_twits: {
+      count_tweets: {
         type: Sequelize.INTEGER,
       },
       notinteresting_for_users: {

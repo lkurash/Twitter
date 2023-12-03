@@ -1,13 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useRef, useState } from "react";
 
+import { useDispatch } from "react-redux";
+import { trendActions } from "../../redux/trend/trend.actions";
+
 import getAuthUserID from "../../utils/getAuthUserID";
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import dotMenu from "../Imgs/more_dots_icon.png";
 import sad_smile from "../Imgs/sad_smiley_icon.png";
-import { useDispatch } from "react-redux";
-import { trendActions } from "../../redux/trend/trend.actions";
 
 const NotInterestingTrendButton = observer(({ trend }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const NotInterestingTrendButton = observer(({ trend }) => {
   useOutsideClick(tooltip, onClose, tooltipVisible);
 
   return (
-    <div className="button-dotmenu-twit">
+    <div className="button-dotmenu-tweet">
       {tooltipVisible && (
         <div ref={tooltip} className="tooltip-trend">
           <button

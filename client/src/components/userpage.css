@@ -149,12 +149,8 @@ h2 {
   margin-top: 15px;
   margin-left: 20px;
   margin-right: 20px;
-  font-size: 17px;
+  font-size: 15px;
   letter-spacing: 0.5px;
-}
-
-.profile-panel-about-user p {
-  white-space: pre-wrap;
 }
 
 .profile-button-panel-followers {
@@ -505,11 +501,12 @@ h2 {
 
 .section-whoyouread-user-name p {
   word-wrap: break-word;
-  width: 80px;
+  width: 125px;
 }
 
 .user-name-list {
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: bold;
   margin-left: 3px;
 }
 

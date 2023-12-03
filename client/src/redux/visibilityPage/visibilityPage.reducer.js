@@ -1,48 +1,24 @@
-import {
-  GET_MAIN_CONTENT,
-  GET_MAIN_CONTENT_FOR_NOT_AUTH_USER,
-  GET_VISIBILITY_ANSWERS,
-  GET_VISIBILITY_BOOKMARKS,
-  GET_VISIBILITY_TWEETS_BY_USER,
-  GET_VISIBILITY_TWEETS_FOR_AUTH_USER,
-  GET_VISIBILITY_TWEETS_WHO_YOU_READ,
-  GET_VISIBILITY_TWEETS_WITH_LIKES,
-  GET_VISIBILITY_TWEETS_WITH_MEDIA,
-  // REQUEST_DATA_FAILED,
-  // REQUEST_DATA_STARTED,
-  SET_MAIN_CONTENT,
-  SET_MAIN_CONTENT_FOR_NOT_AUTH_USER,
-  SET_VISIBILITY_ANSWERS,
-  SET_VISIBILITY_BOOKMARKS,
-  SET_VISIBILITY_TWEETS_BY_USER,
-  SET_VISIBILITY_TWEETS_FOR_AUTH_USER,
-  SET_VISIBILITY_TWEETS_WHO_YOU_READ,
-  SET_VISIBILITY_TWEETS_WITH_LIKES,
-  SET_VISIBILITY_TWEETS_WITH_MEDIA,
-} from "../../utils/consts";
 import { defaultState } from "../store/defaultState";
+import {
+  GET_MAIN_CONTENT_FOR_AUTH_USER,
+  GET_MAIN_CONTENT_FOR_NOT_AUTH_USER,
+  SET_MAIN_CONTENT_FOR_AUTH_USER,
+  SET_MAIN_CONTENT_FOR_NOT_AUTH_USER,
+  REQUEST_CONTENT_FOR_AUTH_USER_FAILED,
+  REQUEST_CONTENT_FOR_AUTH_USER_STARTED,
+  REQUEST_CONTENT_FOR_NOT_AUTH_FAILED,
+  REQUEST_CONTENT_FOR_NOT_AUTH_STARTED,
+} from "./consts";
 
 export const visibilityPageReducer = (
   state = defaultState.visibility,
   action
 ) => {
   switch (action.type) {
-    // case REQUEST_DATA_STARTED:
-    //   return state;
-
-    // case REQUEST_DATA_FAILED:
-    //   return {
-    //     ...state,
-
-    //     loadingStatus: "EROR",
-    //     visibilityPage: false,
-    //     error: action.error,
-    //   };
-
-    case GET_MAIN_CONTENT:
+    case GET_MAIN_CONTENT_FOR_AUTH_USER:
       return state;
 
-    case SET_MAIN_CONTENT:
+    case SET_MAIN_CONTENT_FOR_AUTH_USER:
       return {
         ...state,
         visibilityPage: true,
@@ -59,67 +35,36 @@ export const visibilityPageReducer = (
         loadingStatus: "COMPLETE",
       };
 
-    case GET_VISIBILITY_BOOKMARKS:
-      return state;
-
-    case SET_VISIBILITY_BOOKMARKS:
+    case REQUEST_CONTENT_FOR_AUTH_USER_FAILED:
       return {
         ...state,
-        visibilityPage: true,
+        visibilityPage: false,
+        loadingStatus: "ERROR",
+        error: action.error,
       };
 
-    case GET_VISIBILITY_TWEETS_FOR_AUTH_USER:
-      return state;
-
-    case SET_VISIBILITY_TWEETS_FOR_AUTH_USER:
+    case REQUEST_CONTENT_FOR_AUTH_USER_STARTED:
       return {
         ...state,
-        visibilityPage: true,
+        visibilityPage: false,
+        loadingStatus: "PENDING",
+        error: false,
       };
 
-    case GET_VISIBILITY_TWEETS_WHO_YOU_READ:
-      return state;
-
-    case SET_VISIBILITY_TWEETS_WHO_YOU_READ:
+    case REQUEST_CONTENT_FOR_NOT_AUTH_STARTED:
       return {
         ...state,
-        visibilityPage: true,
+        visibilityPage: false,
+        loadingStatus: "PENDING",
+        error: false,
       };
 
-    case GET_VISIBILITY_TWEETS_BY_USER:
-      return state;
-
-    case SET_VISIBILITY_TWEETS_BY_USER:
+    case REQUEST_CONTENT_FOR_NOT_AUTH_FAILED:
       return {
         ...state,
-        visibilityPage: true,
-      };
-
-    case GET_VISIBILITY_TWEETS_WITH_MEDIA:
-      return state;
-
-    case SET_VISIBILITY_TWEETS_WITH_MEDIA:
-      return {
-        ...state,
-        visibilityPage: true,
-      };
-
-    case GET_VISIBILITY_TWEETS_WITH_LIKES:
-      return state;
-
-    case SET_VISIBILITY_TWEETS_WITH_LIKES:
-      return {
-        ...state,
-        visibilityPage: true,
-      };
-
-    case GET_VISIBILITY_ANSWERS:
-      return state;
-
-    case SET_VISIBILITY_ANSWERS:
-      return {
-        ...state,
-        visibilityPage: true,
+        visibilityPage: false,
+        loadingStatus: "ERROR",
+        error: action.error,
       };
 
     default:

@@ -6,10 +6,11 @@ import { tweetActions } from "../../redux/tweet/tweet.actions";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
+import TweetsForTrends from "../../components/Tweets/TweetsForTrends";
 import DotMenuButton from "../../components/buttons/DotMenuButton";
+
 import searchIcon from "../../components/Imgs/zoom__icon.png";
 import arrowLeft from "../../components/Imgs/arrow_left_icon.png";
-import TwitsForTrends from "../../components/TwitsForTrends";
 
 const TrendsPage = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const TrendsPage = () => {
           <DotMenuButton />
         </div>
       </div>
-      <TwitsForTrends trend={trend} />
+      <TweetsForTrends trend={trend} />
     </>
   );
 };

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       trend: DataTypes.STRING,
       title: DataTypes.STRING,
-      count_twits: DataTypes.INTEGER,
+      count_tweets: DataTypes.INTEGER,
     },
     {
       sequelize,
