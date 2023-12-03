@@ -2,24 +2,26 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
+import { useSelector } from "react-redux";
+import { auth } from "../../redux/user/user.selectors";
+
 import CommentForm from "../forms/CommentForm";
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 
 import activeComment from "../Imgs/active_comment_icon.png";
 import notactiveComment from "../Imgs/notactive_comment_icon.png";
-import { useSelector } from "react-redux";
-import { auth } from "../../redux/user/user.selectors";
 
-const CommentButton = observer(({ twit }) => {
+
+const CommentButton = observer(({ tweet }) => {
   const { isAuth } = useSelector(auth);
   const { commentsStore } = useContext(Context);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
-  const imgButtonComment = (twit) => {
-    if (twit.id === commentsStore.hoverButtonComment.id) {
+  const imgButtonComment = (tweet) => {
+    if (tweet.id === commentsStore.hoverButtonComment.id) {
       return activeComment;
     }
-    if (twit.id === commentsStore.activeComment.id) {
+    if (tweet.id === commentsStore.activeComment.id) {
       return activeComment;
     }
     return notactiveComment;
@@ -30,36 +32,36 @@ const CommentButton = observer(({ twit }) => {
   };
 
   return (
-    <div className="twit-action-comments">
+    <div className="tweet-action-comments">
       <TooltipUserNotAuth
         tooltipUserNotAuth={tooltipUserNotAuth}
         onCloseTooltip={onCloseTooltip}
         comment
       />
       <div
-        className="twit-action-button-comments"
-        key={twit.id}
+        className="tweet-action-button-comments"
+        key={tweet.id}
         onClick={() => {
           if (isAuth) {
-            commentsStore.setActiveComment(twit);
+            commentsStore.setActiveComment(tweet);
           } else {
             setTooltipUserNotAuth(true);
           }
         }}
         onMouseEnter={() => {
-          commentsStore.setHoverButtonComment(twit);
+          commentsStore.setHoverButtonComment(tweet);
         }}
         onMouseLeave={() => commentsStore.setHoverButtonComment({})}
       >
         <img
-          src={imgButtonComment(twit)}
+          src={imgButtonComment(tweet)}
           alt="Comment"
-          className="twit-action-comments-img"
+          className="tweet-action-comments-img"
         />
       </div>
-      {twit.countComments > 0 && <p>{twit.countComments}</p>}
-      {commentsStore.activeComment.id === twit.id && (
-        <CommentForm twit={twit} />
+      {tweet.countComments > 0 && <p>{tweet.countComments}</p>}
+      {commentsStore.activeComment.id === tweet.id && (
+        <CommentForm tweet={tweet} />
       )}
     </div>
   );

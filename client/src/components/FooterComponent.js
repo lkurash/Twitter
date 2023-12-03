@@ -11,7 +11,7 @@ const FooterComponent = observer(() => {
       <footer className="footer">
         <div className="footer-desc">
           <h4>Don’t miss what’s happening</h4>
-          <p>People on Twitter are the first to know.</p>
+          <p>People on Tweetter are the first to know.</p>
         </div>
         <div className="footer-buttons">
           <button

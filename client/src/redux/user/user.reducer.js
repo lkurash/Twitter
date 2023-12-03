@@ -1,20 +1,15 @@
 import { combineReducers } from "redux";
 import {
-  AUTHENTICATION,
   DELETE_USER_IN_LIST_WHO_NOT_READING,
   GET_AUTH,
   GET_FOLLOWERS,
   GET_FOLLOWINGS,
   GET_LIST_WHO_NOT_READING,
-  GET_USER,
   GET_USERS_WHO_TO_FOLLOW,
   GET_USER_PROFILE,
   GET_USER_PROFILE_BY_ID,
-  REGISTRATION,
   REQUEST_AUTHENTICATION_FAILED,
   REQUEST_AUTHENTICATION_STARTED,
-  REQUEST_DATA_FAILED,
-  REQUEST_DATA_STARTED,
   REQUEST_FOLLOWERS_FAILED,
   REQUEST_FOLLOWERS_STARTED,
   REQUEST_FOLLOWINGS_FAILED,
@@ -33,62 +28,13 @@ import {
   SET_LIST_WHO_NOT_READING,
   SET_NEW_FOLLOWING_IN_FOLLOWERS_LIST,
   SET_NEW_FOLLOWING_IN_FOLLOWING_LIST,
-  SET_USER,
   SET_USERS_WHO_TO_FOLLOW,
   SET_USER_PROFILE,
   SET_USER_PROFILE_BY_ID,
   UPDATE_PROFILE,
-} from "../../utils/consts";
+} from "../user/consts";
 import { defaultState } from "../store/defaultState";
-
-const deleteFollowInFollowingsList = (users, userFollowingId) => {
-  users.map((user) => {
-    if (user.id === userFollowingId) {
-      user.following = false;
-    }
-
-    return users;
-  });
-  return users;
-};
-
-const createFollowInFollowingsList = (users, userFollowingId) => {
-  users.map((user) => {
-    if (user.id === userFollowingId) {
-      user.following = true;
-    }
-
-    return users;
-  });
-  return users;
-};
-
-const deleteFollowInFollowersList = (users, userFollowingId) => {
-  users.map((user) => {
-    if (user.id === userFollowingId) {
-      user.following = false;
-    }
-    return users;
-  });
-  return users;
-};
-
-const createFollowInFollowersList = (users, userFollowingId) => {
-  users.map((user) => {
-    if (user.id === userFollowingId) {
-      user.following = true;
-    }
-    return users;
-  });
-  return users;
-};
-
-const deleteUserInListWhoNotReading = (users, id) => {
-  let userIndex = users.findIndex((user) => user.id === id);
-  users.splice(userIndex, 1);
-
-  return users;
-};
+import { changingUsers } from "./changingUsers";
 
 export const userProfile = (state = defaultState.User.userProfile, action) => {
   switch (action.type) {
@@ -224,7 +170,7 @@ export const userFollowers = (
     case SET_NEW_FOLLOWING_IN_FOLLOWERS_LIST:
       return {
         ...state,
-        followers: createFollowInFollowersList(
+        followers: changingUsers.createFollowInFollowersList(
           state.followers,
           action.userFollowingId
         ),
@@ -233,7 +179,7 @@ export const userFollowers = (
     case SET_DELETED_FOLLOW_IN_FOLLOWERS_LIST:
       return {
         ...state,
-        followers: deleteFollowInFollowersList(
+        followers: changingUsers.deleteFollowInFollowersList(
           state.followers,
           action.userFollowingId
         ),
@@ -276,7 +222,7 @@ export const userFollowings = (
     case SET_NEW_FOLLOWING_IN_FOLLOWING_LIST:
       return {
         ...state,
-        followings: createFollowInFollowingsList(
+        followings: changingUsers.createFollowInFollowingsList(
           state.followings,
           action.userFollowingId
         ),
@@ -285,7 +231,7 @@ export const userFollowings = (
     case SET_DELETED_FOLLOW_IN_FOLLOWING_LIST:
       return {
         ...state,
-        followings: deleteFollowInFollowingsList(
+        followings: changingUsers.deleteFollowInFollowingsList(
           state.followings,
           action.userFollowingId
         ),
@@ -325,7 +271,7 @@ export const userListWhoNotReading = (
     case DELETE_USER_IN_LIST_WHO_NOT_READING:
       return {
         ...state,
-        listWhoNotReading: deleteUserInListWhoNotReading(
+        listWhoNotReading: changingUsers.deleteUserInListWhoNotReading(
           state.listWhoNotReading,
           action.userId
         ),
@@ -355,128 +301,3 @@ export const userReducer = combineReducers({
   userFollowings,
   userListWhoNotReading,
 });
-
-// export const userReducer = (state = defaultState.User, action) => {
-//   switch (action.type) {
-//     case REQUEST_DATA_STARTED:
-//       return {
-//         ...state,
-//         User: state.User,
-//       };
-
-//     case REQUEST_DATA_FAILED:
-//       return {
-//         ...state,
-//         User: state.User,
-//       };
-
-//     case SET_USER:
-//       return {
-//         ...state,
-//         User: {
-//           userProfile: {
-//             profile: action.user.profile,
-//             loadingStatus: "COMPLETE",
-//             error: false,
-//           },
-//           userFollowers: {
-//             followers: [...action.user.followers],
-//             loadingStatus: "COMPLETE",
-//             error: false,
-//           },
-//           userFollowings: {
-//             followings: [...action.user.followings],
-//             loadingStatus: "COMPLETE",
-//             error: false,
-//           },
-//           userListWhoNotReading: state.User.userListWhoNotReading,
-//         },
-//       };
-
-//     case SET_USER_PROFILE:
-//       return {
-//         ...state,
-//         User: {
-//           userProfile: Object.assign({}, state, {
-//             profile: userProfile(state.User, action),
-//           }),
-//           userFollowers: state.User.userFollowers,
-//           userFollowings: state.User.userFollowings,
-//           userListWhoNotReading: state.User.userListWhoNotReading,
-//         },
-//       };
-
-//     case AUTHENTICATION:
-//       return state;
-
-//     case REGISTRATION:
-//       return state;
-
-//     case GET_USER:
-//       return state;
-
-//     // case GET_USER_PROFILE:
-//     //   return state;
-
-//     case UPDATE_PROFILE:
-//       return state;
-
-//     case GET_FOLLOWERS:
-//       return state;
-
-//     case SET_FOLLOWERS:
-//       return {
-//         ...state,
-//         User: {
-//           userProfile: state.User.userProfile,
-//           userFollowers: {
-//             followers: [...action.followers],
-//             profile: action.user.profile,
-//             loadingStatus: "COMPLETE",
-//             error: false,
-//           },
-//           userFollowings: state.User.userFollowings,
-//           userListWhoNotReading: state.User.userListWhoNotReading,
-//         },
-//       };
-
-//     case GET_FOLLOWINGS:
-//       return state;
-
-//     case SET_FOLLOWINGS:
-//       return {
-//         ...state,
-//         User: {
-//           userProfile: state.User.userProfile,
-//           userFollowers: state.User.userFollowers,
-//           userFollowings: {
-//             followings: [...action.user.followings],
-//             loadingStatus: "COMPLETE",
-//             error: false,
-//           },
-//           userListWhoNotReading: state.User.userListWhoNotReading,
-//         },
-//       };
-
-//     case GET_LIST_WHO_NOT_READING:
-//       return state;
-
-//     case SET_LIST_WHO_NOT_READING:
-//       return {
-//         ...state,
-//         User: {
-//           userProfile: state.User.userProfile,
-//           userFollowers: state.User.userFollowers,
-//           userFollowings: state.User.userFollowings,
-//           userListWhoNotReading: {
-//             listWhoNotReading: [...action.users],
-//             loadingStatus: "COMPLETE",
-//             error: false,
-//           },
-//         },
-//       };
-
-//     default:
-//       return state;
-//   }
-// };

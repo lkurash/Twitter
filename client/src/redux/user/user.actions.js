@@ -23,7 +23,7 @@ import {
   SET_USER_PROFILE,
   SET_USER_PROFILE_BY_ID,
   UPDATE_PROFILE,
-} from "../../utils/consts";
+} from "../user/consts";
 
 class UserActions {
   setUser(user) {

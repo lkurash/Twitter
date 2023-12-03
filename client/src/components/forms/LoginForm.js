@@ -11,12 +11,15 @@ import { auth } from "../../redux/user/user.selectors";
 import spinner from "../../utils/spinner";
 import { Context } from "../..";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
+import { HOME_PAGE_PATH } from "../../utils/routs";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = observer(() => {
   const { visiblePopUpStore } = useContext(Context);
   const { token } = useSelector(auth);
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [passwordFieldVisible, setPasswordFieldVisible] = useState(false);
   const [emailFieldVisible, setEmailFieldVisible] = useState(true);
@@ -48,6 +51,7 @@ const LoginForm = observer(() => {
         setIsLoading(false);
         dispatch(userActions.getAuth(getFlagIsAuth()));
         visiblePopUpStore.setLoginPageVisible(false);
+        navigate(HOME_PAGE_PATH);
       }, 500);
     }
   }, [token]);

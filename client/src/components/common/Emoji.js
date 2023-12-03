@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
-const Emoji = ({ emojiVisible, addEmojiInTwitText, onClosePopUpEmoji }) => {
+const Emoji = ({ emojiVisible, addEmojiInTweetText, onClosePopUpEmoji }) => {
   const popUpRef = useRef(null);
 
   useOutsideClick(popUpRef, onClosePopUpEmoji, emojiVisible);
@@ -13,7 +13,7 @@ const Emoji = ({ emojiVisible, addEmojiInTwitText, onClosePopUpEmoji }) => {
       <EmojiPicker
         height={500}
         width={350}
-        onEmojiClick={addEmojiInTwitText}
+        onEmojiClick={addEmojiInTweetText}
         searchDisabled={true}
         emojiStyle={"google"}
       />

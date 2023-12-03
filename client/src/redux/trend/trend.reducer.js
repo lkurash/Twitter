@@ -6,18 +6,9 @@ import {
   REQUEST_TRENDS_STARTED,
   SET_NOT_INTERESTING_TREND,
   SET_TRENDS,
-} from "../../utils/consts";
+} from "../trend/consts";
 import { defaultState } from "../store/defaultState";
-
-const deleteNotInterestingTrend = (trends, notInterestingTrend) => {
-
-  let trendIndex = trends.findIndex(
-    (twit) => twit.id === notInterestingTrend.trendId
-  );
-
-  trends.splice(trendIndex, 1);
-  return trends;
-};
+import { changingTrends } from "./changingTrends";
 
 export const trendReducer = (state = defaultState.Trends, action) => {
   switch (action.type) {
@@ -49,7 +40,10 @@ export const trendReducer = (state = defaultState.Trends, action) => {
     case SET_NOT_INTERESTING_TREND:
       return {
         ...state,
-        trends: deleteNotInterestingTrend(state.trends, action.trend),
+        trends: changingTrends.deleteNotInterestingTrend(
+          state.trends,
+          action.trend
+        ),
       };
 
     default:

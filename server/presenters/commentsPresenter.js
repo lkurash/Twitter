@@ -1,6 +1,6 @@
 class CommentsPresenter {
-  constructor(twits) {
-    this.comments = twits;
+  constructor(tweets) {
+    this.comments = tweets;
     this.comment = {};
     this.userComments = [];
   }
@@ -8,30 +8,30 @@ class CommentsPresenter {
   toJSON() {
     this.comments.forEach((comment) => {
       this.comment = {
-        Twit: comment.Twit && {
-          id: comment.twitId,
-          img: comment.Twit.img
-            ? comment.Twit.img.split(",")
-            : comment.Twit.img,
-          countLikes: comment.Twit.countLikes,
-          countRetwits: comment.Twit.countRetwits,
-          countComments: comment.Twit.countComments,
-          retwit: comment.Twit.retwit,
-          text: comment.Twit.text,
-          twitId: comment.Twit.twitId,
-          twitUserId: comment.Twit.twitUserId,
-          userId: comment.Twit.userId,
-          userOriginalTwits: {
-            id: comment.Twit.user.id,
-            user_name: comment.Twit.user.user_name,
-            photo: comment.Twit.user.photo,
-            about: comment.Twit.user.about,
+        Tweet: comment.Tweet && {
+          id: comment.tweetId,
+          img: comment.Tweet.img
+            ? comment.Tweet.img.split(",")
+            : comment.Tweet.img,
+          countLikes: comment.Tweet.countLikes,
+          countRetweets: comment.Tweet.countRetweets,
+          countComments: comment.Tweet.countComments,
+          retweet: comment.Tweet.retweet,
+          text: comment.Tweet.text,
+          tweetId: comment.Tweet.tweetId,
+          tweetUserId: comment.Tweet.tweetUserId,
+          userId: comment.Tweet.userId,
+          userOriginalTweets: {
+            id: comment.Tweet.user.id,
+            user_name: comment.Tweet.user.user_name,
+            photo: comment.Tweet.user.photo,
+            about: comment.Tweet.user.about,
           },
-          userRetwits: comment.Twit.twit_user && {
-            id: comment.Twit.twit_user.id,
-            user_name: comment.Twit.twit_user.user_name,
-            photo: comment.Twit.twit_user.photo,
-            about: comment.Twit.twit_user.about,
+          userRetweets: comment.Tweet.tweet_user && {
+            id: comment.Tweet.tweet_user.id,
+            user_name: comment.Tweet.tweet_user.user_name,
+            photo: comment.Tweet.tweet_user.photo,
+            about: comment.Tweet.tweet_user.about,
           },
         },
         Comment: {
@@ -46,9 +46,9 @@ class CommentsPresenter {
         },
         comment_createDate: comment.createdAt,
         authUserFavorite:
-          comment.favorite_twits && comment.favorite_twits.id != null,
+          comment.favorite_tweets && comment.favorite_tweets.id != null,
         authUserLike: comment.likes && comment.likes.id != null,
-        authUserRetwits: comment.retwits && comment.retwits.id != null,
+        authUserRetweets: comment.retweets && comment.retweets.id != null,
       };
 
       this.userComments.push(this.comment);

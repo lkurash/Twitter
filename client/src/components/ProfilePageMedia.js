@@ -1,23 +1,23 @@
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 
-import spinner from "../utils/spinner";
-
-import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
-import Twits from "./Twits";
 import { useDispatch, useSelector } from "react-redux";
-import { twitsStore } from "../redux/tweet/tweet.selectors";
-
+import { tweetsStore } from "../redux/tweet/tweet.selectors";
 import { userProfileById } from "../redux/user/user.selectors";
 import { useParams } from "react-router-dom";
 import { tweetActions } from "../redux/tweet/tweet.actions";
 
+import spinner from "../utils/spinner";
+
+import Tweets from "./Tweets/Tweets";
+import ShowMoreTweetsButton from "./buttons/ShowMoreTweetsButton";
+
 const ProfilePageMedia = observer(() => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfileById);
-  const { twits } = useSelector(twitsStore);
+  const { tweets } = useSelector(tweetsStore);
   const { id } = useParams();
-  const { loadingStatus } = useSelector(twitsStore);
+  const { loadingStatus } = useSelector(tweetsStore);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -30,14 +30,20 @@ const ProfilePageMedia = observer(() => {
     }
   }, [id]);
 
-  if (isLoading) return <div className="twits">{spinner()}</div>;
+  if (isLoading) return <div className="tweets">{spinner()}</div>;
 
   return (
     <Fragment>
-      <Twits />
-      {twits && twits.length >= 4 && (
-        <ShowMoreTwitsButton
-          getTwits={tweetActions.getMoreTweetsWithMedia}
+      <Tweets
+        message={
+          <div className="lack-tweets-message">
+            <h2>No tweets with media.</h2> <p>Write first.</p>
+          </div>
+        }
+      />
+      {tweets && tweets.length >= 4 && (
+        <ShowMoreTweetsButton
+          getTweets={tweetActions.getMoreTweetsWithMedia}
           userId={profile.id}
         />
       )}

@@ -7,8 +7,9 @@
   margin-bottom: 25px;
   min-width: 50%;
   width: 50%;
-  height: max-content;
-  border: 0.1px solid rgb(174 174 174 / 31.2%);
+  min-height: 100vh;
+  border-left: 0.1px solid rgb(174 174 174 / 31.2%);
+  border-right: 0.1px solid rgb(174 174 174 / 31.2%);
 }
 
 .main {
@@ -77,7 +78,7 @@
 .main-search-list-found-message {
   margin-top: 13px;
   margin-left: 10px;
-  font-size: 16px
+  font-size: 16px;
 }
 
 .main-search-wrapper-found-users {
@@ -165,8 +166,8 @@
 
 .section {
   margin: 0 auto;
-  min-height: 250px;
-  min-width: 250px;
+  min-height: 280px;
+  min-width: 295px;
   height: max-content;
   padding-bottom: 5px;
 }
@@ -218,7 +219,7 @@
 }
 
 .trends-item {
-  width: 80%;
+  width: 100%;
 }
 
 .trends-item-title,
@@ -302,7 +303,7 @@
 .main-content-likes-button-onpanel,
 .main-content-media-button-onpanel,
 .main-content-answers-button-onpanel,
-.main-content-twits-button-onpanel {
+.main-content-tweets-button-onpanel {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -385,6 +386,7 @@
 .content-block {
   display: flex;
   justify-content: space-between;
+  padding: 10px 20px 0px 20px;
 }
 
 .content-block-comment {
@@ -451,7 +453,6 @@
 }
 
 @media (width <= 550px) {
-
   .menu {
     display: none;
   }
@@ -487,6 +488,7 @@
 
   .main-wrapper {
     min-width: 100%;
+    margin-bottom: 50px;
     margin-left: 0;
     border: none;
   }

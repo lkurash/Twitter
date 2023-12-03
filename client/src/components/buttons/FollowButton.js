@@ -2,9 +2,10 @@ import { observer } from "mobx-react-lite";
 import { useContext } from "react";
 import { Context } from "../..";
 
-import getAuthUserID from "../../utils/getAuthUserID";
 import { useDispatch } from "react-redux";
-import { userOptionsActions } from "../../redux/userOptions/userOptions.actions";
+import { userOptionsActions } from "../../redux/user/userOptions/userOptions.actions";
+
+import getAuthUserID from "../../utils/getAuthUserID";
 
 const FollowButton = observer(
   ({ follow, profile, userFollowingIds, classButton }) => {
@@ -19,6 +20,13 @@ const FollowButton = observer(
 
     const createFollow = (userFollowId) => {
       dispatch(userOptionsActions.createFollowing(authUserID, userFollowId));
+    };
+
+    const buttonName = (profile) => {
+      if (usersFollowingsStore.hoverFollowUser === profile.id) {
+        return "Unfollow";
+      }
+      return "Following";
     };
 
     return (
@@ -37,17 +45,14 @@ const FollowButton = observer(
               deleteFollow(profile.id);
             }}
           >
-            <span>
-              {usersFollowingsStore.hoverFollowUser === profile.id
-                ? "Unfollow"
-                : "Following"}
-            </span>
+            <span>{buttonName(profile)}</span>
           </button>
         ) : (
           <button
             type="submit"
             className={`follow-page-main-button-following ${classButton} `}
             onClick={() => {
+              usersFollowingsStore.setHoverFollowUser({});
               createFollow(profile.id);
             }}
           >

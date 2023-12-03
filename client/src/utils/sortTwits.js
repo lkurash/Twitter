@@ -1,5 +1,5 @@
-const sort = (userTwits) => {
-  userTwits.sort((a, b) => {
+const sort = (userTweets) => {
+  userTweets.sort((a, b) => {
     const dateOne = new Date(a.createdAt);
     const dateTwo = new Date(b.createdAt);
 
@@ -7,18 +7,18 @@ const sort = (userTwits) => {
   });
 };
 
-export default function sortTwits(twits) {
-  const userTwits = [];
+export default function sortTweets(tweets) {
+  const userTweets = [];
 
   for (let index = 0; index < arguments.length; index++) {
     if (arguments[index]) {
-      arguments[index].forEach((twit) => {
-        userTwits.push(twit);
+      arguments[index].forEach((tweet) => {
+        userTweets.push(tweet);
       });
     }
   }
 
-  sort(userTwits);
+  sort(userTweets);
 
-  return userTwits;
+  return userTweets;
 }

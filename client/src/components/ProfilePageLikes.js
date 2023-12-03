@@ -1,21 +1,23 @@
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
-import spinner from "../utils/spinner";
 
-import ShowMoreTwitsButton from "./buttons/ShowMoreTwitsButton";
-import Twits from "./Twits";
 import { useDispatch, useSelector } from "react-redux";
-import { twitsStore } from "../redux/tweet/tweet.selectors";
+import { tweetsStore } from "../redux/tweet/tweet.selectors";
 import { userProfileById } from "../redux/user/user.selectors";
 import { useParams } from "react-router-dom";
 import { tweetActions } from "../redux/tweet/tweet.actions";
 
+import spinner from "../utils/spinner";
+
+import Tweets from "./Tweets/Tweets";
+import ShowMoreTweetsButton from "./buttons/ShowMoreTweetsButton";
+
 const ProfilePageLikes = observer(() => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfileById);
-  const { twits } = useSelector(twitsStore);
+  const { tweets } = useSelector(tweetsStore);
   const { id } = useParams();
-  const { loadingStatus } = useSelector(twitsStore);
+  const { loadingStatus } = useSelector(tweetsStore);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,14 +30,24 @@ const ProfilePageLikes = observer(() => {
     }
   }, [id]);
 
-  if (isLoading) return <div className="twits">{spinner()}</div>;
+  if (isLoading) return <div className="tweets">{spinner()}</div>;
 
   return (
     <Fragment>
-      <Twits />
-      {twits && twits.length >= 7 && (
-        <ShowMoreTwitsButton
-          getTwits={tweetActions.getMoreTweetsWithLikes}
+      <Tweets
+        message={
+          <div className="lack-tweets-message">
+            <h2>You don’t have any likes yet</h2>{" "}
+            <p>
+              Tap the heart on any post to show it some love. When you do, it’ll
+              show up here.
+            </p>
+          </div>
+        }
+      />
+      {tweets && tweets.length >= 7 && (
+        <ShowMoreTweetsButton
+          getTweets={tweetActions.getMoreTweetsWithLikes}
           userId={profile.id}
         />
       )}

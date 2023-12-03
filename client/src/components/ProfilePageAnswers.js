@@ -1,19 +1,21 @@
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-
-import UserComments from "./UserComments";
-import { useDispatch, useSelector } from "react-redux";
-import { twitsStore } from "../redux/tweet/tweet.selectors";
-import spinner from "../utils/spinner";
-import { userProfileById } from "../redux/user/user.selectors";
 import { useParams } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { tweetsStore } from "../redux/tweet/tweet.selectors";
+import { userProfileById } from "../redux/user/user.selectors";
 import { tweetActions } from "../redux/tweet/tweet.actions";
+
+import spinner from "../utils/spinner";
+
+import UserComments from "./Tweets/UserComments";
 
 const ProfilePageAnswers = observer(() => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfileById);
   const { id } = useParams();
-  const { loadingStatus } = useSelector(twitsStore);
+  const { loadingStatus } = useSelector(tweetsStore);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -27,11 +29,11 @@ const ProfilePageAnswers = observer(() => {
   }, [id]);
 
   if (isLoading) {
-    return <div className="twits">{spinner()}</div>;
+    return <div className="tweets">{spinner()}</div>;
   }
 
   return (
-    <div className="twits">
+    <div className="tweets">
       <UserComments />
     </div>
   );

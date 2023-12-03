@@ -20,11 +20,11 @@ const UserPresenter = require("../presenters/userPresenter");
 const dbRequestFollowers = require("../sql/dbRequestFollowers");
 const dbRequestFollowings = require("../sql/dbRequestFollowings");
 
-const Twits = models.Twits;
+const Tweets = models.Tweets;
 const User = models.User;
 const Likes = models.Likes;
 const Comments = models.Comments;
-const Favorite_twits = models.Favorite_twits;
+const Favorite_tweets = models.Favorite_tweets;
 const Following = models.Following;
 
 const genereteAccessToken = (id, email) => {
@@ -209,7 +209,7 @@ class UserController {
         }
       );
     }
-    if (web_site_url) {
+    if (web_site_url || web_site_url === "") {
       const profileUpdate = await User.update(
         {
           web_site_url: web_site_url,
@@ -221,7 +221,7 @@ class UserController {
         }
       );
     }
-    if (about) {
+    if (about || about === "") {
       const profileUpdate = await User.update(
         {
           about: about,

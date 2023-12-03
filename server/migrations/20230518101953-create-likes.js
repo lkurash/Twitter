@@ -15,7 +15,7 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
       },
-      twitId: {
+      tweetId: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

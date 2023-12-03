@@ -8,7 +8,7 @@ import {
   PROFILE_PAGE_USER_ANSWERS_PATH,
   PROFILE_PAGE_USER_LIKES_PATH,
   PROFILE_PAGE_USER_MEDIA_PATH,
-  PROFILE_PAGE_USER_TWITS_PATH,
+  PROFILE_PAGE_USER_TWEETS_PATH,
 } from "../utils/routs";
 import path from "../utils/path";
 
@@ -22,17 +22,17 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
           <NavLink
             className={({ isActive, isPending }) =>
               isActive
-                ? `main-content-twits-button-onpanel active-button-panel`
-                : `main-content-twits-button-onpanel`
+                ? `main-content-tweets-button-onpanel active-button-panel`
+                : `main-content-tweets-button-onpanel`
             }
             to={
               pathHomeProfileUser
-                ? PROFILE_PAGE_USER_TWITS_PATH
+                ? PROFILE_PAGE_USER_TWEETS_PATH
                 : path(USER_PAGE_PATH, id)
             }
             end
           >
-            Twits
+            Tweets
           </NavLink>
         </div>
         <div className="wrapper-button">

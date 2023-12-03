@@ -6,7 +6,7 @@ import {
   REQUEST_TRENDS_STARTED,
   SET_NOT_INTERESTING_TREND,
   SET_TRENDS,
-} from "../../utils/consts";
+} from "../trend/consts";
 
 class TrendActions {
   requestStarted() {

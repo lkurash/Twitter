@@ -1,0 +1,170 @@
+.tweet-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 10px;
+  width: 100%;
+  height: 30px;
+}
+
+/* button comment on tweet panel */
+
+.tweet-action-comments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0;
+  color: #666;
+  font-size: 13px;
+  width: 35px;
+  height: 35px;
+}
+
+.tweet-action-comments:hover {
+  color: #1d9bf0;
+}
+
+.tweet-action-comments-img {
+  width: 14px;
+  height: 14px;
+}
+
+.tweet-action-button-comments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.tweet-action-button-comments:hover {
+  background-color: #008cff25;
+}
+
+/* button retweet on tweet panel */
+
+.tweet-action-retweet-img {
+  width: 19px;
+  height: 19px;
+}
+
+.tweet-action-retweet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 13px;
+  width: 35px;
+  height: 35px;
+}
+
+.tweet-action-button-retweet {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.tweet-action-retweet:hover {
+  color: #46d452;
+}
+
+.tweet-action-button-retweet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.tweet-action-button-retweet:hover {
+  background-color: #2efc3f1e;
+}
+
+/* button like on tweet panel  */
+
+.tweet-action-like {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 13px;
+  width: 35px;
+  height: 35px;
+}
+
+.tweet-action-like-img {
+  width: 15px;
+  height: 15px;
+}
+
+.tweet-action-button-like {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.tweet-action-count-like {
+  margin-left: 3px;
+  min-width: 10px;
+  min-height: 15px;
+}
+
+.tweet-action-button-like:hover {
+  background-color: #f02b7d2a;
+}
+
+.tweet-action-like:hover {
+  color: #ff4a6e;
+}
+
+/* button bookmark on tweet panel */
+
+.tweet-action-bookmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 13px;
+  width: 35px;
+  height: 35px;
+}
+
+.tweet-action-bookmark-img {
+  width: 19px;
+  height: 19px;
+}
+
+.tweet-action-bookmark:hover {
+  color: #366cff;
+}
+
+.tweet-action-button-bookmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.tweet-action-button-bookmark:hover {
+  background-color: #008cff25;
+}
+
+@media (width <= 550px) {
+  .tweet-action-button-bookmark {
+    margin-right: 20px;
+  }
+}

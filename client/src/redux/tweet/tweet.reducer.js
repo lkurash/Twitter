@@ -1,4 +1,5 @@
 import { defaultState } from "../store/defaultState";
+import { changingTweets } from "./changingTweets";
 import {
   GET_ANSWERS,
   GET_FAVORITE_TWEETS,
@@ -17,20 +18,20 @@ import {
   REQUEST_ANSWERS_STARTED,
   REQUEST_BOOKMARKS_FAILED,
   REQUEST_BOOKMARKS_STARTED,
-  REQUEST_TWITS_FAILED,
-  REQUEST_TWITS_FOR_AUTH_USER_FAILED,
-  REQUEST_TWITS_FOR_AUTH_USER_STARTED,
-  REQUEST_TWITS_FOR_TRENDS_FAILED,
-  REQUEST_TWITS_FOR_TRENDS_STARTED,
-  REQUEST_TWITS_STARTED,
-  REQUEST_TWITS_WHO_YOU_READING_FAILED,
-  REQUEST_TWITS_WHO_YOU_READING_STARTED,
-  REQUEST_TWITS_WITH_LIKES_FAILED,
-  REQUEST_TWITS_WITH_LIKES_STARTED,
-  REQUEST_TWITS_WITH_MEDIA_FAILED,
-  REQUEST_TWITS_WITH_MEDIA_STARTED,
-  REQUEST_USER_TWITS_FAILED,
-  REQUEST_USER_TWITS_STARTED,
+  REQUEST_TWEETS_FAILED,
+  REQUEST_TWEETS_FOR_AUTH_USER_FAILED,
+  REQUEST_TWEETS_FOR_AUTH_USER_STARTED,
+  REQUEST_TWEETS_FOR_TRENDS_FAILED,
+  REQUEST_TWEETS_FOR_TRENDS_STARTED,
+  REQUEST_TWEETS_STARTED,
+  REQUEST_TWEETS_WHO_YOU_READING_FAILED,
+  REQUEST_TWEETS_WHO_YOU_READING_STARTED,
+  REQUEST_TWEETS_WITH_LIKES_FAILED,
+  REQUEST_TWEETS_WITH_LIKES_STARTED,
+  REQUEST_TWEETS_WITH_MEDIA_FAILED,
+  REQUEST_TWEETS_WITH_MEDIA_STARTED,
+  REQUEST_USER_TWEETS_FAILED,
+  REQUEST_USER_TWEETS_STARTED,
   SET_BOOKMARK,
   SET_LIKE,
   SET_MORE_TWEETS,
@@ -41,118 +42,60 @@ import {
   UNSET_TWEET,
 } from "./const";
 
-const bookmark = (twits, bookmark) => {
-  twits.map((tweet) => {
-    if (tweet.id === bookmark.twitId) {
-      tweet.authUserFavorite = !tweet.authUserFavorite;
-    }
-    return twits;
-  });
-  return twits;
-};
-
-const like = (twits, like) => {
-  twits.map((tweet) => {
-    if (tweet.id === like.id) {
-      tweet.countLikes = like.countLikes;
-      tweet.authUserLike = !tweet.authUserLike;
-    }
-    return twits;
-  });
-  return twits;
-};
-
-const addRetweet = (twits, retweet) => {
-  twits.unshift(retweet);
-
-  twits.map((tweet) => {
-    if (tweet.id === retweet.twitId) {
-      tweet.authUserRetwits = !tweet.authUserRetwits;
-      tweet.countRetwits = retweet.countRetwits;
-    }
-    if (tweet.id === retweet.id) {
-      tweet.authUserRetwits = !tweet.authUserRetwits;
-      tweet.countRetwits = retweet.countRetwits;
-    }
-    return twits;
-  });
-  return twits;
-};
-
-const deleteRetweet = (twits, retweet) => {
-  let originalTwitsIndex = twits.findIndex(
-    (twit) => twit.id === retweet.tweet.twitId
-  );
-
-  let retwitsIndex = twits.findIndex((twit) => twit.id === retweet.tweet.id);
-
-  twits[originalTwitsIndex].authUserRetwits = false;
-  twits[originalTwitsIndex].countRetwits = retweet.count;
-  twits.splice(retwitsIndex, 1);
-
-  return twits;
-};
-
-const deleteTweet = (tweets, deletedTweet) => {
-  let tweetIndex = tweets.findIndex((twit) => twit.id === deletedTweet.id);
-
-  tweets.splice(tweetIndex, 1);
-
-  return tweets;
-};
-
-export const tweetReducer = (state = defaultState.Twits, action) => {
+export const tweetReducer = (state = defaultState.Tweets, action) => {
   switch (action.type) {
     case SET_TWEETS:
       return {
         ...state,
-        twits:
+        tweets:
           action.tweets.tweets.length !== 0 ? [...action.tweets.tweets] : null,
-        moreTweets: action.tweets.moreTwits,
+        moreTweets: action.tweets.moreTweets,
         loadingStatus: "COMPLETE",
       };
 
     case SET_MORE_TWEETS:
       return {
         ...state,
-        twits: state.twits.concat([...action.tweets.tweets]),
-        moreTweets: action.tweets.moreTwits,
+        tweets: state.tweets.concat([...action.tweets.tweets]),
+        moreTweets: action.tweets.moreTweets,
       };
 
     case SET_BOOKMARK:
       return {
         ...state,
-        twits: bookmark(state.twits, action.bookmark),
+        tweets: changingTweets.bookmark(state.tweets, action.bookmark),
       };
 
     case SET_LIKE:
       return {
         ...state,
-        twits: like(state.twits, action.like),
+        tweets: changingTweets.like(state.tweets, action.like),
       };
 
     case SET_RETWEET:
       return {
         ...state,
-        twits: addRetweet(state.twits, ...action.retweet),
+        tweets: changingTweets.addRetweet(state.tweets, ...action.retweet),
       };
 
     case SET_NEW_TWEET:
       return {
         ...state,
-        twits: [...action.tweet.twit].concat(state.twits),
+        tweets: state.tweets
+          ? [...action.tweet.tweet].concat(state.tweets)
+          : [...action.tweet.tweet],
       };
 
     case UNSET_RETWEET:
       return {
         ...state,
-        twits: deleteRetweet(state.twits, action.retweet),
+        tweets: changingTweets.deleteRetweet(state.tweets, action.retweet),
       };
 
     case UNSET_TWEET:
       return {
         ...state,
-        twits: deleteTweet(state.twits, action.tweet),
+        tweets: changingTweets.deleteTweet(state.tweets, action.tweet),
       };
 
     case GET_TWEETS:
@@ -194,98 +137,98 @@ export const tweetReducer = (state = defaultState.Twits, action) => {
     case GET_ANSWERS:
       return state;
 
-    case REQUEST_TWITS_STARTED:
+    case REQUEST_TWEETS_STARTED:
       return {
         ...state,
         loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: false,
       };
 
-    case REQUEST_TWITS_FAILED:
+    case REQUEST_TWEETS_FAILED:
       return {
         ...state,
         loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: action.error,
       };
 
-    case REQUEST_TWITS_WHO_YOU_READING_STARTED:
+    case REQUEST_TWEETS_WHO_YOU_READING_STARTED:
       return {
         ...state,
         loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: false,
       };
 
-    case REQUEST_TWITS_WHO_YOU_READING_FAILED:
+    case REQUEST_TWEETS_WHO_YOU_READING_FAILED:
       return {
         ...state,
         loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: action.error,
       };
 
-    case REQUEST_TWITS_FOR_AUTH_USER_STARTED:
+    case REQUEST_TWEETS_FOR_AUTH_USER_STARTED:
       return {
         ...state,
         loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: false,
       };
 
-    case REQUEST_USER_TWITS_STARTED:
+    case REQUEST_USER_TWEETS_STARTED:
       return {
         ...state,
         loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: false,
       };
 
-    case REQUEST_USER_TWITS_FAILED:
+    case REQUEST_USER_TWEETS_FAILED:
       return {
         ...state,
         loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: action.error,
       };
-    case REQUEST_TWITS_FOR_AUTH_USER_FAILED:
+    case REQUEST_TWEETS_FOR_AUTH_USER_FAILED:
       return {
         ...state,
         loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
-        error: action.error,
-      };
-
-    case REQUEST_TWITS_WITH_LIKES_STARTED:
-      return {
-        ...state,
-        loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
-        error: false,
-      };
-
-    case REQUEST_TWITS_WITH_LIKES_FAILED:
-      return {
-        ...state,
-        loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: action.error,
       };
 
-    case REQUEST_TWITS_WITH_MEDIA_STARTED:
+    case REQUEST_TWEETS_WITH_LIKES_STARTED:
       return {
         ...state,
         loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: false,
       };
 
-    case REQUEST_TWITS_WITH_MEDIA_FAILED:
+    case REQUEST_TWEETS_WITH_LIKES_FAILED:
       return {
         ...state,
         loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
+        error: action.error,
+      };
+
+    case REQUEST_TWEETS_WITH_MEDIA_STARTED:
+      return {
+        ...state,
+        loadingStatus: "PENDING",
+        tweets: state.Tweets ? state.Tweets.tweets : null,
+        error: false,
+      };
+
+    case REQUEST_TWEETS_WITH_MEDIA_FAILED:
+      return {
+        ...state,
+        loadingStatus: "EROR",
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: action.error,
       };
 
@@ -293,7 +236,7 @@ export const tweetReducer = (state = defaultState.Twits, action) => {
       return {
         ...state,
         loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: false,
       };
 
@@ -301,7 +244,7 @@ export const tweetReducer = (state = defaultState.Twits, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: action.error,
       };
 
@@ -309,7 +252,7 @@ export const tweetReducer = (state = defaultState.Twits, action) => {
       return {
         ...state,
         loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: false,
       };
 
@@ -317,23 +260,23 @@ export const tweetReducer = (state = defaultState.Twits, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: action.error,
       };
 
-    case REQUEST_TWITS_FOR_TRENDS_STARTED:
+    case REQUEST_TWEETS_FOR_TRENDS_STARTED:
       return {
         ...state,
         loadingStatus: "PENDING",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: false,
       };
 
-    case REQUEST_TWITS_FOR_TRENDS_FAILED:
+    case REQUEST_TWEETS_FOR_TRENDS_FAILED:
       return {
         ...state,
         loadingStatus: "EROR",
-        twits: state.Twits ? state.Twits.twits : null,
+        tweets: state.Tweets ? state.Tweets.tweets : null,
         error: action.error,
       };
 

@@ -1,5 +1,3 @@
-import spinner from "../../utils/spinner";
-
 const loadPageUserInfo = (isAuth) => {
   return (
     <>
@@ -55,7 +53,7 @@ const loadPageUserInfo = (isAuth) => {
               <div className="main-content-button-panel">
                 <div className="wrapper-button load-page load-page-wrapper-button">
                   <button
-                    className="main-content-twits-button-onpanel"
+                    className="main-content-tweets-button-onpanel"
                     type="button"
                   ></button>
                 </div>
@@ -80,7 +78,6 @@ const loadPageUserInfo = (isAuth) => {
               </div>
               <div className="main-line" />
             </>
-            <div className="twits">{spinner()}</div>
           </div>
         </>
       </div>

@@ -1,6 +1,6 @@
 import { call, put, takeEvery, all } from "redux-saga/effects";
 import { tweetActions } from "./tweet.actions";
-import twitAPI from "../../http/twitAPI";
+import tweetAPI from "../../http/tweetAPI";
 import {
   GET_ANSWERS,
   GET_FAVORITE_TWEETS,
@@ -28,20 +28,20 @@ import { tweetLoadingActions } from "./tweet.loading.actions";
 import trendAPI from "../../http/trendAPI";
 
 export function* fetchAllTweets() {
-  yield put(tweetLoadingActions.requestStartedTwits());
+  yield put(tweetLoadingActions.requestStartedTweets());
 
   try {
-    const tweets = yield call(twitAPI.getAllTwits);
+    const tweets = yield call(tweetAPI.getAllTweets);
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTwits(error));
+    yield put(tweetLoadingActions.requestFailedTweets(error));
   }
 }
 
 export function* fetchMoreTweets(action) {
   try {
-    const tweets = yield call(twitAPI.getAllTwits, action.limit, action.list);
+    const tweets = yield call(tweetAPI.getAllTweets, action.limit, action.list);
 
     yield put(tweetActions.setMoreTweets(tweets));
   } catch (error) {}
@@ -50,7 +50,7 @@ export function* fetchMoreTweets(action) {
 export function* fetchMoreUserTweets(action) {
   try {
     const tweets = yield call(
-      twitAPI.getTwitsByUser,
+      tweetAPI.getTweetsByUser,
       action.userId,
       action.limit,
       action.list
@@ -63,7 +63,7 @@ export function* fetchMoreUserTweets(action) {
 export function* fetchMoreTweetsWithMedia(action) {
   try {
     const tweets = yield call(
-      twitAPI.getUserTwitsWithMedia,
+      tweetAPI.getUserTweetsWithMedia,
       action.userId,
       action.limit,
       action.list
@@ -76,7 +76,7 @@ export function* fetchMoreTweetsWithMedia(action) {
 export function* fetchMoreTweetsWithLikes(action) {
   try {
     const tweets = yield call(
-      twitAPI.getTwitsWithUserLikes,
+      tweetAPI.getTweetsWithUserLikes,
       action.userId,
       action.limit,
       action.list
@@ -89,7 +89,7 @@ export function* fetchMoreTweetsWithLikes(action) {
 export function* fetchMoreAnswers(action) {
   try {
     const tweets = yield call(
-      twitAPI.getCommentsByUser,
+      tweetAPI.getCommentsByUser,
       action.userId,
       action.limit,
       action.list
@@ -99,10 +99,10 @@ export function* fetchMoreAnswers(action) {
   } catch (error) {}
 }
 
-export function* fetchMoreTwitsForAuthUser(action) {
+export function* fetchMoreTweetsForAuthUser(action) {
   try {
     const tweets = yield call(
-      twitAPI.getTwitsForAuthUser,
+      tweetAPI.getTweetsForAuthUser,
       action.userId,
       action.limit,
       action.list
@@ -112,10 +112,10 @@ export function* fetchMoreTwitsForAuthUser(action) {
   } catch (error) {}
 }
 
-export function* fetchMoreTwitsWhoYouReading(action) {
+export function* fetchMoreTweetsWhoYouReading(action) {
   try {
     const tweets = yield call(
-      twitAPI.getTwitsByFollowingsUsers,
+      tweetAPI.getTweetsByFollowingsUsers,
       action.userId,
       action.limit,
       action.list
@@ -128,7 +128,7 @@ export function* fetchMoreTwitsWhoYouReading(action) {
 export function* fetchMoreBookmarks(action) {
   try {
     const tweets = yield call(
-      twitAPI.getFavoriteTwits,
+      tweetAPI.getFavoriteTweets,
       action.userId,
       action.limit,
       action.list
@@ -139,11 +139,11 @@ export function* fetchMoreBookmarks(action) {
 }
 
 export function* fetchTweetsByUser(action) {
-  yield put(tweetLoadingActions.requestStartedUserTwits());
+  yield put(tweetLoadingActions.requestStartedUserTweets());
 
   try {
     const tweets = yield call(
-      twitAPI.getTwitsByUser,
+      tweetAPI.getTweetsByUser,
       action.userId,
       action.limit,
       action.list
@@ -151,14 +151,14 @@ export function* fetchTweetsByUser(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedUserTwits(error));
+    yield put(tweetLoadingActions.requestFailedUserTweets(error));
   }
 }
 
 export function* fetchPublicTweetsByUser(action) {
   try {
     const tweets = yield call(
-      twitAPI.getPublicTwitsByUser,
+      tweetAPI.getPublicTweetsByUser,
       action.userId,
       action.limit,
       action.list
@@ -171,7 +171,7 @@ export function* fetchPublicTweetsByUser(action) {
 export function* fetchMorePublicTweetsByUser(action) {
   try {
     const tweets = yield call(
-      twitAPI.getPublicTwitsByUser,
+      tweetAPI.getPublicTweetsByUser,
       action.userId,
       action.limit,
       action.list
@@ -182,11 +182,11 @@ export function* fetchMorePublicTweetsByUser(action) {
 }
 
 export function* fetchTweetsWhoYouRead(action) {
-  yield put(tweetLoadingActions.requestStartedTwitsWhoYouReading());
+  yield put(tweetLoadingActions.requestStartedTweetsWhoYouReading());
 
   try {
     const tweets = yield call(
-      twitAPI.getTwitsByFollowingsUsers,
+      tweetAPI.getTweetsByFollowingsUsers,
       action.userId,
       action.limit,
       action.list
@@ -194,7 +194,7 @@ export function* fetchTweetsWhoYouRead(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTwitsWhoYouReading(error));
+    yield put(tweetLoadingActions.requestFailedTweetsWhoYouReading(error));
   }
 }
 
@@ -202,7 +202,7 @@ export function* fetchFavoriteTweets(action) {
   yield put(tweetLoadingActions.requestStartedBookmarks());
   try {
     const tweets = yield call(
-      twitAPI.getFavoriteTwits,
+      tweetAPI.getFavoriteTweets,
       action.userId,
       action.limit,
       action.list
@@ -215,11 +215,11 @@ export function* fetchFavoriteTweets(action) {
 }
 
 export function* fetchTweetsForAuthUser(action) {
-  yield put(tweetLoadingActions.requestStartedTwitsAuthUser());
+  yield put(tweetLoadingActions.requestStartedTweetsAuthUser());
 
   try {
     const tweets = yield call(
-      twitAPI.getTwitsForAuthUser,
+      tweetAPI.getTweetsForAuthUser,
       action.userId,
       action.limit,
       action.list
@@ -227,16 +227,16 @@ export function* fetchTweetsForAuthUser(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTwitsAuthUser(error));
+    yield put(tweetLoadingActions.requestFailedTweetsAuthUser(error));
   }
 }
 
 export function* fetchTweetsWithMedia(action) {
-  yield put(tweetLoadingActions.requestStartedTwitsWithMedia());
+  yield put(tweetLoadingActions.requestStartedTweetsWithMedia());
 
   try {
     const tweets = yield call(
-      twitAPI.getUserTwitsWithMedia,
+      tweetAPI.getUserTweetsWithMedia,
       action.userId,
       action.limit,
       action.list
@@ -244,16 +244,16 @@ export function* fetchTweetsWithMedia(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTwitsWithMedia(error));
+    yield put(tweetLoadingActions.requestFailedTweetsWithMedia(error));
   }
 }
 
 export function* fetchTweetsWithLikes(action) {
-  yield put(tweetLoadingActions.requestStartedTwitsWithLikes());
+  yield put(tweetLoadingActions.requestStartedTweetsWithLikes());
 
   try {
     const tweets = yield call(
-      twitAPI.getTwitsWithUserLikes,
+      tweetAPI.getTweetsWithUserLikes,
       action.userId,
       action.limit,
       action.list
@@ -261,7 +261,7 @@ export function* fetchTweetsWithLikes(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTwitsWithLikes(error));
+    yield put(tweetLoadingActions.requestFailedTweetsWithLikes(error));
   }
 }
 
@@ -270,7 +270,7 @@ export function* fetchAnswers(action) {
 
   try {
     const tweets = yield call(
-      twitAPI.getCommentsByUser,
+      tweetAPI.getCommentsByUser,
       action.userId,
       action.limit,
       action.list
@@ -283,11 +283,11 @@ export function* fetchAnswers(action) {
 }
 
 export function* fetchTweetsForTrends(action) {
-  yield put(tweetLoadingActions.requestStartedTwitsForTrends());
+  yield put(tweetLoadingActions.requestStartedTweetsForTrends());
 
   try {
     const tweets = yield call(
-      trendAPI.getPublicTrendsTwits,
+      trendAPI.getPublicTrendsTweets,
       action.trend,
       action.limit,
       action.list
@@ -295,16 +295,16 @@ export function* fetchTweetsForTrends(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTwitsForTrends(error));
+    yield put(tweetLoadingActions.requestFailedTweetsForTrends(error));
   }
 }
 
 export function* fetchTweetsForTrendsAuthUser(action) {
-  yield put(tweetLoadingActions.requestStartedTwitsForTrends());
+  yield put(tweetLoadingActions.requestStartedTweetsForTrends());
 
   try {
     const tweets = yield call(
-      trendAPI.getTrendsTwitsForAuthUser,
+      trendAPI.getTrendsTweetsForAuthUser,
       action.trend,
       action.limit,
       action.list
@@ -312,7 +312,7 @@ export function* fetchTweetsForTrendsAuthUser(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTwitsForTrends(error));
+    yield put(tweetLoadingActions.requestFailedTweetsForTrends(error));
   }
 }
 
@@ -320,7 +320,7 @@ export function* fetchMoreTweetForTrend(action) {
   try {
     if (action.userId) {
       const tweets = yield call(
-        trendAPI.getTrendsTwitsForAuthUser,
+        trendAPI.getTrendsTweetsForAuthUser,
         action.trend,
         action.limit,
         action.list
@@ -328,7 +328,7 @@ export function* fetchMoreTweetForTrend(action) {
       yield put(tweetActions.setMoreTweets(tweets));
     } else {
       const tweets = yield call(
-        trendAPI.getPublicTrendsTwits,
+        trendAPI.getPublicTrendsTweets,
         action.trend,
         action.limit,
         action.list
@@ -367,11 +367,14 @@ export function* watchFetchMoreTweetsWithMedia() {
 }
 
 export function* watchFetchMoreTweetsForAuthUser() {
-  yield takeEvery(GET_MORE_TWEETS_FOR_AUTH_USER, fetchMoreTwitsForAuthUser);
+  yield takeEvery(GET_MORE_TWEETS_FOR_AUTH_USER, fetchMoreTweetsForAuthUser);
 }
 
 export function* watchFetchMoreTweetsWhoYouReading() {
-  yield takeEvery(GET_MORE_TWEETS_WHO_YOU_READING, fetchMoreTwitsWhoYouReading);
+  yield takeEvery(
+    GET_MORE_TWEETS_WHO_YOU_READING,
+    fetchMoreTweetsWhoYouReading
+  );
 }
 
 export function* watchFetchTweetsByUser() {

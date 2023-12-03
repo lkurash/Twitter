@@ -2,29 +2,29 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Favorite_twits extends Model {
+  class Favorite_tweets extends Model {
     static associate(models) {
-      Favorite_twits.belongsTo(models.User, {
+      Favorite_tweets.belongsTo(models.User, {
         as: "user",
         foreignKey: "userId",
       });
-      Favorite_twits.belongsTo(models.Twits, {
-        as: "favorite_twits",
-        foreignKey: "twitId",
+      Favorite_tweets.belongsTo(models.Tweets, {
+        as: "favorite_tweets",
+        foreignKey: "tweetId",
       });
     }
   }
 
-  Favorite_twits.init(
+  Favorite_tweets.init(
     {
       bookmark: DataTypes.BOOLEAN,
       userId: DataTypes.INTEGER,
-      twitId: DataTypes.INTEGER,
+      tweetId: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: "Favorite_twits",
+      modelName: "Favorite_tweets",
     }
   );
-  return Favorite_twits;
+  return Favorite_tweets;
 };

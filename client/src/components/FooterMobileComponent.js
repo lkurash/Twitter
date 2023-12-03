@@ -5,33 +5,34 @@ import {
   BOOKMARKS_PAGE_PATH,
   HOME_PAGE_PATH,
   PROFILE_PAGE_USER_PATH,
-} from "../utils/constans";
+} from "../utils/routs";
+
+import PopUpWriteTweet from "./common/PopUpWriteTweet";
 
 import home from "./Imgs/home_icon.png";
 import bookmark from "./Imgs/bookmark_icon.png";
 import profile from "./Imgs/profile_icon.png";
 import tweetIcon from "./Imgs/feather_icon.png";
-import PopUpWriteTwit from "./PopUpWriteTwit";
 
 import "./footer.css";
 
 function FooterMobileComponent() {
   const navigate = useNavigate();
-  const [twitFormVisible, setTwitFormVisible] = useState(false);
+  const [tweetFormVisible, setTweetFormVisible] = useState(false);
 
   return (
     <footer className="footer-mobile">
       <div
         className="footer-mobile-tweet-button"
         type="button"
-        onClick={() => setTwitFormVisible(true)}
+        onClick={() => setTweetFormVisible(true)}
       >
         <img src={tweetIcon} alt="tweet" className="button-icon-menu" />
       </div>
-      {twitFormVisible && (
-        <PopUpWriteTwit
-          twitFormVisible={twitFormVisible}
-          setTwitFormVisible={setTwitFormVisible}
+      {tweetFormVisible && (
+        <PopUpWriteTweet
+          tweetFormVisible={tweetFormVisible}
+          setTweetFormVisible={setTweetFormVisible}
         />
       )}
 

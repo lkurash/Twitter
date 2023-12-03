@@ -24,8 +24,8 @@ import registrationIcon from "./Imgs/month_icon.png";
 import undefinedUserPhoto from "./Imgs/user_photo.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { auth, userProfileById } from "../redux/user/user.selectors";
-import { userPreview } from "../redux/userOptions/userOptions.selectors";
-import { userOptionsActions } from "../redux/userOptions/userOptions.actions";
+import { userPreview } from "../redux/user/userOptions/userOptions.selectors";
+import { userOptionsActions } from "../redux/user/userOptions/userOptions.actions";
 
 const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const dispatch = useDispatch();

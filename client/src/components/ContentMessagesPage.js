@@ -1,9 +1,10 @@
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
-import NewMessageComponent from "./NewMessageComponent";
 import { userProfile } from "../redux/user/user.selectors";
 import { useSelector } from "react-redux";
+
+import NewMessageComponent from "./NewMessageComponent";
 
 const ContentMessagesPage = observer(() => {
   const { profile } = useSelector(userProfile);
@@ -22,7 +23,7 @@ const ContentMessagesPage = observer(() => {
       <div className="messages-welcome">
         <div className="messages-welcome-desc">
           <h2>Welcome to inbox!</h2>
-          <p>Send a message in a private message with other Twitter users.</p>
+          <p>Send a message in a private message with other Tweetter users.</p>
           <button
             className="messages-button-write"
             type="button"

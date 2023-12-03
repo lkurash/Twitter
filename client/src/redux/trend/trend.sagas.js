@@ -4,17 +4,13 @@ import {
   CREATE_NOT_INTERESTING_TREND,
   GET_TRENDS,
   GET_TRENDS_FOR_AUTH_USER,
-  SET_TRENDS,
-} from "../../utils/consts";
+} from "../trend/consts";
 import { trendActions } from "./trend.actions";
 
 export function* getTrends(action) {
   yield put(trendActions.requestStarted());
   try {
-    const trends = yield call(
-      trendAPI.getAllTrends,
-      action.limit
-    );
+    const trends = yield call(trendAPI.getAllTrends, action.limit);
 
     yield put(trendActions.setTrends(trends));
   } catch (error) {
@@ -37,11 +33,11 @@ export function* getTrendsForAuthUser(action) {
   }
 }
 
-export function* getTrendsTwitsForAuthUser(action) {
+export function* getTrendsTweetsForAuthUser(action) {
   yield put(trendActions.requestStarted());
   try {
     const trends = yield call(
-      trendAPI.getTrendsTwitsForAuthUser,
+      trendAPI.getTrendsTweetsForAuthUser,
       action.trend,
       action.userId,
       action.limit,
@@ -70,8 +66,8 @@ export function* watchGetTrends() {
   yield takeEvery(GET_TRENDS, getTrends);
 }
 
-export function* watchGetTrendsTwitsForAuthUser() {
-  yield takeEvery(GET_TRENDS_FOR_AUTH_USER, getTrendsTwitsForAuthUser);
+export function* watchGetTrendsTweetsForAuthUser() {
+  yield takeEvery(GET_TRENDS_FOR_AUTH_USER, getTrendsTweetsForAuthUser);
 }
 
 export function* watchCreateNotInterestingTrend() {
@@ -81,7 +77,7 @@ export function* watchCreateNotInterestingTrend() {
 export function* trendSagas() {
   yield all([
     call(watchGetTrends),
-    call(watchGetTrendsTwitsForAuthUser),
+    call(watchGetTrendsTweetsForAuthUser),
     call(watchCreateNotInterestingTrend),
   ]);
 }

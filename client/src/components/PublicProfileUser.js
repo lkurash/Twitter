@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
-import { Context } from "..";
+import { useEffect, useState } from "react";
 
-import ProfileUserInfo from "./ProfileUserInfo";
-import UserTwits from "./UserTwits";
-import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
 import { userProfileById } from "../redux/user/user.selectors";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
+import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
+import ProfileUserInfo from "./ProfileUserInfo";
+import UserTweets from "./Tweets/UserTweets";
 
 const PublicProfileUser = observer(() => {
   const { profile } = useSelector(userProfileById);
@@ -33,7 +33,7 @@ const PublicProfileUser = observer(() => {
           <ProfileUserInfo />
         </div>
         <div className="main-line" />
-        <UserTwits />
+        <UserTweets />
       </div>
     </div>
   );

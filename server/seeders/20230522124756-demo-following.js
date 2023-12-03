@@ -67,6 +67,71 @@ module.exports = {
       ],
       {}
     );
+
+     await queryInterface.bulkInsert(
+       "Followings",
+       [
+         {
+           followUserId: 6,
+           userId: 1,
+           createdAt: new Date(),
+           updatedAt: new Date(),
+         },
+       ],
+       {}
+     );
+
+     await queryInterface.bulkInsert(
+       "Followings",
+       [
+         {
+           followUserId: 6,
+           userId: 2,
+           createdAt: new Date(),
+           updatedAt: new Date(),
+         },
+       ],
+       {}
+     );
+
+     await queryInterface.bulkInsert(
+       "Followings",
+       [
+         {
+           followUserId: 6,
+           userId: 3,
+           createdAt: new Date(),
+           updatedAt: new Date(),
+         },
+       ],
+       {}
+     );
+
+     await queryInterface.bulkInsert(
+       "Followings",
+       [
+         {
+           followUserId: 6,
+           userId: 4,
+           createdAt: new Date(),
+           updatedAt: new Date(),
+         },
+       ],
+       {}
+     );
+
+     await queryInterface.bulkInsert(
+       "Followings",
+       [
+         {
+           followUserId: 6,
+           userId: 5,
+           createdAt: new Date(),
+           updatedAt: new Date(),
+         },
+       ],
+       {}
+     );
   },
 
   async down(queryInterface, Sequelize) {

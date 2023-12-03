@@ -1,8 +1,8 @@
+import { useContext } from "react";
+import { Context } from "../..";
 import { useNavigate } from "react-router-dom";
 
 import close from "../Imgs/x_icon.png";
-import { useContext } from "react";
-import { Context } from "../..";
 
 function CloseButton({ nav, pageVisible }) {
   const { visiblePopUpStore } = useContext(Context);

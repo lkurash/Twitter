@@ -1,7 +1,7 @@
 import authenticate from "./utils/authenticate";
 import redirectToHomePage from "./utils/redirectToHomePage";
 
-import AppLayout from "./pages/public/AppLayout";
+import AppLayout from "./pages/AppLayout";
 import LayoutLoginAndSignUpPage from "./pages/public/LayoutLoginAndSignUpPage";
 import PublicHomePage from "./pages/public/PublicHomePage";
 import PublicExplorePage from "./pages/public/PublicExplorePage";
@@ -22,7 +22,7 @@ import ProfileUserPage from "./pages/private/ProfileUserPage";
 import ProfilePageLikes from "./components/ProfilePageLikes";
 import ProfilePageMedia from "./components/ProfilePageMedia";
 import ProfilePageAnswers from "./components/ProfilePageAnswers";
-import UserTwits from "./components/UserTwits";
+import UserTweets from "./components/Tweets/UserTweets";
 
 import {
   EXPLORE_PAGE_PATH,
@@ -42,9 +42,9 @@ import {
   PUBLIC_HOME_PAGE_PATH,
   HOME_PAGE_PATH,
   AUTH_PAGE_PATH,
-  PROFILE_PAGE_USER_TWITS_PATH,
+  PROFILE_PAGE_USER_TWEETS_PATH,
   USER_PAGE_PATH,
-  USER_PAGE_TWITS_PATH,
+  USER_PAGE_TWEETS_PATH,
   USER_PAGE_ANSWERS_PATH,
   USER_PAGE_LIKES_PATH,
   USER_PAGE__MEDIA_PATH,
@@ -57,7 +57,6 @@ import {
   PUBLIC_USER_PAGE_PATH,
 } from "./utils/routs";
 import RootBoundary from "./utils/RootBoundary";
-import PrivateLoyout from "./pages/private/PrivateLoyout";
 import UserFollowersList from "./components/UserFollowersList";
 import UserFollowingList from "./components/UserFollowingList";
 
@@ -134,8 +133,8 @@ export const privateRoutes = {
       element: <HomeProfileUserPage />,
       children: [
         {
-          path: PROFILE_PAGE_USER_TWITS_PATH,
-          element: <UserTwits />,
+          path: PROFILE_PAGE_USER_TWEETS_PATH,
+          element: <UserTweets />,
         },
         {
           path: PROFILE_PAGE_USER_ANSWERS_PATH,
@@ -187,8 +186,8 @@ export const privateUserPageRoutes = {
       element: <ProfileUserPage />,
       children: [
         {
-          path: USER_PAGE_TWITS_PATH,
-          element: <UserTwits />,
+          path: USER_PAGE_TWEETS_PATH,
+          element: <UserTweets />,
         },
         {
           path: USER_PAGE_ANSWERS_PATH,

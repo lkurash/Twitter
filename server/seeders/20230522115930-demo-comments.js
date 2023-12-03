@@ -9,7 +9,7 @@ module.exports = {
         {
           text: "So cute)",
           userId: 2,
-          twitId: 6,
+          tweetId: 6,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -23,7 +23,7 @@ module.exports = {
         {
           text: "Nice)",
           userId: 4,
-          twitId: 1,
+          tweetId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -37,7 +37,7 @@ module.exports = {
         {
           text: "Super!!",
           userId: 2,
-          twitId: 3,
+          tweetId: 3,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -51,7 +51,7 @@ module.exports = {
         {
           text: "Hello!",
           userId: 1,
-          twitId: 4,
+          tweetId: 4,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

@@ -5,9 +5,9 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Likes, { as: "user_like", foreignKey: "userId" });
-      User.hasMany(models.Twits, { foreignKey: "id" });
-      User.hasMany(models.Favorite_twits, {
-        as: "user_favorite_twits",
+      User.hasMany(models.Tweets, { foreignKey: "id" });
+      User.hasMany(models.Favorite_tweets, {
+        as: "user_favorite_tweets",
         foreignKey: "userId",
       });
       User.hasMany(models.Following, {

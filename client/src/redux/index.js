@@ -1,10 +1,10 @@
 import { all, call } from "redux-saga/effects";
 import { tweetSagas } from "./tweet/tweet.sagas";
 import { userSagas } from "./user/user.sagas";
-import { userOptionalsSagas } from "./userOptions/userOptions.sagas";
+import { userOptionalsSagas } from "./user/userOptions/userOptions.sagas";
 import { trendSagas } from "./trend/trend.sagas";
 import { visibilityPageSagas } from "./visibilityPage/visibilityPage.sagas";
-import { tweetOptionsSagas } from "./tweetOptions/tweetOptions.sagas";
+import { tweetOptionsSagas } from "./tweet/tweetOptions/tweetOptions.sagas";
 
 export function* appWatcher() {
   yield all([

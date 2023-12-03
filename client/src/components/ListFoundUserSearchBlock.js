@@ -2,14 +2,14 @@ import { observer } from "mobx-react-lite";
 import { useRef } from "react";
 
 import { useSelector } from "react-redux";
-import { searchUsers } from "../redux/userOptions/userOptions.selectors";
+import { searchUsers } from "../redux/user/userOptions/userOptions.selectors";
 
 import useOutsideClick from "../utils/useOutsideClickFunction";
 
 import UserInList from "./common/UserInList";
 
 const ListFoundUserSearchBlock = observer(
-  ({ listFoundUsersVisible, onClose, loadListUsers }) => {
+  ({ listFoundUsersVisible, onClose, loadListUsers, setUserName }) => {
     const listUsersRef = useRef(null);
     const { users } = useSelector(searchUsers);
 
@@ -20,7 +20,13 @@ const ListFoundUserSearchBlock = observer(
         {users.length > 0 ? (
           <ul className="main-search-list-found-users">
             {users.map((profile) => (
-              <li className="main-search-found-list-user" key={profile.id}>
+              <li
+                className="main-search-found-list-user"
+                key={profile.id}
+                onClick={() => {setUserName("");
+                onClose()
+              }}
+              >
                 <UserInList profile={profile} />
               </li>
             ))}

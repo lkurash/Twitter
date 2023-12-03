@@ -26,13 +26,13 @@ export const defaultState = {
   },
 
   users: {
-    users: null,
+    users: [],
   },
 
-  Twits: { twits: null, loadingStatus: "PENDING", error: false },
+  Tweets: { tweets: null, loadingStatus: "PENDING", error: false },
 
   Trends: {
-    trends: null,
+    trends: [],
     loadingStatus: "PENDING",
     error: false,
   },

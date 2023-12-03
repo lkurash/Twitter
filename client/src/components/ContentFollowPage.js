@@ -1,17 +1,16 @@
 import { observer } from "mobx-react-lite";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
-import path from "../utils/path";
+import { useSelector } from "react-redux";
+import { userProfileById } from "../redux/user/user.selectors";
 
+import path from "../utils/path";
 import {
   FOLLOWERS_PAGE_PATH,
   FOLLOWINGS_PAGE_PATH,
   USER_FOLLOWER_PAGE_PATH,
   USER_FOLLOWING_PAGE_PATH,
 } from "../utils/routs";
-
-import { useSelector } from "react-redux";
-import { userProfileById } from "../redux/user/user.selectors";
 
 const ContentFollowPage = observer(() => {
   const { profile } = useSelector(userProfileById);

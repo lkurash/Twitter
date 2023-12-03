@@ -9,15 +9,18 @@ import { auth } from "../../redux/user/user.selectors";
 import spinner from "../../utils/spinner";
 import { userActions } from "../../redux/user/user.actions";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
+import { useNavigate } from "react-router-dom";
+import { HOME_PAGE_PATH } from "../../utils/routs";
 
 const PreviewRegistrationForm = observer(({ checkUserInfo }) => {
   const dispatch = useDispatch();
   const { token } = useSelector(auth);
 
-   const { visiblePopUpStore } = useContext(Context);
+  const { visiblePopUpStore } = useContext(Context);
   const { userStore } = useContext(Context);
   const [isLoading, setIsLoading] = useState(false);
   const [previewVisible, setPreviewVisible] = useState(true);
+  const navigate = useNavigate();
 
   const signUp = async () => {
     if (checkUserInfo) {
@@ -44,7 +47,8 @@ const PreviewRegistrationForm = observer(({ checkUserInfo }) => {
       setTimeout(() => {
         setIsLoading(false);
         dispatch(userActions.getAuth(getFlagIsAuth()));
-        visiblePopUpStore.setLoginPageVisible(false);
+        visiblePopUpStore.setSignPageUpVisible(false);
+        navigate(HOME_PAGE_PATH);
       }, 500);
     }
   }, [token]);
