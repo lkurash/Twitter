@@ -11,21 +11,21 @@ import { userActions } from "../redux/user/user.actions";
 import getFlagIsAuth from "../utils/getFlagIsAuth";
 import getAuthUserID from "../utils/getAuthUserID";
 
-import MenuComponent from "../components/MenuComponent";
-import SidebarContent from "../components/SidebarContent";
+import MenuComponent from "./MenuComponent";
+import Sidebar from "./Sidebar";
 import LoginPage from "./public/LoginPage";
 import SignUpPage from "./public/SignUpPage";
 import MessageOnWindow from "../components/common/MessageOnWindow";
-import FooterComponent from "../components/FooterComponent";
+import FooterComponent from "./FooterComponent";
 
-import "../components/main.css";
-import "../components/sideBar.css";
-import "../components/footer.css";
+import "./main.css";
+import "./sideBar.css";
+import "./footer.css";
 import "../components/userpage.css";
 import "../components/Tweets/Tweet/tweetActions.css";
 import "../components/comment.css";
 import "../components/common/common.css";
-import FooterMobileComponent from "../components/FooterMobileComponent";
+import FooterMobileComponent from "./FooterMobileComponent";
 
 const AppLayout = observer(() => {
   const { infoMessageStore } = useContext(Context);
@@ -43,7 +43,7 @@ const AppLayout = observer(() => {
     } else {
       dispatch(visibilityPageActions.getContentForNotAuthUser());
     }
-  }, [authUserID]);
+  }, [authUserID, isAuth]);
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
@@ -51,7 +51,7 @@ const AppLayout = observer(() => {
 
   return (
     <div>
-      <div className="page" ref={ref}>
+      <div className={authUserID ? "private-page" : "public-page"} ref={ref}>
         <MenuComponent page={authUserID ? "privatePage" : "publicPage"} />
         <main className="main-wrapper">
           <div className="main">
@@ -62,7 +62,7 @@ const AppLayout = observer(() => {
             </div>
           </div>
         </main>
-        <SidebarContent />
+        <Sidebar />
       </div>
       {visiblePopUpStore.loginPage && <LoginPage />}
       {visiblePopUpStore.signUpPage && <SignUpPage />}

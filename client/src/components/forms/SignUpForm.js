@@ -4,7 +4,7 @@ import { Context } from "../..";
 
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
-import SignUpFormInput from "../SignUpFormInput";
+import SignUpFormInput from "./SignUpFormInput";
 import BirthForm from "./BirthForm";
 
 const SignUpForm = observer(({ setCheckUserInfo }) => {

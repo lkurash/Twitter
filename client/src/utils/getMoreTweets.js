@@ -7,9 +7,9 @@ export default async function getMoreTweets(
 ) {
   if (showMoreTweets) {
     if (userId) {
-      dispatch(getTweets(userId, 7, itemListTweets));
+      dispatch(getTweets(userId, 9, itemListTweets));
     } else {
-      dispatch(getTweets(7, itemListTweets));
+      dispatch(getTweets(9, itemListTweets));
     }
   }
 }

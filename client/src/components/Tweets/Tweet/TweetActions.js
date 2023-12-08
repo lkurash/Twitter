@@ -1,12 +1,12 @@
 import LikeTweetButton from "../../buttons/LikeTweetButton";
 import RetweetTweetButton from "../../buttons/RetweetTweetButton";
-import CommentButton from "../../buttons/CommentButton";
+import RepliesButton from "../../buttons/RepliesButton";
 import BookmarkButton from "../../buttons/BookmarkButton";
 
 const TweetActions = ({ tweet, retweet }) => {
   return (
     <div className="tweet-action" key={tweet.id}>
-      <CommentButton tweet={tweet} />
+      <RepliesButton tweet={tweet} />
       <RetweetTweetButton tweet={tweet} retweet={retweet} />
       <LikeTweetButton
         tweet={tweet}

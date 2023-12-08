@@ -39,16 +39,19 @@ const ShowMoreTrendsTweetsButton = ({ trend }) => {
   }
 
   return (
-    <button
-      className="tweets-button-show-more"
-      type="button"
-      onClick={() => {
-        setItemListTweets(itemListTweets + 1);
-        setShowMoreTweets(true);
-      }}
-    >
-      Show more
-    </button>
+    <>
+      <button
+        className="tweets-button-show-more"
+        type="button"
+        onClick={() => {
+          setItemListTweets(itemListTweets + 1);
+          setShowMoreTweets(true);
+        }}
+      >
+        Show more
+      </button>
+      <div className="main-line" />
+    </>
   );
 };
 

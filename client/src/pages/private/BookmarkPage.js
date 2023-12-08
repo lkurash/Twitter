@@ -1,14 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
-import getAuthUserID from "../../utils/getAuthUserID";
-import getFlagIsAuth from "../../utils/getFlagIsAuth";
-
-import ContentBookmarksPage from "../../components/ContentBookmarksPage";
 import { useDispatch, useSelector } from "react-redux";
-import { visibilityPageActions } from "../../redux/visibilityPage/visibilityPage.actions";
 import { visibility } from "../../redux/visibilityPage/visibilityPage.selectors";
 import { tweetActions } from "../../redux/tweet/tweet.actions";
+
+import getAuthUserID from "../../utils/getAuthUserID";
+
+import BookmarksPageContent from "../../components/BookmarksPageContent";
 
 const BookmarksPage = observer(() => {
   const { loadingStatus } = useSelector(visibility);
@@ -27,7 +26,7 @@ const BookmarksPage = observer(() => {
 
   return (
     <>
-      <ContentBookmarksPage />
+      <BookmarksPageContent />
     </>
   );
 });

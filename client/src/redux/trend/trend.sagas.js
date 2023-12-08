@@ -33,11 +33,11 @@ export function* getTrendsForAuthUser(action) {
   }
 }
 
-export function* getTrendsTweetsForAuthUser(action) {
+export function* getAuthUserTweetsForTrend(action) {
   yield put(trendActions.requestStarted());
   try {
     const trends = yield call(
-      trendAPI.getTrendsTweetsForAuthUser,
+      trendAPI.getAuthUserTweetsForTrend,
       action.trend,
       action.userId,
       action.limit,
@@ -67,7 +67,7 @@ export function* watchGetTrends() {
 }
 
 export function* watchGetTrendsTweetsForAuthUser() {
-  yield takeEvery(GET_TRENDS_FOR_AUTH_USER, getTrendsTweetsForAuthUser);
+  yield takeEvery(GET_TRENDS_FOR_AUTH_USER, getAuthUserTweetsForTrend);
 }
 
 export function* watchCreateNotInterestingTrend() {

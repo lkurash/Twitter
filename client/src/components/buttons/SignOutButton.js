@@ -1,31 +1,63 @@
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
 
-import useOutsideClick from "../../utils/useOutsideClickFunction";
-import { AUTH_PAGE_PATH } from "../../utils/routs";
+import getUserPhoto from "../../utils/getUserPhoto";
 
-const Cookies = require("js-cookie");
+import SignOutTooltip from "../common/SignOutTooltip";
 
-function SignOutButton({ buttonSignOutVisible, onClose }) {
-  const tooltipRef = useRef(null);
-  const navigate = useNavigate();
+import dotMenu from "../Imgs/more_dots_icon.png";
+import { useSelector } from "react-redux";
+import { userProfile } from "../../redux/user/user.selectors";
 
-  const logout = () => {
-    Cookies.remove("refreshToken");
-    Cookies.remove("token");
-    Cookies.remove("tweetsWhoReading");
-    navigate(AUTH_PAGE_PATH);
+const SignOutButton = observer(() => {
+  const { profile, loadingStatus } = useSelector(userProfile);
+  const [isLoading, setIsLoading] = useState(true);
+  const [buttonSignOutVisible, setButtonSignOutVisible] = useState(false);
+
+  useEffect(() => {
+    if (loadingStatus !== "PENDING") {
+      setIsLoading(false);
+    }
+  }, [loadingStatus]);
+
+  if (isLoading) {
+    return null;
+  }
+
+  const onClose = () => {
+    setButtonSignOutVisible(false);
   };
 
-  useOutsideClick(tooltipRef, onClose, buttonSignOutVisible);
-
   return (
-    <div ref={tooltipRef} className="tooltip">
-      <button type="button" className="logout" onClick={logout}>
-        <span>Sign out</span>
+    <div className="user-block-menu">
+      {buttonSignOutVisible && (
+        <SignOutTooltip
+          buttonSignOutVisible={buttonSignOutVisible}
+          onClose={onClose}
+        />
+      )}
+
+      <button
+        className="button-user"
+        onClick={() => setButtonSignOutVisible((v) => !v)}
+      >
+        <div className="button-user-desc">
+          <div className="button-user-photo">
+            <img src={getUserPhoto(profile)} alt="User" />
+          </div>
+          <div className="button-user-name">
+            <span>{profile.user_name}</span>
+            <p>@{profile.user_name}</p>
+          </div>
+        </div>
+        <img
+          src={dotMenu}
+          alt="dot menu"
+          className="button-user-dotmenu-icon"
+        />
       </button>
     </div>
   );
-}
+});
 
 export default SignOutButton;

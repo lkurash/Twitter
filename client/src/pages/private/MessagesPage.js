@@ -1,14 +1,11 @@
 import { observer } from "mobx-react-lite";
 
-import ContentMessagesPage from "../../components/ContentMessagesPage";
+import MessagesPageContent from "../../components/MessagesPageContent";
 
 const MessagesPage = observer(() => {
-
-
-
   return (
     <>
-      <ContentMessagesPage />
+      <MessagesPageContent />
     </>
   );
 });

@@ -2,9 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import getAuthUserID from "../../utils/getAuthUserID";
-
-import path from "../../utils/path";
-import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../utils/routs";
+import navigateClickOnUser from "../../utils/navigateClickOnUser";
 
 import PreviewUserOnTweet from "./PreviewUserOnTweet";
 
@@ -42,7 +40,7 @@ const TooltipRetweetOnTweet = ({ retweet, user }) => {
                   alt="Retweet"
                   className="tweet-hint-about-retweet-img"
                 />{" "}
-                <p className="tweet-hint-about-retweet-text">You retweeted</p>
+                <p className="tweet-hint-about-retweet-text">You reposted</p>
               </div>
             </div>
           ) : (
@@ -58,13 +56,7 @@ const TooltipRetweetOnTweet = ({ retweet, user }) => {
               >
                 <div
                   className="tweet-hint-about-retweet-img-text"
-                  onClick={() => {
-                    if (isAuth) {
-                      navigate(path(USER_PAGE_PATH, user.id));
-                    } else {
-                      navigate(path(PUBLIC_USER_PAGE_PATH, user.id));
-                    }
-                  }}
+                  onClick={() => navigate(navigateClickOnUser(isAuth, user.id))}
                 >
                   <img
                     src={retweetIcon}
@@ -72,7 +64,7 @@ const TooltipRetweetOnTweet = ({ retweet, user }) => {
                     className="tweet-hint-about-retweet-img"
                   />
                   <p className="tweet-hint-about-retweet-text">
-                    {user.user_name} retweeted
+                    {user.user_name} reposted
                   </p>
                 </div>
                 {showProfileUser && (

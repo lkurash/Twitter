@@ -54,7 +54,7 @@ module.exports = {
       "Tweets",
       [
         {
-          text: "Hi, tweetter",
+          text: "Hi, twitter",
           img: "46031399-1115-4929-b916-807938c17b84.jpg",
           userId: 4,
           createdAt: new Date(),
@@ -175,21 +175,21 @@ module.exports = {
       {}
     );
 
-     await queryInterface.bulkInsert(
-       "Tweets",
-       [
-         {
-           text: "Excited to give a talk today in Zhuhai.Even more excited to see the announcement on the beautiful Opera House.",
-           img: "",
-           userId: 4,
-           retweet: false,
-           countRetweets: 1,
-           createdAt: new Date(),
-           updatedAt: new Date(),
-         },
-       ],
-       {}
-     );
+    await queryInterface.bulkInsert(
+      "Tweets",
+      [
+        {
+          text: "Excited to give a talk today in Zhuhai.Even more excited to see the announcement on the beautiful Opera House.",
+          img: "",
+          userId: 4,
+          retweet: false,
+          countRetweets: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+      {}
+    );
 
     await queryInterface.bulkInsert(
       "Tweets",

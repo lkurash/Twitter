@@ -7,8 +7,8 @@ import { tweetActions } from "../../redux/tweet/tweet.actions";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
-import ContentExplorePageAllTweets from "../../components/ContentExplorePageAllTweets";
-import MainSectionTrends from "../../components/MainSectionTrends";
+import ExplorePageAllTweets from "../../components/Tweets/ExplorePageAllTweets";
+import MainSectionTrends from "../MainSectionTrends";
 
 const PrivateExplorePage = observer(() => {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const PrivateExplorePage = observer(() => {
         />
 
         <div className="main-line" />
-        <ContentExplorePageAllTweets />
+        <ExplorePageAllTweets />
       </div>
     </>
   );

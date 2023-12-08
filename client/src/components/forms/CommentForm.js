@@ -15,7 +15,7 @@ import { userProfile } from "../../redux/user/user.selectors";
 
 const CommentForm = observer(({ tweet }) => {
   const { profile } = useSelector(userProfile);
-  const { commentsStore } = useContext(Context);
+  const { repliesStore } = useContext(Context);
   const { infoMessageStore } = useContext(Context);
 
   const [commentText, setCommentText] = useState("");
@@ -27,7 +27,7 @@ const CommentForm = observer(({ tweet }) => {
 
     infoMessageStore.setTextMessage("Comment has been sent.");
     infoMessageStore.setInfoMessageVisible(true);
-    commentsStore.setActiveComment({});
+    repliesStore.setActiveRepliesOnTweet({});
   };
 
   if (commentText.length > 255) {
@@ -43,7 +43,7 @@ const CommentForm = observer(({ tweet }) => {
       <div className="comment-form">
         <div
           className="button-close"
-          onClick={() => commentsStore.setActiveComment({})}
+          onClick={() => repliesStore.setActiveRepliesOnTweet({})}
         >
           <img src={close} alt="close-icon" className="close-icon" />
         </div>

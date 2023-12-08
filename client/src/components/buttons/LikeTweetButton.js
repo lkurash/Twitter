@@ -29,24 +29,33 @@ const LikeTweetButton = observer(({ tweet, like, countLikes }) => {
     dispatch(tweetOptionsActions.deleteLike(authUserID, tweet.id));
   };
 
-  const imgOnTweet = (tweet) => {
+  const imgLikeButton = (tweet) => {
     if (tweet.id === tweetsStore.hoverTweetLike.id) {
       return hoverLike;
     }
 
-    return notactiveLike;
+    if (like) {
+      if (tweet.id === tweetsStore.likedTweet.id) {
+        return activeLike;
+      }
+
+      return activeLike;
+    } else {
+      return notactiveLike;
+    }
   };
 
-  const imgOnLikedTweet = (tweet) => {
-    if (tweet.id === tweetsStore.likedTweet.id) {
-      return activeLike;
+  const onClickLike = (tweet) => {
+    if (isAuth) {
+      if (like) {
+        dislikeTweet(tweet);
+      } else {
+        createLikeTweet(tweet);
+        tweetsStore.setLikedTweet(tweet);
+      }
+    } else {
+      setTooltipUserNotAuth(true);
     }
-
-    if (tweet.id === tweetsStore.hoverTweetLike.id) {
-      return hoverLike;
-    }
-
-    return activeLike;
   };
 
   const onCloseTooltip = () => {
@@ -55,53 +64,22 @@ const LikeTweetButton = observer(({ tweet, like, countLikes }) => {
 
   return (
     <div className="tweet-action-like">
-      {like ? (
-        <div className="tweet-action-button-like">
-          <img
-            alt="Like"
-            key={tweet.id}
-            className="tweet-action-like-img"
-            src={imgOnLikedTweet(tweet)}
-            onMouseEnter={() => {
-              tweetsStore.sethoverTweetLike(tweet);
-            }}
-            onMouseLeave={() => tweetsStore.sethoverTweetLike({})}
-            onClick={() => {
-              dislikeTweet(tweet);
-            }}
-          />
-        </div>
-      ) : (
-        <>
-          <TooltipUserNotAuth
-            tooltipUserNotAuth={tooltipUserNotAuth}
-            onCloseTooltip={onCloseTooltip}
-            like
-          />
-          <div
-            className="tweet-action-button-like"
-            key={tweet.id}
-            onClick={() => {
-              if (isAuth) {
-                createLikeTweet(tweet);
-                tweetsStore.setLikedTweet(tweet);
-              } else {
-                setTooltipUserNotAuth(true);
-              }
-            }}
-            onMouseEnter={() => {
-              tweetsStore.sethoverTweetLike(tweet);
-            }}
-            onMouseLeave={() => tweetsStore.sethoverTweetLike({})}
-          >
-            <img
-              src={imgOnTweet(tweet)}
-              alt="Like"
-              className="tweet-action-like-img"
-            />
-          </div>
-        </>
-      )}
+      <TooltipUserNotAuth
+        tooltipUserNotAuth={tooltipUserNotAuth}
+        onCloseTooltip={onCloseTooltip}
+        like
+      />
+      <div className="tweet-action-button-like">
+        <img
+          alt="Like"
+          key={tweet.id}
+          className="tweet-action-like-img"
+          src={imgLikeButton(tweet)}
+          onMouseEnter={() => tweetsStore.sethoverTweetLike(tweet)}
+          onMouseLeave={() => tweetsStore.sethoverTweetLike({})}
+          onClick={() => onClickLike(tweet)}
+        />
+      </div>
       <p className="tweet-action-count-like">{countLikes > 0 && countLikes}</p>
     </div>
   );

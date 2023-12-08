@@ -43,23 +43,32 @@ const RetweetTweetButton = observer(({ tweet, retweet }) => {
     infoMessageStore.setInfoMessageVisible(true);
   };
 
-  const imgOnTweet = (tweet) => {
+  const imgRetweetButton = (tweet) => {
     if (tweet.id === retweetsStore.hoverTweetRetweet.id) {
       return activeRetweet;
     }
 
-    return notactiveRetweet;
-  };
-
-  const imgOnRetweetedTweet = (tweet) => {
-    if (tweet.id === retweetsStore.tweetRetweet.id) {
+    if (retweet) {
+      if (tweet.id === retweetsStore.tweetRetweet.id) {
+        return activeRetweet;
+      }
       return activeRetweet;
-    }
-
-    if (tweet.id === retweetsStore.hoverTweetRetweet.id) {
+    } else {
       return notactiveRetweet;
     }
-    return activeRetweet;
+  };
+
+  const onClickRetweet = (tweet) => {
+    if (isAuth) {
+      if (retweet) {
+        deleteRetweet(tweet);
+      } else {
+        retweetsStore.setTweetRetweet(tweet);
+        createRetweetTweet(tweet);
+      }
+    } else {
+      setTooltipUserNotAuth(true);
+    }
   };
 
   const onCloseTooltip = () => {
@@ -76,25 +85,12 @@ const RetweetTweetButton = observer(({ tweet, retweet }) => {
       <div
         className="tweet-action-button-retweet"
         key={tweet.id}
-        onClick={() => {
-          if (isAuth) {
-            if (retweet) {
-              deleteRetweet(tweet);
-            } else {
-              retweetsStore.setTweetRetweet(tweet);
-              createRetweetTweet(tweet);
-            }
-          } else {
-            setTooltipUserNotAuth(true);
-          }
-        }}
-        onMouseEnter={() => {
-          retweetsStore.sethoverTweetRetweet(tweet);
-        }}
+        onClick={() => onClickRetweet(tweet)}
+        onMouseEnter={() => retweetsStore.sethoverTweetRetweet(tweet)}
         onMouseLeave={() => retweetsStore.sethoverTweetRetweet({})}
       >
         <img
-          src={retweet ? imgOnRetweetedTweet(tweet) : imgOnTweet(tweet)}
+          src={imgRetweetButton(tweet)}
           alt="button retweet"
           className="tweet-action-retweet-img"
         />

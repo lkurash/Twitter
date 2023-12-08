@@ -2,12 +2,14 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import PublicProfileUser from "../../components/PublicProfileUser";
 import { userActions } from "../../redux/user/user.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
+
 import { USER_PAGE_PATH } from "../../utils/routs";
 import path from "../../utils/path";
+
+import PublicProfileUser from "../../components/PublicProfileUser";
 
 const PublicProfilePageUser = observer(() => {
   const dispatch = useDispatch();
