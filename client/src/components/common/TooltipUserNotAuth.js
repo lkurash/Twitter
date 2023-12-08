@@ -74,14 +74,14 @@ const TooltipUserNotAuth = observer(
             {bookmark && (
               <>
                 <h2>Bookmark a Tweet to save it.</h2>
-                <p>Join Tweetter now</p>
+                <p>Join Twitter now</p>
               </>
             )}
             {like && (
               <>
                 <h2>Like a Tweet to share the love.</h2>
                 <p>
-                  Join Tweetter now to let internet hall of fame know you like
+                  Join Twitter now to let internet hall of fame know you like
                   their Tweet.
                 </p>
               </>
@@ -90,7 +90,7 @@ const TooltipUserNotAuth = observer(
               <>
                 <h2>Retweet to spread the word.</h2>
                 <p>
-                  When you join Tweetter, you can share internet hall of fame’s
+                  When you join Twitter, you can share internet hall of fame’s
                   Tweet with your followers.
                 </p>
               </>
@@ -99,7 +99,7 @@ const TooltipUserNotAuth = observer(
               <>
                 <h2>Reply to join the conversation.</h2>
                 <p>
-                  Once you’ve joined Tweetter, you’ll be able to respond to
+                  Once you’ve joined Twitter, you’ll be able to respond to
                   internet hall of fame’s Tweet.
                 </p>
               </>
@@ -107,7 +107,7 @@ const TooltipUserNotAuth = observer(
             {follow && (
               <>
                 <h2>Don’t miss what’s happening.</h2>
-                <p>People on Tweetter are the first to know.</p>
+                <p>People on Twitter are the first to know.</p>
               </>
             )}
           </div>

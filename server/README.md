@@ -1,4 +1,4 @@
-# Tweetter
+# Twitter
 
 ## Database setup
 

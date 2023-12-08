@@ -37,22 +37,32 @@ const BookmarkButton = observer(({ tweet, bookmark }) => {
     infoMessageStore.setInfoMessageVisible(true);
   };
 
-  const imgOnTweet = (tweet) => {
+  const imgBookmarkButton = (tweet) => {
     if (tweet.id === favoriteTweetsStore.hoverTweetBookmark.id) {
       return hoverBookmark;
     }
-    return notactiveBookmark;
-  };
 
-  const imgOnBookmark = (tweet) => {
-    if (tweet.id === favoriteTweetsStore.tweetBookmark.id) {
+    if (bookmark) {
+      if (tweet.id === favoriteTweetsStore.tweetBookmark.id) {
+        return activeBookmark;
+      }
       return activeBookmark;
-    }
-
-    if (tweet.id === favoriteTweetsStore.hoverTweetBookmark.id) {
+    } else {
       return notactiveBookmark;
     }
-    return activeBookmark;
+  };
+
+  const onClickBookmark = () => {
+    if (isAuth) {
+      if (bookmark) {
+        deleteBookmark(tweet);
+      } else {
+        favoriteTweetsStore.setTweetBookmark(tweet);
+        createFavoriteTweets(tweet);
+      }
+    } else {
+      setTooltipUserNotAuth(true);
+    }
   };
 
   const onCloseTooltip = () => {
@@ -61,55 +71,24 @@ const BookmarkButton = observer(({ tweet, bookmark }) => {
 
   return (
     <div className="tweet-action-bookmark">
-      {!bookmark ? (
-        <>
-          <TooltipUserNotAuth
-            tooltipUserNotAuth={tooltipUserNotAuth}
-            onCloseTooltip={onCloseTooltip}
-            bookmark
-          />
-          <div
-            className="tweet-action-button-bookmark"
-            key={tweet.id}
-            onClick={() => {
-              if (isAuth) {
-                favoriteTweetsStore.setTweetBookmark(tweet);
-                createFavoriteTweets(tweet);
-              } else {
-                setTooltipUserNotAuth(true);
-              }
-            }}
-            onMouseEnter={() => {
-              favoriteTweetsStore.setHoverTweetBookmark(tweet);
-            }}
-            onMouseLeave={() => favoriteTweetsStore.setHoverTweetBookmark({})}
-          >
-            <img
-              src={imgOnTweet(tweet)}
-              alt="Bookmark"
-              className="tweet-action-bookmark-img"
-            />
-          </div>
-        </>
-      ) : (
-        <div
-          className="tweet-action-button-bookmark"
-          key={tweet.id}
-          onClick={() => {
-            deleteBookmark(tweet);
-          }}
-          onMouseEnter={() => {
-            favoriteTweetsStore.setHoverTweetBookmark(tweet);
-          }}
-          onMouseLeave={() => favoriteTweetsStore.setHoverTweetBookmark({})}
-        >
-          <img
-            src={imgOnBookmark(tweet)}
-            alt="Bookmark"
-            className="tweet-action-bookmark-img"
-          />
-        </div>
-      )}
+      <TooltipUserNotAuth
+        tooltipUserNotAuth={tooltipUserNotAuth}
+        onCloseTooltip={onCloseTooltip}
+        bookmark
+      />
+      <div
+        className="tweet-action-button-bookmark"
+        key={tweet.id}
+        onClick={() => onClickBookmark(tweet)}
+        onMouseEnter={() => favoriteTweetsStore.setHoverTweetBookmark(tweet)}
+        onMouseLeave={() => favoriteTweetsStore.setHoverTweetBookmark({})}
+      >
+        <img
+          src={imgBookmarkButton(tweet)}
+          alt="Bookmark"
+          className="tweet-action-bookmark-img"
+        />
+      </div>
     </div>
   );
 });

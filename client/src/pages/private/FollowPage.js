@@ -1,12 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import getAuthUserID from "../../utils/getAuthUserID";
 
-import ContentFollowPage from "../../components/ContentFollowPage";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../redux/user/user.actions";
 import { userProfileById } from "../../redux/user/user.selectors";
+
+import getAuthUserID from "../../utils/getAuthUserID";
+
+import FollowPageContent from "../../components/FollowPageContent";
 
 const FollowPage = observer(() => {
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const FollowPage = observer(() => {
   }
   return (
     <>
-      <ContentFollowPage />
+      <FollowPageContent />
     </>
   );
 });

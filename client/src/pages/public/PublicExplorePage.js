@@ -7,7 +7,7 @@ import { tweetsStore } from "../../redux/tweet/tweet.selectors";
 
 import spinner from "../../utils/spinner";
 
-import MainSectionTrends from "../../components/MainSectionTrends";
+import MainSectionTrends from "../MainSectionTrends";
 import ShowMoreTweetsButton from "../../components/buttons/ShowMoreTweetsButton";
 import Tweets from "../../components/Tweets/Tweets";
 
@@ -33,24 +33,15 @@ const PublicExplorePage = observer(() => {
         className="section section-public-page trends"
         mainBlock={true}
       />
-
       <div className="main-line" />
-      {isLoading ? (
-        <div className="tweets">{spinner()}</div>
-      ) : (
-        <>
-          <Tweets
-            message={
-              <div className="lack-tweets-message">
-                <h2>No tweets yet.</h2> <p>Write first.</p>
-              </div>
-            }
-          />
-          {tweets && tweets.length >= 7 && (
-            <ShowMoreTweetsButton getTweets={tweetActions.getMoreTweets} />
-          )}
-        </>
-      )}
+      <Tweets
+        message={
+          <div className="lack-tweets-message">
+            <h2>No tweets yet.</h2> <p>Write first.</p>
+          </div>
+        }
+        getMoreTweets={tweetActions.getMoreTweets}
+      />
     </div>
   );
 });

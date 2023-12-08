@@ -1,5 +1,6 @@
 import authenticate from "./utils/authenticate";
 import redirectToHomePage from "./utils/redirectToHomePage";
+import RootBoundary from "./utils/RootBoundary";
 
 import AppLayout from "./pages/AppLayout";
 import LayoutLoginAndSignUpPage from "./pages/public/LayoutLoginAndSignUpPage";
@@ -19,10 +20,12 @@ import EditProfilePage from "./pages/private/EditProfilePage";
 import FollowPage from "./pages/private/FollowPage";
 import ProfileUserPage from "./pages/private/ProfileUserPage";
 
-import ProfilePageLikes from "./components/ProfilePageLikes";
-import ProfilePageMedia from "./components/ProfilePageMedia";
-import ProfilePageAnswers from "./components/ProfilePageAnswers";
+import AnswersPageContent from "./components/AnswersPageContent";
 import UserTweets from "./components/Tweets/UserTweets";
+import UserFollowersList from "./components/UserFollowersList";
+import UserFollowingList from "./components/UserFollowingList";
+import UserTweetsWithMedia from "./components/Tweets/UserTweetsWithMedia";
+import UserTweetsWithLikes from "./components/Tweets/UserTweetsWithLikes";
 
 import {
   EXPLORE_PAGE_PATH,
@@ -56,9 +59,6 @@ import {
   TRENDS_PAGE_PATH,
   PUBLIC_USER_PAGE_PATH,
 } from "./utils/routs";
-import RootBoundary from "./utils/RootBoundary";
-import UserFollowersList from "./components/UserFollowersList";
-import UserFollowingList from "./components/UserFollowingList";
 
 export const publicRoutes = {
   path: ROOT_PAGE_PATH,
@@ -138,15 +138,15 @@ export const privateRoutes = {
         },
         {
           path: PROFILE_PAGE_USER_ANSWERS_PATH,
-          element: <ProfilePageAnswers />,
+          element: <AnswersPageContent />,
         },
         {
           path: PROFILE_PAGE_USER_LIKES_PATH,
-          element: <ProfilePageLikes />,
+          element: <UserTweetsWithLikes />,
         },
         {
           path: PROFILE_PAGE_USER_MEDIA_PATH,
-          element: <ProfilePageMedia />,
+          element: <UserTweetsWithMedia />,
         },
         {
           path: EDIT_PROFILE_PAGE_PATH,
@@ -191,15 +191,15 @@ export const privateUserPageRoutes = {
         },
         {
           path: USER_PAGE_ANSWERS_PATH,
-          element: <ProfilePageAnswers />,
+          element: <AnswersPageContent />,
         },
         {
           path: USER_PAGE_LIKES_PATH,
-          element: <ProfilePageLikes />,
+          element: <UserTweetsWithLikes />,
         },
         {
           path: USER_PAGE__MEDIA_PATH,
-          element: <ProfilePageMedia />,
+          element: <UserTweetsWithMedia />,
         },
       ],
     },

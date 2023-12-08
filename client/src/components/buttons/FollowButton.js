@@ -35,15 +35,11 @@ const FollowButton = observer(
           <button
             key={profile.id}
             className={`follow-page-main-button-following ${classButton} button-following-hover`}
-            onMouseEnter={() => {
-              usersFollowingsStore.setHoverFollowUser(profile.id);
-            }}
-            onMouseLeave={() => {
-              usersFollowingsStore.setHoverFollowUser({});
-            }}
-            onClick={() => {
-              deleteFollow(profile.id);
-            }}
+            onMouseEnter={() =>
+              usersFollowingsStore.setHoverFollowUser(profile.id)
+            }
+            onMouseLeave={() => usersFollowingsStore.setHoverFollowUser({})}
+            onClick={() => deleteFollow(profile.id)}
           >
             <span>{buttonName(profile)}</span>
           </button>

@@ -139,7 +139,7 @@ export function* fetchMoreBookmarks(action) {
 }
 
 export function* fetchTweetsByUser(action) {
-  yield put(tweetLoadingActions.requestStartedUserTweets());
+  yield put(tweetLoadingActions.requestStartedTweetsAuthUser());
 
   try {
     const tweets = yield call(
@@ -151,11 +151,12 @@ export function* fetchTweetsByUser(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedUserTweets(error));
+    yield put(tweetLoadingActions.requestFailedTweetsAuthUser(error));
   }
 }
 
 export function* fetchPublicTweetsByUser(action) {
+  yield put(tweetLoadingActions.requestStartedUserTweets());
   try {
     const tweets = yield call(
       tweetAPI.getPublicTweetsByUser,
@@ -165,7 +166,9 @@ export function* fetchPublicTweetsByUser(action) {
     );
 
     yield put(tweetActions.setTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(tweetLoadingActions.requestFailedUserTweets(error));
+  }
 }
 
 export function* fetchMorePublicTweetsByUser(action) {
@@ -304,7 +307,7 @@ export function* fetchTweetsForTrendsAuthUser(action) {
 
   try {
     const tweets = yield call(
-      trendAPI.getTrendsTweetsForAuthUser,
+      trendAPI.getAuthUserTweetsForTrend,
       action.trend,
       action.limit,
       action.list
@@ -320,7 +323,7 @@ export function* fetchMoreTweetForTrend(action) {
   try {
     if (action.userId) {
       const tweets = yield call(
-        trendAPI.getTrendsTweetsForAuthUser,
+        trendAPI.getAuthUserTweetsForTrend,
         action.trend,
         action.limit,
         action.list

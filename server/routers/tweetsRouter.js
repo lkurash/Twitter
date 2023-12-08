@@ -1,42 +1,44 @@
 const Router = require("express");
-const tweetsController = require("../controllers/tweetsController");
-const tweetsConstructor = require("../controllers/tweetsConstructor");
+const dbRequestTweets = require("../controllers/dbRequestTweets");
+const tweetsDecorator = require("../controllers/tweetsDecorator");
 const router = new Router();
 
-router.post("/tweet", tweetsController.createTweetAndTrends);
-router.get("/", tweetsConstructor.publicTweets);
-router.get("/auth/user/:userId", tweetsConstructor.tweetsByUser);
-router.get("/user/:userId", tweetsConstructor.publicTweetsByUser);
-router.get("/user/:userId/bookmarks", tweetsConstructor.favoriteTweets);
-router.get("/user/:userId/comments", tweetsConstructor.tweetsWithUserAnswers);
-router.delete("/tweet/:tweetId", tweetsController.deleteTweet);
-router.get("/authUser/:userId", tweetsConstructor.tweetsForAuthUser);
+router.post("/tweet", tweetsDecorator.newTweetAndTrend);
+router.get("/", tweetsDecorator.publicTweets);
+router.get("/auth/user/:userId", tweetsDecorator.tweetsByUser);
+router.get("/user/:userId", tweetsDecorator.publicTweetsByUser);
+router.get("/user/:userId/bookmarks", tweetsDecorator.favoriteTweets);
+router.get("/user/:userId/comments", tweetsDecorator.tweetsWithUserAnswers);
+router.delete("/tweet/:tweetId", tweetsDecorator.deletedTweet);
+router.get("/authUser/:userId", tweetsDecorator.tweetsForAuthUser);
 router.get(
   "/following/user/:userId",
-  tweetsConstructor.tweetsForAuthUserByFollowings
+  tweetsDecorator.tweetsForAuthUserByFollowings
 );
-router.get("/user/:userId/media", tweetsConstructor.tweetsByUserWithMedia);
-router.get("/likes/user/:userId", tweetsConstructor.tweetsWithUserLikes);
-router.post(
-  "/tweet/:tweetId/user/:userId/likes",
-  tweetsController.createLikeOnTweet
-);
-router.put(
-  "/tweet/:tweetId/likes/user/:userId",
-  tweetsController.deleteLikeOnTweet
-);
+router.get("/user/:userId/media", tweetsDecorator.tweetsByUserWithMedia);
+router.get("/likes/user/:userId", tweetsDecorator.tweetsWithUserLikes);
+router.post("/tweet/:tweetId/user/:userId/likes", tweetsDecorator.likedTweet);
+router.put("/tweet/:tweetId/likes/user/:userId", tweetsDecorator.dislikeTweet);
 router.post(
   "/tweet/:tweetId/user/:userId/retweets",
-  tweetsController.createRetweetTweet
+  tweetsDecorator.newRetweet
 );
-router.put(
-  "/retweets/:retweetId/user/:userId",
-  tweetsController.deleteRetweetTweet
-);
+router.put("/retweets/:retweetId/user/:userId", tweetsDecorator.deleteRetweet);
 
 router.post(
   "/tweet/:tweetId/user/:userId/comments",
-  tweetsController.createAnswer
+  tweetsDecorator.newReplies
+);
+
+router.get("/trend/:trend", tweetsDecorator.publicTweetsForTrend);
+router.get("/auth/trend/:trend", tweetsDecorator.authUserTweetsForTrend);
+router.post(
+  "/tweet/:tweetId/user/:userId/bookmarks",
+  tweetsDecorator.newFavoriteTweet
+);
+router.post(
+  "/bookmarks/tweet/:tweetId/user/:userId",
+  tweetsDecorator.deletedFavoriteTweet
 );
 
 module.exports = router;

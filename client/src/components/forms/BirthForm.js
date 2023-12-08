@@ -1,11 +1,12 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
+
 import { userProfile } from "../../redux/user/user.selectors";
 import { useSelector } from "react-redux";
 
 const BirthForm = observer(({ user }) => {
-  const { profile, loadingStatus } = useSelector(userProfile);
+  const { profile } = useSelector(userProfile);
   const { userStore } = useContext(Context);
   const [userSelectMonth, setUserSelectMonth] = useState("");
   const [userSelectDay, setUserSelectDay] = useState("");

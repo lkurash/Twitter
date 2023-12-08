@@ -62,12 +62,17 @@ img {
   box-shadow: 0 0 30px rgb(12 12 12 / 54.1%);
 }
 
-.page {
+.public-page,
+.private-page {
   margin: 0 auto;
   display: flex;
   justify-content: center;
   width: 90%;
   height: max-content;
+}
+
+.public-page {
+  margin-bottom: 50px;
 }
 
 .tweet-page {

@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { auth } from "../../../redux/user/user.selectors";
 
-import path from "../../../utils/path";
 import getUserPhoto from "../../../utils/getUserPhoto";
-import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "../../../utils/routs";
+import navigateClickOnUser from "../../../utils/navigateClickOnUser";
 
 import PreviewUserOnTweet from "../../common/PreviewUserOnTweet";
 
@@ -43,13 +42,7 @@ const UserPhoto = observer(({ tweet, user }) => {
         <img
           alt="User"
           src={getUserPhoto(user)}
-          onClick={() => {
-            if (isAuth) {
-              navigate(path(USER_PAGE_PATH, user.id));
-            } else {
-              navigate(path(PUBLIC_USER_PAGE_PATH, user.id));
-            }
-          }}
+          onClick={() => navigate(navigateClickOnUser(isAuth, user.id))}
         />
         {showProfileUser && (
           <PreviewUserOnTweet

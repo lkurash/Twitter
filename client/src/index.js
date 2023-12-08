@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 
 import reportWebVitals from "./reportWebVitals";
-import CommentsStore from "./store/CommentsStore";
+import RepliesStore from "./store/RepliesStore";
 import FavoriteTweetsStore from "./store/FavoriteTweetsStore";
 import UsersFollowStore from "./store/UsersFollowStore";
 import RetweetsStore from "./store/RetweetStore";
@@ -25,7 +25,7 @@ root.render(
       value={{
         userStore: new UserStore(),
         tweetsStore: new TweetsStore(),
-        commentsStore: new CommentsStore(),
+        repliesStore: new RepliesStore(),
         retweetsStore: new RetweetsStore(),
         favoriteTweetsStore: new FavoriteTweetsStore(),
         usersFollowingsStore: new UsersFollowStore(),

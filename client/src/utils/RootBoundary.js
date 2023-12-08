@@ -1,6 +1,6 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
-import MenuComponent from "../components/MenuComponent";
-import SidebarContent from "../components/SidebarContent";
+import MenuComponent from "../pages/MenuComponent";
+import Sidebar from "../pages/Sidebar";
 
 export default function RootBoundary() {
   const error = useRouteError();
@@ -23,7 +23,7 @@ export default function RootBoundary() {
                 </div>
               </div>
             </main>
-            <SidebarContent />
+            <Sidebar />
           </div>
         </div>
       );
@@ -43,7 +43,7 @@ export default function RootBoundary() {
             </div>
           </div>
         </main>
-        <SidebarContent />
+        <Sidebar />
       </div>
     </div>
   );
