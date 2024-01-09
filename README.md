@@ -2,7 +2,9 @@
 
 <p>Built with React, Redux, Express and Postgres. </p>
 
-<img width="700" align="center" alt="Screenshot Twitter" src="https://github.com/lkurash/Twitter/assets/105499318/3f29745d-36c6-4468-b218-2ebf6d6d44d3">
+<p align="center">
+  <img width="700" alt="Screenshot Twitter" src="https://github.com/lkurash/Twitter/assets/105499318/3f29745d-36c6-4468-b218-2ebf6d6d44d3">
+</p>
 
 <h3>Features</h4>
 <ul>
