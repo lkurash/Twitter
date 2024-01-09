@@ -1,7 +1,10 @@
-<p align="center">
-<img src="https://github.com/lkurash/Twitter/assets/105499318/dcce6405-5a52-42f5-bb9e-289b6199f8ed" width="600" height="450" >
+<h1>Twitter clone</h3>
+<p>Built with React, Redux, Express and Postgres. </p>
+
+<p>
+  <img src="https://github.com/lkurash/Twitter/assets/105499318/dcce6405-5a52-42f5-bb9e-289b6199f8ed" width="600" height="450" >
 </p>
-<h3 align="center">Twitter clone built in Next.js + React.js + Redux + CSS + using PostgreSQL</h3>
+
 <h3>Features :sparkles:</h4>
 <ul>
   <li>Authentication.</li>
@@ -14,6 +17,15 @@
   <li>Users can see a list of trends and mark those that do not interest them.</li>
   <li>Realtime update likes, retweets, and user profile.</li>
   <li>User can edit their profile.<li>Responsive design for mobile, tablet, and desktop.</li>
+</ul>
+
+<h3>Principles :sparkles:</h4>
+<ul>
+  <li>Single responsibility</li>
+  <li>DRY</li>
+  <li>Naming principles</li>
+  <li>Separation of concepts</li>
+  <li>Decorators</li>
 </ul>
 
 <h3>Tech :wrench:</h4>
