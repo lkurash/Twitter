@@ -2,9 +2,9 @@
 
 <p>Built with React, Redux, Express and Postgres. </p>
 
-<img width="1485" alt="Screenshot Twitter" src="https://github.com/lkurash/Twitter/assets/105499318/3f29745d-36c6-4468-b218-2ebf6d6d44d3">
+<img width="1000" alt="Screenshot Twitter" src="https://github.com/lkurash/Twitter/assets/105499318/3f29745d-36c6-4468-b218-2ebf6d6d44d3">
 
-<h3>Features :sparkles:</h4>
+<h3>Features</h4>
 <ul>
   <li>Authentication</li>
   <li><b>Users can add tweets, like, retweet, and reply</b></li>
@@ -19,7 +19,7 @@
   <li><b>Responsive design for mobile, tablet, and desktop</b></li>
 </ul>
 
-<h3>Principles</h4>
+<h3>Principles :sparkles:</h4>
 <ul>
   <li>Single responsibility</li>
   <li>DRY</li>
@@ -28,7 +28,7 @@
   <li>Decorators</li>
 </ul>
 
-<h3>Tech :wrench:</h4>
+<h3>Tech</h4>
 <ul>
   <li>Next.js</li>
   <li>React.js</li>
