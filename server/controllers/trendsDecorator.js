@@ -28,7 +28,7 @@ class TrendsDecorator {
           });
 
           if (!checkedTrend) {
-            const newTrend = dbRequestTrends.createTrend(countTweets, word);
+            const newTrend = await dbRequestTrends.createTrend(countTweets, word);
           } else {
             await dbRequestTrends.countUpdateTrend(countTweets, word);
           }
