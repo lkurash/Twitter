@@ -5,18 +5,18 @@
 <h3>Features :sparkles:</h4>
 <ul>
   <li>Authentication.</li>
-<li>Users can add tweets, like, retweet, and reply.</li>
-<li>Users can add up to 4 images to their tweets.</li>
-<li>Users can delete tweets, add a tweet to bookmarks.</li>
-<li>Users can follow and unfollow other users.</li>
-<li>Users can see their and other followers and the following list.</li>
-<li>The user can search for other users.</li>
-<li>Users can see a list of trends and mark those that do not interest them.</li>
-<li>Realtime update likes, retweets, and user profile.</li>
-<li>User can edit their profile.<li>Responsive design for mobile, tablet, and desktop.</li>
+  <li>Users can add tweets, like, retweet, and reply.</li>
+  <li>Users can add up to 4 images to their tweets.</li>
+  <li>Users can delete tweets, add a tweet to bookmarks.</li>
+  <li>Users can follow and unfollow other users.</li>
+  <li>Users can see their and other followers and the following list.</li>
+  <li>The user can search for other users.</li>
+  <li>Users can see a list of trends and mark those that do not interest them.</li>
+  <li>Realtime update likes, retweets, and user profile.</li>
+  <li>User can edit their profile.<li>Responsive design for mobile, tablet, and desktop.</li>
 </ul>
 
-<h3>Tech  :wrench:</h4>
+<h3>Tech :wrench:</h4>
 <ul>
   <li>Next.js</li>
   <li>React.js</li>
