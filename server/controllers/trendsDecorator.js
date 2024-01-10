@@ -19,7 +19,7 @@ class TrendsDecorator {
     try {
       const words = text.split(" ");
 
-      words.forEach(async (word) => {
+      for (const word of words) {
         if (word.length >= 4) {
           const countTweets = await dbRequestTrends.countTweetsForTrend(word);
 
@@ -33,7 +33,7 @@ class TrendsDecorator {
             await dbRequestTrends.countUpdateTrend(countTweets, word);
           }
         }
-      });
+      }
 
       return words;
     } catch (error) {
@@ -113,7 +113,7 @@ class TrendsDecorator {
     try {
       const words = text.split(" ");
 
-      words.forEach(async (word) => {
+      for (const word of words) {
         if (word.length >= 4) {
           const countTweets = await dbRequestTrends.countTweetsForTrend(word);
 
@@ -129,7 +129,7 @@ class TrendsDecorator {
             }
           }
         }
-      });
+      }
 
       return text;
     } catch (error) {

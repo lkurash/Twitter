@@ -15,6 +15,11 @@ const ListFoundUserSearchBlock = observer(
 
     useOutsideClick(listUsersRef, onClose, listFoundUsersVisible);
 
+    const handleUserClick = (profile) => {
+      setUserName("");
+      onClose();
+    };
+
     return (
       <div className="main-search-wrapper-found-users" ref={listUsersRef}>
         {users.length > 0 ? (
@@ -23,9 +28,7 @@ const ListFoundUserSearchBlock = observer(
               <li
                 className="main-search-found-list-user"
                 key={profile.id}
-                onClick={() => {setUserName("");
-                onClose()
-              }}
+                onClick={() => handleUserClick(profile)}
               >
                 <UserInList profile={profile} />
               </li>

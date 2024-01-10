@@ -17,6 +17,11 @@ const FollowPageContent = observer(() => {
   const location = useLocation().pathname;
   const pathHomeProfileUser = location.includes("home");
 
+  const getClassNameActiveButton = (isActive) =>
+    isActive
+      ? `follow-page-main-button-onpanel follow-page-active-button-panel`
+      : `follow-page-main-button-onpanel`;
+
   return (
     <>
       <div className="follow-page-header">
@@ -31,11 +36,7 @@ const FollowPageContent = observer(() => {
 
         <div className="main-content-button-panel">
           <NavLink
-            className={({ isActive }) =>
-              isActive
-                ? `follow-page-main-button-onpanel follow-page-active-button-panel`
-                : `follow-page-main-button-onpanel`
-            }
+            className={({ isActive }) => getClassNameActiveButton(isActive)}
             to={
               pathHomeProfileUser
                 ? FOLLOWINGS_PAGE_PATH
@@ -46,11 +47,7 @@ const FollowPageContent = observer(() => {
             <span>Following</span>
           </NavLink>
           <NavLink
-            className={({ isActive }) =>
-              isActive
-                ? `follow-page-main-button-onpanel follow-page-active-button-panel`
-                : `follow-page-main-button-onpanel`
-            }
+            className={({ isActive }) => getClassNameActiveButton(isActive)}
             to={
               pathHomeProfileUser
                 ? FOLLOWERS_PAGE_PATH

@@ -32,6 +32,21 @@ const PrivateHomePageContent = observer(() => {
     }
   }, [cookies.tweetsWhoReading]);
 
+  const handleClickedButtonForYou = () => {
+    setCookie("tweetsWhoReading", "false");
+    setTweetsWhoReadingVisible(false);
+    setTweetsForYouVisible(true);
+  };
+
+  const handleClickedButtonWhoYouRead = () => {
+    setCookie("tweetsWhoReading", "true");
+    setTweetsForYouVisible(false);
+    setTweetsWhoReadingVisible(true);
+  };
+
+  const getClassNameActiveButton = (isActive) =>
+    isActive ? "main-button-active" : "main-button-notactive";
+
   return (
     <>
       <div className="main-stiky-panel">
@@ -45,40 +60,22 @@ const PrivateHomePageContent = observer(() => {
             <button
               type="button"
               className="main-button-foryou"
-              onClick={() => {
-                setCookie("tweetsWhoReading", "false");
-                setTweetsWhoReadingVisible(false);
-                setTweetsForYouVisible(true);
-              }}
+              onClick={handleClickedButtonForYou}
             >
               <span>For you</span>
             </button>
-            <div
-              className={
-                tweetsForYouVisible
-                  ? "main-button-active"
-                  : "main-button-notactive"
-              }
-            />
+            <div className={getClassNameActiveButton(tweetsForYouVisible)} />
           </div>
           <div className="wrapper-button">
             <button
               type="button"
               className="main-button-whoyouread"
-              onClick={() => {
-                setCookie("tweetsWhoReading", "true");
-                setTweetsForYouVisible(false);
-                setTweetsWhoReadingVisible(true);
-              }}
+              onClick={handleClickedButtonWhoYouRead}
             >
               <span> You are reading</span>
             </button>
             <div
-              className={
-                tweetsWhoReadingVisible
-                  ? "main-button-active"
-                  : "main-button-notactive"
-              }
+              className={getClassNameActiveButton(tweetsWhoReadingVisible)}
             />
           </div>
         </div>
