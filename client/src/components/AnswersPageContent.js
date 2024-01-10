@@ -11,6 +11,7 @@ import spinner from "../utils/spinner";
 
 import UserComments from "./Tweets/UserComments";
 
+
 const AnswersPageContent = observer(() => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfileById);
@@ -28,13 +29,9 @@ const AnswersPageContent = observer(() => {
     }
   }, [id]);
 
-  if (isLoading) {
-    return <div className="tweets">{spinner()}</div>;
-  }
-
   return (
     <div className="tweets">
-      <UserComments />
+      {isLoading ? spinner() : <UserComments />}
     </div>
   );
 });

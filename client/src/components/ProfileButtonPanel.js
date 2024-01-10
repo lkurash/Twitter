@@ -15,15 +15,18 @@ import path from "../utils/path";
 const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
   const { id } = useParams();
 
+  const getClassNameActiveButton = (isActive) =>
+    isActive
+      ? `main-content-tweets-button-onpanel active-button-panel`
+      : `main-content-tweets-button-onpanel`;
+
   return (
     <>
       <div className="main-content-button-panel">
         <div className="wrapper-button">
           <NavLink
             className={({ isActive, isPending }) =>
-              isActive
-                ? `main-content-tweets-button-onpanel active-button-panel`
-                : `main-content-tweets-button-onpanel`
+              getClassNameActiveButton(isActive)
             }
             to={
               pathHomeProfileUser
@@ -42,10 +45,8 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
                 ? PROFILE_PAGE_USER_ANSWERS_PATH
                 : path(USER_PAGE_ANSWERS_PATH, id)
             }
-            className={({ isActive }) =>
-              isActive
-                ? `main-content-answers-button-onpanel active-button-panel`
-                : `main-content-answers-button-onpanel`
+            className={({ isActive, isPending }) =>
+              getClassNameActiveButton(isActive)
             }
           >
             Answers
@@ -58,10 +59,8 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
                 ? PROFILE_PAGE_USER_MEDIA_PATH
                 : path(USER_PAGE__MEDIA_PATH, id)
             }
-            className={({ isActive }) =>
-              isActive
-                ? `main-content-media-button-onpanel active-button-panel`
-                : `main-content-media-button-onpanel`
+            className={({ isActive, isPending }) =>
+              getClassNameActiveButton(isActive)
             }
           >
             Media
@@ -74,10 +73,8 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
                 ? PROFILE_PAGE_USER_LIKES_PATH
                 : path(USER_PAGE_LIKES_PATH, id)
             }
-            className={({ isActive }) =>
-              isActive
-                ? `main-content-likes-button-onpanel active-button-panel`
-                : `main-content-likes-button-onpanel`
+            className={({ isActive, isPending }) =>
+              getClassNameActiveButton(isActive)
             }
           >
             <span>Likes</span>

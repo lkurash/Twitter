@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 
 const LoyoutProfilePage = ({ pathHomeProfileUser }) => {
   const { profile, loadingStatus } = useSelector(userProfileById);
-    const { isAuth } = useSelector(auth);
+  const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
