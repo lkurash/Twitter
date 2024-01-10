@@ -6,7 +6,6 @@ import userClient from "../http/userClient";
 
 import getAuthUserID from "../utils/getAuthUserID";
 import spinner from "../utils/spinner";
-import UserInList from "./common/UserInList";
 
 import UserInList from "./common/UserInList";
 

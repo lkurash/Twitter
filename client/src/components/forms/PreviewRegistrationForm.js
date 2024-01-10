@@ -6,8 +6,8 @@ import { useContext } from "react";
 
 import userClient from "../../http/userClient";
 import { HOME_PAGE_PATH } from "../../utils/constans";
+import localAuthClient from "../../store/LocalAuthClient";
 
-import LocalAuthClient from "../../store/LocalAuthClient";
 
 const PreviewRegistrationForm = observer(({ checkUserInfo }) => {
   const { usersStore } = useContext(Context);
@@ -26,7 +26,7 @@ const PreviewRegistrationForm = observer(({ checkUserInfo }) => {
       usersStore.setAuth(true);
       usersStore.setBirthDate("");
 
-      LocalAuthClient.setAccessToken(registerResult.token);
+      localAuthClient.setAccessToken(registerResult.token);
 
       navigate(HOME_PAGE_PATH);
     }

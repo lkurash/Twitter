@@ -15,4 +15,6 @@ class LocalAuthClient {
   }
 }
 
-module.exports = new LocalAuthClient();
+const localAuthClient = new LocalAuthClient()
+
+export default localAuthClient

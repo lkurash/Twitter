@@ -7,10 +7,9 @@ import userClient from "../../http/userClient";
 
 import { HOME_PAGE_PATH } from "../../utils/constans";
 
-import LocalAuthClient from "../../store/LocalAuthClient";
-
 import LoginPasswordForm from "./LoginPasswordForm";
 import LoginEmailForm from "./LoginEmailForm";
+import localAuthClient from "../../store/LocalAuthClient";
 
 const LoginForm = observer(() => {
   const { usersStore } = useContext(Context);
@@ -37,7 +36,7 @@ const LoginForm = observer(() => {
         usersStore.setUser(authenticationResult.user);
         usersStore.setAuth(true);
 
-        LocalAuthClient.setAccessToken(authenticationResult.token);
+        localAuthClient.setAccessToken(authenticationResult.token);
 
         return navigate(HOME_PAGE_PATH);
       }
