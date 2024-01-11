@@ -2,7 +2,8 @@ import axios from "axios";
 import env from "react-dotenv";
 const Cookies = require("js-cookie");
 
-const BASE_URL = `${env.API_SCHEMA}://${env.API_HOST}:${env.API_PORT}`;
+let BASE_URL = `${env.API_SCHEMA}://${env.API_HOST}`;
+BASE_URL += env.API_PORT ? `:${env.API_PORT}` : "";
 
 const $client = axios.create({
   baseURL: BASE_URL,
