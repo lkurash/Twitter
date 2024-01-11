@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const databaseUserName = process.env.USERNAME;
 const databasePassword = process.env.PASSWORD;
 const databaseHost = process.env.HOST;
