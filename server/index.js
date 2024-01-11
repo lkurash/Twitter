@@ -11,7 +11,7 @@ const middleware = require("./middleware/errorMiddleware");
 const models = require("./models/index");
 const router = require("./routers/index");
 
-const PORT = 5500;
+const PORT = 3001;
 const app = express();
 
 app.use(cors());
