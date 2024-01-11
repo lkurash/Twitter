@@ -1,10 +1,8 @@
-const dotenv = require("dotenv");
-dotenv.config();
 const databaseUserName = process.env.USERNAME;
 const databasePassword = process.env.PASSWORD;
 const databaseHost = process.env.HOST;
 
-JSON.stringify({
+const config = {
   production: {
     username: databaseUserName,
     password: databasePassword,
@@ -12,4 +10,5 @@ JSON.stringify({
     host: databaseHost,
     dialect: "mysql",
   },
-});
+};
+module.exports = config;
