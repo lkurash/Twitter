@@ -14,6 +14,8 @@ export function* getTrends(action) {
 
     yield put(trendActions.setTrends(trends));
   } catch (error) {
+    console.log("error");
+    console.log(error);
     yield put(trendActions.requestFailed(error));
   }
 }
