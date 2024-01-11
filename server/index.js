@@ -1,5 +1,7 @@
 const express = require('express');
 const fileupload = require("express-fileupload");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const cors = require('cors');
 const path = require('path');
@@ -9,7 +11,7 @@ const middleware = require("./middleware/errorMiddleware");
 const models = require("./models/index");
 const router = require("./routers/index");
 
-const PORT = 5500;
+const PORT = process.env.API_PORT;
 const app = express();
 
 app.use(cors());
