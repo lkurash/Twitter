@@ -9,6 +9,7 @@ const config = {
     database: "twitter_production",
     host: databaseHost,
     dialect: "postgres",
+    ssl: true,
   },
 };
 module.exports = config;
