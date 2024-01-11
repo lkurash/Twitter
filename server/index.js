@@ -1,5 +1,7 @@
 const express = require('express');
 const fileupload = require("express-fileupload");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const cors = require('cors');
 const path = require('path');
