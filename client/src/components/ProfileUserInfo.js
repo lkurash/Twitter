@@ -13,6 +13,7 @@ import {
 import getUserPhoto from "../utils/getUserPhoto";
 import path from "../utils/path";
 import getAuthUserID from "../utils/getAuthUserID";
+import env from "react-dotenv";
 
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 import EditProfileButton from "./buttons/EditProfileButton";
@@ -26,6 +27,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth, userProfileById } from "../redux/user/user.selectors";
 import { userPreview } from "../redux/user/userOptions/userOptions.selectors";
 import { userOptionsActions } from "../redux/user/userOptions/userOptions.actions";
+
+let BASE_URL = `${env.API_SCHEMA}://${env.API_HOST}`;
+BASE_URL += env.API_PORT ? `:${env.API_PORT}` : "";
 
 const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const dispatch = useDispatch();
@@ -46,7 +50,7 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
 
   const getUserBackground = () => {
     if (profile.background) {
-      return `http://localhost:5500/${profile.background}`;
+      return `${BASE_URL}/${profile.background}`;
     }
     return undefinedUserPhoto;
   };

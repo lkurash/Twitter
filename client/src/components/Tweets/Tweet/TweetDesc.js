@@ -1,3 +1,8 @@
+import env from "react-dotenv";
+
+let BASE_URL = `${env.API_SCHEMA}://${env.API_HOST}`;
+BASE_URL += env.API_PORT ? `:${env.API_PORT}` : "";
+
 const TweetDesc = ({ tweet, user }) => {
   const getClassName = (imgs) => {
     if (imgs.length === 1) {
@@ -24,7 +29,7 @@ const TweetDesc = ({ tweet, user }) => {
           {tweet.img.map((img) => (
             <div className="wrapper-tweet-img" key={img}>
               <img
-                src={`http://localhost:5500/${img}`}
+                src={`${BASE_URL}/${img}`}
                 alt="Imgs tweet"
                 className="tweet-img"
               />

@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Context } from "../..";
+import env from "react-dotenv";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/user/user.selectors";
@@ -17,6 +18,9 @@ import CloseButton from "../buttons/CloseButton";
 
 import buttonEditPhoto from "../Imgs/add_photo_icon.png";
 import undefinedUserPhoto from "../Imgs/user_photo.jpeg";
+
+let BASE_URL = `${env.API_SCHEMA}://${env.API_HOST}`;
+BASE_URL += env.API_PORT ? `:${env.API_PORT}` : "";
 
 const EditProfileForm = observer(() => {
   const dispatch = useDispatch();
@@ -48,7 +52,7 @@ const EditProfileForm = observer(() => {
 
   const getUserBackground = () => {
     if (profile.background) {
-      return `http://localhost:5500/${profile.background}`;
+      return `${BASE_URL}/${profile.background}`;
     }
     return undefinedUserPhoto;
   };
