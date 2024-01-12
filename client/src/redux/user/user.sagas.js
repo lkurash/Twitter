@@ -63,7 +63,7 @@ export function* isAuth(action) {
 }
 
 export function* fetchUser(action) {
-  // yield put(userActions.requestStarted());
+  yield put(userActions.requestStarted());
   try {
     const user = yield call(pageAPI.getUser, action.userId);
 

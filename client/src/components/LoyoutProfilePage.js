@@ -39,8 +39,12 @@ const LoyoutProfilePage = ({ pathHomeProfileUser }) => {
           <img src={arrowLeft} alt="Button return" />
         </div>
         <div className="main-page-name">
-          <h2>{profile.user_name}</h2>
-          <p>@{profile.user_name}</p>
+          {profile.user_name && (
+            <>
+              <h2>{profile.user_name}</h2>
+              <p>@{profile.user_name}</p>
+            </>
+          )}
         </div>
       </div>
 

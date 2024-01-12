@@ -22,7 +22,7 @@ const PublicProfileUser = observer(() => {
     }, 250);
   }, [id]);
 
-  if (isLoading || !profile.id) {
+  if (isLoading || !profile) {
     return loadPageUserInfo();
   }
 
