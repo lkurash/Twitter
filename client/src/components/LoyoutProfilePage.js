@@ -21,11 +21,11 @@ const LoyoutProfilePage = ({ pathHomeProfileUser }) => {
     if (loadingStatus === "PENDING") {
       setTimeout(() => {
         setIsLoading(false);
-      }, 250);
+      }, 300);
     }
   }, [loadingStatus]);
 
-  if (!profile || isLoading) {
+  if (isLoading) {
     return loadPageUserInfo(isAuth);
   }
 
