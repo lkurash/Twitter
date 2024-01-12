@@ -25,7 +25,7 @@ const LoyoutProfilePage = ({ pathHomeProfileUser }) => {
     }
   }, [loadingStatus]);
 
-  if (isLoading) {
+  if (isLoading || !profile) {
     return loadPageUserInfo(isAuth);
   }
 
