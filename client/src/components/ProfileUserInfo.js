@@ -65,6 +65,10 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
     }
   }, []);
 
+  if (!profile) {
+    return null;
+  }
+
   return (
     <>
       <div className="profile-panel-photo">
