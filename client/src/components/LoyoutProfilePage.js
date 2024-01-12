@@ -1,33 +1,16 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 
-import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
+import { userProfileById } from "../redux/user/user.selectors";
+import { useSelector } from "react-redux";
 
 import ProfileButtonPanel from "./ProfileButtonPanel";
 import ProfileUserInfo from "./ProfileUserInfo";
 
 import arrowLeft from "./Imgs/arrow_left_icon.png";
-import { auth, userProfileById } from "../redux/user/user.selectors";
-import { useSelector } from "react-redux";
 
 const LoyoutProfilePage = ({ pathHomeProfileUser }) => {
-  const { profile, loadingStatus } = useSelector(userProfileById);
-  const { isAuth } = useSelector(auth);
+  const { profile } = useSelector(userProfileById);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(true);
-    if (loadingStatus === "PENDING") {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 300);
-    }
-  }, [loadingStatus]);
-
-  if (isLoading) {
-    return loadPageUserInfo(isAuth);
-  }
 
   return (
     <>
