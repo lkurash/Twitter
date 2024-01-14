@@ -1,8 +1,9 @@
 import undefinedUserPhoto from "../components/Imgs/user_photo.jpeg";
-import env from "react-dotenv";
 
-let BASE_URL = `${env.API_SCHEMA}://${env.API_HOST}`;
-BASE_URL += env.API_PORT ? `:${env.API_PORT}` : "";
+let BASE_URL = `${process.env.REACT_APP_API_SCHEMA}://${process.env.REACT_APP_API_HOST}`;
+BASE_URL += process.env.REACT_APP_API_PORT
+  ? `:${process.env.REACT_APP_API_PORT}`
+  : "";
 
 export default function getUserPhoto(user) {
   if (user.photo) {

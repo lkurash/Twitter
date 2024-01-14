@@ -13,7 +13,6 @@ import {
 import getUserPhoto from "../utils/getUserPhoto";
 import path from "../utils/path";
 import getAuthUserID from "../utils/getAuthUserID";
-import env from "react-dotenv";
 
 import TooltipUserNotAuth from "./common/TooltipUserNotAuth";
 import EditProfileButton from "./buttons/EditProfileButton";
@@ -28,8 +27,10 @@ import { auth, userProfileById } from "../redux/user/user.selectors";
 import { userPreview } from "../redux/user/userOptions/userOptions.selectors";
 import { userOptionsActions } from "../redux/user/userOptions/userOptions.actions";
 
-let BASE_URL = `${env.API_SCHEMA}://${env.API_HOST}`;
-BASE_URL += env.API_PORT ? `:${env.API_PORT}` : "";
+let BASE_URL = `${process.env.REACT_APP_API_SCHEMA}://${process.env.REACT_APP_API_HOST}`;
+BASE_URL += process.env.REACT_APP_API_PORT
+  ? `:${process.env.REACT_APP_API_PORT}`
+  : "";
 
 const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
   const dispatch = useDispatch();

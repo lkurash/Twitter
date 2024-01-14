@@ -1,12 +1,10 @@
-import { observer } from "mobx-react-lite";
-
 import { useSelector } from "react-redux";
 import { userProfile } from "../redux/user/user.selectors";
 import { tweetActions } from "../redux/tweet/tweet.actions";
 
 import Tweets from "./Tweets/Tweets";
 
-const BookmarksPageContent = observer(() => {
+const BookmarksPageContent = () => {
   const { profile } = useSelector(userProfile);
 
   const message = (
@@ -31,6 +29,6 @@ const BookmarksPageContent = observer(() => {
       />
     </>
   );
-});
+};
 
 export default BookmarksPageContent;

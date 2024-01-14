@@ -28,7 +28,7 @@ const UserFollowingList = () => {
     }
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !followings) {
     return spinner();
   }
 

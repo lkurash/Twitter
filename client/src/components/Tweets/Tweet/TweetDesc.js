@@ -1,7 +1,7 @@
-import env from "react-dotenv";
-
-let BASE_URL = `${env.API_SCHEMA}://${env.API_HOST}`;
-BASE_URL += env.API_PORT ? `:${env.API_PORT}` : "";
+let BASE_URL = `${process.env.REACT_APP_API_SCHEMA}://${process.env.REACT_APP_API_HOST}`;
+BASE_URL += process.env.REACT_APP_API_PORT
+  ? `:${process.env.REACT_APP_API_PORT}`
+  : "";
 
 const TweetDesc = ({ tweet, user }) => {
   const getClassName = (imgs) => {
@@ -21,6 +21,7 @@ const TweetDesc = ({ tweet, user }) => {
       return "wrapper-four-imgs";
     }
   };
+  
   return (
     <div className="tweet-desc">
       <p className="tweet-text">{tweet.text}</p>

@@ -29,7 +29,7 @@ const UserFollowersList = observer(() => {
     }
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !followers) {
     return spinner();
   }
 

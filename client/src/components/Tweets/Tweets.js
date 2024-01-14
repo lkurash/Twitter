@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
@@ -10,7 +9,7 @@ import Tweet from "./Tweet/Tweet";
 import ShowMoreTweetsButton from "../buttons/ShowMoreTweetsButton";
 import ShowMoreTrendsTweetsButton from "../buttons/ShowMoreTrendsTweetsButton";
 
-const Tweets = observer(({ message, getMoreTweets, userId, trend }) => {
+const Tweets = ({ message, getMoreTweets, userId, trend }) => {
   const { tweets, loadingStatus } = useSelector(tweetsStore);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -68,6 +67,6 @@ const Tweets = observer(({ message, getMoreTweets, userId, trend }) => {
       )}
     </>
   );
-});
+};
 
 export default Tweets;

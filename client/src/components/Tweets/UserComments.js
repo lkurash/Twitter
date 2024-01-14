@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { Fragment } from "react";
 
 import ShowMoreTweetsButton from "../buttons/ShowMoreTweetsButton";
@@ -10,13 +9,13 @@ import { useSelector } from "react-redux";
 import { tweetActions } from "../../redux/tweet/tweet.actions";
 import { userProfileById } from "../../redux/user/user.selectors";
 
-const UserComments = observer(() => {
-  const { tweets } = useSelector(tweetsStore);
+const UserComments = () => {
+  const { tweets, loadingStatus } = useSelector(tweetsStore);
   const { profile } = useSelector(userProfileById);
 
   return (
     <>
-      {tweets ? (
+      {tweets && loadingStatus === "COMPLETE" ? (
         <>
           {tweets.map(({ Comment, Tweet }) => (
             <Fragment key={Comment.id}>
@@ -59,6 +58,6 @@ const UserComments = observer(() => {
       )}
     </>
   );
-});
+};
 
 export default UserComments;
