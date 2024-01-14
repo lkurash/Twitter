@@ -15,7 +15,7 @@ const UserComments = () => {
 
   return (
     <>
-      {tweets && loadingStatus === "COMPLETE" ? (
+      {tweets && loadingStatus === "COMPLETE" && tweets.length > 0 ? (
         <>
           {tweets.map(({ Comment, Tweet }) => (
             <Fragment key={Comment.id}>

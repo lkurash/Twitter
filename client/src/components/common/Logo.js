@@ -12,7 +12,7 @@ const Logo = observer((props) => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <>
       {isAuth ? (
         <div
           className={props.class}
@@ -32,7 +32,7 @@ const Logo = observer((props) => {
           <img src={logo} alt="logo" className="logo-icon" />
         </div>
       )}
-    </div>
+    </>
   );
 });
 

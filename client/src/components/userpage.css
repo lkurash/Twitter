@@ -548,10 +548,11 @@ h2 {
   border-bottom: 0.5px solid rgb(174 174 174 / 55.8%);
 }
 
-@media (width <= 825px) {
-}
-
-@media (width <= 660px) {
+@media (width <= 550px) {
+  .edit-profile-form{
+    height: 100%;
+    margin-top: 0px;
+  }
 }
 
 @media (width <= 400px) {

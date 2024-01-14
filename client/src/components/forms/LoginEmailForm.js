@@ -25,13 +25,13 @@ const LoginEmailForm = ({
       </div>
       <form className="login-form">
         <div className="block-input login">
-          <label htmlFor="input-login">
+          <label htmlFor="input-login" className="label-input-login">
             <p className="hint">Phone, email address, or username</p>
             <input
               id="input-login"
               min={1}
               autoFocus
-              className="input-form"
+              className="input-form-email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyDown={(event) => nextKeyDown(event)}

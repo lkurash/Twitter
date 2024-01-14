@@ -23,18 +23,18 @@ const LoginPasswordForm = ({ email, password, setPassword, signIn }) => {
           <p className="password-form-notactive-input-email">{email}</p>
         </div>
         <div className="block-input input-password">
-          <span>
+          <label className="label-input-login" htmlFor="input-form-password">
             <p className="password-form-hint">Password</p>
             <input
               name="loginFormInput"
               autoFocus
               type="password"
-              className="input-form"
+              className="input-form-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(event) => signInKeyDown(event)}
             />
-          </span>
+          </label>
         </div>
         <div className="password-form-forgot-password">
           <p>Forgot password?</p>
