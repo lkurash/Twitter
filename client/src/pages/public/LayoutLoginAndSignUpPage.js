@@ -27,8 +27,10 @@ const LayoutLoginAndSignUpPage = () => {
         />
       </div>
       <div className="right-side-bar">
-        <h1>Happening now</h1>
-        <h3>Join today.</h3>
+        <div>
+          <h1>Happening now</h1>
+          <h3>Join today.</h3>
+        </div>
         <div className="auth-page-button-panel">
           <button
             className="auth-page-button button-create-account"

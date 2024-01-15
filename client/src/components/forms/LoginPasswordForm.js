@@ -28,7 +28,7 @@ const LoginPasswordForm = ({
       </div>
       <form className="login-form-password">
         <div className="password-form-notactive-input">
-          <p>Email</p>
+          <p className="password-form-email-hint">Email</p>
           <p className="password-form-notactive-input-email">{email}</p>
         </div>
         <div className="block-input input-password">
@@ -60,17 +60,17 @@ const LoginPasswordForm = ({
             Log in
           </button>
         </div>
+        <div className="password-form-footer">
+          <p>Don’t have an account?</p>
+          <button
+            type="button"
+            className="login-form-button-singup"
+            onClick={() => navigate(SIGNUP_PAGE_PATH)}
+          >
+            Sign up
+          </button>
+        </div>
       </form>
-      <div className="password-form-footer">
-        Don’t have an account?
-        <button
-          type="button"
-          className="login-form-button-singup"
-          onClick={() => navigate(SIGNUP_PAGE_PATH)}
-        >
-          Sign up
-        </button>
-      </div>
     </main>
   );
 };

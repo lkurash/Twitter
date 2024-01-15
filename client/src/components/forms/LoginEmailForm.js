@@ -33,7 +33,7 @@ const LoginEmailForm = ({
             emptyEmail ? "block-input login email-error" : "block-input login"
           }
         >
-          <label htmlFor="input-login" className="label-input-login">
+          <div className="label-input-login">
             <p className={emptyEmail ? "hint email-error-hint" : "hint"}>
               Phone, email address, or username
             </p>
@@ -52,7 +52,7 @@ const LoginEmailForm = ({
               }}
               onKeyDown={(event) => nextKeyDown(event)}
             />
-          </label>
+          </div>
         </div>
         <p className="login-form-error-message">
           {infoMessageStore.errorVisible && infoMessageStore.textErrorMessage}
