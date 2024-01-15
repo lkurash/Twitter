@@ -49,13 +49,19 @@ class UserDecorator {
     try {
       const { email, password } = request.body;
 
-      const user = await dbRequestUser.userAuthentication(email, password);
+      const user = await dbRequestUser.userAuthentication(
+        email,
+        password,
+        next
+      );
 
       const token = helpers.genereteAccessToken(user.id, user.email);
 
+      console.log(user);
+
       return response.json({ token, user });
     } catch (error) {
-      next(ApiError.internal(error));
+      next(ApiError.badRequest(error.message));
     }
   }
 

@@ -40,19 +40,24 @@ class DbRequestUser {
     return user;
   }
 
-  async userAuthentication(email, password) {
-    if (!email || !password) {
-      next(ApiError.badRequest("Email or Password error"));
+  async userAuthentication(email, password, next) {
+    if (!email) {
+      throw ApiError.badRequest("Please enter your email");
     }
+
+    if (!password) {
+      throw ApiError.badRequest("Please enter your password");
+    }
+
     const user = await db.User.findOne({ where: { email } });
 
     if (!user) {
-      next(ApiError.badRequest("User with email is not registration"));
+      throw ApiError.badRequest("User with this email doesn't exist");
     }
     const comparePassword = bcrypt.compareSync(password, user.password);
 
     if (!comparePassword) {
-      next(ApiError.badRequest("Incorrect password"));
+      throw ApiError.badRequest("Incorrect password");
     }
     return user;
   }

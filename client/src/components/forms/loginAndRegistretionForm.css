@@ -161,11 +161,16 @@
 .login-form-title {
   color: whitesmoke;
   padding-top: 20px;
-  margin-left: 30px;
+  margin: 0 auto;
+  width: 250px;
 }
 
 .password-form-title {
   padding-top: 10px;
+}
+
+.password-form-title h2{
+  font-size: 31px;
 }
 
 .login-form-title h2 {
@@ -198,10 +203,14 @@
 }
 
 .block-input {
-  margin: 0 auto;
+  width: 100%;
   height: 55px;
   border: 2px solid rgb(59 204 244);
   border-radius: 5px;
+}
+
+.email-error {
+  border: 2px solid rgb(255, 0, 0);
 }
 
 .login {
@@ -216,6 +225,10 @@
   color: rgb(59 204 244);
 }
 
+.email-error-hint {
+  color: rgb(255, 0, 0);
+}
+
 .label-input-login {
   display: flex;
   flex-direction: column;
@@ -223,19 +236,21 @@
   align-items: center;
 }
 
-.input-form-email,
-.input-form-password {
+.input-form-email {
   width: 90%;
   height: 20px;
-  color: aliceblue;
+  caret-color: black;
+  color: black;
 }
 
 .input-form-password {
   border: none;
   margin-top: 2px;
   width: 94%;
+  height: 20px;
   background-color: #17181b;
   caret-color: aliceblue;
+  color: aliceblue;
 }
 
 .login-form-footer {
@@ -401,7 +416,8 @@
 .signup-form-input input {
   margin-top: 2px;
   margin-left: 5px;
-  height: 50px;
+  height: 90%;
+  width: 95%;
   font-size: 18px;
   color: aliceblue;
   border: none;
@@ -528,20 +544,33 @@
   height: 5px;
 }
 
+.password-form-error-message,
+.login-form-error-message {
+  color: rgb(255, 0, 0);
+  font-size: 10px;
+  margin-top: 5px;
+  margin-left: 10px;
+  height: 15px;
+  width: 80%;
+}
+
 @media (width <= 550px) {
   .form-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     margin: 0;
     width: 100%;
     height: 100%;
+    min-width: 330px;
   }
 
   .login-form-main,
   .password-form-main,
   .right-side-bar {
     height: 80%;
+    width: 90%;
     padding: 0px 15px 15px 15px;
   }
 
@@ -549,11 +578,11 @@
     width: 100%;
   }
 
-  .right-side-bar h1{
+  .right-side-bar h1 {
     font-size: 40px;
   }
 
-  .right-side-bar h3{
+  .right-side-bar h3 {
     font-size: 25px;
   }
 

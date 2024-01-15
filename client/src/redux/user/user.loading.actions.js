@@ -20,9 +20,10 @@ class UserLoadingActions {
     };
   }
 
-  requestAuthenticationFailed() {
+  requestAuthenticationFailed(error) {
     return {
       type: REQUEST_AUTHENTICATION_FAILED,
+      error,
     };
   }
 

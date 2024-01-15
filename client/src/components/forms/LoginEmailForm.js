@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 import { SIGNUP_PAGE_PATH } from "../../utils/routs";
+import { useContext, useState } from "react";
+import { Context } from "../..";
 
 const LoginEmailForm = ({
   email,
@@ -8,7 +10,9 @@ const LoginEmailForm = ({
   showPasswordField,
   setEmailFieldVisible,
 }) => {
+  const { infoMessageStore } = useContext(Context);
   const navigate = useNavigate();
+  const [emptyEmail, setEmptyEmail] = useState(false);
 
   const nextKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -24,20 +28,35 @@ const LoginEmailForm = ({
         <h2>Sign in to Twitter</h2>
       </div>
       <form className="login-form">
-        <div className="block-input login">
+        <div
+          className={
+            emptyEmail ? "block-input login email-error" : "block-input login"
+          }
+        >
           <label htmlFor="input-login" className="label-input-login">
-            <p className="hint">Phone, email address, or username</p>
+            <p className={emptyEmail ? "hint email-error-hint" : "hint"}>
+              Phone, email address, or username
+            </p>
             <input
               id="input-login"
               min={1}
               autoFocus
               className="input-form-email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (infoMessageStore.errorVisible) {
+                  setEmptyEmail(false);
+                  infoMessageStore.setErrorVisible(false);
+                }
+              }}
               onKeyDown={(event) => nextKeyDown(event)}
             />
           </label>
         </div>
+        <p className="login-form-error-message">
+          {infoMessageStore.errorVisible && infoMessageStore.textErrorMessage}
+        </p>
         <button
           className="login-form-button"
           type="button"
@@ -45,6 +64,10 @@ const LoginEmailForm = ({
             if (email) {
               setEmailFieldVisible(false);
               showPasswordField();
+            } else {
+              setEmail("");
+              setEmptyEmail(true);
+              infoMessageStore.setErrorVisible(true);
             }
           }}
         >

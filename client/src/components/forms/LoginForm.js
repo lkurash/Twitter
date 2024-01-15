@@ -16,7 +16,8 @@ import { useNavigate } from "react-router-dom";
 
 const LoginForm = observer(() => {
   const { visiblePopUpStore } = useContext(Context);
-  const { token } = useSelector(auth);
+  const { infoMessageStore } = useContext(Context);
+  const { token, error } = useSelector(auth);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -54,7 +55,17 @@ const LoginForm = observer(() => {
         navigate(HOME_PAGE_PATH);
       }, 500);
     }
-  }, [token]);
+    if (error) {
+      setIsLoading(false);
+      infoMessageStore.setTextErrorMessage(error);
+      infoMessageStore.setErrorVisible(true);
+      if (error.includes("password")) {
+        setPasswordFieldVisible(true);
+      } else {
+        setEmailFieldVisible(true);
+      }
+    }
+  }, [token, error]);
 
   if (isLoading) {
     return <div className="load-login">{spinner()}</div>;

@@ -51,10 +51,13 @@ export function* authentication(action) {
       action.email,
       action.password
     );
-
     yield put(userActions.setAuth(true, authenticationResult.token));
   } catch (error) {
-    yield put(userLoadingActions.requestAuthenticationFailed(error));
+    yield put(
+      userLoadingActions.requestAuthenticationFailed(
+        error.response.data.message
+      )
+    );
   }
 }
 

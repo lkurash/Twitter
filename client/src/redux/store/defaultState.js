@@ -1,5 +1,5 @@
 export const defaultState = {
-  isAuth: { isAuth: false },
+  isAuth: { isAuth: false, loadingStatus: "PENDING", error: false },
   User: {
     userProfile: { profile: null, loadingStatus: "PENDING", error: false },
     userProfileById: { profile: null, loadingStatus: "PENDING", error: false },

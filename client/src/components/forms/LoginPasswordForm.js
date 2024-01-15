@@ -1,8 +1,17 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { SIGNUP_PAGE_PATH } from "../../utils/routs";
+import { Context } from "../..";
+import { useContext } from "react";
 
-const LoginPasswordForm = ({ email, password, setPassword, signIn }) => {
+const LoginPasswordForm = ({
+  email,
+  password,
+  setPassword,
+  signIn,
+  message,
+}) => {
+  const { infoMessageStore } = useContext(Context);
   const navigate = useNavigate();
 
   const signInKeyDown = (event) => {
@@ -27,15 +36,22 @@ const LoginPasswordForm = ({ email, password, setPassword, signIn }) => {
             <p className="password-form-hint">Password</p>
             <input
               name="loginFormInput"
-              autoFocus
               type="password"
               className="input-form-password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (infoMessageStore.errorVisible) {
+                  infoMessageStore.setErrorVisible(false);
+                }
+              }}
               onKeyDown={(event) => signInKeyDown(event)}
             />
           </label>
         </div>
+        <p className="password-form-error-message">
+          {infoMessageStore.errorVisible && infoMessageStore.textErrorMessage}
+        </p>
         <div className="password-form-forgot-password">
           <p>Forgot password?</p>
         </div>

@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { tweetActions } from "../../redux/tweet/tweet.actions";
 import { tweetsStore } from "../../redux/tweet/tweet.selectors";
 
-import spinner from "../../utils/spinner";
-
 import MainSectionTrends from "../MainSectionTrends";
-import ShowMoreTweetsButton from "../../components/buttons/ShowMoreTweetsButton";
 import Tweets from "../../components/Tweets/Tweets";
 
 const PublicExplorePage = observer(() => {
