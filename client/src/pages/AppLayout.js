@@ -38,12 +38,12 @@ const AppLayout = observer(() => {
 
   useEffect(() => {
     if (authUserID) {
-      dispatch(visibilityPageActions.getContentForAuthUser(authUserID));
       dispatch(userActions.getAuth(getFlagIsAuth()));
+      dispatch(visibilityPageActions.getContentForAuthUser(authUserID));
     } else {
       dispatch(visibilityPageActions.getContentForNotAuthUser());
     }
-  }, [authUserID, isAuth]);
+  }, [isAuth]);
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
