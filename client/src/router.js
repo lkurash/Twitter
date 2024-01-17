@@ -58,7 +58,9 @@ import {
   PUBLIC_TRENDS_PAGE_PATH,
   TRENDS_PAGE_PATH,
   PUBLIC_USER_PAGE_PATH,
+  LOG_OUT_PAGE_PATH,
 } from "./utils/routs";
+import LogOutPage from "./pages/private/LogOutPage";
 
 export const publicRoutes = {
   path: ROOT_PAGE_PATH,
@@ -171,6 +173,9 @@ export const privateRoutes = {
     {
       path: TRENDS_PAGE_PATH,
       element: <TrendsPage />,
+    },
+    { path: LOG_OUT_PAGE_PATH,
+      element: <LogOutPage />
     },
   ],
 };

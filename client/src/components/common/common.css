@@ -12,11 +12,6 @@
   background-color: rgb(128 128 128 / 34.7%);
 }
 
-.mobile-logo,
-.mobile-button-main-settings {
-  display: none;
-}
-
 .logo-icon {
   height: 25px;
   width: 30px;

@@ -8,7 +8,6 @@ import {
 } from "redux-saga/effects";
 import { userActions } from "./user.actions";
 import userAPI from "../../http/userAPI";
-import pageAPI from "../../http/pageAPI";
 import {
   AUTHENTICATION,
   GET_AUTH,
@@ -68,7 +67,7 @@ export function* isAuth(action) {
 export function* fetchUser(action) {
   yield put(userActions.requestStarted());
   try {
-    const user = yield call(pageAPI.getUser, action.userId);
+    const user = yield call(userAPI.getUserProfile, action.userId);
 
     yield put(userActions.setUser(user));
   } catch (error) {

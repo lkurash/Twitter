@@ -18,6 +18,7 @@ export const BOOKMARKS_PAGE_PATH = "/home/bookmarks";
 export const FOLLOWINGS_PAGE_PATH = "/home/followings";
 export const FOLLOWERS_PAGE_PATH = "/home/followers";
 export const TRENDS_PAGE_PATH = "/home/trends";
+export const LOG_OUT_PAGE_PATH = "/home/logout";
 
 export const PROFILE_PAGE_USER_PATH = "/home/profile";
 export const PROFILE_PAGE_USER_TWEETS_PATH = "/home/profile";

@@ -5,7 +5,7 @@ import useOutsideClick from "../../utils/useOutsideClickFunction";
 
 import dotMenu from "../Imgs/more_dots_icon.png";
 import deleteIcon from "../Imgs/delete_trash_icon.png";
-import DeleteTweetForm from "../forms/DeleteTweetForm";
+import DeleteTweetConfirmation from "../forms/DeleteTweetConfirmation";
 
 const DeleteTweetButton = observer(({ tweet }) => {
   const [deleteButtonVisible, setDeleteButtonVisible] = useState(false);
@@ -44,12 +44,11 @@ const DeleteTweetButton = observer(({ tweet }) => {
       >
         <img src={dotMenu} alt="dot menu" className="dotmenu-icon" />
       </div>
-      {deleteTweetFormVisible && (
-        <DeleteTweetForm
-          tweet={tweet}
-          setDeleteTweetFormVisible={setDeleteTweetFormVisible}
-        />
-      )}
+      <DeleteTweetConfirmation
+        tweet={tweet}
+        deleteTweetFormVisible={deleteTweetFormVisible}
+        setDeleteTweetFormVisible={setDeleteTweetFormVisible}
+      />
     </>
   );
 });

@@ -10,7 +10,7 @@ import Tweets from "../../components/Tweets/Tweets";
 
 const PublicExplorePage = observer(() => {
   const dispatch = useDispatch();
-  const { loadingStatus, tweets } = useSelector(tweetsStore);
+  const { loadingStatus } = useSelector(tweetsStore);
 
   const [isLoading, setIsLoading] = useState(true);
 

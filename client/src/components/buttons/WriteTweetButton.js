@@ -16,12 +16,10 @@ const WriteTweetButton = () => {
         <span>Tweet</span>
         <img src={tweetIcon} alt="Tweet" className="tweet-icon" />
       </button>
-      {tweetFormVisible && (
-        <PopUpWriteTweet
-          tweetFormVisible={tweetFormVisible}
-          setTweetFormVisible={setTweetFormVisible}
-        />
-      )}
+      <PopUpWriteTweet
+        tweetFormVisible={tweetFormVisible}
+        setTweetFormVisible={setTweetFormVisible}
+      />
     </>
   );
 };

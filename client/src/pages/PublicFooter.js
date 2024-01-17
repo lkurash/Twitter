@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
-const FooterComponent = observer(() => {
+const PublicFooter = observer(() => {
   const { visiblePopUpStore } = useContext(Context);
 
   return (
@@ -31,4 +31,4 @@ const FooterComponent = observer(() => {
     </>
   );
 });
-export default FooterComponent;
+export default PublicFooter;

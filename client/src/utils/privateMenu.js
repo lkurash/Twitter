@@ -7,13 +7,12 @@ import message from "../components/Imgs/message_icon.png";
 import {
   EXPLORE_PAGE_PATH,
   BOOKMARKS_PAGE_PATH,
-  HOME_PAGE_PATH,
   MESSAGE_PAGE_PATH,
   NOTIFICATIONS_PAGE_PATH,
   PROFILE_PAGE_USER_PATH,
 } from "./routs";
 
-export const menuButtonsAuthUser = (user) => {
+export const privateMenu = (user) => {
   const buttons = [
     {
       id: "1",
@@ -74,4 +73,4 @@ export const menuButtonsAuthUser = (user) => {
 
   return buttons;
 };
-export default menuButtonsAuthUser;
+export default privateMenu;

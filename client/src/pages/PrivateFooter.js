@@ -16,7 +16,7 @@ import tweetIcon from "../components/Imgs/feather_icon.png";
 
 import "./footer.css";
 
-function FooterMobileComponent() {
+function PrivateFooter() {
   const navigate = useNavigate();
   const [tweetFormVisible, setTweetFormVisible] = useState(false);
 
@@ -29,12 +29,10 @@ function FooterMobileComponent() {
       >
         <img src={tweetIcon} alt="tweet" className="button-icon-menu" />
       </div>
-      {tweetFormVisible && (
-        <PopUpWriteTweet
-          tweetFormVisible={tweetFormVisible}
-          setTweetFormVisible={setTweetFormVisible}
-        />
-      )}
+      <PopUpWriteTweet
+        tweetFormVisible={tweetFormVisible}
+        setTweetFormVisible={setTweetFormVisible}
+      />
 
       <div className="footer-buttons-mobile">
         <div
@@ -63,4 +61,4 @@ function FooterMobileComponent() {
   );
 }
 
-export default FooterMobileComponent;
+export default PrivateFooter;

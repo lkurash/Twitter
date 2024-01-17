@@ -1,6 +1,14 @@
 import { NavLink } from "react-router-dom";
 
-const MenuButton = ({ classNameButtonImg, buttonName, nav, alt, img, id }) => {
+const MenuButton = ({
+  classNameButtonImg,
+  buttonNameClass,
+  buttonName,
+  nav,
+  alt,
+  img,
+  id,
+}) => {
   return (
     <NavLink
       className={({ isActive }) =>
@@ -12,7 +20,9 @@ const MenuButton = ({ classNameButtonImg, buttonName, nav, alt, img, id }) => {
       end
     >
       <img src={img} alt={alt} className={classNameButtonImg} />
-      <span className="menu-button-name">{buttonName}</span>
+      <span className={`menu-button-name ${buttonNameClass}`}>
+        {buttonName}
+      </span>
     </NavLink>
   );
 };

@@ -1,9 +1,7 @@
-import { useContext } from "react";
 import { observer } from "mobx-react-lite";
-import { Context } from "..";
 
 import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/routs";
-import menuButtonsAuthUser from "../utils/menuButtonsAuthUser";
+import privateMenu from "../utils/privateMenu";
 
 import MenuButton from "../components/buttons/MenuButton";
 import WriteTweetButton from "../components/buttons/WriteTweetButton";
@@ -14,9 +12,7 @@ import hashtag from "../components/Imgs/hashtag_icon.png";
 import SignOutButton from "../components/buttons/SignOutButton";
 
 const MenuComponent = observer(({ page }) => {
-  const { userStore } = useContext(Context);
-
-  const buttonsAuthUser = menuButtonsAuthUser(userStore);
+  const buttonsAuthUser = privateMenu();
 
   return (
     <aside className="menu">

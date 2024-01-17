@@ -3,16 +3,6 @@
 
 /* page create comment for tweet */
 
-.comment-form-wrapper {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  background-color: rgb(106 145 168 / 37.4%);
-}
-
 .comment-form {
   height: max-content;
   margin: 0 auto;

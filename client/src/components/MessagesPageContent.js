@@ -5,20 +5,15 @@ import { userProfile } from "../redux/user/user.selectors";
 import { useSelector } from "react-redux";
 
 import NewMessageComponent from "./NewMessageComponent";
+import MainStikyPanel from "./MainStikyPanel";
 
 const MessagesPageContent = observer(() => {
   const { profile } = useSelector(userProfile);
   const [writeMessage, setWriteMessage] = useState(false);
+
   return (
     <>
-      <div className="main-stiky-panel">
-        <div className="main-page-name-wrapper">
-          <div className="main-page-name">
-            <h2>Messages</h2>
-            <p>@{profile.user_name}</p>
-          </div>
-        </div>
-      </div>
+      <MainStikyPanel pageName="Messages" userName={profile.user_name} arrowVisible={true} />
       <div className="main-line" />
       <div className="messages-welcome">
         <div className="messages-welcome-desc">

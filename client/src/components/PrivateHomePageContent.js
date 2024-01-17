@@ -11,6 +11,7 @@ import getAuthUserID from "../utils/getAuthUserID";
 import TweetForm from "./forms/TweetForm";
 import TweetsForYou from "./Tweets/TweetsForYou";
 import TweetsWhoYouRead from "./Tweets/TweetsWhoYouReading";
+import MainStikyPanel from "./MainStikyPanel";
 
 const PrivateHomePageContent = observer(() => {
   const dispatch = useDispatch();
@@ -44,42 +45,17 @@ const PrivateHomePageContent = observer(() => {
     setTweetsWhoReadingVisible(true);
   };
 
-  const getClassNameActiveButton = (isActive) =>
-    isActive ? "main-button-active" : "main-button-notactive";
-
   return (
     <>
-      <div className="main-stiky-panel">
-        <div className="main-page-name-wrapper">
-          <div className="main-page-name">
-            <h2>Home</h2>
-          </div>
-        </div>
-        <div className="main-content-button-panel">
-          <div className="wrapper-button">
-            <button
-              type="button"
-              className="main-button-foryou"
-              onClick={handleClickedButtonForYou}
-            >
-              <span>For you</span>
-            </button>
-            <div className={getClassNameActiveButton(tweetsForYouVisible)} />
-          </div>
-          <div className="wrapper-button">
-            <button
-              type="button"
-              className="main-button-whoyouread"
-              onClick={handleClickedButtonWhoYouRead}
-            >
-              <span> You are reading</span>
-            </button>
-            <div
-              className={getClassNameActiveButton(tweetsWhoReadingVisible)}
-            />
-          </div>
-        </div>
-      </div>
+      <MainStikyPanel
+        homePage={{
+          handleClickedButtonForYou,
+          handleClickedButtonWhoYouRead,
+          tweetsForYouVisible,
+          tweetsWhoReadingVisible,
+        }}
+        pageName={"Home"}
+      />
       <div className="main-content-block main-content-block-mobile">
         <div className="main-line" />
         <TweetForm />

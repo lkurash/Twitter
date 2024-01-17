@@ -376,7 +376,7 @@
   margin-right: 5px;
 }
 
-.message-page-delete-tweet {
+.backgraund-confirmation {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -389,7 +389,7 @@
   justify-content: center;
 }
 
-.message-delete-tweet {
+.confirmation-message {
   padding: 35px 25px 25px 25px;
   padding: 25px;
   max-width: 250px;
@@ -398,23 +398,23 @@
   border-radius: 20px;
 }
 
-.message-delete-tweet-title {
+.confirmation-message-title {
   font-weight: 700;
   font-size: 25px;
 }
 
-.message-delete-tweet-text {
+.confirmation-message-text {
   margin-top: 10px;
   color: rgb(113, 118, 123);
   font-size: 15px;
 }
 
-.message-delete-tweet-buttons {
+.confirmation-message-buttons {
   display: flex;
   flex-direction: column;
 }
 
-.message-delete-tweet-button {
+.confirmation-message-button {
   width: 100%;
   height: 40px;
   margin-top: 15px;
@@ -424,6 +424,15 @@
   font-size: 15px;
   font-weight: 800;
   cursor: pointer;
+}
+
+.button-logout {
+  color: black;
+  background-color: #dedede;
+}
+
+.button-logout:hover {
+  background-color: #c4c4c4;
 }
 
 .button-delete {
@@ -464,7 +473,6 @@
 .user-info-photo {
   width: 43px;
   height: 43px;
-  margin-top: 2px;
   border-radius: 30px;
   background-color: rgba(51, 51, 51, 0.56);
   cursor: pointer;
@@ -809,7 +817,7 @@
     font-size: 13px;
   }
 
-  .tweet-user-name-block p{
+  .tweet-user-name-block p {
     margin-top: 3px;
   }
 

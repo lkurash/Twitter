@@ -16,7 +16,7 @@ import Sidebar from "./Sidebar";
 import LoginPage from "./public/LoginPage";
 import SignUpPage from "./public/SignUpPage";
 import MessageOnWindow from "../components/common/MessageOnWindow";
-import FooterComponent from "./FooterComponent";
+import PublicFooter from "./PublicFooter";
 
 import "./main.css";
 import "./sideBar.css";
@@ -25,7 +25,7 @@ import "../components/userpage.css";
 import "../components/Tweets/Tweet/tweetActions.css";
 import "../components/comment.css";
 import "../components/common/common.css";
-import FooterMobileComponent from "./FooterMobileComponent";
+import PrivateFooter from "./PrivateFooter";
 
 const AppLayout = observer(() => {
   const { infoMessageStore } = useContext(Context);
@@ -72,8 +72,8 @@ const AppLayout = observer(() => {
           <MessageOnWindow />
         </div>
       )}
-      {getFlagIsAuth() && <FooterMobileComponent />}
-      {!getFlagIsAuth() && <FooterComponent />}
+      {getFlagIsAuth() && <PrivateFooter />}
+      {!getFlagIsAuth() && <PublicFooter />}
     </div>
   );
 });

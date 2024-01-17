@@ -39,7 +39,7 @@ const CommentForm = observer(({ tweet }) => {
   };
 
   return (
-    <div className="comment-form-wrapper">
+    <div className="background">
       <div className="comment-form">
         <div
           className="button-close"

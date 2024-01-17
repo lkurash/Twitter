@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { auth, userProfileById } from "../../redux/user/user.selectors";
@@ -14,7 +13,6 @@ const UserTweets = observer(() => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfileById);
   const { isAuth } = useSelector(auth);
-  const { id } = useParams();
   const authUserID = getAuthUserID();
 
   useEffect(() => {

@@ -7,7 +7,7 @@ const EditProfilePage = observer(() => {
   return (
     <>
       <UserTweets />
-      <div className="edit-profile-page">
+      <div className="background">
         <EditProfileForm />
       </div>
     </>

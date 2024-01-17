@@ -3,6 +3,7 @@ import { userProfile } from "../redux/user/user.selectors";
 import { tweetActions } from "../redux/tweet/tweet.actions";
 
 import Tweets from "./Tweets/Tweets";
+import MainStikyPanel from "./MainStikyPanel";
 
 const BookmarksPageContent = () => {
   const { profile } = useSelector(userProfile);
@@ -16,12 +17,7 @@ const BookmarksPageContent = () => {
 
   return (
     <>
-      <div className="main-stiky-panel users-page-stiky-panel">
-        <div className="main-page-name">
-          <h2>Bookmarks</h2>
-          <p>@{profile.user_name}</p>
-        </div>
-      </div>
+      <MainStikyPanel pageName={"Bookmarks"} userName={profile.user_name} arrowVisible={true}/>
       <Tweets
         message={message}
         getMoreTweets={tweetActions.getMoreBookmarks}
