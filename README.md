@@ -32,11 +32,12 @@
 
 <h3>Tech</h4>
 <ul>
-  <li>Next.js</li>
-  <li>React.js</li>
+  <li>React</li>
+  <li>Redux</li>
+  <li>JavaScript</li>
   <li>PostgreSQL</li>
+  <li>Express.js</li>
   <li>Sequelize</li>
   <li>SQL</li>
-  <li>Redux</li>
   <li>CSS</li>
 </ul>
