@@ -3,9 +3,8 @@ import { useContext, useEffect, useLayoutEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { visibilityPageActions } from "../redux/visibilityPage/visibilityPage.actions";
-import { auth } from "../redux/user/user.selectors";
 import { userActions } from "../redux/user/user.actions";
 
 import getFlagIsAuth from "../utils/getFlagIsAuth";
@@ -30,7 +29,6 @@ import PrivateFooter from "./PrivateFooter";
 const AppLayout = observer(() => {
   const { infoMessageStore } = useContext(Context);
   const { visiblePopUpStore } = useContext(Context);
-  const { isAuth } = useSelector(auth);
   const authUserID = getAuthUserID();
   const dispatch = useDispatch();
   const path = useLocation().pathname;
@@ -43,7 +41,7 @@ const AppLayout = observer(() => {
     } else {
       dispatch(visibilityPageActions.getContentForNotAuthUser());
     }
-  }, [isAuth]);
+  }, [authUserID]);
 
   useLayoutEffect(() => {
     ref.current.scrollIntoView();
