@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 
 import { useDispatch, useSelector } from "react-redux";
-import { visibility } from "../../redux/visibilityPage/visibilityPage.selectors";
+import { visibilityPrivatePage } from "../../redux/visibilityPage/visibilityPage.selectors";
 import { tweetActions } from "../../redux/tweet/tweet.actions";
 
 import getAuthUserID from "../../utils/getAuthUserID";
@@ -12,7 +12,7 @@ import MainSectionTrends from "../MainSectionTrends";
 
 const PrivateExplorePage = observer(() => {
   const dispatch = useDispatch();
-  const { loadingStatus } = useSelector(visibility);
+  const { loadingStatus } = useSelector(visibilityPrivatePage);
   const authUserID = getAuthUserID();
 
   useEffect(() => {

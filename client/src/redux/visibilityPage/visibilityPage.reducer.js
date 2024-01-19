@@ -1,3 +1,4 @@
+import { combineReducers } from "redux";
 import { defaultState } from "../store/defaultState";
 import {
   GET_MAIN_CONTENT_FOR_AUTH_USER,
@@ -10,8 +11,8 @@ import {
   REQUEST_CONTENT_FOR_NOT_AUTH_STARTED,
 } from "./consts";
 
-export const visibilityPageReducer = (
-  state = defaultState.visibility,
+export const visibilityPrivatePage = (
+  state = defaultState.visibilityPrivatePage,
   action
 ) => {
   switch (action.type) {
@@ -19,16 +20,6 @@ export const visibilityPageReducer = (
       return state;
 
     case SET_MAIN_CONTENT_FOR_AUTH_USER:
-      return {
-        ...state,
-        visibilityPage: true,
-        loadingStatus: "COMPLETE",
-      };
-
-    case GET_MAIN_CONTENT_FOR_NOT_AUTH_USER:
-      return state;
-
-    case SET_MAIN_CONTENT_FOR_NOT_AUTH_USER:
       return {
         ...state,
         visibilityPage: true,
@@ -51,6 +42,26 @@ export const visibilityPageReducer = (
         error: false,
       };
 
+    default:
+      return state;
+  }
+};
+
+export const visibilityPublicPage = (
+  state = defaultState.visibilityPublicPage,
+  action
+) => {
+  switch (action.type) {
+    case GET_MAIN_CONTENT_FOR_NOT_AUTH_USER:
+      return state;
+
+    case SET_MAIN_CONTENT_FOR_NOT_AUTH_USER:
+      return {
+        ...state,
+        visibilityPage: true,
+        loadingStatus: "COMPLETE",
+      };
+
     case REQUEST_CONTENT_FOR_NOT_AUTH_STARTED:
       return {
         ...state,
@@ -71,3 +82,8 @@ export const visibilityPageReducer = (
       return state;
   }
 };
+
+export const visibilityPageReducer = combineReducers({
+  visibilityPrivatePage,
+  visibilityPublicPage,
+});

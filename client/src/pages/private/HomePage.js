@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
-import { visibility } from "../../redux/visibilityPage/visibilityPage.selectors";
+
 import { auth } from "../../redux/user/user.selectors";
+import { visibilityPrivatePage } from "../../redux/visibilityPage/visibilityPage.selectors";
 
 import PrivateHomePageContent from "../../components/PrivateHomePageContent";
 
 const HomePage = () => {
   const { isAuth } = useSelector(auth);
-  const { visibilityPage } = useSelector(visibility);
+  const { visibilityPage } = useSelector(visibilityPrivatePage);
 
   return <>{visibilityPage === true && isAuth && <PrivateHomePageContent />}</>;
 };

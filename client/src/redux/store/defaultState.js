@@ -37,7 +37,13 @@ export const defaultState = {
     error: false,
   },
 
-  visibility: {
+  visibilityPrivatePage: {
+    loadingStatus: "PENDING",
+    visibilityPage: false,
+    error: false,
+  },
+  
+  visibilityPublicPage: {
     loadingStatus: "PENDING",
     visibilityPage: false,
     error: false,
