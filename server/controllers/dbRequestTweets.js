@@ -23,47 +23,43 @@ const sqlRequestCountTweetsForAuthUserByFollowings = require("../sql/sqlRequestC
 
 class DbRequestTweets {
   async createTweetByUser(text, file, userId, request, response, next) {
-    try {
-      if (file) {
-        const { imgs } = request.files;
-        let tweetImgs = [];
+    if (file) {
+      const { imgs } = request.files;
+      let tweetImgs = [];
 
-        if (Array.isArray(imgs)) {
-          imgs.forEach((tweetImg) => {
-            tweetImgs.push(helpers.createFileName(tweetImg));
-          });
-        } else {
-          tweetImgs.push(helpers.createFileName(imgs));
-        }
-
-        const newTweet = await db.Tweets.create({
-          text,
-          img: tweetImgs.toString(),
-          userId,
+      if (Array.isArray(imgs)) {
+        imgs.forEach((tweetImg) => {
+          tweetImgs.push(helpers.createFileName(tweetImg));
         });
-
-        const tweet = await db.Tweets.findOne({
-          include: [{ model: db.User, as: "user" }],
-          where: { id: newTweet.id },
-        });
-
-        const presenter = new TweetsPresenter([tweet]);
-
-        return presenter.toJSON();
       } else {
-        const newTweet = await db.Tweets.create({ text, userId });
-
-        const tweet = await db.Tweets.findOne({
-          include: [{ model: db.User, as: "user" }],
-          where: { id: newTweet.id },
-        });
-
-        const presenter = new TweetsPresenter([tweet]);
-
-        return presenter.toJSON();
+        tweetImgs.push(helpers.createFileName(imgs));
       }
-    } catch (error) {
-      next(ApiError.badRequest(error.message));
+
+      const newTweet = await db.Tweets.create({
+        text,
+        img: tweetImgs.toString(),
+        userId,
+      });
+
+      const tweet = await db.Tweets.findOne({
+        include: [{ model: db.User, as: "user" }],
+        where: { id: newTweet.id },
+      });
+
+      const presenter = new TweetsPresenter([tweet]);
+
+      return presenter.toJSON();
+    } else {
+      const newTweet = await db.Tweets.create({ text, userId });
+
+      const tweet = await db.Tweets.findOne({
+        include: [{ model: db.User, as: "user" }],
+        where: { id: newTweet.id },
+      });
+
+      const presenter = new TweetsPresenter([tweet]);
+
+      return presenter.toJSON();
     }
   }
 

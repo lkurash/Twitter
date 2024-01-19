@@ -20,12 +20,12 @@ const FollowingsUserPresenter = require("../presenters/followingsUserPresenter")
 class DbRequestUser {
   async createUser(name, email, password, role, birthdate, next) {
     if (!email || !password) {
-      next(ApiError.badRequest("Email or Password error"));
+      throw ApiError.badRequest("Email or Password error");
     }
     const condidat = await db.User.findOne({ where: { email } });
 
     if (condidat) {
-      next(ApiError.badRequest("User with email is registration"));
+      throw ApiError.badRequest("User with email is registration");
     }
     const hashpassword = await bcrypt.hash(password, 5);
 
@@ -215,7 +215,7 @@ class DbRequestUser {
     });
 
     if (followings) {
-      next(ApiError.badRequest("The following already exists."));
+      throw ApiError.badRequest("The following already exists.");
     }
 
     if (!followings) {

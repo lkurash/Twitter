@@ -35,7 +35,9 @@ export function* fetchAllTweets() {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTweets(error));
+    yield put(
+      tweetLoadingActions.requestFailedTweets(error.response.data.message)
+    );
   }
 }
 
@@ -44,7 +46,11 @@ export function* fetchMoreTweets(action) {
     const tweets = yield call(tweetAPI.getAllTweets, action.limit, action.list);
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedTweets(error.response.data.message)
+    );
+  }
 }
 
 export function* fetchMoreUserTweets(action) {
@@ -57,7 +63,11 @@ export function* fetchMoreUserTweets(action) {
     );
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedUserTweets(error.response.data.message)
+    );
+  }
 }
 
 export function* fetchMoreTweetsWithMedia(action) {
@@ -70,7 +80,13 @@ export function* fetchMoreTweetsWithMedia(action) {
     );
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedTweetsWithMedia(
+        error.response.data.message
+      )
+    );
+  }
 }
 
 export function* fetchMoreTweetsWithLikes(action) {
@@ -83,7 +99,13 @@ export function* fetchMoreTweetsWithLikes(action) {
     );
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedTweetsWithLikes(
+        error.response.data.message
+      )
+    );
+  }
 }
 
 export function* fetchMoreAnswers(action) {
@@ -96,7 +118,11 @@ export function* fetchMoreAnswers(action) {
     );
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedAnswerss(error.response.data.message)
+    );
+  }
 }
 
 export function* fetchMoreTweetsForAuthUser(action) {
@@ -109,7 +135,13 @@ export function* fetchMoreTweetsForAuthUser(action) {
     );
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedTweetsAuthUser(
+        error.response.data.message
+      )
+    );
+  }
 }
 
 export function* fetchMoreTweetsWhoYouReading(action) {
@@ -122,7 +154,13 @@ export function* fetchMoreTweetsWhoYouReading(action) {
     );
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedTweetsWhoYouReading(
+        error.response.data.message
+      )
+    );
+  }
 }
 
 export function* fetchMoreBookmarks(action) {
@@ -135,7 +173,11 @@ export function* fetchMoreBookmarks(action) {
     );
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedBookmarks(error.response.data.message)
+    );
+  }
 }
 
 export function* fetchTweetsByUser(action) {
@@ -151,7 +193,11 @@ export function* fetchTweetsByUser(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTweetsAuthUser(error));
+    yield put(
+      tweetLoadingActions.requestFailedTweetsAuthUser(
+        error.response.data.message
+      )
+    );
   }
 }
 
@@ -167,7 +213,9 @@ export function* fetchPublicTweetsByUser(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedUserTweets(error));
+    yield put(
+      tweetLoadingActions.requestFailedUserTweets(error.response.data.message)
+    );
   }
 }
 
@@ -181,7 +229,11 @@ export function* fetchMorePublicTweetsByUser(action) {
     );
 
     yield put(tweetActions.setMoreTweets(tweets));
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedUserTweets(error.response.data.message)
+    );
+  }
 }
 
 export function* fetchTweetsWhoYouRead(action) {
@@ -197,7 +249,11 @@ export function* fetchTweetsWhoYouRead(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTweetsWhoYouReading(error));
+    yield put(
+      tweetLoadingActions.requestFailedTweetsWhoYouReading(
+        error.response.data.message
+      )
+    );
   }
 }
 
@@ -213,7 +269,9 @@ export function* fetchFavoriteTweets(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedBookmarks(error));
+    yield put(
+      tweetLoadingActions.requestFailedBookmarks(error.response.data.message)
+    );
   }
 }
 
@@ -230,7 +288,11 @@ export function* fetchTweetsForAuthUser(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTweetsAuthUser(error));
+    yield put(
+      tweetLoadingActions.requestFailedTweetsAuthUser(
+        error.response.data.message
+      )
+    );
   }
 }
 
@@ -247,7 +309,11 @@ export function* fetchTweetsWithMedia(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTweetsWithMedia(error));
+    yield put(
+      tweetLoadingActions.requestFailedTweetsWithMedia(
+        error.response.data.message
+      )
+    );
   }
 }
 
@@ -264,7 +330,11 @@ export function* fetchTweetsWithLikes(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTweetsWithLikes(error));
+    yield put(
+      tweetLoadingActions.requestFailedTweetsWithLikes(
+        error.response.data.message
+      )
+    );
   }
 }
 
@@ -281,7 +351,9 @@ export function* fetchAnswers(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedAnswerss(error));
+    yield put(
+      tweetLoadingActions.requestFailedAnswerss(error.response.data.message)
+    );
   }
 }
 
@@ -298,7 +370,11 @@ export function* fetchTweetsForTrends(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTweetsForTrends(error));
+    yield put(
+      tweetLoadingActions.requestFailedTweetsForTrends(
+        error.response.data.message
+      )
+    );
   }
 }
 
@@ -315,7 +391,11 @@ export function* fetchTweetsForTrendsAuthUser(action) {
 
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
-    yield put(tweetLoadingActions.requestFailedTweetsForTrends(error));
+    yield put(
+      tweetLoadingActions.requestFailedTweetsForTrends(
+        error.response.data.message
+      )
+    );
   }
 }
 
@@ -338,7 +418,13 @@ export function* fetchMoreTweetForTrend(action) {
       );
       yield put(tweetActions.setMoreTweets(tweets));
     }
-  } catch (error) {}
+  } catch (error) {
+    yield put(
+      tweetLoadingActions.requestFailedTweetsForTrends(
+        error.response.data.message
+      )
+    );
+  }
 }
 
 export function* watchFetchAllTweets() {

@@ -57,8 +57,6 @@ class UserDecorator {
 
       const token = helpers.genereteAccessToken(user.id, user.email);
 
-      console.log(user);
-
       return response.json({ token, user });
     } catch (error) {
       next(ApiError.badRequest(error.message));
@@ -147,7 +145,7 @@ class UserDecorator {
         return response.json(presenter.toJSON());
       }
     } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -166,7 +164,7 @@ class UserDecorator {
 
       return response.json(followings.followUserId);
     } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -185,7 +183,7 @@ class UserDecorator {
 
       return response.json(following.followUserId);
     } catch (error) {
-      next(ApiError.badRequest("Check followUserId"));
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -199,7 +197,7 @@ class UserDecorator {
       let presenter = new FollowingsUserPresenter(users);
       return response.json(presenter.toJSON(users));
     } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -213,7 +211,7 @@ class UserDecorator {
 
       return response.json(presenter.toJSON(users));
     } catch (error) {
-      next(ApiError.badRequest("Check user.id"));
+      next(ApiError.badRequest(error.message));
     }
   }
 

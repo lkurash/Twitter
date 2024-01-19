@@ -31,7 +31,7 @@ export function* getTrendsForAuthUser(action) {
 
     yield put(trendActions.setTrends(trends));
   } catch (error) {
-    yield put(trendActions.requestFailed(error));
+    yield put(trendActions.requestFailed(error.response.data.message));
   }
 }
 
@@ -48,7 +48,7 @@ export function* getAuthUserTweetsForTrend(action) {
 
     yield put(trendActions.setTrends(trends));
   } catch (error) {
-    yield put(trendActions.requestFailed(error));
+    yield put(trendActions.requestFailed(error.response.data.message));
   }
 }
 

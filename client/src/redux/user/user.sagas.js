@@ -37,7 +37,11 @@ export function* register(action) {
 
     yield put(userActions.setAuth(true, authenticationResult.token));
   } catch (error) {
-    yield put(userLoadingActions.requestAuthenticationFailed(error));
+    yield put(
+      userLoadingActions.requestAuthenticationFailed(
+        error.response.data.message
+      )
+    );
   }
 }
 
@@ -71,7 +75,7 @@ export function* fetchUser(action) {
 
     yield put(userActions.setUser(user));
   } catch (error) {
-    yield put(userActions.requestFailed(error));
+    yield put(userActions.requestFailed(error.response.data.message));
   }
 }
 
@@ -82,7 +86,7 @@ export function* fetchUserProfile(action) {
 
     yield put(userActions.setUserProfile(userProfile));
   } catch (error) {
-    yield put(userLoadingActions.requestUserProfileFailed(error));
+    yield put(userLoadingActions.requestUserProfileFailed(error.response.data.message));
   }
 }
 
@@ -94,7 +98,7 @@ export function* fetchUserProfileById(action) {
 
     yield put(userActions.setUserProfileById(userProfile));
   } catch (error) {
-    yield put(userLoadingActions.requestUserProfileByIdFailed(error));
+    yield put(userLoadingActions.requestUserProfileByIdFailed(error.response.data.message));
   }
 }
 
@@ -110,7 +114,7 @@ export function* updateProfile(action) {
     yield put(userActions.setUserProfileById(userProfile));
     yield put(userActions.setUserProfile(userProfile));
   } catch (error) {
-    yield put(userLoadingActions.requestUserProfileByIdFailed(error));
+    yield put(userLoadingActions.requestUserProfileByIdFailed(error.response.data.message));
   }
 }
 
@@ -121,7 +125,7 @@ export function* fetchFollowers(action) {
 
     yield put(userActions.setFollowers(followers));
   } catch (error) {
-    yield put(userLoadingActions.requestFollowersFailed(error));
+    yield put(userLoadingActions.requestFollowersFailed(error.response.data.message));
   }
 }
 
@@ -132,7 +136,7 @@ export function* fetchFollowings(action) {
 
     yield put(userActions.setFollowings(followings));
   } catch (error) {
-    yield put(userLoadingActions.requestFollowingsFailed(error));
+    yield put(userLoadingActions.requestFollowingsFailed(error.response.data.message));
   }
 }
 
@@ -146,7 +150,7 @@ export function* fetchListWhoNotReading(action) {
 
     yield put(userActions.setListWhoNotReading(listWhoNotReading));
   } catch (error) {
-    yield put(userLoadingActions.requestListWhoNotReadingFailed(error));
+    yield put(userLoadingActions.requestListWhoNotReadingFailed(error.response.data.message));
   }
 }
 
@@ -157,7 +161,7 @@ export function* fetchListWhoToFollow(action) {
 
     yield put(userActions.setListWhoToFollow(listWhoNotReading));
   } catch (error) {
-    yield put(userLoadingActions.requestListWhoNotReadingFailed(error));
+    yield put(userLoadingActions.requestListWhoNotReadingFailed(error.response.data.message));
   }
 }
 
