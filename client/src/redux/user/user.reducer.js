@@ -5,6 +5,7 @@ import {
   GET_FOLLOWERS,
   GET_FOLLOWINGS,
   GET_LIST_WHO_NOT_READING,
+  GET_LOG_OUT,
   GET_USERS_WHO_TO_FOLLOW,
   GET_USER_PROFILE,
   GET_USER_PROFILE_BY_ID,
@@ -52,12 +53,17 @@ export const userProfile = (state = defaultState.User.userProfile, action) => {
       return state;
 
     case SET_USER_PROFILE:
+      console.log(action);
+      console.log(action.profile);
       return {
         ...state,
         profile: action.profile,
         loadingStatus: "COMPLETE",
         error: false,
       };
+
+    case GET_LOG_OUT:
+      return defaultState.User.userProfile;
 
     case UPDATE_PROFILE:
       return state;

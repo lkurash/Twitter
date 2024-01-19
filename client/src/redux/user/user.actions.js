@@ -5,6 +5,7 @@ import {
   GET_FOLLOWERS,
   GET_FOLLOWINGS,
   GET_LIST_WHO_NOT_READING,
+  GET_LOG_OUT,
   GET_USER,
   GET_USERS_WHO_TO_FOLLOW,
   GET_USER_PROFILE,
@@ -16,6 +17,7 @@ import {
   SET_FOLLOWERS,
   SET_FOLLOWINGS,
   SET_LIST_WHO_NOT_READING,
+  SET_LOG_OUT,
   SET_NEW_FOLLOWING_IN_FOLLOWERS_LIST,
   SET_NEW_FOLLOWING_IN_FOLLOWING_LIST,
   SET_USER,
@@ -26,6 +28,12 @@ import {
 } from "../user/consts";
 
 class UserActions {
+  setLogOut() {
+    return {
+      type: SET_LOG_OUT,
+    };
+  }
+
   setUser(user) {
     return {
       type: SET_USER,
@@ -133,6 +141,12 @@ class UserActions {
     return {
       type: GET_AUTH,
       auth,
+    };
+  }
+
+  getLogOut() {
+    return {
+      type: GET_LOG_OUT,
     };
   }
 

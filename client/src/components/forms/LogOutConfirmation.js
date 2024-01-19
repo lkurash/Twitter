@@ -18,6 +18,7 @@ const LogOutConfirmation = () => {
     Cookies.remove("token");
     Cookies.remove("tweetsWhoReading");
     navigate(AUTH_PAGE_PATH);
+    dispatch(userActions.getLogOut())
     dispatch(userActions.getAuth(getFlagIsAuth()));
   };
 

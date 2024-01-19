@@ -1,5 +1,6 @@
 export const SET_USER = "SET_USER";
 export const SET_AUTH = "SET_AUTH";
+export const SET_LOG_OUT = "SET_LOG_OUT";
 export const SET_USER_PROFILE = "SET_PROFILE";
 export const SET_USER_PROFILE_BY_ID = "SET_USER_PROFILE_BY_ID";
 export const SET_USERS_WHO_TO_FOLLOW = "SET_USERS_WHO_TO_FOLLOW";
@@ -28,6 +29,7 @@ export const CREATE_FOLLOWING = "CREATE_FOLLOWING";
 
 export const GET_USER = "GET_USER";
 export const GET_AUTH = "GET_AUTH";
+export const GET_LOG_OUT = "GET_LOG_OUT";
 export const GET_USER_PROFILE_BY_ID = "GET_USER_PROFILE_BY_ID";
 export const GET_USER_PROFILE = "GET_USER_PROFILE";
 export const GET_USERS_WHO_TO_FOLLOW = "GET_USERS_WHO_TO_FOLLOW";
