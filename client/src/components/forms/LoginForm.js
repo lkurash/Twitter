@@ -1,18 +1,20 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import LocalAuthClient from "../../store/LocalAuthClient";
 
-import LoginPasswordForm from "./LoginPasswordForm";
-import LoginEmailForm from "./LoginEmailForm";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../redux/user/user.actions";
 import { auth } from "../../redux/user/user.selectors";
+
 import spinner from "../../utils/spinner";
 import { Context } from "../..";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import { HOME_PAGE_PATH } from "../../utils/routs";
-import { useNavigate } from "react-router-dom";
+
+import LoginPasswordForm from "./LoginPasswordForm";
+import LoginEmailForm from "./LoginEmailForm";
 
 const LoginForm = observer(() => {
   const { visiblePopUpStore } = useContext(Context);
@@ -48,11 +50,11 @@ const LoginForm = observer(() => {
     if (token) {
       LocalAuthClient.setAccessToken(token);
       LocalAuthClient.setCookiesTweets(false);
+      navigate(HOME_PAGE_PATH);
       setTimeout(() => {
-        setIsLoading(false);
         dispatch(userActions.getAuth(getFlagIsAuth()));
         visiblePopUpStore.setLoginPageVisible(false);
-        navigate(HOME_PAGE_PATH);
+        setIsLoading(false);
       }, 500);
     }
     if (error) {
