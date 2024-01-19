@@ -58,9 +58,8 @@ const ImgsInTweetForm = ({
   };
 
   useEffect(() => {
-    setChangesImgsList(false);
     setTimeout(() => {
-      setChangesImgsList(true);
+      setChangesImgsList(false);
     }, 500);
   }, [changesImgsList]);
 

@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import LocalAuthClient from "../../store/LocalAuthClient";
 
@@ -17,16 +17,17 @@ import LoginPasswordForm from "./LoginPasswordForm";
 import LoginEmailForm from "./LoginEmailForm";
 
 const LoginForm = observer(() => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation().pathname;
+
   const { visiblePopUpStore } = useContext(Context);
   const { infoMessageStore } = useContext(Context);
   const { token, error } = useSelector(auth);
-  const dispatch = useDispatch();
 
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [passwordFieldVisible, setPasswordFieldVisible] = useState(false);
   const [emailFieldVisible, setEmailFieldVisible] = useState(true);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -50,7 +51,9 @@ const LoginForm = observer(() => {
     if (token) {
       LocalAuthClient.setAccessToken(token);
       LocalAuthClient.setCookiesTweets(false);
-      navigate(HOME_PAGE_PATH);
+      if (!location.includes("user")) {
+        navigate(HOME_PAGE_PATH);
+      }
       setTimeout(() => {
         dispatch(userActions.getAuth(getFlagIsAuth()));
         visiblePopUpStore.setLoginPageVisible(false);

@@ -16,6 +16,7 @@ import LoginPage from "./public/LoginPage";
 import SignUpPage from "./public/SignUpPage";
 import MessageOnWindow from "../components/common/MessageOnWindow";
 import PublicFooter from "./PublicFooter";
+import PrivateFooter from "./PrivateFooter";
 
 import "./main.css";
 import "./sideBar.css";
@@ -24,7 +25,6 @@ import "../components/userpage.css";
 import "../components/Tweets/Tweet/tweetActions.css";
 import "../components/comment.css";
 import "../components/common/common.css";
-import PrivateFooter from "./PrivateFooter";
 
 const AppLayout = observer(() => {
   const { infoMessageStore } = useContext(Context);

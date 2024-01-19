@@ -2,13 +2,14 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../..";
 
+import { useDispatch, useSelector } from "react-redux";
+import { userProfile } from "../../redux/user/user.selectors";
+import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
+
 import getUserPhoto from "../../utils/getUserPhoto";
 import EmojiButton from "../buttons/EmojiButton";
 
 import imgFile from "../Imgs/file.png";
-import { useDispatch, useSelector } from "react-redux";
-import { userProfile } from "../../redux/user/user.selectors";
-import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
 import ImgsInTweetForm from "./ImgsInTweetForm";
 
 const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
@@ -59,12 +60,25 @@ const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
     setImgs([]);
   };
 
-  if (text.length > 255) {
-    return setText(text.slice(0, 254));
-  }
-
   const addEmojiInTweetText = (event) => {
     setText(text + event.emoji);
+  };
+
+  const handleTweetInputChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleTweetFormSubmit = () => {
+    if (tweetFormVisible) {
+      setTweetFormVisible(false);
+    }
+    createTweets();
+  };
+
+  const handleTextOverflow = () => {
+    if (text.length > 255) {
+      setText(text.slice(0, 254));
+    }
   };
 
   return (
@@ -72,22 +86,25 @@ const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
       <div className="loading-tweet">
         {isLoading && <div className="loading-line" />}
       </div>
-      <div className="tweet-fotrm-block">
+      <div className="tweet-block">
         <form className="tweet-form">
-          <div className="user-info">
-            <div className="user-info-photo">
-              <img alt="User" src={getUserPhoto(profile)} />
+          <div className="tweet-content">
+            <div className="user-info">
+              <div className="user-info-photo">
+                <img alt="User" src={getUserPhoto(profile)} />
+              </div>
             </div>
-          </div>
-          <div className="tweet-form-input">
-            <textarea
-              name="tweetInputForm"
-              value={text}
-              autoFocus={tweetFormVisible}
-              className="tweet-input-text"
-              onChange={(e) => setText(e.target.value)}
-              placeholder="What's happening?"
-            />
+            <div className="tweet-form-input">
+              <textarea
+                name="tweetInputForm"
+                value={text}
+                autoFocus={tweetFormVisible}
+                className="tweet-input-text"
+                onChange={handleTweetInputChange}
+                onKeyUp={handleTextOverflow}
+                placeholder="What's happening?"
+              />
+            </div>
           </div>
         </form>
         <ImgsInTweetForm
@@ -103,9 +120,7 @@ const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
               multiple
               accept=".jpg, .jpeg, .png"
               id="input-file"
-              onChange={(e) => {
-                getSelectedImgFile(e);
-              }}
+              onChange={getSelectedImgFile}
             />
             <label htmlFor="input-file" className="tweet-form-input-file">
               <img src={imgFile} alt="File" />
@@ -115,12 +130,7 @@ const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
           <button
             className="tweet-panel-button-tweet"
             type="button"
-            onClick={() => {
-              if (tweetFormVisible) {
-                setTweetFormVisible(false);
-              }
-              createTweets();
-            }}
+            onClick={handleTweetFormSubmit}
           >
             <span>Tweet</span>
           </button>

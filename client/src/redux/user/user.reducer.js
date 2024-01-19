@@ -53,8 +53,6 @@ export const userProfile = (state = defaultState.User.userProfile, action) => {
       return state;
 
     case SET_USER_PROFILE:
-      console.log(action);
-      console.log(action.profile);
       return {
         ...state,
         profile: action.profile,

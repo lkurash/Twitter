@@ -10,6 +10,7 @@ import {
   REQUEST_CONTENT_FOR_NOT_AUTH_FAILED,
   REQUEST_CONTENT_FOR_NOT_AUTH_STARTED,
 } from "./consts";
+import { GET_LOG_OUT } from "../user/consts";
 
 export const visibilityPrivatePage = (
   state = defaultState.visibilityPrivatePage,
@@ -41,6 +42,9 @@ export const visibilityPrivatePage = (
         loadingStatus: "PENDING",
         error: false,
       };
+
+    case GET_LOG_OUT:
+      return defaultState.visibilityPrivatePage;
 
     default:
       return state;

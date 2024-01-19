@@ -20,7 +20,7 @@ const SignOutButton = observer(() => {
     }
   }, [loadingStatus]);
 
-  if (isLoading) {
+  if (isLoading || !profile) {
     return null;
   }
 
