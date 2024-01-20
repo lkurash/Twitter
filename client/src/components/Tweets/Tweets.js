@@ -32,7 +32,7 @@ const Tweets = ({ message, getMoreTweets, userId, trend }) => {
       ) : (
         <Fragment>
           <div className="tweets">
-            {tweets ? (
+            {tweets.length !== 0 ? (
               <>
                 {tweets.map((tweet) => (
                   <Tweet

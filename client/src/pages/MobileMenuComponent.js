@@ -49,7 +49,7 @@ const MobileMenuComponent = ({
                       id={button.id}
                       alt={button.alt}
                       classNameButtonImg={button.classNameButtonImg}
-                      buttonNameClass={"mobile-button-name"}
+                      buttonNameClass="mobile-button-name"
                       buttonName={button.buttonName}
                       nav={button.nav}
                     />
@@ -65,6 +65,7 @@ const MobileMenuComponent = ({
                     buttonName="Explore"
                     id="0"
                     classNameButtonImg="button-icon-menu"
+                    buttonNameClass="mobile-button-name"
                     nav={PUBLIC_EXPLORE_PAGE_PATH}
                   />
                 </>

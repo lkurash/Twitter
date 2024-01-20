@@ -48,7 +48,7 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         tweets:
-          action.tweets.tweets.length !== 0 ? [...action.tweets.tweets] : null,
+          action.tweets.tweets.length !== 0 ? [...action.tweets.tweets] : [],
         moreTweets: action.tweets.moreTweets,
         loadingStatus: "COMPLETE",
       };
@@ -149,7 +149,7 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
 
@@ -165,7 +165,7 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
 
@@ -189,14 +189,14 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
     case REQUEST_TWEETS_FOR_AUTH_USER_FAILED:
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
 
@@ -212,7 +212,7 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
 
@@ -228,7 +228,7 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
 
@@ -244,7 +244,7 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
 
@@ -260,7 +260,7 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
 
@@ -276,7 +276,7 @@ export const tweetReducer = (state = defaultState.Tweets, action) => {
       return {
         ...state,
         loadingStatus: "EROR",
-        tweets: state.Tweets ? state.Tweets.tweets : null,
+        tweets: state.Tweets ? state.Tweets.tweets : [],
         error: action.error,
       };
 

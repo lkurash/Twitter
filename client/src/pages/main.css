@@ -463,6 +463,10 @@
 }
 
 @media (width <= 550px) {
+  .main {
+    margin-bottom: 80px;
+  }
+
   .main-search-form-explore {
     width: 100%;
     margin-left: 0px;

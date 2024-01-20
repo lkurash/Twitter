@@ -13,9 +13,13 @@ const UserComments = () => {
   const { tweets, loadingStatus } = useSelector(tweetsStore);
   const { profile } = useSelector(userProfileById);
 
+  if (tweets === null) {
+    return null;
+  }
+
   return (
     <>
-      {tweets && loadingStatus === "COMPLETE" && tweets.length > 0 ? (
+      {tweets && loadingStatus === "COMPLETE" && (
         <>
           {tweets.map(({ Comment, Tweet }) => (
             <Fragment key={Comment.id}>
@@ -49,13 +53,16 @@ const UserComments = () => {
             />
           )}
         </>
-      ) : (
-        <div className="tweet-hint-about-lack-tweets">
-          <div className="lack-tweets-message">
-            <h2>No tweets yet.</h2> <p>Write first.</p>
-          </div>
-        </div>
       )}
+      <>
+        {tweets.length === 0 && (
+          <div className="tweet-hint-about-lack-tweets">
+            <div className="lack-tweets-message">
+              <h2>No tweets yet.</h2> <p>Write first.</p>
+            </div>
+          </div>
+        )}
+      </>
     </>
   );
 };

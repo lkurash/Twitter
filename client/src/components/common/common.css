@@ -165,8 +165,10 @@
 }
 
 .tooltip-notauth-user {
+  margin: 0 auto;
   width: 600px;
   height: 400px;
+  margin-top: 60px;
   border-radius: 15px;
   display: flex;
   align-items: center;
