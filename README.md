@@ -1,6 +1,7 @@
 <h1>Twitter clone</h3>
 
 <p>Built with React, Redux, Express and Postgres. </p>
+<p>Deploy on Render.com: https://twitter-clone-com.onrender.com</p>
 
 <p align="center">
   <img width="700" alt="Screenshot Twitter" src="https://github.com/lkurash/Twitter/assets/105499318/3f29745d-36c6-4468-b218-2ebf6d6d44d3">
