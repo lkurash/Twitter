@@ -2,7 +2,7 @@ const config = {
   production: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
-    database: "twitter_prodaction_c52d",
+    database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     dialect: "postgres",
     ssl: true,
