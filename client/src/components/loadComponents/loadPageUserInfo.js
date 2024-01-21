@@ -2,24 +2,29 @@ const loadPageUserInfo = (isAuth) => {
   return (
     <>
       <div className="main-content-block">
-        <div className="main-stiky-panel users-page-stiky-panel">
-          <div className="main-page-name-wrapper">
-            <div className="main-search-block-button-return" />
-            <div className="main-page-name-user-name load-page">
-              {isAuth && (
+        {isAuth && (
+          <div className="main-stiky-panel users-page-stiky-panel">
+            <div className="main-page-name-wrapper">
+              <div className="main-search-block-button-return" />
+              <div className="main-page-name-user-name load-page">
                 <>
                   <h2 />
                   <p />
                 </>
-              )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
         <>
           <div className="main-content-profile-panel">
             <>
               <div className="profile-panel-photo">
-                <div className="profile-panel-background-user load-page-babackground-user" />
+                <div
+                  className={`profile-panel-background-user ${
+                    isAuth && "load-page-babackground-user"
+                  }`}
+                />
                 <div className="profile-panel-block-photo-button">
                   <div className="profile-panel-photo-user" />
                   {isAuth && (
