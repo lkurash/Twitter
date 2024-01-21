@@ -33,6 +33,10 @@ h2 {
   height: 35px;
 }
 
+.load-page-babackground-user{
+  margin-top: 20px;
+}
+
 .about-user-load-page {
   width: 300px;
   height: 25px;
@@ -92,7 +96,7 @@ h2 {
 }
 
 .profile-panel-background-user img {
-  height: 200px;
+  height: 100%;
   width: 100%;
   object-fit: cover;
   object-position: center;
