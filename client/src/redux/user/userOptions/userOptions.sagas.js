@@ -11,6 +11,7 @@ import {
 import userAPI from "../../../http/userAPI";
 
 export function* fetchPreviewProfile(action) {
+  yield put(userOptionsActions.requestPreviewProfileStarted());
   try {
     const user = yield call(
       userAPI.getPreviewProfile,
@@ -19,7 +20,9 @@ export function* fetchPreviewProfile(action) {
     );
 
     yield put(userOptionsActions.setPreviewProfile(user));
-  } catch (error) {}
+  } catch (error) {
+    yield put(userOptionsActions.requestPreviewProfileFailed(error));
+  }
 }
 
 export function* addNewFollowingInFollowingList(newFollowing) {

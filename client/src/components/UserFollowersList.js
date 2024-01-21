@@ -42,13 +42,15 @@ const UserFollowersList = observer(() => {
               <Fragment>
                 <UserInList profile={profile} />
 
-                {profile.id !== authUserID && (
-                  <FollowButton
-                    profile={profile}
-                    follow={profile.following}
-                    classButton="button-follow-follow-list"
-                  />
-                )}
+                <div className="wrapper-button-follow-follow-list">
+                  {profile.id !== authUserID && (
+                    <FollowButton
+                      profile={profile}
+                      follow={profile.following}
+                      classButton="button-follow-follow-list"
+                    />
+                  )}
+                </div>
               </Fragment>
             </li>
           ))}

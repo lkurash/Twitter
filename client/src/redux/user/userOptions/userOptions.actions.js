@@ -3,6 +3,8 @@ import {
   DELETE_FOLLOWING,
   GET_PREVIEW_PROFILE,
   GET_SEARCHED_USERS,
+  REQUEST_PREVIEW_PROFILE_FAILED,
+  REQUEST_PREVIEW_PROFILE_STARTED,
   SET_FOLLOW_PREVIEW_PROFILE,
   SET_PREVIEW_PROFILE,
   SET_SEARCHED_USERS,
@@ -57,6 +59,19 @@ class UserOptionsActions {
       type: DELETE_FOLLOWING,
       id,
       followUserId,
+    };
+  }
+
+  requestPreviewProfileFailed(error) {
+    return {
+      type: REQUEST_PREVIEW_PROFILE_FAILED,
+      error,
+    };
+  }
+
+  requestPreviewProfileStarted() {
+    return {
+      type: REQUEST_PREVIEW_PROFILE_STARTED,
     };
   }
 }

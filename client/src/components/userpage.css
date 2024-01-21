@@ -101,6 +101,7 @@ h2 {
 .profile-panel-block-photo-button {
   display: flex;
   justify-content: space-between;
+  padding-right: 10px;
 }
 
 .profile-panel-photo-user {
@@ -121,14 +122,12 @@ h2 {
 }
 
 .button-edit-profile {
-  width: 114px;
-  height: 36px;
-  margin-top: 10px;
-  margin-right: 20px;
+  width: 100%;
+  height: 100%;
   border-radius: 30px;
+  border: none;
   background-color: black;
   color: aliceblue;
-  border: 1px solid rgb(110 110 110);
   font-weight: bold;
   letter-spacing: 0.5px;
   font-size: 14px;
@@ -442,25 +441,43 @@ h2 {
 
 .follow-page-main-button-following {
   height: 36px;
-  margin-top: 10px;
   margin-right: 20px;
   border-radius: 30px;
   background-color: black;
   color: aliceblue;
-  border: 1px solid rgb(110 110 110);
   font-weight: bold;
   letter-spacing: 0.5px;
   cursor: pointer;
 }
 
-.button-follow-follow-list {
+.wrapper-follow-button {
+  margin-top: 10px;
+  font-size: 15px;
+  height: 36px;
+  width: 114px;
+  border-radius: 30px;
+  border: 1px solid rgb(110 110 110);
+}
+
+.wrapper-button-follow-follow-list {
+  margin-top: 3px;
   width: 80px;
+  height: 33px;
+  border-radius: 30px;
+  border: 1px solid rgb(110 110 110);
+}
+
+.button-follow-follow-list {
+  width: 100%;
+  height: 100%;
+  border: none;
   font-size: 11px;
 }
 
 .button-follow-user-profile {
-  width: 114px;
-  font-size: 15px;
+  border: none;
+  width: 100%;
+  height: 100%;
 }
 
 .section-whoyouread-button-follow {
@@ -491,6 +508,7 @@ h2 {
 }
 
 .user-follow-list {
+  padding: 0px 10px 0px 10px;
   padding-left: 10px;
 }
 

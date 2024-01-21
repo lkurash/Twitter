@@ -7,6 +7,8 @@ import {
   SET_FOLLOW_PREVIEW_PROFILE,
   SET_PREVIEW_PROFILE,
   SET_SEARCHED_USERS,
+  REQUEST_PREVIEW_PROFILE_STARTED,
+  REQUEST_PREVIEW_PROFILE_FAILED,
 } from "../consts";
 import { defaultState } from "../../store/defaultState";
 import { changingUsers } from "../changingUsers";
@@ -33,6 +35,18 @@ export const userInfo = (state = defaultState.userInfo, action) => {
       return {
         ...state,
         userInfo: changingUsers.changeFollow(state.userInfo),
+      };
+
+    case REQUEST_PREVIEW_PROFILE_STARTED:
+      return {
+        state,
+      };
+
+    case REQUEST_PREVIEW_PROFILE_FAILED:
+      return {
+        ...state,
+        loadingStatus: "FAILED",
+        error: action.error,
       };
 
     default:

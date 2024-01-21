@@ -49,11 +49,13 @@ const PreviewUserOnTweet = observer(({ user, setShowProfileUser }) => {
               <img alt="User" src={getUserPhoto(user)} />
             </div>
             {authUserID !== user.id && authUserID && (
-              <FollowButton
-                profile={user}
-                follow={userInfo.following}
-                classButton="button-follow-follow-list"
-              />
+              <div className="wrapper-button-follow-follow-list">
+                <FollowButton
+                  profile={user}
+                  follow={userInfo.following}
+                  classButton="button-follow-follow-list"
+                />
+              </div>
             )}
           </div>
           <div

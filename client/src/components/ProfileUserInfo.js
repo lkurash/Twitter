@@ -83,17 +83,20 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
 
           {isAuth && (
             <>
-              {(location === PROFILE_PAGE_USER_PATH ||
-                authUserID === profile.id) && (
-                <EditProfileButton userStore={userStore} />
-              )}
-              {loadingStatus === "COMPLETE" && authUserID !== profile.id && (
-                <FollowButton
-                  follow={userInfo.following}
-                  profile={profile}
-                  classButton="button-follow-user-profile"
-                />
-              )}
+              <div className="wrapper-follow-button">
+                {(location === PROFILE_PAGE_USER_PATH ||
+                  authUserID === profile.id) && (
+                  <EditProfileButton userStore={userStore} />
+                )}
+                
+                {loadingStatus === "COMPLETE" && authUserID !== profile.id && (
+                  <FollowButton
+                    follow={userInfo.following}
+                    profile={profile}
+                    classButton="button-follow-user-profile"
+                  />
+                )}
+              </div>
             </>
           )}
         </div>
