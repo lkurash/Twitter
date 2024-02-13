@@ -34,7 +34,7 @@ const AppLayout = observer(() => {
   const path = useLocation().pathname;
   const ref = useRef();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (authUserID) {
       dispatch(userActions.getAuth(getFlagIsAuth()));
       dispatch(visibilityPageActions.getContentForAuthUser(authUserID));
@@ -43,8 +43,10 @@ const AppLayout = observer(() => {
     }
   }, [authUserID]);
 
-  useLayoutEffect(() => {
-    ref.current.scrollIntoView();
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [path]);
 
   return (
