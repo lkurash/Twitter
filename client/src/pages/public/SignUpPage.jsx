@@ -12,11 +12,11 @@ const SignUpPage = observer(() => {
   const [checkUserInfo, setCheckUserInfo] = useState(false);
 
   return (
-    <div className="background-auth-form">
+    <div className="background-auth-form" data-testid="signup-page">
       <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
           <CloseButton nav={AUTH_PAGE_PATH} />
-          <Logo class="logo-icon-form" />
+          <Logo className="logo-icon-form" />
         </header>
         {!checkUserInfo ? (
           <SignUpForm setCheckUserInfo={setCheckUserInfo} />

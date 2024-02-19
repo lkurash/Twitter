@@ -1,11 +1,13 @@
-import { createContext } from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./App.css";
+
 import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
+import { Context } from "./Context";
 
-import reportWebVitals from "./reportWebVitals";
+import AppRouter from "./AppRouter";
+
+import { store } from "./redux/store";
+
 import RepliesStore from "./store/RepliesStore";
 import FavoriteTweetsStore from "./store/FavoriteTweetsStore";
 import UsersFollowStore from "./store/UsersFollowStore";
@@ -13,10 +15,13 @@ import RetweetsStore from "./store/RetweetStore";
 import TweetsStore from "./store/TweetsStore";
 import UserStore from "./store/UserStore";
 import InfoMessageStore from "./store/InfoMessageStore";
-import { store } from "./redux/store";
 import VisiblePopUpStore from "./store/VisiblePopUpStore";
 
-export const Context = createContext(null);
+import reportWebVitals from "./reportWebVitals";
+
+import "./App.css";
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -34,7 +39,7 @@ root.render(
       }}
     >
       <CookiesProvider>
-        <App />
+        <AppRouter />
       </CookiesProvider>
     </Context.Provider>
   </Provider>

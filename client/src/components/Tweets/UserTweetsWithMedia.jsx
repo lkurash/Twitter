@@ -7,9 +7,11 @@ import { useParams } from "react-router-dom";
 import { tweetActions } from "../../redux/tweet/tweet.actions";
 
 import Tweets from "./Tweets";
+import { tweetsStore } from "../../redux/tweet/tweet.selectors";
 
 const UserTweetsWithMedia = observer(() => {
   const dispatch = useDispatch();
+  const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
   const { profile } = useSelector(userProfileById);
   const { id } = useParams();
 
@@ -19,6 +21,8 @@ const UserTweetsWithMedia = observer(() => {
 
   return (
     <Tweets
+      tweets={tweets}
+      moreTweets={moreTweets}
       message={
         <div className="lack-tweets-message">
           <h2>No tweets with media.</h2> <p>Write first.</p>

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Context } from "../..";
+import { Context } from "../../Context";
 import { useNavigate } from "react-router-dom";
 
 import close from "../Imgs/x_icon.png";

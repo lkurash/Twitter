@@ -9,7 +9,7 @@ import retweetImg from "../Imgs/tooltip_retweet_icon.png";
 import commentImg from "../Imgs/tooltip_comment_icon.png";
 import logo from "../Imgs/logo_icon.png";
 import close from "../Imgs/x_icon.png";
-import { Context } from "../..";
+import { Context } from "../../Context";
 import { observer } from "mobx-react-lite";
 
 const TooltipUserNotAuth = observer(

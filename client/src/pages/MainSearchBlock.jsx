@@ -28,10 +28,13 @@ const MainSearchBlock = ({ classNameForm }) => {
 
   return (
     <div className="main-search-block">
-      <Logo path={logo} class="mobile-logo" />
+      <Logo path={logo} className="mobile-logo" />
       <div
         className={
           activeInput ? `${classNameForm} active-search-input` : classNameForm
+        }
+        data-testid={
+          activeInput ? "active-search-input" : "notactive-search-input"
         }
       >
         <div className="main-search-form">
@@ -42,6 +45,7 @@ const MainSearchBlock = ({ classNameForm }) => {
           />
           <div className="main-search-form-input">
             <input
+              data-testid="input-search"
               name="searchFormInput"
               className="main-input"
               placeholder="Search User"

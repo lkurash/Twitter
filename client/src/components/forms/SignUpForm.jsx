@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useRef, useState } from "react";
-import { Context } from "../..";
+import { Context } from "../../Context";
 
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 

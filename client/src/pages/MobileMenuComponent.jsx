@@ -36,7 +36,7 @@ const MobileMenuComponent = ({
     >
       <div className="background" ref={nodeRef}>
         <div className="mobile-menu wrapper-border" ref={popUpMobileMenu}>
-          {page === "publicPage" && <Logo class="logo" />}
+          {page === "publicPage" && <Logo className="logo" />}
           <nav className="nav-mobile">
             <div className="mobile-menu-buttons">
               {page === "privatePage" && (

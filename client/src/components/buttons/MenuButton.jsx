@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 const MenuButton = ({
+  testid,
   classNameButtonImg,
   buttonNameClass,
   buttonName,
@@ -11,6 +12,7 @@ const MenuButton = ({
 }) => {
   return (
     <NavLink
+      data-testid={testid}
       className={({ isActive }) =>
         isActive ? `menu-button active-menu-button` : `menu-button notactive`
       }

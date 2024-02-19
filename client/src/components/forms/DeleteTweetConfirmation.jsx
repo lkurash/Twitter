@@ -2,7 +2,7 @@ import { CSSTransition } from "react-transition-group";
 import { useContext, useRef } from "react";
 import { useDispatch } from "react-redux";
 
-import { Context } from "../..";
+import { Context } from "../../Context";
 
 import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
 

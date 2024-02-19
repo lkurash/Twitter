@@ -9,7 +9,7 @@ import { userActions } from "../../redux/user/user.actions";
 import { auth } from "../../redux/user/user.selectors";
 
 import spinner from "../../utils/spinner";
-import { Context } from "../..";
+import { Context } from "../../Context";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import { HOME_PAGE_PATH } from "../../utils/routs";
 

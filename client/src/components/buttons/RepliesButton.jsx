@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { Context } from "../..";
+import { Context } from "../../Context";
 
 import { useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
@@ -39,7 +39,7 @@ const RepliesButton = observer(({ tweet }) => {
   };
 
   return (
-    <div className="tweet-action-comments">
+    <div className="tweet-action-comments" data-testid="replies-button">
       <TooltipUserNotAuth
         tooltipUserNotAuth={tooltipUserNotAuth}
         onCloseTooltip={onCloseTooltip}

@@ -16,7 +16,7 @@ const MenuComponent = observer(({ page }) => {
 
   return (
     <aside className="menu">
-      <Logo class="logo" />
+      <Logo className="logo" testid="logo-web" />
       <nav className="nav">
         {page === "privatePage" && (
           <div>
@@ -41,6 +41,7 @@ const MenuComponent = observer(({ page }) => {
               type="button"
               img={hashtag}
               alt="Explore"
+              testid="nav-explore-page"
               buttonName="Explore"
               id="0"
               classNameButtonImg="button-icon-menu"

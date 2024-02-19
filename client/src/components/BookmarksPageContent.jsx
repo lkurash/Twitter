@@ -4,8 +4,10 @@ import { tweetActions } from "../redux/tweet/tweet.actions";
 
 import Tweets from "./Tweets/Tweets";
 import MainStikyPanel from "./MainStikyPanel";
+import { tweetsStore } from "../redux/tweet/tweet.selectors";
 
 const BookmarksPageContent = () => {
+  const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
   const { profile } = useSelector(userProfile);
 
   const message = (
@@ -17,8 +19,14 @@ const BookmarksPageContent = () => {
 
   return (
     <>
-      <MainStikyPanel pageName={"Bookmarks"} userName={profile.user_name} arrowVisible={true}/>
+      <MainStikyPanel
+        pageName={"Bookmarks"}
+        userName={profile.user_name}
+        arrowVisible={true}
+      />
       <Tweets
+        tweets={tweets}
+        moreTweets={moreTweets}
         message={message}
         getMoreTweets={tweetActions.getMoreBookmarks}
         userId={profile.id}

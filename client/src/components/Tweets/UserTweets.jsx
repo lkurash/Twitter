@@ -8,9 +8,11 @@ import { tweetActions } from "../../redux/tweet/tweet.actions";
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import Tweets from "./Tweets";
+import { tweetsStore } from "../../redux/tweet/tweet.selectors";
 
 const UserTweets = observer(() => {
   const dispatch = useDispatch();
+  const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
   const { profile } = useSelector(userProfileById);
   const { isAuth } = useSelector(auth);
   const authUserID = getAuthUserID();
@@ -25,6 +27,8 @@ const UserTweets = observer(() => {
 
   return (
     <Tweets
+      tweets={tweets}
+      moreTweets={moreTweets}
       message={
         <div className="lack-tweets-message">
           <h2>No tweets yet.</h2> <p>Write first.</p>

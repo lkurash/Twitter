@@ -7,7 +7,7 @@ import NotInterestingTrendButton from "./buttons/NotInterestingTrendButton";
 import { useSelector } from "react-redux";
 import { auth } from "../redux/user/user.selectors";
 
-const Trends = observer(({ topic }) => {
+const Trend = observer(({ topic }) => {
   const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
 
@@ -38,4 +38,4 @@ const Trends = observer(({ topic }) => {
   );
 });
 
-export default Trends;
+export default Trend;

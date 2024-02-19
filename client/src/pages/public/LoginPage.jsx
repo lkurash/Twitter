@@ -6,11 +6,11 @@ import Logo from "../../components/common/Logo";
 
 function LoginPage() {
   return (
-    <div className="background-auth-form">
+    <div className="background-auth-form" data-testid="login-page">
       <div className="form-wrapper wrapper-border">
         <header className="login-form-header">
           <CloseButton nav={AUTH_PAGE_PATH} />
-          <Logo class="logo-icon-form" />
+          <Logo className="logo-icon-form" />
         </header>
         <LoginForm />
       </div>

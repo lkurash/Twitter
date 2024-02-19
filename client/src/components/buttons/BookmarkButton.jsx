@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { Context } from "../..";
+
+import { Context } from "../../Context";
 
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
@@ -70,7 +71,7 @@ const BookmarkButton = observer(({ tweet, bookmark }) => {
   };
 
   return (
-    <div className="tweet-action-bookmark">
+    <div className="tweet-action-bookmark" data-testid="bookmark-button">
       <TooltipUserNotAuth
         tooltipUserNotAuth={tooltipUserNotAuth}
         onCloseTooltip={onCloseTooltip}

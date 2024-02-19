@@ -25,7 +25,7 @@ const Tweet = ({ tweet, userInfo, retweet }) => {
 
   return (
     <>
-      <div className="tweet-block">
+      <div className="tweet-block" data-testid="tweet">
         {retweet && (
           <TooltipRetweetOnTweet
             retweet={tweet}
@@ -40,7 +40,9 @@ const Tweet = ({ tweet, userInfo, retweet }) => {
               <UserName tweet={tweet} user={userInfo} />
               <img src={dot} alt="Dot" className="dot-tweet" />
 
-              <p className="tweet-data">{tweet.tweet_createDate}</p>
+              <p className="tweet-data" data-testid="tweet-data-created-tweet">
+                {tweet.tweet_createDate}
+              </p>
             </div>
             <TweetDesc tweet={tweet} user={userInfo} />
           </div>

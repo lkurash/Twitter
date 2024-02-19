@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
-import { Context } from "../..";
+import { Context } from "../../Context";
 
 const MessageOnWindow = observer(() => {
   const { infoMessageStore } = useContext(Context);

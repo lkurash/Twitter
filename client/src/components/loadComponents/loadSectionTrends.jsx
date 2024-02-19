@@ -1,6 +1,6 @@
 const loadSectionTrends = () => {
   return (
-    <section className="section trends-home section-background load-page">
+    <section className="section trends-sidebar section-background load-page">
       <h2 className="main-section-name" />
       <div className="main-trends-item">
         <div className="trends-item load-page">

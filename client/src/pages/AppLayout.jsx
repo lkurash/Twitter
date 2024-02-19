@@ -1,9 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { useContext, useEffect, useLayoutEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { Context } from "..";
+import { Context } from "../Context";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { visibilityPageActions } from "../redux/visibilityPage/visibilityPage.actions";
 import { userActions } from "../redux/user/user.actions";
 
@@ -25,10 +25,12 @@ import "../components/userpage.css";
 import "../components/Tweets/Tweet/tweetActions.css";
 import "../components/comment.css";
 import "../components/common/common.css";
+import { visibilityPrivatePage } from "../redux/visibilityPage/visibilityPage.selectors";
 
 const AppLayout = observer(() => {
   const { infoMessageStore } = useContext(Context);
   const { visiblePopUpStore } = useContext(Context);
+  const { loadingStatus } = useSelector(visibilityPrivatePage);
   const authUserID = getAuthUserID();
   const dispatch = useDispatch();
   const path = useLocation().pathname;
@@ -43,11 +45,11 @@ const AppLayout = observer(() => {
     }
   }, [authUserID]);
 
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [path]);
+  // useEffect(() => {
+  //   if (ref.current) {
+  //     ref.current.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }, [path]);
 
   return (
     <div>

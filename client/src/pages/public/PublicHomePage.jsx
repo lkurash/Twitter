@@ -1,12 +1,17 @@
-import { observer } from "mobx-react-lite";
+import MainSectionTrends from "../MainSectionTrends";
+import MainSectionWhoToRead from "../MainSectionWhoToRead";
+import MainSearchBlock from "../MainSearchBlock";
 
-import PublicHomePageContent from "../../components/PublicHomePageContent";
-
-const PublicHomePage = observer(() => {
+const PublicHomePage = () => {
   return (
-    <>
-      <PublicHomePageContent />
-    </>
+    <div data-testid="public-home-page">
+      <MainSearchBlock classNameForm="main-search-form-explore" />
+
+      <MainSectionTrends className="section section-public-page trends" />
+      <div className="main-line" />
+      <MainSectionWhoToRead className="section section-public-page happen" />
+    </div>
   );
-});
+};
+
 export default PublicHomePage;

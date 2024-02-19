@@ -69,18 +69,18 @@ export const publicRoutes = {
   children: [
     {
       path: PUBLIC_HOME_PAGE_PATH,
-      loader: redirectToHomePage,
+      // loader: redirectToHomePage,
       element: <PublicHomePage />,
     },
     {
       path: PUBLIC_EXPLORE_PAGE_PATH,
-      loader: redirectToHomePage,
+      // loader: redirectToHomePage,
       element: <PublicExplorePage />,
     },
     {
       path: PUBLIC_TRENDS_PAGE_PATH,
       element: <TrendsPage />,
-      loader: redirectToHomePage,
+      // loader: redirectToHomePage,
     },
     {
       path: PUBLIC_USER_PAGE_PATH,
@@ -90,7 +90,7 @@ export const publicRoutes = {
       path: AUTH_PAGE_PATH,
       element: <LayoutLoginAndSignUpPage />,
       errorElement: <RootBoundary />,
-      loader: redirectToHomePage,
+      // loader: redirectToHomePage,
       children: [
         {
           path: LOGIN_PAGE_PATH,

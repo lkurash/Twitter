@@ -5,7 +5,7 @@ import BookmarkButton from "../../buttons/BookmarkButton";
 
 const TweetActions = ({ tweet, retweet }) => {
   return (
-    <div className="tweet-action" key={tweet.id}>
+    <div className="tweet-action" key={tweet.id} data-testid="tweet-action">
       <RepliesButton tweet={tweet} />
       <RetweetTweetButton tweet={tweet} retweet={retweet} />
       <LikeTweetButton

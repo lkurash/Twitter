@@ -38,6 +38,7 @@ const DeleteTweetButton = observer(({ tweet }) => {
       )}
       <div
         className="dotmenu"
+        data-testid="delete-tweet-button"
         onClick={() => {
           setDeleteButtonVisible(true);
         }}

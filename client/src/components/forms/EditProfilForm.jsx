@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import { Context } from "../..";
+import { Context } from "../../Context";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/user/user.selectors";

@@ -1,7 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { NavLink, useLocation, useParams } from "react-router-dom";
-import { Context } from "..";
+
+import { Context } from "../Context";
 
 import {
   FOLLOWERS_PAGE_PATH,
@@ -88,7 +89,7 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
                   authUserID === profile.id) && (
                   <EditProfileButton userStore={userStore} />
                 )}
-                
+
                 {loadingStatus === "COMPLETE" && authUserID !== profile.id && (
                   <FollowButton
                     follow={userInfo.following}

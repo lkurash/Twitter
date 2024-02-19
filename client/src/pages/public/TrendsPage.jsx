@@ -32,7 +32,7 @@ const TrendsPage = () => {
 
   return (
     <>
-      <div className="page-trands-search-block">
+      <div className="page-trands-search-block" data-testid='trends-page'>
         <div
           className="main-search-block-button-return"
           onClick={() => navigate(-1)}

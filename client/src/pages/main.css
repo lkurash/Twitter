@@ -169,6 +169,7 @@
   min-height: 280px;
   min-width: 295px;
   height: max-content;
+  margin-top: 8px;
   padding-bottom: 5px;
 }
 
@@ -186,7 +187,7 @@
   color: rgb(113, 118, 123);
 }
 
-.happen-home {
+.happen-sidebar {
   margin-top: 20px;
   padding-top: 1px;
   margin-left: 20px;
@@ -345,7 +346,7 @@
   background-color: rgb(16 144 230);
 }
 
-.trends-home {
+.trends-sidebar {
   padding-top: 1px;
   margin-left: 20px;
   padding-left: 10px;

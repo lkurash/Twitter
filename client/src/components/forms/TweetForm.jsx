@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
-import { Context } from "../..";
+import { Context } from "../../Context";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/user/user.selectors";

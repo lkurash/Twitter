@@ -1,6 +1,6 @@
 const loadSectionWhoRead = () => {
   return (
-    <section className="section happen-home section-background load-page">
+    <section className="section happen-sidebar section-background load-page">
       <h2 className="main-section-name" />
       <ul className="users">
         <li className="user">

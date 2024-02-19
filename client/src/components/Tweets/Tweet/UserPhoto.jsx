@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,10 +9,10 @@ import navigateClickOnUser from "../../../utils/navigateClickOnUser";
 
 import PreviewUserOnTweet from "../../common/PreviewUserOnTweet";
 
-const UserPhoto = observer(({ tweet, user }) => {
+const UserPhoto = ({ user }) => {
   const { isAuth } = useSelector(auth);
   const [showProfileUser, setShowProfileUser] = useState(false);
-
+  
   const navigate = useNavigate();
 
   const onMouseLeave = () => {
@@ -29,7 +28,7 @@ const UserPhoto = observer(({ tweet, user }) => {
   };
 
   return (
-    <div className="user-info">
+    <div className="user-info" data-testid="user-info">
       <div
         className="user-info-photo"
         onMouseEnter={() => {
@@ -40,6 +39,7 @@ const UserPhoto = observer(({ tweet, user }) => {
         }}
       >
         <img
+          data-testid="user-photo"
           alt="User"
           src={getUserPhoto(user)}
           onClick={() => navigate(navigateClickOnUser(isAuth, user.id))}
@@ -53,5 +53,5 @@ const UserPhoto = observer(({ tweet, user }) => {
       </div>
     </div>
   );
-});
+};
 export default UserPhoto;

@@ -7,7 +7,7 @@ import logo from "../Imgs/logo_icon.png";
 import { useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
 
-const Logo = observer((props) => {
+const Logo = observer(({ className, testid }) => {
   const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
 
@@ -15,7 +15,8 @@ const Logo = observer((props) => {
     <>
       {isAuth ? (
         <div
-          className={props.class}
+          data-testid={testid}
+          className={className}
           onClick={() => {
             navigate(`/${HOME_PAGE_PATH}`);
           }}
@@ -24,7 +25,8 @@ const Logo = observer((props) => {
         </div>
       ) : (
         <div
-          className={props.class}
+          data-testid={testid}
+          className={className}
           onClick={() => {
             navigate(ROOT_PAGE_PATH);
           }}
