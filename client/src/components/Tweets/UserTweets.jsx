@@ -1,47 +1,50 @@
-import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-import { auth, userProfileById } from "../../redux/user/user.selectors";
+import { useSelector } from "react-redux";
+import { userProfileById } from "../../redux/user/user.selectors";
 import { tweetActions } from "../../redux/tweet/tweet.actions";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
 import Tweets from "./Tweets";
 import { tweetsStore } from "../../redux/tweet/tweet.selectors";
+import { loadingSetup } from "../../utils/loadingSetup";
+import spinner from "../../utils/spinner";
 
-const UserTweets = observer(() => {
-  const dispatch = useDispatch();
+const UserTweets = () => {
+  const tweetsStoreSelector = useSelector(tweetsStore);
   const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
   const { profile } = useSelector(userProfileById);
-  const { isAuth } = useSelector(auth);
   const authUserID = getAuthUserID();
+  const [isLoading, setIsLoading] = useState(false);
+  const bindSetup = loadingSetup.setup.bind(tweetsStoreSelector);
 
   useEffect(() => {
-    if (isAuth) {
-      dispatch(tweetActions.getTweetsByUser(profile.id));
-    } else {
-      dispatch(tweetActions.getPublicTweetsByUser(profile.id));
-    }
-  }, []);
+    bindSetup(setIsLoading);
+  }, [loadingStatus]);
 
   return (
-    <Tweets
-      tweets={tweets}
-      moreTweets={moreTweets}
-      message={
-        <div className="lack-tweets-message">
-          <h2>No tweets yet.</h2> <p>Write first.</p>
-        </div>
-      }
-      getMoreTweets={
-        authUserID
-          ? tweetActions.getMoreUserTweets
-          : tweetActions.getMoreUserPublicTweets
-      }
-      userId={profile.id}
-    />
+    <>
+      {isLoading && spinner()}
+      {loadingStatus === "COMPLETE" && (
+        <Tweets
+          tweets={tweets}
+          moreTweets={moreTweets}
+          message={
+            <div className="lack-tweets-message">
+              <h2>No tweets yet.</h2> <p>Write first.</p>
+            </div>
+          }
+          getMoreTweets={
+            authUserID
+              ? tweetActions.getMoreUserTweets
+              : tweetActions.getMoreUserPublicTweets
+          }
+          userId={profile.id}
+        />
+      )}
+    </>
   );
-});
+};
 
 export default UserTweets;

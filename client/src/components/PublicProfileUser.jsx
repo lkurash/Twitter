@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
 import ProfileUserInfo from "./ProfileUserInfo";
-import UserTweets from "./Tweets/UserTweets";
+import UserPageTweetsContent from "./UserPageTweetsContent";
 
 const PublicProfileUser = observer(() => {
   const { profile } = useSelector(userProfileById);
@@ -33,7 +33,7 @@ const PublicProfileUser = observer(() => {
           <ProfileUserInfo />
         </div>
         <div className="main-line" />
-        <UserTweets />
+        <UserPageTweetsContent />
       </div>
     </div>
   );

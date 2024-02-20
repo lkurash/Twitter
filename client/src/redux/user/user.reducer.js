@@ -40,7 +40,11 @@ import { changingUsers } from "./changingUsers";
 export const userProfile = (state = defaultState.User.userProfile, action) => {
   switch (action.type) {
     case REQUEST_USER_PROFILE_STARTED:
-      return defaultState.User.userProfile;
+     return {
+        ...state,
+        loadingStatus: "PENDING",
+        error: action.error,
+      };
 
     case REQUEST_USER_PROFILE_FAILED:
       return {

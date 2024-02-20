@@ -1,67 +1,61 @@
-import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 
+import { useSelector } from "react-redux";
+import { userFollowers } from "../redux/user/user.selectors";
+
+import spinner from "../utils/spinner";
+import { loadingSetup } from "../utils/loadingSetup";
 import getAuthUserID from "../utils/getAuthUserID";
 
 import FollowButton from "./buttons/FollowButton";
 import UserInList from "./common/UserInList";
-import { useDispatch, useSelector } from "react-redux";
-import { userFollowers } from "../redux/user/user.selectors";
-import { userActions } from "../redux/user/user.actions";
-import { useParams } from "react-router-dom";
-import spinner from "../utils/spinner";
 
-const UserFollowersList = observer(() => {
-  const dispatch = useDispatch();
+const UserFollowersList = () => {
+  const userFollowersStoreSelector = useSelector(userFollowers);
   const { followers, loadingStatus } = useSelector(userFollowers);
   const authUserID = getAuthUserID();
-  const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const bindSetup = loadingSetup.setup.bind(userFollowersStoreSelector);
 
   useEffect(() => {
-    setIsLoading(true);
-
-    dispatch(userActions.getFollowers(id || authUserID));
-    if (loadingStatus === "PENDING" || isLoading) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 400);
-    }
-  }, []);
-
-  if (isLoading || !followers) {
-    return spinner();
-  }
+    bindSetup(setIsLoading);
+  }, [loadingStatus]);
 
   return (
     <div className="user-follow-list">
-      {followers.length > 0 ? (
-        <ul className="users">
-          {followers.map((profile) => (
-            <li className="user" key={profile.id}>
-              <Fragment>
-                <UserInList profile={profile} />
+      {isLoading && spinner()}
+      {loadingStatus === "COMPLETE" && (
+        <>
+          {followers.length > 0 ? (
+            <ul className="users">
+              {followers.map((profile) => (
+                <li className="user" key={profile.id}>
+                  <Fragment>
+                    <UserInList profile={profile} />
 
-                <div className="wrapper-button-follow-follow-list">
-                  {profile.id !== authUserID && (
-                    <FollowButton
-                      profile={profile}
-                      follow={profile.following}
-                      classButton="button-follow-follow-list"
-                    />
-                  )}
-                </div>
-              </Fragment>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="follow-page-main-message-follow">
-          You don't have followers
-        </p>
+                    <div className="wrapper-button-follow-follow-list">
+                      {profile.id !== authUserID && (
+                        <FollowButton
+                          profile={profile}
+                          follow={profile.following}
+                          classButton="button-follow-follow-list"
+                        />
+                      )}
+                    </div>
+                  </Fragment>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="follow-page-main-message-follow">
+              You don't have followers
+            </p>
+          )}
+        </>
       )}
     </div>
   );
-});
+};
 
 export default UserFollowersList;

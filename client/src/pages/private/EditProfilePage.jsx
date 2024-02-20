@@ -1,17 +1,15 @@
-import { observer } from "mobx-react-lite";
-
 import EditProfileForm from "../../components/forms/EditProfilForm";
-import UserTweets from "../../components/Tweets/UserTweets";
+import UserPageTweetsContent from "../../components/UserPageTweetsContent";
 
-const EditProfilePage = observer(() => {
+const EditProfilePage = () => {
   return (
     <>
-      <UserTweets />
+      <UserPageTweetsContent />
       <div className="background">
         <EditProfileForm />
       </div>
     </>
   );
-});
+};
 
 export default EditProfilePage;

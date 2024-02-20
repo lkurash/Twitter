@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +8,7 @@ import getAuthUserID from "../../utils/getAuthUserID";
 
 import BookmarksPageContent from "../../components/BookmarksPageContent";
 
-const BookmarksPage = observer(() => {
+const BookmarksPage = () => {
   const { loadingStatus } = useSelector(visibilityPrivatePage);
   const dispatch = useDispatch();
   const authUserID = getAuthUserID();
@@ -20,15 +19,11 @@ const BookmarksPage = observer(() => {
     }
   }, [loadingStatus]);
 
-  if (loadingStatus !== "COMPLETE") {
-    return null;
-  }
-
   return (
     <>
       <BookmarksPageContent />
     </>
   );
-});
+};
 
 export default BookmarksPage;

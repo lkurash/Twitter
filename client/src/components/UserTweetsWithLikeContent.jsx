@@ -1,14 +1,14 @@
-import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userProfileById } from "../redux/user/user.selectors";
 import { tweetActions } from "../redux/tweet/tweet.actions";
 
-import UserAnswers from "./Tweets/UserAnswers";
+import { useParams } from "react-router-dom";
 
-const AnswersPageContent = observer(() => {
+import UserTweetsWithLikes from "./Tweets/UserTweetsWithLikes";
+
+const UserTweetsWithLikesContent = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfileById);
   const { id } = useParams();
@@ -16,10 +16,10 @@ const AnswersPageContent = observer(() => {
 
   useEffect(() => {
     setIsLoading(true);
-    dispatch(tweetActions.getAnswers(profile.id));
+    dispatch(tweetActions.getTweetsWithLikes(profile.id));
   }, [id]);
 
-  return <div className="tweets">{isLoading && <UserAnswers />}</div>;
-});
+  return <>{isLoading && <UserTweetsWithLikes />}</>;
+};
 
-export default AnswersPageContent;
+export default UserTweetsWithLikesContent;

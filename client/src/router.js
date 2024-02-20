@@ -10,6 +10,7 @@ import PublicProfilePageUser from "./pages/public/PublicProfilePageUser";
 import TrendsPage from "./pages/public/TrendsPage";
 import LoginPage from "./pages/public/LoginPage";
 import SignUpPage from "./pages/public/SignUpPage";
+import LogOutPage from "./pages/private/LogOutPage";
 
 import HomePage from "./pages/private/HomePage";
 import PrivateExplorePage from "./pages/private/PrivateExplorePage";
@@ -19,13 +20,12 @@ import HomeProfileUserPage from "./pages/private/HomeProfileUserPage";
 import EditProfilePage from "./pages/private/EditProfilePage";
 import FollowPage from "./pages/private/FollowPage";
 import ProfileUserPage from "./pages/private/ProfileUserPage";
-
 import AnswersPageContent from "./components/AnswersPageContent";
-import UserTweets from "./components/Tweets/UserTweets";
-import UserFollowersList from "./components/UserFollowersList";
-import UserFollowingList from "./components/UserFollowingList";
-import UserTweetsWithMedia from "./components/Tweets/UserTweetsWithMedia";
-import UserTweetsWithLikes from "./components/Tweets/UserTweetsWithLikes";
+import UserPageTweetsContent from "./components/UserPageTweetsContent";
+import UserTweetsWithLikesContent from "./components/UserTweetsWithLikeContent";
+import UserTweetsWithMediaContent from "./components/UserTweetsWithMediaContent";
+import UserFollowersPageContent from "./components/UserFollowersPageContent";
+import UserFollowingPageContent from "./components/UserFollowingsPageContent";
 
 import {
   EXPLORE_PAGE_PATH,
@@ -60,7 +60,6 @@ import {
   PUBLIC_USER_PAGE_PATH,
   LOG_OUT_PAGE_PATH,
 } from "./utils/routs";
-import LogOutPage from "./pages/private/LogOutPage";
 
 export const publicRoutes = {
   path: ROOT_PAGE_PATH,
@@ -136,7 +135,7 @@ export const privateRoutes = {
       children: [
         {
           path: PROFILE_PAGE_USER_TWEETS_PATH,
-          element: <UserTweets />,
+          element: <UserPageTweetsContent />,
         },
         {
           path: PROFILE_PAGE_USER_ANSWERS_PATH,
@@ -144,11 +143,11 @@ export const privateRoutes = {
         },
         {
           path: PROFILE_PAGE_USER_LIKES_PATH,
-          element: <UserTweetsWithLikes />,
+          element: <UserTweetsWithLikesContent />,
         },
         {
           path: PROFILE_PAGE_USER_MEDIA_PATH,
-          element: <UserTweetsWithMedia />,
+          element: <UserTweetsWithMediaContent />,
         },
         {
           path: EDIT_PROFILE_PAGE_PATH,
@@ -162,11 +161,11 @@ export const privateRoutes = {
       children: [
         {
           path: FOLLOWINGS_PAGE_PATH,
-          element: <UserFollowingList />,
+          element: <UserFollowingPageContent />,
         },
         {
           path: FOLLOWERS_PAGE_PATH,
-          element: <UserFollowersList />,
+          element: <UserFollowersPageContent />,
         },
       ],
     },
@@ -174,9 +173,7 @@ export const privateRoutes = {
       path: TRENDS_PAGE_PATH,
       element: <TrendsPage />,
     },
-    { path: LOG_OUT_PAGE_PATH,
-      element: <LogOutPage />
-    },
+    { path: LOG_OUT_PAGE_PATH, element: <LogOutPage /> },
   ],
 };
 
@@ -192,7 +189,7 @@ export const privateUserPageRoutes = {
       children: [
         {
           path: USER_PAGE_TWEETS_PATH,
-          element: <UserTweets />,
+          element: <UserPageTweetsContent />,
         },
         {
           path: USER_PAGE_ANSWERS_PATH,
@@ -200,11 +197,11 @@ export const privateUserPageRoutes = {
         },
         {
           path: USER_PAGE_LIKES_PATH,
-          element: <UserTweetsWithLikes />,
+          element: <UserTweetsWithLikesContent />,
         },
         {
           path: USER_PAGE__MEDIA_PATH,
-          element: <UserTweetsWithMedia />,
+          element: <UserTweetsWithMediaContent />,
         },
       ],
     },
@@ -214,11 +211,11 @@ export const privateUserPageRoutes = {
       children: [
         {
           path: USER_FOLLOWER_PAGE_PATH,
-          element: <UserFollowersList />,
+          element: <UserFollowersPageContent />,
         },
         {
           path: USER_FOLLOWING_PAGE_PATH,
-          element: <UserFollowingList />,
+          element: <UserFollowingPageContent />,
         },
       ],
     },

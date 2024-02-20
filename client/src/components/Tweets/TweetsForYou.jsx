@@ -22,24 +22,19 @@ const TweetsForYou = () => {
 
   return (
     <>
-      {isLoading ? (
-        spinner()
-      ) : (
-        <>
-          {loadingStatus === "COMPLETE" && (
-            <Tweets
-              tweets={tweets}
-              moreTweets={moreTweets}
-              message={
-                <div className="lack-tweets-message">
-                  <h2>No tweets yet.</h2> <p>Write first.</p>
-                </div>
-              }
-              getMoreTweets={tweetActions.getMoreTweetsForAuthUser}
-              userId={profile.id}
-            />
-          )}
-        </>
+      {isLoading && spinner()}
+      {loadingStatus === "COMPLETE" && (
+        <Tweets
+          tweets={tweets}
+          moreTweets={moreTweets}
+          message={
+            <div className="lack-tweets-message">
+              <h2>No tweets yet.</h2> <p>Write first.</p>
+            </div>
+          }
+          getMoreTweets={tweetActions.getMoreTweetsForAuthUser}
+          userId={profile.id}
+        />
       )}
     </>
   );

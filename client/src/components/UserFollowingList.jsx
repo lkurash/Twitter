@@ -1,62 +1,57 @@
 import { Fragment, useEffect, useState } from "react";
 
+import { useSelector } from "react-redux";
+import { userFollowings } from "../redux/user/user.selectors";
+
 import getAuthUserID from "../utils/getAuthUserID";
+import spinner from "../utils/spinner";
+import { loadingSetup } from "../utils/loadingSetup";
 
 import FollowButton from "./buttons/FollowButton";
 import UserInList from "./common/UserInList";
-import { useDispatch, useSelector } from "react-redux";
-import { userFollowings } from "../redux/user/user.selectors";
-import spinner from "../utils/spinner";
-import { userActions } from "../redux/user/user.actions";
-import { useParams } from "react-router-dom";
 
 const UserFollowingList = () => {
-  const dispatch = useDispatch();
+  const userFollowingsStoreSelector = useSelector(userFollowings);
   const { followings, loadingStatus } = useSelector(userFollowings);
   const authUserID = getAuthUserID();
-  const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const bindSetup = loadingSetup.setup.bind(userFollowingsStoreSelector);
 
   useEffect(() => {
-    setIsLoading(true);
-
-    dispatch(userActions.getFollowings(id || authUserID));
-    if (loadingStatus === "PENDING" || isLoading) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 400);
-    }
-  }, []);
-
-  if (isLoading || !followings) {
-    return spinner();
-  }
+    bindSetup(setIsLoading);
+  }, [loadingStatus]);
 
   return (
     <div className="user-follow-list">
-      {followings.length > 0 ? (
-        <ul className="users">
-          {followings.map((profile) => (
-            <li key={profile.id} className="user">
-              <Fragment>
-                <UserInList profile={profile} />
-                <div className="wrapper-button-follow-follow-list">
-                  {profile.id !== authUserID && (
-                    <FollowButton
-                      profile={profile}
-                      follow={profile.following}
-                      classButton="button-follow-follow-list"
-                    />
-                  )}
-                </div>
-              </Fragment>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="follow-page-main-message-follow">
-          You don't have following
-        </p>
+      {isLoading && spinner()}
+      {loadingStatus === "COMPLETE" && (
+        <>
+          {followings.length > 0 ? (
+            <ul className="users">
+              {followings.map((profile) => (
+                <li className="user" key={profile.id}>
+                  <Fragment>
+                    <UserInList profile={profile} />
+
+                    <div className="wrapper-button-follow-follow-list">
+                      {profile.id !== authUserID && (
+                        <FollowButton
+                          profile={profile}
+                          follow={profile.following}
+                          classButton="button-follow-follow-list"
+                        />
+                      )}
+                    </div>
+                  </Fragment>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="follow-page-main-message-follow">
+              You don't have followers
+            </p>
+          )}
+        </>
       )}
     </div>
   );

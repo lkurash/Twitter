@@ -181,8 +181,7 @@ export function* fetchMoreBookmarks(action) {
 }
 
 export function* fetchTweetsByUser(action) {
-  yield put(tweetLoadingActions.requestStartedTweetsAuthUser());
-
+  yield put(tweetLoadingActions.requestStartedUserTweets());
   try {
     const tweets = yield call(
       tweetAPI.getTweetsByUser,
@@ -194,9 +193,7 @@ export function* fetchTweetsByUser(action) {
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
     yield put(
-      tweetLoadingActions.requestFailedTweetsAuthUser(
-        error.response.data.message
-      )
+      tweetLoadingActions.requestFailedUserTweets(error.response.data.message)
     );
   }
 }
