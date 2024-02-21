@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { tweetActions } from "../../redux/tweet/tweet.actions";
 
 import MainSectionTrends from "../MainSectionTrends";
-import ExplorePageAllTweets from "../../components/Tweets/ExplorePageAllTweets";
+import ExploreTweets from "../../components/Tweets/ExploreTweets";
 
 const PublicExplorePage = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const PublicExplorePage = () => {
         mainBlock={true}
       />
       <div className="main-line" />
-      <ExplorePageAllTweets />
+      <ExploreTweets />
     </div>
   );
 };

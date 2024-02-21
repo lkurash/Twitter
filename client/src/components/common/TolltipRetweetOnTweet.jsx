@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import getAuthUserID from "../../utils/getAuthUserID";
-import navigateClickOnUser from "../../utils/navigateClickOnUser";
+import getUserPagePath from "../../utils/getUserPagePath";
 
 import PreviewUserOnTweet from "./PreviewUserOnTweet";
 
@@ -56,7 +56,7 @@ const TooltipRetweetOnTweet = ({ retweet, user }) => {
               >
                 <div
                   className="tweet-hint-about-retweet-img-text"
-                  onClick={() => navigate(navigateClickOnUser(isAuth, user.id))}
+                  onClick={() => navigate(getUserPagePath(isAuth, user.id))}
                 >
                   <img
                     src={retweetIcon}

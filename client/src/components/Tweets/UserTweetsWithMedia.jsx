@@ -10,9 +10,9 @@ import { loadingSetup } from "../../utils/loadingSetup";
 import spinner from "../../utils/spinner";
 
 const UserTweetsWithMedia = () => {
+  const { profile } = useSelector(userProfileById);
   const tweetsStoreSelector = useSelector(tweetsStore);
   const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
-  const { profile } = useSelector(userProfileById);
   const [isLoading, setIsLoading] = useState(false);
   const bindSetup = loadingSetup.setup.bind(tweetsStoreSelector);
 

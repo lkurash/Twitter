@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { auth } from "../../../redux/user/user.selectors";
 
-import navigateClickOnUser from "../../../utils/navigateClickOnUser";
+import getUserPagePath from "../../../utils/getUserPagePath";
 
 const UserName = ({ user }) => {
   const isAuth = useSelector(auth);
@@ -16,7 +16,7 @@ const UserName = ({ user }) => {
         <h4
           data-testid="tweet-user-name"
           className="tweet-user-name"
-          onClick={() => navigate(navigateClickOnUser(isAuth, user.id))}
+          onClick={() => navigate(getUserPagePath(isAuth, user.id))}
         >
           {user.user_name}
         </h4>

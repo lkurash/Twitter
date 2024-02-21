@@ -9,7 +9,7 @@ import { userPreview } from "../../redux/user/userOptions/userOptions.selectors"
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
-import navigateClickOnUser from "../../utils/navigateClickOnUser";
+import getUserPagePath from "../../utils/getUserPagePath";
 
 import FollowButton from "../buttons/FollowButton";
 
@@ -60,7 +60,7 @@ const PreviewUserOnTweet = observer(({ user, setShowProfileUser }) => {
           </div>
           <div
             className="preview-user-name"
-            onClick={() => navigate(navigateClickOnUser(isAuth, user.id))}
+            onClick={() => navigate(getUserPagePath(isAuth, user.id))}
           >
             <h4 className="user-name">{user.user_name}</h4>
             <p className="profile-name">{`@${user.user_name}`}</p>

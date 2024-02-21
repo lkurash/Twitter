@@ -5,14 +5,14 @@ import { useSelector } from "react-redux";
 import { auth } from "../../../redux/user/user.selectors";
 
 import getUserPhoto from "../../../utils/getUserPhoto";
-import navigateClickOnUser from "../../../utils/navigateClickOnUser";
+import getUserPagePath from "../../../utils/getUserPagePath";
 
 import PreviewUserOnTweet from "../../common/PreviewUserOnTweet";
 
 const UserPhoto = ({ user }) => {
   const { isAuth } = useSelector(auth);
   const [showProfileUser, setShowProfileUser] = useState(false);
-  
+
   const navigate = useNavigate();
 
   const onMouseLeave = () => {
@@ -42,7 +42,7 @@ const UserPhoto = ({ user }) => {
           data-testid="user-photo"
           alt="User"
           src={getUserPhoto(user)}
-          onClick={() => navigate(navigateClickOnUser(isAuth, user.id))}
+          onClick={() => navigate(getUserPagePath(isAuth, user.id))}
         />
         {showProfileUser && (
           <PreviewUserOnTweet

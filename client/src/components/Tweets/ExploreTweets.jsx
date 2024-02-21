@@ -10,7 +10,7 @@ import spinner from "../../utils/spinner";
 
 import Tweets from "./Tweets";
 
-const ExplorePageAllTweets = () => {
+const ExploreTweets = () => {
   const tweetsStoreSelector = useSelector(tweetsStore);
   const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
   const authUserID = getAuthUserID();
@@ -45,4 +45,4 @@ const ExplorePageAllTweets = () => {
   );
 };
 
-export default ExplorePageAllTweets;
+export default ExploreTweets;

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { useSelector } from "react-redux";
-import TweetsForYou from "../../components/Tweets/TweetsForYou";
+import UserTweets from "../../components/Tweets/UserTweets";
 
 jest.mock("../../components/Tweets/Tweets", () => () => (
   <div data-testid="mocked-tweets-component">Mocked Child Component</div>
@@ -11,7 +11,7 @@ jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }));
 
-describe("TweetsForYou component", () => {
+describe("UserTweets", () => {
   let useStateSpy = jest.spyOn(React, "useState");
 
   beforeEach(() => {
@@ -35,7 +35,7 @@ describe("TweetsForYou component", () => {
       moreTweets: false,
     });
 
-    render(<TweetsForYou />);
+    render(<UserTweets />);
 
     const spinner = screen.getByTestId("spinner");
 
@@ -61,7 +61,7 @@ describe("TweetsForYou component", () => {
       moreTweets: false,
     });
 
-    render(<TweetsForYou />);
+    render(<UserTweets />);
 
     const tweetsComponent = screen.getByTestId("mocked-tweets-component");
 
@@ -87,7 +87,7 @@ describe("TweetsForYou component", () => {
       moreTweets: false,
     });
 
-    render(<TweetsForYou />);
+    render(<UserTweets />);
 
     const tweetsComponent = screen.queryByTestId("mocked-tweets-component");
 

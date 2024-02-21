@@ -10,7 +10,7 @@ jest.mock("../../components/buttons/ShowMoreTweetsButton", () => () => (
   <div data-testid="mocked-button-showmore">Mocked Child Component</div>
 ));
 
-describe("Visabile component TwitsForYou", () => {
+describe("TweetsForYou component", () => {
   const tweets = [
     {
       id: 1,
@@ -66,12 +66,14 @@ describe("Visabile component TwitsForYou", () => {
 
   test("should render Tweets component with mocked tweets", () => {
     renderWithRedux(<Tweets tweets={tweets} />);
+
     const tweet = screen.getAllByTestId("mocked-tweet");
     expect(tweet.length).toBe(5);
   });
 
   test("should render Tweets component when tweets is []", () => {
     renderWithRedux(<Tweets tweets={[]} message={"No tweets yet."} />);
+
     expect(screen.queryByTestId("mocked-tweet")).toBeNull();
 
     const message = screen.getByTestId("message-empty-tweets");
@@ -80,9 +82,10 @@ describe("Visabile component TwitsForYou", () => {
     const text = screen.getByText("No tweets yet.");
     expect(text).toBeInTheDocument();
   });
-  
+
   test("should render Tweets component visabile button show more", () => {
     renderWithRedux(<Tweets tweets={tweets} moreTweets={true}/>);
+
     const button = screen.getByTestId("mocked-button-showmore");
     expect(button).toBeInTheDocument();
   });

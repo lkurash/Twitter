@@ -12,7 +12,7 @@ const Tweets = ({
   trend,
   moreTweets,
 }) => {
-
+  
   return (
     <Fragment>
       <div className="tweets">

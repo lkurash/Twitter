@@ -26,7 +26,7 @@ jest.mock("../../../components/buttons/DeleteTweetButton", () => () => (
 jest.mock("../../../utils/getAuthUserID", () => () => 1);
 
 describe("Tweet", () => {
-  const tweetData = {
+  const userTweet = {
     id: 1,
     img: ["855d7593-fdea-4df7-afd7-c478268c7c16.jpg"],
     retweet: false,
@@ -37,10 +37,19 @@ describe("Tweet", () => {
     userId: 1,
   };
 
-  test("visible tweet", () => {
-    render(<Tweet tweet={tweetData} retweet={false} />);
-    const tweet = screen.getByTestId("tweet");
-    expect(tweet).toBeInTheDocument();
+  const tweet = {
+    id: 2,
+    img: ["855d7593-fdea-4df7-afd7-c478268c7c16.jpg"],
+    retweet: false,
+    text: "Hello World!",
+    tweetId: null,
+    tweetUserId: null,
+    tweet_createDate: "21 Jan. 2024",
+    userId: 2,
+  };
+
+  test("displays child components", () => {
+    render(<Tweet tweet={tweet} retweet={false} />);
 
     const userName = screen.getByTestId("mocked-user-name");
     expect(userName).toBeInTheDocument();
@@ -55,33 +64,26 @@ describe("Tweet", () => {
     expect(tweetAction).toBeInTheDocument();
   });
 
-  test("visabile tolltip retweet", () => {
-    render(<Tweet tweet={tweetData} retweet={true} />);
-
-    const tweet = screen.getByTestId("tweet");
-    expect(tweet).toBeInTheDocument();
+  test("shows a retweet tooltip", () => {
+    render(<Tweet tweet={tweet} retweet={true} />);
 
     const tolltipRetweet = screen.getByTestId("mocked-tolltip-retweet-tweet");
     expect(tolltipRetweet).toBeInTheDocument();
   });
 
-  test("visible delete tweet button on tweet", () => {
-    const userInfo = { id: 1 };
+  test("if the user is the owner of the tweet visible delete tweet button on tweet", () => {
+    render(<Tweet tweet={userTweet} retweet={false} />);
 
-    render(<Tweet tweet={tweetData} userInfo={userInfo} retweet={false} />);
     const deleteTweetButton = screen.getByTestId("mocked-delete-tweet-button");
     expect(deleteTweetButton).toBeInTheDocument();
   });
 
-  test("visible tweet text", () => {
-    render(<Tweet tweet={tweetData} retweet={false} />);
-    const tweetDesc = screen.getByText("Hello World!");
-    expect(tweetDesc).toBeInTheDocument();
-  });
+  test("if the user is the not owner of the tweet not visible delete tweet button on tweet", () => {
+    render(<Tweet tweet={tweet} retweet={false} />);
 
-  test("visible tweet image", () => {
-    render(<Tweet tweet={tweetData} retweet={false} />);
-    const tweetImg = screen.getByTestId("tweet-img");
-    expect(tweetImg).toBeInTheDocument();
+    const deleteTweetButton = screen.queryByTestId(
+      "mocked-delete-tweet-button"
+    );
+    expect(deleteTweetButton).toBeNull();
   });
 });

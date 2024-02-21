@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
 
 import getUserPhoto from "../../utils/getUserPhoto";
-import navigateClickOnUser from "../../utils/navigateClickOnUser";
+import getUserPagePath from "../../utils/getUserPagePath";
 
 const UserInList = observer(({ profile }) => {
   const { isAuth } = useSelector(auth);
@@ -14,7 +14,7 @@ const UserInList = observer(({ profile }) => {
   return (
     <div
       className="user-info-in-user-list"
-      onClick={() => navigate(navigateClickOnUser(isAuth, profile.id))}
+      onClick={() => navigate(getUserPagePath(isAuth, profile.id))}
     >
       <img src={getUserPhoto(profile)} alt="User" />
       <div className="section-whoyouread-user-name">

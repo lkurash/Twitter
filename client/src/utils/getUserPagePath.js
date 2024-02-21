@@ -1,7 +1,7 @@
 import { PUBLIC_USER_PAGE_PATH, USER_PAGE_PATH } from "./routs";
 import path from "./path";
 
-const navigateClickOnUser = (isAuth, id) => {
+const getUserPagePath = (isAuth, id) => {
   if (isAuth) {
     return path(USER_PAGE_PATH, id);
   } else {
@@ -9,4 +9,4 @@ const navigateClickOnUser = (isAuth, id) => {
   }
 };
 
-export default navigateClickOnUser;
+export default getUserPagePath;
