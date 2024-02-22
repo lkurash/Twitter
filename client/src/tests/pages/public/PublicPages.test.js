@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-test-renderer";
 import { renderApp } from "../../helpers/renderApp";
@@ -17,7 +17,7 @@ describe("Render public pages", () => {
     expect(buttonExplore).toBeInTheDocument();
   });
 
-  test("explore page", () => {
+  test("should render public explore page when clicked on the button 'Explore'", () => {
     renderApp();
 
     const buttonExplore = screen.getByTestId("nav-explore-page");
@@ -26,12 +26,12 @@ describe("Render public pages", () => {
     act(() => {
       userEvent.click(buttonExplore);
     });
-    
+
     const explorePage = screen.getByTestId("explore-page");
     expect(explorePage).toBeInTheDocument();
   });
 
-  test("return from Explore page on Public home page", () => {
+  test("return from Explore page on Public home page when clicked on the button 'Logo'", () => {
     renderApp("/explore");
 
     const explorePage = screen.getByTestId("explore-page");
@@ -48,7 +48,7 @@ describe("Render public pages", () => {
     expect(homePageAfterClick).toBeInTheDocument();
   });
 
-  test("visible Login page", () => {
+  test("should render login page when login button is clicked", () => {
     renderApp();
 
     const buttonLogin = screen.getByTestId("footer-login-button");
@@ -62,7 +62,7 @@ describe("Render public pages", () => {
     expect(loginPage).toBeInTheDocument();
   });
 
-  test("visible SignUp page", () => {
+  test("should render signup page when signUp button is clicked", () => {
     renderApp();
 
     const buttonSignUp = screen.getByTestId("footer-signup-button");

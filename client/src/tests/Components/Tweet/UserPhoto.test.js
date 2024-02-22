@@ -26,94 +26,96 @@ describe("UserPhoto component", () => {
   };
 
   beforeEach(() => {
-    useSelector.mockClear();
-    useNavigate.mockClear();
+    useStateSpy.mockReturnValueOnce([showProfileUser, setShowProfileUser]);
+
+    useSelector.mockReturnValueOnce({
+      isAuth: {},
+    });
+
+    useNavigate.mockReturnValueOnce(() => {});
     jest.useFakeTimers();
   });
 
   afterEach(() => {
+    useSelector.mockClear();
+    useNavigate.mockClear();
     jest.clearAllTimers();
   });
 
-  test("display user photo visible", () => {
-    useStateSpy.mockReturnValueOnce([showProfileUser, setShowProfileUser]);
-    useSelector.mockReturnValueOnce({
-      isAuth: true,
-    });
-
+  test("should display user photo", () => {
     render(<UserPhoto user={user} />);
 
     const userPhoto = screen.getByTestId("user-photo");
     expect(userPhoto).toBeInTheDocument();
   });
 
-  test("navigate to user page if user is authenticated", () => {
-    useStateSpy.mockReturnValueOnce([showProfileUser, setShowProfileUser]);
-    useSelector.mockReturnValueOnce({
-      isAuth: true,
+  describe("when user is authenticated", () => {
+    beforeEach(() => {
+      useSelector.mockReturnValueOnce({
+        isAuth: true,
+      });
     });
 
-    useNavigate.mockReturnValueOnce(() => {});
+    afterEach(() => {
+      useSelector.mockClear();
+    });
 
-    render(<UserPhoto user={user} />);
+    test("clicking on the username calls the navigation function", () => {
+      render(<UserPhoto user={user} />);
 
-    const userPhoto = screen.getByTestId("user-photo");
-    fireEvent.click(userPhoto);
+      const userPhoto = screen.getByTestId("user-photo");
+      fireEvent.click(userPhoto);
 
-    expect(useNavigate).toBeCalledTimes(1);
+      expect(useNavigate).toBeCalledTimes(1);
+    });
   });
 
-  test("navigate to user page if user isn't authenticated", () => {
-    useStateSpy.mockReturnValueOnce([showProfileUser, setShowProfileUser]);
-    useSelector.mockReturnValueOnce({
-      isAuth: false,
+  describe("when user is not authenticated", () => {
+    beforeEach(() => {
+      useSelector.mockReturnValueOnce({
+        isAuth: false,
+      });
     });
 
-    useNavigate.mockReturnValueOnce(() => {});
+    afterEach(() => {
+      useSelector.mockClear();
+    });
 
-    render(<UserPhoto user={user} />);
+    test("clicking on the username calls the navigation function", () => {
+      render(<UserPhoto user={user} />);
 
-    const userPhoto = screen.getByTestId("user-photo");
-    fireEvent.click(userPhoto);
+      const userPhoto = screen.getByTestId("user-photo");
+      fireEvent.click(userPhoto);
 
-    expect(useNavigate).toBeCalledTimes(1);
+      expect(useNavigate).toBeCalledTimes(1);
+    });
   });
 
-  test("when mouse enters user's photo, display user preview", () => {
-    useStateSpy.mockReturnValueOnce([showProfileUser, setShowProfileUser]);
+  describe("user preview", () => {
+    test("when mouse enters user's photo, display user preview", () => {
+      render(<UserPhoto user={user} />);
 
-    useSelector.mockReturnValueOnce({
-      isAuth: true,
+      const userPhoto = screen.getByTestId("user-photo");
+      expect(userPhoto).toBeInTheDocument();
+      fireEvent.mouseEnter(userPhoto);
+
+      jest.advanceTimersByTime(500);
+
+      expect(setShowProfileUser).toHaveBeenCalledTimes(1);
+      expect(setShowProfileUser).toHaveBeenCalledWith(true);
     });
 
-    render(<UserPhoto user={user} />);
+    test("when mouse leaves user's photo, display user preview not visabile", () => {
+      render(<UserPhoto user={user} />);
 
-    const userPhoto = screen.getByTestId("user-photo");
-    expect(userPhoto).toBeInTheDocument();
-    fireEvent.mouseEnter(userPhoto);
+      const userPhoto = screen.getByTestId("user-photo");
+      expect(userPhoto).toBeInTheDocument();
+      fireEvent.mouseLeave(userPhoto);
 
-    jest.advanceTimersByTime(500);
+      jest.advanceTimersByTime(500);
 
-    expect(setShowProfileUser).toHaveBeenCalledTimes(1);
-    expect(setShowProfileUser).toHaveBeenCalledWith(true);
-  });
-
-  test("when mouse leaves user's photo, display user preview not visabile", () => {
-    useStateSpy.mockReturnValueOnce([showProfileUser, setShowProfileUser]);
-
-    useSelector.mockReturnValueOnce({
-      isAuth: true,
+      expect(setShowProfileUser).toHaveBeenCalledTimes(1);
+      expect(setShowProfileUser).toHaveBeenCalledWith(false);
     });
-
-    render(<UserPhoto user={user} />);
-
-    const userPhoto = screen.getByTestId("user-photo");
-    expect(userPhoto).toBeInTheDocument();
-    fireEvent.mouseLeave(userPhoto);
-
-    jest.advanceTimersByTime(500);
-
-    expect(setShowProfileUser).toHaveBeenCalledTimes(1);
-    expect(setShowProfileUser).toHaveBeenCalledWith(false);
   });
 });

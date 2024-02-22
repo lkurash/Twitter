@@ -22,7 +22,7 @@ describe("UserName component", () => {
     useNavigate.mockClear();
   });
 
-  test("display user name and profile name visabile", () => {
+  test("should display user name and profile name", () => {
     useSelector.mockReturnValueOnce({
       isAuth: true,
     });
@@ -35,16 +35,23 @@ describe("UserName component", () => {
 
     const profileName = screen.getByTestId("profile-name");
     expect(profileName).toBeInTheDocument();
-    expect(profileName).toHaveTextContent(`@${user.user_name}`);
+    expect(profileName).toHaveTextContent("@User Name");
   });
 
-  describe("when click on photo navigate to private user page", () => {
-    test("navigate to user page if isAuth true", () => {
+  describe("when user is authenticated", () => {
+    beforeEach(() => {
       useSelector.mockReturnValueOnce({
         isAuth: true,
       });
       useNavigate.mockReturnValueOnce(() => {});
+    });
 
+    afterEach(() => {
+      useSelector.mockClear();
+      useNavigate.mockClear();
+    });
+
+    test("clicking on the username calls the navigation function", () => {
       render(<UserName user={user} />);
 
       const userName = screen.getByTestId("tweet-user-name");
@@ -54,17 +61,23 @@ describe("UserName component", () => {
     });
   });
 
-  describe("when click on photo navigate to user public page", () => {
-    test("navigate to user page if isAuth false", () => {
+  describe("when user is not authenticated", () => {
+    beforeEach(() => {
       useSelector.mockReturnValueOnce({
         isAuth: false,
       });
       useNavigate.mockReturnValueOnce(() => {});
+    });
 
+    afterEach(() => {
+      useSelector.mockClear();
+      useNavigate.mockClear();
+    });
+
+    test("clicking on the username calls the navigation function", () => {
       render(<UserName user={user} />);
 
       const userName = screen.getByTestId("tweet-user-name");
-
       fireEvent.click(userName);
 
       expect(useNavigate).toBeCalledTimes(1);

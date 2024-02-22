@@ -1,32 +1,38 @@
 import { render, screen } from "@testing-library/react";
 import Tweet from "../../../components/Tweets/Tweet/Tweet";
+import { mockedComponents } from "../../helpers/mockComponent";
 
-jest.mock("../../../components/Tweets/Tweet/TweetActions", () => () => (
-  <div data-testid="mocked-tweet-action">Mocked TweetActions </div>
-));
+jest.mock(
+  "../../../components/Tweets/Tweet/TweetActions",
+  () => () => mockedComponents("TweetActions")
+);
 
-jest.mock("../../../components/common/TolltipRetweetOnTweet", () => () => (
-  <div data-testid="mocked-tolltip-retweet-tweet">
-    Mocked TooltipRetweetOnTweet
-  </div>
-));
+jest.mock(
+  "../../../components/common/TolltipRetweetOnTweet",
+  () => () => mockedComponents("TolltipRetweetOnTweet")
+);
 
-jest.mock("../../../components/Tweets/Tweet/UserName", () => () => (
-  <div data-testid="mocked-user-name">Mocked UserName</div>
-));
+jest.mock(
+  "../../../components/Tweets/Tweet/UserName",
+  () => () => mockedComponents("UserName")
+);
 
-jest.mock("../../../components/Tweets/Tweet/UserPhoto", () => () => (
-  <div data-testid="mocked-user-photo">Mocked UserPhoto</div>
-));
+jest.mock(
+  "../../../components/Tweets/Tweet/UserPhoto",
+  () => () => mockedComponents("UserPhoto")
+);
 
-jest.mock("../../../components/buttons/DeleteTweetButton", () => () => (
-  <div data-testid="mocked-delete-tweet-button">Mocked UserPhoto</div>
-));
+jest.mock(
+  "../../../components/buttons/DeleteTweetButton",
+  () => () => mockedComponents("DeleteTweetButton")
+);
 
-jest.mock("../../../utils/getAuthUserID", () => () => 1);
+const AUTHENTICATED_USER_ID = 1;
+
+jest.mock("../../../utils/getAuthUserID", () => () => AUTHENTICATED_USER_ID);
 
 describe("Tweet", () => {
-  const userTweet = {
+  const usersOwnTweet = {
     id: 1,
     img: ["855d7593-fdea-4df7-afd7-c478268c7c16.jpg"],
     retweet: false,
@@ -37,7 +43,7 @@ describe("Tweet", () => {
     userId: 1,
   };
 
-  const tweet = {
+  const someoneElsesTweet = {
     id: 2,
     img: ["855d7593-fdea-4df7-afd7-c478268c7c16.jpg"],
     retweet: false,
@@ -49,41 +55,51 @@ describe("Tweet", () => {
   };
 
   test("displays child components", () => {
-    render(<Tweet tweet={tweet} retweet={false} />);
+    render(<Tweet tweet={someoneElsesTweet} retweet={false} />);
 
-    const userName = screen.getByTestId("mocked-user-name");
+    const userName = screen.getByTestId("mocked-userName");
     expect(userName).toBeInTheDocument();
 
-    const userPhoto = screen.getByTestId("mocked-user-photo");
+    const userPhoto = screen.getByTestId("mocked-userPhoto");
     expect(userPhoto).toBeInTheDocument();
 
     const dataCreatedTweet = screen.getByTestId("tweet-data-created-tweet");
     expect(dataCreatedTweet).toBeInTheDocument();
 
-    const tweetAction = screen.getByTestId("mocked-tweet-action");
+    const tweetAction = screen.getByTestId("mocked-tweetActions");
     expect(tweetAction).toBeInTheDocument();
   });
 
-  test("shows a retweet tooltip", () => {
-    render(<Tweet tweet={tweet} retweet={true} />);
+  test("displays a tooltip about retweer", () => {
+    render(<Tweet tweet={someoneElsesTweet} retweet={true} />);
 
-    const tolltipRetweet = screen.getByTestId("mocked-tolltip-retweet-tweet");
+    const tolltipRetweet = screen.getByTestId("mocked-tolltipRetweetOnTweet");
     expect(tolltipRetweet).toBeInTheDocument();
   });
 
-  test("if the user is the owner of the tweet visible delete tweet button on tweet", () => {
-    render(<Tweet tweet={userTweet} retweet={false} />);
+  describe("when user is the owner of the tweet", () => {
+    describe("delete tweet button", () => {
+      test("visible delete tweet button on tweet", () => {
+        render(<Tweet tweet={usersOwnTweet} retweet={false} />);
 
-    const deleteTweetButton = screen.getByTestId("mocked-delete-tweet-button");
-    expect(deleteTweetButton).toBeInTheDocument();
-  });
+        const deleteTweetButton = screen.getByTestId(
+          "mocked-deleteTweetButton"
+        );
+        expect(deleteTweetButton).toBeInTheDocument();
+      });
+    });
 
-  test("if the user is the not owner of the tweet not visible delete tweet button on tweet", () => {
-    render(<Tweet tweet={tweet} retweet={false} />);
+    describe("when user is not the owner of the tweet", () => {
+      describe("delete tweet button", () => {
+        test("delete button is invisible", () => {
+          render(<Tweet tweet={someoneElsesTweet} retweet={false} />);
 
-    const deleteTweetButton = screen.queryByTestId(
-      "mocked-delete-tweet-button"
-    );
-    expect(deleteTweetButton).toBeNull();
+          const deleteTweetButton = screen.queryByTestId(
+            "mocked-delete-tweet-button"
+          );
+          expect(deleteTweetButton).toBeNull();
+        });
+      });
+    });
   });
 });

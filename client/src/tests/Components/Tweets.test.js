@@ -1,14 +1,17 @@
 import { screen } from "@testing-library/react";
 import Tweets from "../../components/Tweets/Tweets";
 import { renderWithRedux } from "../helpers/renderWithRedux";
+import { mockedComponents } from "../helpers/mockComponent";
 
-jest.mock("../../components/Tweets/Tweet/Tweet", () => () => (
-  <div data-testid="mocked-tweet">Mocked Child Component</div>
-));
+jest.mock(
+  "../../components/Tweets/Tweet/Tweet",
+  () => () => mockedComponents("Tweet")
+);
 
-jest.mock("../../components/buttons/ShowMoreTweetsButton", () => () => (
-  <div data-testid="mocked-button-showmore">Mocked Child Component</div>
-));
+jest.mock(
+  "../../components/buttons/ShowMoreTweetsButton",
+  () => () => mockedComponents("ShowMoreTweetsButton")
+);
 
 describe("TweetsForYou component", () => {
   const tweets = [
@@ -71,7 +74,7 @@ describe("TweetsForYou component", () => {
     expect(tweet.length).toBe(5);
   });
 
-  test("should render Tweets component when tweets is []", () => {
+  test("should render Tweets component when tweets is empty", () => {
     renderWithRedux(<Tweets tweets={[]} message={"No tweets yet."} />);
 
     expect(screen.queryByTestId("mocked-tweet")).toBeNull();
@@ -83,10 +86,17 @@ describe("TweetsForYou component", () => {
     expect(text).toBeInTheDocument();
   });
 
-  test("should render Tweets component visabile button show more", () => {
-    renderWithRedux(<Tweets tweets={tweets} moreTweets={true}/>);
+  test("should render Tweets component with'show more' button", () => {
+    renderWithRedux(<Tweets tweets={tweets} moreTweets={true} />);
 
-    const button = screen.getByTestId("mocked-button-showmore");
+    const button = screen.getByTestId("mocked-showMoreTweetsButton");
     expect(button).toBeInTheDocument();
+  });
+
+  test("should render component Tweets without 'show more' button", () => {
+    renderWithRedux(<Tweets tweets={tweets} moreTweets={false} />);
+
+    const button = screen.queryByTestId("mocked-showMoreTweetsButton");
+    expect(button).toBeNull();
   });
 });

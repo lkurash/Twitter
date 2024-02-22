@@ -2,10 +2,12 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { useSelector } from "react-redux";
 import TweetsForTrends from "../../components/Tweets/TweetsForTrends";
+import { mockedComponents } from "../helpers/mockComponent";
 
-jest.mock("../../components/Tweets/Tweets", () => () => (
-  <div data-testid="mocked-tweets-component">Mocked Child Component</div>
-));
+jest.mock(
+  "../../components/Tweets/Tweets",
+  () => () => mockedComponents("Tweets")
+);
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
@@ -45,7 +47,7 @@ describe("TweetsForTrends component", () => {
 
     render(<TweetsForTrends />);
 
-    const tweetsComponent = screen.getByTestId("mocked-tweets-component");
+    const tweetsComponent = screen.getByTestId("mocked-tweets");
 
     expect(tweetsComponent).toBeInTheDocument();
   });
@@ -61,7 +63,7 @@ describe("TweetsForTrends component", () => {
 
     render(<TweetsForTrends />);
 
-    const tweetsComponent = screen.queryByTestId("mocked-tweets-component");
+    const tweetsComponent = screen.queryByTestId("mocked-tweets");
 
     expect(tweetsComponent).not.toBeInTheDocument();
   });
