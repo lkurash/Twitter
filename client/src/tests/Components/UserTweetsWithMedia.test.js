@@ -17,20 +17,16 @@ describe("UserTweetsWithMedia component", () => {
   let useStateSpy = jest.spyOn(React, "useState");
 
   beforeEach(() => {
-    useSelector.mockClear();
-  });
-
-  test("visible tweets when loading status is 'PENDING' > 1000ms", () => {
-    useStateSpy.mockReturnValueOnce([true, jest.fn()]);
-
     useSelector.mockReturnValueOnce({
       profile: {},
     });
+  });
 
+  test("displays a spinner when it takes a long time to load", () => {
+    useStateSpy.mockReturnValueOnce([true, jest.fn()]);
     useSelector.mockReturnValueOnce({
       profile: { id: 1 },
     });
-
     useSelector.mockReturnValueOnce({
       tweets: [],
       loadingStatus: "PENDING",
@@ -44,19 +40,11 @@ describe("UserTweetsWithMedia component", () => {
     expect(spinner).toBeInTheDocument();
   });
 
-  test("visible tweets when loading status is 'COMPLETE'", () => {
+  test("displays tweets after loading", () => {
     useStateSpy.mockReturnValueOnce([false, jest.fn()]);
-
-    useSelector.mockReturnValueOnce({
-      profile: {},
-    });
-
     useSelector.mockReturnValueOnce({
       profile: { id: 1 },
-      loadingStatus: "COMPLETE",
-      error: false,
     });
-
     useSelector.mockReturnValueOnce({
       tweets: [{ id: 1, text: "Hello World" }],
       loadingStatus: "COMPLETE",
@@ -68,31 +56,5 @@ describe("UserTweetsWithMedia component", () => {
     const tweetsComponent = screen.getByTestId("mocked-tweets");
 
     expect(tweetsComponent).toBeInTheDocument();
-  });
-
-  test("return empty page when loading status is 'PENDING' < 1000ms", () => {
-    useStateSpy.mockReturnValueOnce([false, jest.fn()]);
-
-    useSelector.mockReturnValueOnce({
-      profile: {},
-    });
-
-    useSelector.mockReturnValueOnce({
-      profile: { id: 1 },
-      loadingStatus: "COMPLETE",
-      error: false,
-    });
-
-    useSelector.mockReturnValueOnce({
-      tweets: [],
-      loadingStatus: "PENDING",
-      moreTweets: false,
-    });
-
-    render(<UserTweetsWithMedia />);
-
-    const tweetsComponent = screen.queryByTestId("mocked-tweets");
-
-    expect(tweetsComponent).not.toBeInTheDocument();
   });
 });

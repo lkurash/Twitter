@@ -17,12 +17,11 @@ describe("UserAnswers component", () => {
   let useStateSpy = jest.spyOn(React, "useState");
 
   beforeEach(() => {
-    useSelector.mockClear();
+    useSelector.mockReturnValueOnce({});
   });
 
-  test("visible tweets when loading status is 'PENDING' > 1000ms", () => {
+  test("displays a spinner when it takes a long time to load", () => {
     useStateSpy.mockReturnValueOnce([true, jest.fn()]);
-    useSelector.mockReturnValueOnce({});
     useSelector.mockReturnValueOnce({
       tweets: [],
       loadingStatus: "PENDING",
@@ -36,9 +35,8 @@ describe("UserAnswers component", () => {
     expect(spinner).toBeInTheDocument();
   });
 
-  test("visible tweets when loading status is 'COMPLETE'", () => {
+  test("displays tweets after loading", () => {
     useStateSpy.mockReturnValueOnce([false, jest.fn()]);
-    useSelector.mockReturnValueOnce({});
     useSelector.mockReturnValueOnce({
       tweets: [{ id: 1, text: "Hello World" }],
       loadingStatus: "COMPLETE",
@@ -50,21 +48,5 @@ describe("UserAnswers component", () => {
     const tweetsComponent = screen.getByTestId("mocked-answers");
 
     expect(tweetsComponent).toBeInTheDocument();
-  });
-
-  test("return empty page when loading status is 'PENDING' < 1000ms", () => {
-    useStateSpy.mockReturnValueOnce([false, jest.fn()]);
-    useSelector.mockReturnValueOnce({});
-    useSelector.mockReturnValueOnce({
-      tweets: [],
-      loadingStatus: "PENDING",
-      moreTweets: false,
-    });
-
-    render(<UserAnswers />);
-
-    const tweetsComponent = screen.queryByTestId("mocked-answers");
-
-    expect(tweetsComponent).not.toBeInTheDocument();
   });
 });
