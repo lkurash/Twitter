@@ -103,7 +103,7 @@ describe("UserPhoto component", () => {
       expect(setShowProfileUser).toHaveBeenCalledWith(true);
     });
 
-    test("when mouse leaves user's photo, display user preview not visabile", () => {
+    test("when mouse leaves user's photo, not display user preview", () => {
       render(<UserPhoto user={user} />);
 
       const userPhoto = screen.getByTestId("user-photo");
