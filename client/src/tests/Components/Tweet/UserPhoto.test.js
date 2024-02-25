@@ -27,11 +27,9 @@ describe("UserPhoto component", () => {
 
   beforeEach(() => {
     useStateSpy.mockReturnValueOnce([showProfileUser, setShowProfileUser]);
-
     useSelector.mockReturnValueOnce({
       isAuth: {},
     });
-
     useNavigate.mockReturnValueOnce(() => {});
     jest.useFakeTimers();
   });

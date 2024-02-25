@@ -22,6 +22,10 @@ describe("UserTweetsWithLikes component", () => {
     });
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  }); 
+
   test("displays a spinner when it takes a long time to load", () => {
     useStateSpy.mockReturnValueOnce([true, jest.fn()]);
     useSelector.mockReturnValueOnce({
