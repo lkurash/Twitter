@@ -14,7 +14,7 @@ jest.mock("react-router-dom", () => ({
 
 jest.mock("timers");
 
-describe("UserPhoto component", () => {
+describe("UserPhoto", () => {
   const useStateSpy = jest.spyOn(React, "useState");
   let showProfileUser = false;
   let setShowProfileUser = jest.fn();
@@ -40,7 +40,7 @@ describe("UserPhoto component", () => {
     jest.clearAllTimers();
   });
 
-  test("should display user photo", () => {
+  test("displays user photo", () => {
     render(<UserPhoto user={user} />);
 
     const userPhoto = screen.getByTestId("user-photo");
@@ -58,13 +58,15 @@ describe("UserPhoto component", () => {
       useSelector.mockClear();
     });
 
-    test("clicking on the username calls the navigation function", () => {
-      render(<UserPhoto user={user} />);
+    describe("when clicking on the user photo", () => {
+      test("calls the navigation function", () => {
+        render(<UserPhoto user={user} />);
 
-      const userPhoto = screen.getByTestId("user-photo");
-      fireEvent.click(userPhoto);
+        const userPhoto = screen.getByTestId("user-photo");
+        fireEvent.click(userPhoto);
 
-      expect(useNavigate).toBeCalledTimes(1);
+        expect(useNavigate).toBeCalledTimes(1);
+      });
     });
   });
 
@@ -79,18 +81,20 @@ describe("UserPhoto component", () => {
       useSelector.mockClear();
     });
 
-    test("clicking on the username calls the navigation function", () => {
-      render(<UserPhoto user={user} />);
+    describe("when clicking on the user photo", () => {
+      test("calls the navigation function", () => {
+        render(<UserPhoto user={user} />);
 
-      const userPhoto = screen.getByTestId("user-photo");
-      fireEvent.click(userPhoto);
+        const userPhoto = screen.getByTestId("user-photo");
+        fireEvent.click(userPhoto);
 
-      expect(useNavigate).toBeCalledTimes(1);
+        expect(useNavigate).toBeCalledTimes(1);
+      });
     });
   });
 
-  describe("user preview", () => {
-    test("when mouse enters user's photo, display user preview", () => {
+  describe("user profile preview popup", () => {
+    test("displays user preview", () => {
       render(<UserPhoto user={user} />);
 
       const userPhoto = screen.getByTestId("user-photo");
@@ -103,7 +107,7 @@ describe("UserPhoto component", () => {
       expect(setShowProfileUser).toHaveBeenCalledWith(true);
     });
 
-    test("when mouse leaves user's photo, not display user preview", () => {
+    test("doesn't show user preview", () => {
       render(<UserPhoto user={user} />);
 
       const userPhoto = screen.getByTestId("user-photo");

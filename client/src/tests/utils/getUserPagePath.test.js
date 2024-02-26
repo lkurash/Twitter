@@ -1,6 +1,6 @@
 import getUserPagePath from "../../utils/getUserPagePath";
 
-describe("GetUserPagePath", () => {
+describe("getUserPagePath", () => {
   test("when user is authenticated navigate to private user page with id 1", () => {
     expect(getUserPagePath(true, 1)).toBe("/user/1");
   });

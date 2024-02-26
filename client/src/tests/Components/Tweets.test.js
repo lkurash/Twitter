@@ -1,19 +1,19 @@
 import { screen } from "@testing-library/react";
 import Tweets from "../../components/Tweets/Tweets";
 import { renderWithRedux } from "../helpers/renderWithRedux";
-import { mockedComponents } from "../helpers/mockComponent";
+import { mockedComponent } from "../helpers/mockComponent";
 
 jest.mock(
   "../../components/Tweets/Tweet/Tweet",
-  () => () => mockedComponents("Tweet")
+  () => () => mockedComponent("Tweet")
 );
 
 jest.mock(
   "../../components/buttons/ShowMoreTweetsButton",
-  () => () => mockedComponents("ShowMoreTweetsButton")
+  () => () => mockedComponent("ShowMoreTweetsButton")
 );
 
-describe("TweetsForYou component", () => {
+describe("TweetsForYou", () => {
   const tweets = [
     {
       id: 1,
@@ -35,68 +35,41 @@ describe("TweetsForYou component", () => {
       tweet_createDate: "21 Jan. 2024",
       userId: 1,
     },
-    {
-      id: 3,
-      img: ["855d7593-fdea-4df7-afd7-c478268c7c16.jpg"],
-      retweet: false,
-      text: "",
-      tweetId: null,
-      tweetUserId: null,
-      tweet_createDate: "21 Jan. 2024",
-      userId: 1,
-    },
-    {
-      id: 4,
-      img: ["855d7593-fdea-4df7-afd7-c478268c7c16.jpg"],
-      retweet: false,
-      text: "",
-      tweetId: null,
-      tweetUserId: null,
-      tweet_createDate: "21 Jan. 2024",
-      userId: 1,
-    },
-    {
-      id: 5,
-      img: ["855d7593-fdea-4df7-afd7-c478268c7c16.jpg"],
-      retweet: false,
-      text: "",
-      tweetId: null,
-      tweetUserId: null,
-      tweet_createDate: "21 Jan. 2024",
-      userId: 1,
-    },
   ];
 
-  test("should render Tweets component with mocked tweets", () => {
+  test("displays Tweets component with mocked tweets", () => {
     renderWithRedux(<Tweets tweets={tweets} />);
 
     const tweet = screen.getAllByTestId("mocked-tweet");
-    expect(tweet.length).toBe(5);
+    expect(tweet.length).toBe(2);
   });
 
-  test("should render Tweets component when tweets is empty", () => {
-    renderWithRedux(<Tweets tweets={[]} message={"No tweets yet."} />);
+  describe("when additional tweets to display", () => {
+    test("displays more tweets button", () => {
+      renderWithRedux(<Tweets tweets={tweets} moreTweets={true} />);
 
-    expect(screen.queryByTestId("mocked-tweet")).toBeNull();
-
-    const message = screen.getByTestId("message-empty-tweets");
-    expect(message).toBeInTheDocument();
-
-    const text = screen.getByText("No tweets yet.");
-    expect(text).toBeInTheDocument();
+      const button = screen.getByTestId("mocked-showMoreTweetsButton");
+      expect(button).toBeInTheDocument();
+    });
   });
 
-  test("should render Tweets component with'show more' button", () => {
-    renderWithRedux(<Tweets tweets={tweets} moreTweets={true} />);
+  describe("when no additional tweets to display", () => {
+    test("doesn't displays more tweets button", () => {
+      renderWithRedux(<Tweets tweets={tweets} moreTweets={false} />);
 
-    const button = screen.getByTestId("mocked-showMoreTweetsButton");
-    expect(button).toBeInTheDocument();
+      const button = screen.queryByTestId("mocked-showMoreTweetsButton");
+      expect(button).toBeNull();
+    });
   });
 
-  test("should render component Tweets without 'show more' button", () => {
-    renderWithRedux(<Tweets tweets={tweets} moreTweets={false} />);
+  describe("when no tweets", () => {
+    test("displays no tweet message", () => {
+      renderWithRedux(<Tweets tweets={[]} message={"No tweets yet."} />);
 
-    const button = screen.queryByTestId("mocked-showMoreTweetsButton");
-    expect(button).toBeNull();
+      expect(screen.queryByTestId("mocked-tweet")).toBeNull();
+
+      const message = screen.getByTestId("message-empty-tweets");
+      expect(message).toBeInTheDocument();
+    });
   });
 });

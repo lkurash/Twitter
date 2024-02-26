@@ -2,18 +2,18 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { useSelector } from "react-redux";
 import TweetsWhoYouRead from "../../components/Tweets/TweetsWhoYouReading";
-import { mockedComponents } from "../helpers/mockComponent";
+import { mockedComponent } from "../helpers/mockComponent";
 
 jest.mock(
   "../../components/Tweets/Tweets",
-  () => () => mockedComponents("Tweets")
+  () => () => mockedComponent("Tweets")
 );
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }));
 
-describe("TweetsWhoYouRead component", () => {
+describe("TweetsWhoYouRead", () => {
   let useStateSpy = jest.spyOn(React, "useState");
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe("TweetsWhoYouRead component", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-  }); 
+  });
 
   test("displays a spinner when it takes a long time to load", () => {
     useStateSpy.mockReturnValueOnce([true, jest.fn()]);
@@ -40,7 +40,6 @@ describe("TweetsWhoYouRead component", () => {
     render(<TweetsWhoYouRead />);
 
     const spinner = screen.getByTestId("spinner");
-
     expect(spinner).toBeInTheDocument();
   });
 
@@ -58,7 +57,6 @@ describe("TweetsWhoYouRead component", () => {
     render(<TweetsWhoYouRead />);
 
     const tweetsComponent = screen.getByTestId("mocked-tweets");
-
     expect(tweetsComponent).toBeInTheDocument();
   });
 });

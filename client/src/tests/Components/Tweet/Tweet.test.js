@@ -1,34 +1,33 @@
 import { render, screen } from "@testing-library/react";
 import Tweet from "../../../components/Tweets/Tweet/Tweet";
-import { mockedComponents } from "../../helpers/mockComponent";
+import { mockedComponent } from "../../helpers/mockComponent";
 
 jest.mock(
   "../../../components/Tweets/Tweet/TweetActions",
-  () => () => mockedComponents("TweetActions")
+  () => () => mockedComponent("TweetActions")
 );
 
 jest.mock(
   "../../../components/common/TolltipRetweetOnTweet",
-  () => () => mockedComponents("TolltipRetweetOnTweet")
+  () => () => mockedComponent("TolltipRetweetOnTweet")
 );
 
 jest.mock(
   "../../../components/Tweets/Tweet/UserName",
-  () => () => mockedComponents("UserName")
+  () => () => mockedComponent("UserName")
 );
 
 jest.mock(
   "../../../components/Tweets/Tweet/UserPhoto",
-  () => () => mockedComponents("UserPhoto")
+  () => () => mockedComponent("UserPhoto")
 );
 
 jest.mock(
   "../../../components/buttons/DeleteTweetButton",
-  () => () => mockedComponents("DeleteTweetButton")
+  () => () => mockedComponent("DeleteTweetButton")
 );
 
 const AUTHENTICATED_USER_ID = 1;
-
 jest.mock("../../../utils/getAuthUserID", () => () => AUTHENTICATED_USER_ID);
 
 describe("Tweet", () => {
@@ -70,7 +69,7 @@ describe("Tweet", () => {
     expect(tweetAction).toBeInTheDocument();
   });
 
-  test("displays a tooltip about retweer", () => {
+  test("displays a tooltip about retweet", () => {
     render(<Tweet tweet={someoneElsesTweet} retweet={true} />);
 
     const tolltipRetweet = screen.getByTestId("mocked-tolltipRetweetOnTweet");

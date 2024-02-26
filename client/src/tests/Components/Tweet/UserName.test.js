@@ -11,7 +11,7 @@ jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
-describe("UserName component", () => {
+describe("UserName", () => {
   const user = {
     id: 1,
     user_name: "User Name",
@@ -22,7 +22,7 @@ describe("UserName component", () => {
     useNavigate.mockClear();
   });
 
-  test("should display user name and profile name", () => {
+  test("displays user name and profile name", () => {
     useSelector.mockReturnValueOnce({
       isAuth: true,
     });
@@ -51,13 +51,15 @@ describe("UserName component", () => {
       useNavigate.mockClear();
     });
 
-    test("clicking on the username calls the navigation function", () => {
-      render(<UserName user={user} />);
+    describe("when clicking on the username", () => {
+      test("calls the navigation function", () => {
+        render(<UserName user={user} />);
 
-      const userName = screen.getByTestId("tweet-user-name");
-      fireEvent.click(userName);
+        const userName = screen.getByTestId("tweet-user-name");
+        fireEvent.click(userName);
 
-      expect(useNavigate).toBeCalledTimes(1);
+        expect(useNavigate).toBeCalledTimes(1);
+      });
     });
   });
 
@@ -74,13 +76,15 @@ describe("UserName component", () => {
       useNavigate.mockClear();
     });
 
-    test("clicking on the username calls the navigation function", () => {
-      render(<UserName user={user} />);
+    describe("when clicking on the username", () => {
+      test("calls the navigation function", () => {
+        render(<UserName user={user} />);
 
-      const userName = screen.getByTestId("tweet-user-name");
-      fireEvent.click(userName);
+        const userName = screen.getByTestId("tweet-user-name");
+        fireEvent.click(userName);
 
-      expect(useNavigate).toBeCalledTimes(1);
+        expect(useNavigate).toBeCalledTimes(1);
+      });
     });
   });
 });

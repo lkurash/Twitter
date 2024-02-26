@@ -2,11 +2,11 @@ import { render, screen } from "@testing-library/react";
 import React from "react";
 import { useSelector } from "react-redux";
 import UserTweets from "../../components/Tweets/UserTweets";
-import { mockedComponents } from "../helpers/mockComponent";
+import { mockedComponent } from "../helpers/mockComponent";
 
 jest.mock(
   "../../components/Tweets/Tweets",
-  () => () => mockedComponents("Tweets")
+  () => () => mockedComponent("Tweets")
 );
 
 jest.mock("react-redux", () => ({
@@ -36,7 +36,6 @@ describe("UserTweets", () => {
     render(<UserTweets />);
 
     const spinner = screen.getByTestId("spinner");
-
     expect(spinner).toBeInTheDocument();
   });
 
@@ -56,7 +55,6 @@ describe("UserTweets", () => {
     render(<UserTweets />);
 
     const tweetsComponent = screen.getByTestId("mocked-tweets");
-
     expect(tweetsComponent).toBeInTheDocument();
   });
 });
