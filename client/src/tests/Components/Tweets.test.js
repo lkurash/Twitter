@@ -37,7 +37,7 @@ describe("TweetsForYou", () => {
     },
   ];
 
-  test("displays Tweets component with mocked tweets", () => {
+  test("displaying tweets", () => {
     renderWithRedux(<Tweets tweets={tweets} />);
 
     const tweet = screen.getAllByTestId("mocked-tweet");
@@ -63,7 +63,7 @@ describe("TweetsForYou", () => {
   });
 
   describe("when no tweets", () => {
-    test("displays no tweet message", () => {
+    test("displaying a message about the absence of a tweet.", () => {
       renderWithRedux(<Tweets tweets={[]} message={"No tweets yet."} />);
 
       expect(screen.queryByTestId("mocked-tweet")).toBeNull();
