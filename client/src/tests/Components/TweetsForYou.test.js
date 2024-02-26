@@ -40,7 +40,6 @@ describe("TweetsForYou", () => {
     render(<TweetsForYou />);
 
     const spinner = screen.getByTestId("spinner");
-
     expect(spinner).toBeInTheDocument();
   });
 

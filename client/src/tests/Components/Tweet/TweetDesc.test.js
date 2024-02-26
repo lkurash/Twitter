@@ -6,11 +6,11 @@ describe("TweetDesc", () => {
     text: "Tweet text",
   };
 
-  const tweetWithOneImg = {
+  const tweetWithOneImages = {
     img: ["855d7593-fdea-4df7-afd7-c478268c7c16.jpg"],
   };
 
-  const tweetWithFourImg = {
+  const tweetWithFourImages = {
     img: [
       "855d7593-fdea-4df7-afd7-c478268c7c16.jpg",
       "855d7593-fdea-4df7-afd7-c478268c7c17.jpg",
@@ -31,7 +31,7 @@ describe("TweetDesc", () => {
   });
 
   test("displays tweet with one img", () => {
-    render(<TweetDesc tweet={tweetWithOneImg} />);
+    render(<TweetDesc tweet={tweetWithOneImages} />);
 
     const wrapperTweetOneImg = screen.getByTestId("wrapper-tweet-one-img");
     expect(wrapperTweetOneImg).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe("TweetDesc", () => {
   });
 
   test("displays tweet with four img", () => {
-    render(<TweetDesc tweet={tweetWithFourImg} />);
+    render(<TweetDesc tweet={tweetWithFourImages} />);
 
     const wrapperTweetFourImg = screen.getByTestId("wrapper-four-imgs");
     expect(wrapperTweetFourImg).toBeInTheDocument();

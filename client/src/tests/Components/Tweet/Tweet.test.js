@@ -77,28 +77,22 @@ describe("Tweet", () => {
   });
 
   describe("when user is the owner of the tweet", () => {
-    describe("delete tweet button", () => {
-      test("visible delete tweet button on tweet", () => {
-        render(<Tweet tweet={usersOwnTweet} retweet={false} />);
+    test("displays delete tweet button on tweet", () => {
+      render(<Tweet tweet={usersOwnTweet} retweet={false} />);
 
-        const deleteTweetButton = screen.getByTestId(
-          "mocked-deleteTweetButton"
-        );
-        expect(deleteTweetButton).toBeInTheDocument();
-      });
+      const deleteTweetButton = screen.getByTestId("mocked-deleteTweetButton");
+      expect(deleteTweetButton).toBeInTheDocument();
     });
+  });
 
-    describe("when user is not the owner of the tweet", () => {
-      describe("delete tweet button", () => {
-        test("delete button is invisible", () => {
-          render(<Tweet tweet={someoneElsesTweet} retweet={false} />);
+  describe("when user is not the owner of the tweet", () => {
+    test("delete button is invisible on tweet", () => {
+      render(<Tweet tweet={someoneElsesTweet} retweet={false} />);
 
-          const deleteTweetButton = screen.queryByTestId(
-            "mocked-delete-tweet-button"
-          );
-          expect(deleteTweetButton).toBeNull();
-        });
-      });
+      const deleteTweetButton = screen.queryByTestId(
+        "mocked-delete-tweet-button"
+      );
+      expect(deleteTweetButton).toBeNull();
     });
   });
 });
