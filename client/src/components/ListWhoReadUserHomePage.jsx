@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { Fragment } from "react";
 
 import { useSelector } from "react-redux";
@@ -7,7 +6,7 @@ import { auth } from "../redux/user/user.selectors";
 import FollowButton from "./buttons/FollowButton";
 import UserInList from "./common/UserInList";
 
-const ListWhoReadUserHomePage = observer(({ users }) => {
+const ListWhoReadUserHomePage = ({ users }) => {
   const { isAuth } = useSelector(auth);
 
   return (
@@ -37,6 +36,6 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
       </ul>
     </>
   );
-});
+};
 
 export default ListWhoReadUserHomePage;

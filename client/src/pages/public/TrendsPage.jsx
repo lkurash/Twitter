@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { tweetActions } from "../../redux/tweet/tweet.actions";
@@ -14,19 +14,20 @@ import arrowLeft from "../../components/Imgs/arrow_left_icon.png";
 
 const TrendsPage = () => {
   const dispatch = useDispatch();
-
   const [searchParams] = useSearchParams();
-  const trend = searchParams.get("trend");
-
   const authUserID = getAuthUserID();
-
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const trend = searchParams.get("trend");
 
   useEffect(() => {
     if (authUserID) {
       dispatch(tweetActions.getTweetsForTrendsAuthUser(trend));
+      setIsLoading(true);
     } else {
       dispatch(tweetActions.getTweetsForTrends(trend));
+      setIsLoading(true);
     }
   }, [trend]);
 
@@ -56,7 +57,7 @@ const TrendsPage = () => {
           <DotMenuButton />
         </div>
       </div>
-      <TweetsForTrends trend={trend} />
+      {isLoading && <TweetsForTrends trend={trend} />}
     </div>
   );
 };

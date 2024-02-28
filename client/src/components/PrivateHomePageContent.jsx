@@ -19,18 +19,23 @@ const PrivateHomePageContent = observer(() => {
   const authUserID = getAuthUserID();
   const ref = useRef();
 
+  const [isLoading, setLoading] = useState(false);
+
   const [tweetsForYouVisible, setTweetsForYouVisible] = useState(true);
   const [tweetsWhoReadingVisible, setTweetsWhoReadingVisible] = useState(false);
 
   useEffect(() => {
+    setLoading(false);
     if (cookies.tweetsWhoReading === "true") {
       setTweetsWhoReadingVisible(true);
       setTweetsForYouVisible(false);
 
       dispatch(tweetActions.getTweetsByFollowingUsers(authUserID));
+      setLoading(true);
     }
     if (cookies.tweetsWhoReading === "false" && tweetsForYouVisible) {
       dispatch(tweetActions.getTweetsForAuthUser(authUserID));
+      setLoading(true);
     }
 
     if (ref.current) {
@@ -67,7 +72,7 @@ const PrivateHomePageContent = observer(() => {
       </div>
       <div className="main-line" />
       <>
-        {tweetsForYouVisible && <TweetsForYou />}
+        {tweetsForYouVisible && isLoading && <TweetsForYou />}
 
         {(tweetsWhoReadingVisible || !tweetsForYouVisible) && (
           <TweetsWhoYouRead userTweets={tweetsStore.userTweets} />

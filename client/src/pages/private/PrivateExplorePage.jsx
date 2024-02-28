@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -14,10 +14,12 @@ const PrivateExplorePage = observer(() => {
   const dispatch = useDispatch();
   const { loadingStatus } = useSelector(visibilityPrivatePage);
   const authUserID = getAuthUserID();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (loadingStatus === "COMPLETE") {
       dispatch(tweetActions.getTweetsForAuthUser(authUserID));
+      setIsLoading(true);
     }
   }, [loadingStatus]);
 
@@ -34,7 +36,7 @@ const PrivateExplorePage = observer(() => {
         />
 
         <div className="main-line" />
-        <ExploreTweets />
+        {isLoading && <ExploreTweets />}
       </div>
     </>
   );
