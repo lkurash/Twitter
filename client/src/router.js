@@ -2,7 +2,6 @@ import authenticate from "./utils/authenticate";
 import redirectToHomePage from "./utils/redirectToHomePage";
 import RootBoundary from "./utils/RootBoundary";
 
-import AppLayout from "./pages/AppLayout";
 import LayoutLoginAndSignUpPage from "./pages/public/LayoutLoginAndSignUpPage";
 import PublicHomePage from "./pages/public/PublicHomePage";
 import PublicExplorePage from "./pages/public/PublicExplorePage";
@@ -60,26 +59,27 @@ import {
   PUBLIC_USER_PAGE_PATH,
   LOG_OUT_PAGE_PATH,
 } from "./utils/routs";
+import Preloading from "./pages/Preloading";
 
 export const publicRoutes = {
   path: ROOT_PAGE_PATH,
-  element: <AppLayout />,
+  element: <Preloading />,
   errorElement: <RootBoundary />,
   children: [
     {
       path: PUBLIC_HOME_PAGE_PATH,
-      // loader: redirectToHomePage,
+      loader: redirectToHomePage,
       element: <PublicHomePage />,
     },
     {
       path: PUBLIC_EXPLORE_PAGE_PATH,
-      // loader: redirectToHomePage,
+      loader: redirectToHomePage,
       element: <PublicExplorePage />,
     },
     {
       path: PUBLIC_TRENDS_PAGE_PATH,
       element: <TrendsPage />,
-      // loader: redirectToHomePage,
+      loader: redirectToHomePage,
     },
     {
       path: PUBLIC_USER_PAGE_PATH,
@@ -89,7 +89,7 @@ export const publicRoutes = {
       path: AUTH_PAGE_PATH,
       element: <LayoutLoginAndSignUpPage />,
       errorElement: <RootBoundary />,
-      // loader: redirectToHomePage,
+      loader: redirectToHomePage,
       children: [
         {
           path: LOGIN_PAGE_PATH,
@@ -106,7 +106,7 @@ export const publicRoutes = {
 
 export const privateRoutes = {
   path: ROOT_PRIVATE_PAGE_PATH,
-  element: <AppLayout />,
+  element: <Preloading />,
   loader: authenticate,
   errorElement: <RootBoundary />,
   children: [
@@ -179,7 +179,7 @@ export const privateRoutes = {
 
 export const privateUserPageRoutes = {
   path: USER_PAGE_PATH,
-  element: <AppLayout />,
+  element: <Preloading />,
   loader: authenticate,
   errorElement: <RootBoundary />,
   children: [

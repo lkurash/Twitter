@@ -6,8 +6,6 @@ import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
 
-
-
 const Sidebar = () => {
   const location = useLocation().pathname;
   return (

@@ -1,36 +1,18 @@
 import { observer } from "mobx-react-lite";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 
 import { useSelector } from "react-redux";
-import { auth, userListWhoNotReading } from "../redux/user/user.selectors";
-
-import spinner from "../utils/spinner";
+import { auth } from "../redux/user/user.selectors";
 
 import FollowButton from "./buttons/FollowButton";
 import UserInList from "./common/UserInList";
 
 const ListWhoReadUserHomePage = observer(({ users }) => {
-  const { loadingStatus } = useSelector(userListWhoNotReading);
   const { isAuth } = useSelector(auth);
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (loadingStatus === "PENDING" || isLoading) {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 400);
-    }
-  }, []);
-
-  if (isLoading) {
-    return spinner();
-  }
-
-
   return (
-    <ul className="users">
-      {users ? (
+    <>
+      <ul className="users">
         <>
           {users.map((profile) => (
             <li className="user" key={profile.id}>
@@ -48,16 +30,12 @@ const ListWhoReadUserHomePage = observer(({ users }) => {
           ))}
           {users.length === 0 && (
             <p className="section-whoyouread-hint-about-lack-section">
-              You are following all users
+              No users for following
             </p>
           )}
         </>
-      ) : (
-        <p className="section-whoyouread-hint-about-lack-section">
-          No users to read
-        </p>
-      )}
-    </ul>
+      </ul>
+    </>
   );
 });
 

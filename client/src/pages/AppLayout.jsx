@@ -1,14 +1,13 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { useContext, useEffect, useLayoutEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Context } from "../Context";
 
-import { useDispatch } from "react-redux";
-import { visibilityPageActions } from "../redux/visibilityPage/visibilityPage.actions";
-import { userActions } from "../redux/user/user.actions";
+import { useSelector } from "react-redux";
 
 import getFlagIsAuth from "../utils/getFlagIsAuth";
 import getAuthUserID from "../utils/getAuthUserID";
+import { loadingSetup } from "../utils/loadingSetup";
 
 import MenuComponent from "./MenuComponent";
 import Sidebar from "./Sidebar";
@@ -25,23 +24,36 @@ import "../components/userpage.css";
 import "../components/Tweets/Tweet/tweetActions.css";
 import "../components/comment.css";
 import "../components/common/common.css";
+import {
+  visibilityPrivatePage,
+  visibilityPublicPage,
+} from "../redux/visibilityPage/visibilityPage.selectors";
+import MessageAboutLoading from "../components/common/MessageAboutLoading";
 
 const AppLayout = observer(() => {
   const { infoMessageStore } = useContext(Context);
   const { visiblePopUpStore } = useContext(Context);
+  const visibilityPublic = useSelector(visibilityPublicPage);
+  const visibilityPrivate = useSelector(visibilityPrivatePage);
   const authUserID = getAuthUserID();
-  const dispatch = useDispatch();
   const path = useLocation().pathname;
   const ref = useRef();
+  const [isLoading, setIsLoading] = useState(false);
+  const boundedSetup = loadingSetup.setup.bind(
+    authUserID ? visibilityPrivate : visibilityPublic
+  );
 
-  useLayoutEffect(() => {
-    if (authUserID) {
-      dispatch(userActions.getAuth(getFlagIsAuth()));
-      dispatch(visibilityPageActions.getContentForAuthUser(authUserID));
+  const getLoadingStatus = () => {
+    if (visibilityPublic.visibilityPage || visibilityPrivate.visibilityPage) {
+      return true;
     } else {
-      dispatch(visibilityPageActions.getContentForNotAuthUser());
+      return false;
     }
-  }, [authUserID]);
+  };
+
+  useEffect(() => {
+    boundedSetup(setIsLoading);
+  }, [getLoadingStatus()]);
 
   useEffect(() => {
     if (ref.current) {
@@ -51,27 +63,36 @@ const AppLayout = observer(() => {
 
   return (
     <div>
-      <div className={authUserID ? "private-page" : "public-page"} ref={ref}>
-        <MenuComponent page={authUserID ? "privatePage" : "publicPage"} />
-        <main className="main-wrapper">
-          <div className="main">
-            <div className="main-content">
-              <Outlet />
-            </div>
+      {isLoading ? (
+        <MessageAboutLoading />
+      ) : (
+        <>
+          <div
+            className={authUserID ? "private-page" : "public-page"}
+            ref={ref}
+          >
+            <MenuComponent page={authUserID ? "privatePage" : "publicPage"} />
+            <main className="main-wrapper">
+              <div className="main">
+                <div className="main-content">
+                  <Outlet />
+                </div>
+              </div>
+            </main>
+            <Sidebar />
           </div>
-        </main>
-        <Sidebar />
-      </div>
-      {visiblePopUpStore.loginPage && <LoginPage />}
-      {visiblePopUpStore.signUpPage && <SignUpPage />}
+          {visiblePopUpStore.loginPage && <LoginPage />}
+          {visiblePopUpStore.signUpPage && <SignUpPage />}
 
-      {infoMessageStore.infoMessageVisible && (
-        <div className="message-on-window">
-          <MessageOnWindow />
-        </div>
+          {infoMessageStore.infoMessageVisible && (
+            <div className="message-on-window">
+              <MessageOnWindow />
+            </div>
+          )}
+          {getFlagIsAuth() && <PrivateFooter />}
+          {!getFlagIsAuth() && <PublicFooter />}
+        </>
       )}
-      {getFlagIsAuth() && <PrivateFooter />}
-      {!getFlagIsAuth() && <PublicFooter />}
     </div>
   );
 });
