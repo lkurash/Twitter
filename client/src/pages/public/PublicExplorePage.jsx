@@ -14,7 +14,7 @@ const PublicExplorePage = () => {
   }, []);
 
   return (
-    <div className="main-content" data-testid="explore-page">
+    <div className="main-block" data-testid="explore-page">
       <MainSectionTrends
         className="section section-public-page trends"
         mainBlock={true}

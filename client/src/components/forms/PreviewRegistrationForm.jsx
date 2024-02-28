@@ -1,15 +1,16 @@
-import { Context } from "../../Context";
-
-import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import LocalAuthClient from "../../store/LocalAuthClient";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
-import spinner from "../../utils/spinner";
 import { userActions } from "../../redux/user/user.actions";
+
+import { Context } from "../../Context";
+import { observer } from "mobx-react-lite";
+import LocalAuthClient from "../../store/LocalAuthClient";
+
+import spinner from "../../utils/spinner";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
-import { useNavigate } from "react-router-dom";
 import { HOME_PAGE_PATH } from "../../utils/routs";
 
 const PreviewRegistrationForm = observer(({ checkUserInfo }) => {

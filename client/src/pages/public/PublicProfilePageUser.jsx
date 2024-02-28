@@ -27,9 +27,9 @@ const PublicProfilePageUser = observer(() => {
   }, [id, isAuth]);
 
   return (
-    <>
+    <div className="main-content-block">
       <PublicProfileUser />
-    </>
+    </div>
   );
 });
 

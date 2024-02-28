@@ -16,10 +16,10 @@ const UserFollowersList = () => {
   const authUserID = getAuthUserID();
   const [isLoading, setIsLoading] = useState(false);
 
-  const bindSetup = loadingSetup.setup.bind(userFollowersStoreSelector);
+  const boundedSetup = loadingSetup.setup.bind(userFollowersStoreSelector);
 
   useEffect(() => {
-    bindSetup(setIsLoading);
+    boundedSetup(setIsLoading);
   }, [loadingStatus]);
 
   return (

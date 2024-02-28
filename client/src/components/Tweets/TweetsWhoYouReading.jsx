@@ -15,11 +15,12 @@ const TweetsWhoYouRead = () => {
   const { profile } = useSelector(userProfile);
   const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
   const [isLoading, setIsLoading] = useState(false);
-  const bindSetup = loadingSetup.setup.bind(tweetsStoreSelector);
+  const boundedSetup = loadingSetup.setup.bind(tweetsStoreSelector);
 
   useEffect(() => {
-    bindSetup(setIsLoading);
+    boundedSetup(setIsLoading);
   }, [loadingStatus]);
+
 
   return (
     <>

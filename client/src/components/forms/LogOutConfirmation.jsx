@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import useOutsideClick from "../../utils/useOutsideClickFunction";
 import { useRef } from "react";
+
 import { useDispatch } from "react-redux";
-import { AUTH_PAGE_PATH } from "../../utils/routs";
 import { userActions } from "../../redux/user/user.actions";
+
+import useOutsideClick from "../../utils/useOutsideClickFunction";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
+import { AUTH_PAGE_PATH } from "../../utils/routs";
 
 const Cookies = require("js-cookie");
 

@@ -1,8 +1,9 @@
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { SIGNUP_PAGE_PATH } from "../../utils/routs";
-import { useContext, useState } from "react";
 import { Context } from "../../Context";
+
+import { SIGNUP_PAGE_PATH } from "../../utils/routs";
 
 const LoginEmailForm = ({
   email,

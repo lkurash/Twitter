@@ -15,10 +15,10 @@ const ExploreTweets = () => {
   const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
   const authUserID = getAuthUserID();
   const [isLoading, setIsLoading] = useState(false);
-  const bindSetup = loadingSetup.setup.bind(tweetsStoreSelector);
+  const boundedSetup = loadingSetup.setup.bind(tweetsStoreSelector);
 
   useEffect(() => {
-    bindSetup(setIsLoading);
+    boundedSetup(setIsLoading);
   }, [loadingStatus]);
 
   return (

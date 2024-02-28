@@ -1,20 +1,22 @@
+import { useEffect, useState } from "react";
+
 import { useSelector } from "react-redux";
 import { userProfile } from "../redux/user/user.selectors";
 import { tweetActions } from "../redux/tweet/tweet.actions";
+import { tweetsStore } from "../redux/tweet/tweet.selectors";
+
+import spinner from "../utils/spinner";
+import { loadingSetup } from "../utils/loadingSetup";
 
 import Tweets from "./Tweets/Tweets";
 import MainStikyPanel from "./MainStikyPanel";
-import { tweetsStore } from "../redux/tweet/tweet.selectors";
-import spinner from "../utils/spinner";
-import { useEffect, useState } from "react";
-import { loadingSetup } from "../utils/loadingSetup";
 
 const BookmarksPageContent = () => {
   const tweetsStoreSelector = useSelector(tweetsStore);
   const { tweets, loadingStatus, moreTweets } = useSelector(tweetsStore);
   const { profile } = useSelector(userProfile);
   const [isLoading, setIsLoading] = useState(false);
-  const bindSetup = loadingSetup.setup.bind(tweetsStoreSelector);
+  const boundedSetup = loadingSetup.setup.bind(tweetsStoreSelector);
 
   const message = (
     <div className="lack-tweets-message">
@@ -24,11 +26,11 @@ const BookmarksPageContent = () => {
   );
 
   useEffect(() => {
-    bindSetup(setIsLoading);
+    boundedSetup(setIsLoading);
   }, [loadingStatus]);
 
   return (
-    <>
+    <div className="main-content-block">
       {isLoading && spinner()}
       {loadingStatus === "COMPLETE" && (
         <>
@@ -46,7 +48,7 @@ const BookmarksPageContent = () => {
           />
         </>
       )}
-    </>
+    </div>
   );
 };
 

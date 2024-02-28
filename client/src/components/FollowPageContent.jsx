@@ -23,7 +23,7 @@ const FollowPageContent = observer(() => {
       : `follow-page-main-button-onpanel`;
 
   return (
-    <>
+    <div className="main-content-block">
       <div className="follow-page-header">
         <div className="follow-page-header-main-page-name">
           {profile.user_name && (
@@ -59,7 +59,7 @@ const FollowPageContent = observer(() => {
         </div>
       </div>
       <Outlet />
-    </>
+    </div>
   );
 });
 

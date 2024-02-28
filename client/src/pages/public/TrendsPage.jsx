@@ -31,7 +31,7 @@ const TrendsPage = () => {
   }, [trend]);
 
   return (
-    <>
+    <div className="main-content-block">
       <div className="page-trands-search-block" data-testid="trends-page">
         <div
           className="main-search-block-button-return"
@@ -57,7 +57,7 @@ const TrendsPage = () => {
         </div>
       </div>
       <TweetsForTrends trend={trend} />
-    </>
+    </div>
   );
 };
 

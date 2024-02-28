@@ -1,6 +1,6 @@
-import { CSSTransition } from "react-transition-group";
 import { useContext, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { CSSTransition } from "react-transition-group";
 
 import { Context } from "../../Context";
 

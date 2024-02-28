@@ -66,7 +66,7 @@ const ImgsInTweetForm = ({
   return (
     <>
       {imgs.length > 0 && (
-        <div className={getClassName(imgs)}>
+        <div className={getClassName(imgs)} data-testid='button-delete-img'>
           {imgs.map((img) => (
             <div className="wrapper-tweet-img" key={imgs.indexOf(img)}>
               <div

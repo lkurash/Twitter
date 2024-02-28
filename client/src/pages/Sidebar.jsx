@@ -1,8 +1,12 @@
 import { useLocation } from "react-router-dom";
+
+import { ROOT_PAGE_PATH } from "../utils/routs";
+
 import MainSearchBlock from "./MainSearchBlock";
 import MainSectionTrends from "./MainSectionTrends";
 import MainSectionWhoToRead from "./MainSectionWhoToRead";
-import { ROOT_PAGE_PATH } from "../utils/routs";
+
+
 
 const Sidebar = () => {
   const location = useLocation().pathname;

@@ -1,9 +1,10 @@
-import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
-import { Context } from "../../Context";
 
-import { userProfile } from "../../redux/user/user.selectors";
 import { useSelector } from "react-redux";
+import { userProfile } from "../../redux/user/user.selectors";
+
+import { observer } from "mobx-react-lite";
+import { Context } from "../../Context";
 
 const BirthForm = observer(({ user }) => {
   const { profile } = useSelector(userProfile);

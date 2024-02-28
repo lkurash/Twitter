@@ -1,11 +1,12 @@
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { userOptionsActions } from "../redux/user/userOptions/userOptions.actions";
+
 import Logo from "../components/common/Logo";
 import ListFoundUserSearchBlock from "../components/ListFoundUserSearchBlock";
 
 import logo from "../components/Imgs/logo_icon.png";
 import searchIcon from "../components/Imgs/zoom__icon.png";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import { userOptionsActions } from "../redux/user/userOptions/userOptions.actions";
 
 const MainSearchBlock = ({ classNameForm }) => {
   const dispatch = useDispatch();

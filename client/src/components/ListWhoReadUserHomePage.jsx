@@ -1,12 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { Fragment, useEffect, useState } from "react";
 
-import spinner from "../utils/spinner";
-
-import UserInList from "./common/UserInList";
 import { useSelector } from "react-redux";
 import { auth, userListWhoNotReading } from "../redux/user/user.selectors";
+
+import spinner from "../utils/spinner";
+
 import FollowButton from "./buttons/FollowButton";
+import UserInList from "./common/UserInList";
 
 const ListWhoReadUserHomePage = observer(({ users }) => {
   const { loadingStatus } = useSelector(userListWhoNotReading);

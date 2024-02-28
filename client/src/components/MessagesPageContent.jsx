@@ -12,8 +12,12 @@ const MessagesPageContent = observer(() => {
   const [writeMessage, setWriteMessage] = useState(false);
 
   return (
-    <>
-      <MainStikyPanel pageName="Messages" userName={profile.user_name} arrowVisible={true} />
+    <div className="main-content-block">
+      <MainStikyPanel
+        pageName="Messages"
+        userName={profile.user_name}
+        arrowVisible={true}
+      />
       <div className="main-line" />
       <div className="messages-welcome">
         <div className="messages-welcome-desc">
@@ -29,7 +33,7 @@ const MessagesPageContent = observer(() => {
         </div>
       </div>
       <NewMessageComponent writeMessage={writeMessage} />
-    </>
+    </div>
   );
 });
 

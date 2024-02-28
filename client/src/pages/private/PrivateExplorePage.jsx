@@ -27,7 +27,7 @@ const PrivateExplorePage = observer(() => {
 
   return (
     <>
-      <div className="main-content">
+      <div className="main-block">
         <MainSectionTrends
           className="section section-public-page trends"
           mainBlock={true}

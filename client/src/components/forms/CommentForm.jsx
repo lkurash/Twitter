@@ -2,7 +2,9 @@ import { observer } from "mobx-react-lite";
 import { useContext, useState } from "react";
 import { Context } from "../../Context";
 
-import tweetAPI from "../../http/tweetAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { userProfile } from "../../redux/user/user.selectors";
+import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
@@ -10,10 +12,9 @@ import getUserPhoto from "../../utils/getUserPhoto";
 import EmojiButton from "../buttons/EmojiButton";
 
 import close from "../Imgs/x_icon.png";
-import { useSelector } from "react-redux";
-import { userProfile } from "../../redux/user/user.selectors";
 
 const CommentForm = observer(({ tweet }) => {
+  const dispatch = useDispatch();
   const { profile } = useSelector(userProfile);
   const { repliesStore } = useContext(Context);
   const { infoMessageStore } = useContext(Context);
@@ -22,8 +23,11 @@ const CommentForm = observer(({ tweet }) => {
 
   const authUserID = getAuthUserID();
 
-  const createComment = async (tweetId) => {
-    await tweetAPI.createCommentTweetByUser(authUserID, tweetId, commentText);
+  const createComment = (tweetId) => {
+    dispatch(
+      tweetOptionsActions.createCommet(authUserID, tweetId, commentText)
+    );
+    // await tweetAPI.createCommentTweetByUser(authUserID, tweetId, commentText);
 
     infoMessageStore.setTextMessage("Comment has been sent.");
     infoMessageStore.setInfoMessageVisible(true);

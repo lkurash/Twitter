@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { Context } from "../../Context";
 import LocalAuthClient from "../../store/LocalAuthClient";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +10,6 @@ import { userActions } from "../../redux/user/user.actions";
 import { auth } from "../../redux/user/user.selectors";
 
 import spinner from "../../utils/spinner";
-import { Context } from "../../Context";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import { HOME_PAGE_PATH } from "../../utils/routs";
 

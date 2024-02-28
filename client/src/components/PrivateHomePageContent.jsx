@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 
 import { tweetsStore } from "../redux/tweet/tweet.selectors";
@@ -17,6 +17,7 @@ const PrivateHomePageContent = observer(() => {
   const dispatch = useDispatch();
   const [cookies, setCookie] = useCookies();
   const authUserID = getAuthUserID();
+  const ref = useRef();
 
   const [tweetsForYouVisible, setTweetsForYouVisible] = useState(true);
   const [tweetsWhoReadingVisible, setTweetsWhoReadingVisible] = useState(false);
@@ -30,6 +31,10 @@ const PrivateHomePageContent = observer(() => {
     }
     if (cookies.tweetsWhoReading === "false" && tweetsForYouVisible) {
       dispatch(tweetActions.getTweetsForAuthUser(authUserID));
+    }
+
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [cookies.tweetsWhoReading]);
 
@@ -46,7 +51,7 @@ const PrivateHomePageContent = observer(() => {
   };
 
   return (
-    <>
+    <div className="main-content-block" ref={ref}>
       <MainStikyPanel
         homePage={{
           handleClickedButtonForYou,
@@ -68,7 +73,7 @@ const PrivateHomePageContent = observer(() => {
           <TweetsWhoYouRead userTweets={tweetsStore.userTweets} />
         )}
       </>
-    </>
+    </div>
   );
 });
 

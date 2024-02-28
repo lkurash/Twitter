@@ -17,14 +17,14 @@ const LoyoutProfilePage = ({ pathHomeProfileUser }) => {
   const { isAuth } = useSelector(auth);
   const { profile, loadingStatus } = useSelector(userProfileById);
   const [isLoading, setIsLoading] = useState(false);
-  const bindSetup = loadingSetup.setup.bind(userProfileByIdStore);
+  const boundedSetup = loadingSetup.setup.bind(userProfileByIdStore);
 
   useEffect(() => {
-    bindSetup(setIsLoading);
+    boundedSetup(setIsLoading);
   }, [loadingStatus]);
 
   return (
-    <>
+    <div className="main-content-block">
       {isLoading && loadPageUserInfo(isAuth)}
       {loadingStatus === "COMPLETE" && (
         <>
@@ -43,7 +43,7 @@ const LoyoutProfilePage = ({ pathHomeProfileUser }) => {
           </>
         </>
       )}
-    </>
+    </div>
   );
 };
 

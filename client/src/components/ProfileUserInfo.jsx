@@ -4,6 +4,11 @@ import { NavLink, useLocation, useParams } from "react-router-dom";
 
 import { Context } from "../Context";
 
+import { useDispatch, useSelector } from "react-redux";
+import { auth, userProfileById } from "../redux/user/user.selectors";
+import { userPreview } from "../redux/user/userOptions/userOptions.selectors";
+import { userOptionsActions } from "../redux/user/userOptions/userOptions.actions";
+
 import {
   FOLLOWERS_PAGE_PATH,
   FOLLOWINGS_PAGE_PATH,
@@ -23,10 +28,6 @@ import birthdateIcon from "./Imgs/birthday_icon.png";
 import webSiteIcon from "./Imgs/url_web_icon.png";
 import registrationIcon from "./Imgs/month_icon.png";
 import undefinedUserPhoto from "./Imgs/user_photo.jpeg";
-import { useDispatch, useSelector } from "react-redux";
-import { auth, userProfileById } from "../redux/user/user.selectors";
-import { userPreview } from "../redux/user/userOptions/userOptions.selectors";
-import { userOptionsActions } from "../redux/user/userOptions/userOptions.actions";
 
 let BASE_URL = `${process.env.REACT_APP_API_SCHEMA}://${process.env.REACT_APP_API_HOST}`;
 BASE_URL += process.env.REACT_APP_API_PORT
