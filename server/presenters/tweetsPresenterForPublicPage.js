@@ -5,6 +5,12 @@ class TweetsPresenterForPublicPage {
     this.tweetsForPublicPage = [];
   }
 
+  createTweetDate(date) {
+    const tweetDate = new Date(date).toString().split(" ");
+
+    return `${tweetDate[2]} ${tweetDate[1]}. ${tweetDate[3]}`;
+  }
+
   toJSON() {
     this.tweets.forEach((tweet) => {
       this.tweet = {
@@ -28,6 +34,7 @@ class TweetsPresenterForPublicPage {
           user_name: tweet.tweet_user ? tweet.tweet_user.user_name : null,
           photo: tweet.tweet_user ? tweet.tweet_user.photo : null,
         },
+        tweet_createDate: this.createTweetDate(tweet.createdAt),
       };
 
       this.tweetsForPublicPage.push(this.tweet);

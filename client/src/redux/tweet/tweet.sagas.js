@@ -181,8 +181,7 @@ export function* fetchMoreBookmarks(action) {
 }
 
 export function* fetchTweetsByUser(action) {
-  yield put(tweetLoadingActions.requestStartedTweetsAuthUser());
-
+  yield put(tweetLoadingActions.requestStartedUserTweets());
   try {
     const tweets = yield call(
       tweetAPI.getTweetsByUser,
@@ -194,9 +193,7 @@ export function* fetchTweetsByUser(action) {
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
     yield put(
-      tweetLoadingActions.requestFailedTweetsAuthUser(
-        error.response.data.message
-      )
+      tweetLoadingActions.requestFailedUserTweets(error.response.data.message)
     );
   }
 }
@@ -277,7 +274,6 @@ export function* fetchFavoriteTweets(action) {
 
 export function* fetchTweetsForAuthUser(action) {
   yield put(tweetLoadingActions.requestStartedTweetsAuthUser());
-
   try {
     const tweets = yield call(
       tweetAPI.getTweetsForAuthUser,
@@ -352,7 +348,7 @@ export function* fetchAnswers(action) {
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
     yield put(
-      tweetLoadingActions.requestFailedAnswerss(error.response.data.message)
+      tweetLoadingActions.requestFailedAnswers(error.response.data.message)
     );
   }
 }

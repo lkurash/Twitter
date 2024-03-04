@@ -37,7 +37,8 @@
 }
 
 .tweet-form-input {
-  width: 70%;
+  width: 100%;
+  margin-right: 70px;
   height: 80px;
   margin-left: 33px;
 }
@@ -457,6 +458,7 @@
 .tweet-content {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .tweet-info {
@@ -581,17 +583,7 @@
   }
 }
 
-@media (width <= 865px) {
-  .tweet-text {
-    width: 440px;
-  }
-}
-
 @media (width <= 840px) {
-  .tweet-text {
-    width: 400px;
-  }
-
   .max-size-img {
     max-width: 230px;
     max-height: 250px;
@@ -607,13 +599,13 @@
 
 @media (width <= 740px) {
   .tweet-text {
-    width: 350px;
+    width: 400px;
   }
 }
 
 @media (width <= 700px) {
   .tweet-text {
-    width: 330px;
+    width: 400px;
   }
 
   .tweet-user-name,
@@ -624,13 +616,13 @@
 
 @media (width <= 650px) {
   .tweet-text {
-    width: 310px;
+    width: 390px;
   }
 }
 
 @media (width <= 620px) {
   .tweet-text {
-    width: 290px;
+    width: 380px;
   }
 
   .tweet-user-name {
@@ -650,7 +642,7 @@
 @media (width <= 550px) {
   .tweet-text {
     font-size: 15px;
-    width: 280px;
+    width: 290px;
   }
 }
 

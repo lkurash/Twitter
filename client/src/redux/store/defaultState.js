@@ -42,7 +42,7 @@ export const defaultState = {
     visibilityPage: false,
     error: false,
   },
-  
+
   visibilityPublicPage: {
     loadingStatus: "PENDING",
     visibilityPage: false,

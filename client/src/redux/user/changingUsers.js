@@ -46,7 +46,7 @@ class ChangingUsers {
     if (userIndex !== -1) {
       users.splice(userIndex, 1);
     }
-
+    
     return users;
   }
 
