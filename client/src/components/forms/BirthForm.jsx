@@ -1,14 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/user/user.selectors";
+import { setBirthDate } from "../../redux/user/visibilityUserInfo/visibilityUserInfo";
 
-import { observer } from "mobx-react-lite";
-import { Context } from "../../Context";
-
-const BirthForm = observer(({ user }) => {
+const BirthForm = ({ user }) => {
+  const dispatch = useDispatch();
   const { profile } = useSelector(userProfile);
-  const { userStore } = useContext(Context);
   const [userSelectMonth, setUserSelectMonth] = useState("");
   const [userSelectDay, setUserSelectDay] = useState("");
   const [userSelectYear, setUserSelectYear] = useState("");
@@ -84,8 +82,8 @@ const BirthForm = observer(({ user }) => {
   useEffect(() => {
     const createUserBirthdate = () => {
       if (userSelectDay && userSelectMonth && userSelectYear) {
-        userStore.setBirthDate(
-          `${userSelectDay} ${userSelectMonth} ${userSelectYear}`
+        dispatch(
+          setBirthDate(`${userSelectDay} ${userSelectMonth} ${userSelectYear}`)
         );
       }
     };
@@ -154,6 +152,6 @@ const BirthForm = observer(({ user }) => {
       </div>
     </>
   );
-});
+};
 
 export default BirthForm;

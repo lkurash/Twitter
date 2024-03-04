@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useDispatch } from "react-redux";
+import {
+  setLoginPageVisible,
+  setSignUpPageVisible,
+} from "../redux/popupElements/popupForm";
 
-import { observer } from "mobx-react-lite";
-import { Context } from "../Context";
-
-const PublicFooter = observer(() => {
-  const { visiblePopUpStore } = useContext(Context);
+const PublicFooter = () => {
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -17,14 +18,14 @@ const PublicFooter = observer(() => {
           <button
             className="button-login"
             data-testid="footer-login-button"
-            onClick={() => visiblePopUpStore.setLoginPageVisible(true)}
+            onClick={() => dispatch(setLoginPageVisible(true))}
           >
             Log in
           </button>
           <button
             data-testid="footer-signup-button"
             className="button-singup"
-            onClick={() => visiblePopUpStore.setSignPageUpVisible(true)}
+            onClick={() => dispatch(setSignUpPageVisible(true))}
           >
             Sing up
           </button>
@@ -32,5 +33,5 @@ const PublicFooter = observer(() => {
       </footer>
     </>
   );
-});
+};
 export default PublicFooter;

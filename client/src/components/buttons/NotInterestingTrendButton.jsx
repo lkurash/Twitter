@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useRef, useState } from "react";
 
 import { useDispatch } from "react-redux";
@@ -10,7 +9,7 @@ import useOutsideClick from "../../utils/useOutsideClickFunction";
 import dotMenu from "../Imgs/more_dots_icon.png";
 import sad_smile from "../Imgs/sad_smiley_icon.png";
 
-const NotInterestingTrendButton = observer(({ trend }) => {
+const NotInterestingTrendButton = ({ trend }) => {
   const dispatch = useDispatch();
 
   const tooltip = useRef(null);
@@ -55,6 +54,6 @@ const NotInterestingTrendButton = observer(({ trend }) => {
       )}
     </div>
   );
-});
+};
 
 export default NotInterestingTrendButton;

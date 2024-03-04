@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
 import getUserPhoto from "../../utils/getUserPhoto";
@@ -9,7 +8,7 @@ import dotMenu from "../Imgs/more_dots_icon.png";
 import { useSelector } from "react-redux";
 import { userProfile } from "../../redux/user/user.selectors";
 
-const SignOutButton = observer(() => {
+const SignOutButton = () => {
   const { profile, loadingStatus } = useSelector(userProfile);
   const [isLoading, setIsLoading] = useState(true);
   const [buttonSignOutVisible, setButtonSignOutVisible] = useState(false);
@@ -58,6 +57,6 @@ const SignOutButton = observer(() => {
       </button>
     </div>
   );
-});
+};
 
 export default SignOutButton;

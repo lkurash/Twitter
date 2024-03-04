@@ -1,10 +1,13 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
-import { Context } from "../../Context";
+import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/user/user.selectors";
 import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
+import { setActiveButtonReplies } from "../../redux/buttons/buttonsOnTweet";
+import {
+  setInfoMessageVisible,
+  setTextMessage,
+} from "../../redux/popupElements/infoMessage";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 import getUserPhoto from "../../utils/getUserPhoto";
@@ -13,11 +16,9 @@ import EmojiButton from "../buttons/EmojiButton";
 
 import close from "../Imgs/x_icon.png";
 
-const CommentForm = observer(({ tweet }) => {
+const CommentForm = ({ tweet }) => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfile);
-  const { repliesStore } = useContext(Context);
-  const { infoMessageStore } = useContext(Context);
 
   const [commentText, setCommentText] = useState("");
 
@@ -27,11 +28,10 @@ const CommentForm = observer(({ tweet }) => {
     dispatch(
       tweetOptionsActions.createCommet(authUserID, tweetId, commentText)
     );
-    // await tweetAPI.createCommentTweetByUser(authUserID, tweetId, commentText);
 
-    infoMessageStore.setTextMessage("Comment has been sent.");
-    infoMessageStore.setInfoMessageVisible(true);
-    repliesStore.setActiveRepliesOnTweet({});
+    dispatch(setTextMessage("Comment has been sent."));
+    dispatch(setInfoMessageVisible(true));
+    dispatch(setActiveButtonReplies({ id: null }));
   };
 
   if (commentText.length > 255) {
@@ -47,7 +47,7 @@ const CommentForm = observer(({ tweet }) => {
       <div className="comment-form">
         <div
           className="button-close"
-          onClick={() => repliesStore.setActiveRepliesOnTweet({})}
+          onClick={() => dispatch(setActiveButtonReplies({ id: null }))}
         >
           <img src={close} alt="close-icon" className="close-icon" />
         </div>
@@ -87,6 +87,6 @@ const CommentForm = observer(({ tweet }) => {
       </div>
     </div>
   );
-});
+};
 
 export default CommentForm;

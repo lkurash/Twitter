@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 
@@ -13,7 +12,7 @@ import TweetsForYou from "./Tweets/TweetsForYou";
 import TweetsWhoYouRead from "./Tweets/TweetsWhoYouReading";
 import MainStikyPanel from "./MainStikyPanel";
 
-const PrivateHomePageContent = observer(() => {
+const PrivateHomePageContent = () => {
   const dispatch = useDispatch();
   const [cookies, setCookie] = useCookies();
   const authUserID = getAuthUserID();
@@ -80,6 +79,6 @@ const PrivateHomePageContent = observer(() => {
       </>
     </div>
   );
-});
+};
 
 export default PrivateHomePageContent;

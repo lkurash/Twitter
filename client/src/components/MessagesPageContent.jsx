@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
 import { userProfile } from "../redux/user/user.selectors";
@@ -7,7 +6,7 @@ import { useSelector } from "react-redux";
 import NewMessageComponent from "./NewMessageComponent";
 import MainStikyPanel from "./MainStikyPanel";
 
-const MessagesPageContent = observer(() => {
+const MessagesPageContent = () => {
   const { profile } = useSelector(userProfile);
   const [writeMessage, setWriteMessage] = useState(false);
 
@@ -35,6 +34,6 @@ const MessagesPageContent = observer(() => {
       <NewMessageComponent writeMessage={writeMessage} />
     </div>
   );
-});
+};
 
 export default MessagesPageContent;

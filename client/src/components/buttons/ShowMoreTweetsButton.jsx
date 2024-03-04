@@ -4,9 +4,7 @@ import getMoreTweets from "../../utils/getMoreTweets";
 import { useDispatch, useSelector } from "react-redux";
 import { tweetsStore } from "../../redux/tweet/tweet.selectors";
 
-const { observer } = require("mobx-react-lite");
-
-const ShowMoreTweetsButton = observer(({ getTweets, userId, store }) => {
+const ShowMoreTweetsButton = ({ getTweets, userId, store }) => {
   const dispatch = useDispatch();
   const { moreTweets } = useSelector(tweetsStore);
   const [showMoreTweets, setShowMoreTweets] = useState(false);
@@ -33,6 +31,6 @@ const ShowMoreTweetsButton = observer(({ getTweets, userId, store }) => {
       <div className="main-line" />
     </>
   );
-});
+};
 
 export default ShowMoreTweetsButton;

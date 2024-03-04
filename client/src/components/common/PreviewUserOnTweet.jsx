@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +12,7 @@ import getUserPagePath from "../../utils/getUserPagePath";
 
 import FollowButton from "../buttons/FollowButton";
 
-const PreviewUserOnTweet = observer(({ user, setShowProfileUser }) => {
+const PreviewUserOnTweet = ({ user, setShowProfileUser }) => {
   const dispatch = useDispatch();
   const { isAuth } = useSelector(auth);
   const { userInfo } = useSelector(userPreview);
@@ -80,5 +79,5 @@ const PreviewUserOnTweet = observer(({ user, setShowProfileUser }) => {
       </>
     </div>
   );
-});
+};
 export default PreviewUserOnTweet;

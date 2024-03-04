@@ -1,20 +1,26 @@
-import { useContext } from "react";
-import { Context } from "../../Context";
 import { useNavigate } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { popupElementsStateStore } from "../../redux/popupElements/popup.selectors";
+import {
+  setLoginPageVisible,
+  setSignUpPageVisible,
+} from "../../redux/popupElements/popupForm";
 
 import close from "../Imgs/x_icon.png";
 
 function CloseButton({ nav, pageVisible }) {
-  const { visiblePopUpStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const popupState = useSelector(popupElementsStateStore);
   const navigate = useNavigate();
 
   return (
     <div
       className="button-close"
       onClick={() => {
-        if (visiblePopUpStore.loginPage || visiblePopUpStore.signUpPage) {
-          visiblePopUpStore.setLoginPageVisible(false);
-          visiblePopUpStore.setSignPageUpVisible(false);
+        if (popupState.loginPage || popupState.signUpPage) {
+          dispatch(setLoginPageVisible(false));
+          dispatch(setSignUpPageVisible(false));
         } else {
           navigate(nav);
         }

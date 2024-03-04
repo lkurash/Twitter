@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -10,8 +9,7 @@ import { userProfileById } from "../../redux/user/user.selectors";
 import LoyoutProfilePage from "../../components/LoyoutProfilePage";
 import loadPageUserInfo from "../../components/loadComponents/loadPageUserInfo";
 
-
-const ProfileUserPage = observer(() => {
+const ProfileUserPage = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const { loadingStatus } = useSelector(userProfileById);
@@ -32,6 +30,6 @@ const ProfileUserPage = observer(() => {
   }
 
   return <>{loadingStatus === "COMPLETE" && <LoyoutProfilePage />}</>;
-});
+};
 
 export default ProfileUserPage;

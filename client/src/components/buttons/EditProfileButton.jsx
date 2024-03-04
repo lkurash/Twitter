@@ -1,9 +1,8 @@
-import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
 import { EDIT_PROFILE_PAGE_PATH } from "../../utils/routs";
 
-const EditProfileButton = observer(({ userStore }) => {
+const EditProfileButton = () => {
   const navigate = useNavigate();
 
   return (
@@ -15,6 +14,6 @@ const EditProfileButton = observer(({ userStore }) => {
       <span>Edit Profile</span>
     </button>
   );
-});
+};
 
 export default EditProfileButton;

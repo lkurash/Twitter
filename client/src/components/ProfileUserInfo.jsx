@@ -1,8 +1,5 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useLocation, useParams } from "react-router-dom";
-
-import { Context } from "../Context";
 
 import { useDispatch, useSelector } from "react-redux";
 import { auth, userProfileById } from "../redux/user/user.selectors";
@@ -34,14 +31,13 @@ BASE_URL += process.env.REACT_APP_API_PORT
   ? `:${process.env.REACT_APP_API_PORT}`
   : "";
 
-const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
+const ProfileUserInfo = ({ pathHomeProfileUser }) => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfileById);
   const { isAuth } = useSelector(auth);
   const { userInfo, loadingStatus } = useSelector(userPreview);
   const { id } = useParams();
 
-  const { userStore } = useContext(Context);
   const location = useLocation().pathname;
 
   const authUserID = getAuthUserID();
@@ -87,9 +83,7 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
             <>
               <div className="wrapper-follow-button">
                 {(location === PROFILE_PAGE_USER_PATH ||
-                  authUserID === profile.id) && (
-                  <EditProfileButton userStore={userStore} />
-                )}
+                  authUserID === profile.id) && <EditProfileButton />}
 
                 {loadingStatus === "COMPLETE" && authUserID !== profile.id && (
                   <FollowButton
@@ -178,6 +172,6 @@ const ProfileUserInfo = observer(({ pathHomeProfileUser }) => {
       </div>
     </>
   );
-});
+};
 
 export default ProfileUserInfo;

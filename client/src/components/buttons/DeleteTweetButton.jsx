@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useRef, useState } from "react";
 
 import useOutsideClick from "../../utils/useOutsideClickFunction";
@@ -7,7 +6,7 @@ import dotMenu from "../Imgs/more_dots_icon.png";
 import deleteIcon from "../Imgs/delete_trash_icon.png";
 import DeleteTweetConfirmation from "../forms/DeleteTweetConfirmation";
 
-const DeleteTweetButton = observer(({ tweet }) => {
+const DeleteTweetButton = ({ tweet }) => {
   const [deleteButtonVisible, setDeleteButtonVisible] = useState(false);
   const [deleteTweetFormVisible, setDeleteTweetFormVisible] = useState(false);
   const tooltipDeleteTweet = useRef(null);
@@ -52,6 +51,6 @@ const DeleteTweetButton = observer(({ tweet }) => {
       />
     </>
   );
-});
+};
 
 export default DeleteTweetButton;

@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
 import { AUTH_PAGE_PATH } from "../../utils/routs";
@@ -8,7 +7,7 @@ import CloseButton from "../../components/buttons/CloseButton";
 import Logo from "../../components/common/Logo";
 import PreviewRegistrationForm from "../../components/forms/PreviewRegistrationForm";
 
-const SignUpPage = observer(() => {
+const SignUpPage = () => {
   const [checkUserInfo, setCheckUserInfo] = useState(false);
 
   return (
@@ -26,6 +25,6 @@ const SignUpPage = observer(() => {
       </div>
     </div>
   );
-});
+};
 
 export default SignUpPage;

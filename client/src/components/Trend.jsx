@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
 import { TRENDS_PAGE_PATH, PUBLIC_TRENDS_PAGE_PATH } from "../utils/routs";
@@ -7,7 +6,7 @@ import NotInterestingTrendButton from "./buttons/NotInterestingTrendButton";
 import { useSelector } from "react-redux";
 import { auth } from "../redux/user/user.selectors";
 
-const Trend = observer(({ topic }) => {
+const Trend = ({ topic }) => {
   const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
 
@@ -36,6 +35,6 @@ const Trend = observer(({ topic }) => {
       <NotInterestingTrendButton trend={topic} />
     </div>
   );
-});
+};
 
 export default Trend;

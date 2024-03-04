@@ -1,11 +1,17 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
-
-import { Context } from "../../Context";
+import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
 import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
+import { buttonsStateStore } from "../../redux/buttons/buttons.selectors";
+import {
+  setBookmarkedTweet,
+  setHoverBookmarkTweet,
+} from "../../redux/buttons/buttonsOnTweet";
+import {
+  setInfoMessageVisible,
+  setTextMessage,
+} from "../../redux/popupElements/infoMessage";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
@@ -15,11 +21,10 @@ import activeBookmark from "../Imgs/active_bookmark_icon.png";
 import notactiveBookmark from "../Imgs/notactive_bookmark_icon.png";
 import hoverBookmark from "../Imgs/hover_bookmark.png";
 
-const BookmarkButton = observer(({ tweet, bookmark }) => {
-  const { isAuth } = useSelector(auth);
+const BookmarkButton = ({ tweet, bookmark }) => {
   const dispatch = useDispatch();
-  const { favoriteTweetsStore } = useContext(Context);
-  const { infoMessageStore } = useContext(Context);
+  const { isAuth } = useSelector(auth);
+  const buttonState = useSelector(buttonsStateStore);
 
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const authUserID = getAuthUserID();
@@ -27,24 +32,23 @@ const BookmarkButton = observer(({ tweet, bookmark }) => {
   const createFavoriteTweets = async (tweet) => {
     dispatch(tweetOptionsActions.createBookmark(authUserID, tweet.id));
 
-    infoMessageStore.setTextMessage("Added to your Bookmarks.");
-    infoMessageStore.setInfoMessageVisible(true);
+    dispatch(setTextMessage("Added to your Bookmarks."));
+    dispatch(setInfoMessageVisible(true));
   };
 
   const deleteBookmark = async (tweet) => {
     dispatch(tweetOptionsActions.deleteBookmark(authUserID, tweet.id));
-
-    infoMessageStore.setTextMessage("Removed from your Bookmarks.");
-    infoMessageStore.setInfoMessageVisible(true);
+    dispatch(setTextMessage("Removed from your Bookmarks."));
+    dispatch(setInfoMessageVisible(true));
   };
 
   const imgBookmarkButton = (tweet) => {
-    if (tweet.id === favoriteTweetsStore.hoverTweetBookmark.id) {
+    if (tweet.id === buttonState.hoverBookmarkTweet.id) {
       return hoverBookmark;
     }
 
     if (bookmark) {
-      if (tweet.id === favoriteTweetsStore.tweetBookmark.id) {
+      if (tweet.id === buttonState.bookmarkedTweet.id) {
         return activeBookmark;
       }
       return activeBookmark;
@@ -58,7 +62,7 @@ const BookmarkButton = observer(({ tweet, bookmark }) => {
       if (bookmark) {
         deleteBookmark(tweet);
       } else {
-        favoriteTweetsStore.setTweetBookmark(tweet);
+        dispatch(setBookmarkedTweet({ id: tweet.id }));
         createFavoriteTweets(tweet);
       }
     } else {
@@ -81,8 +85,8 @@ const BookmarkButton = observer(({ tweet, bookmark }) => {
         className="tweet-action-button-bookmark"
         key={tweet.id}
         onClick={() => onClickBookmark(tweet)}
-        onMouseEnter={() => favoriteTweetsStore.setHoverTweetBookmark(tweet)}
-        onMouseLeave={() => favoriteTweetsStore.setHoverTweetBookmark({})}
+        onMouseEnter={() => dispatch(setHoverBookmarkTweet({ id: tweet.id }))}
+        onMouseLeave={() => dispatch(setHoverBookmarkTweet({ id: null }))}
       >
         <img
           src={imgBookmarkButton(tweet)}
@@ -92,6 +96,6 @@ const BookmarkButton = observer(({ tweet, bookmark }) => {
       </div>
     </div>
   );
-});
+};
 
 export default BookmarkButton;

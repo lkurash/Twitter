@@ -2,8 +2,19 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-test-renderer";
 import { renderApp } from "../../helpers/renderApp";
+import React from "react";
+
+jest.mock("../../../utils/getAuthUserID", () => () => null);
 
 describe("Render public pages", () => {
+  beforeEach(() => {
+    jest.spyOn(React, "useRef").mockReturnValueOnce({ current: null });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test("render public home page", () => {
     renderApp();
 
@@ -17,7 +28,7 @@ describe("Render public pages", () => {
     expect(buttonExplore).toBeInTheDocument();
   });
 
-  test("should render public explore page when clicked on the button 'Explore'", () => {
+  test("render public explore page when clicked on the button 'Explore'", () => {
     renderApp();
 
     const buttonExplore = screen.getByTestId("nav-explore-page");
@@ -48,7 +59,7 @@ describe("Render public pages", () => {
     expect(homePageAfterClick).toBeInTheDocument();
   });
 
-  test("should render login page when login button is clicked", () => {
+  test("render login page when login button is clicked", () => {
     renderApp();
 
     const buttonLogin = screen.getByTestId("footer-login-button");
@@ -62,7 +73,7 @@ describe("Render public pages", () => {
     expect(loginPage).toBeInTheDocument();
   });
 
-  test("should render signup page when signUp button is clicked", () => {
+  test("render signup page when signUp button is clicked", () => {
     renderApp();
 
     const buttonSignUp = screen.getByTestId("footer-signup-button");

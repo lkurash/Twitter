@@ -1,67 +1,76 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useRef, useState } from "react";
-import { Context } from "../../Context";
+import { useRef, useState } from "react";
 
 import useOutsideClick from "../../utils/useOutsideClickFunction";
+
+import { useDispatch, useSelector } from "react-redux";
+import { visibilityUserInfo } from "../../redux/user/visibilityUserInfo/userInfo.selector";
+import {
+  setUserRegistrationEmail,
+  setUserRegistrationName,
+  setUserRegistrationPassword,
+} from "../../redux/user/visibilityUserInfo/visibilityUserInfo";
+import { checkRegistrationEmail } from "../../utils/checkRegistrationEmail";
 
 import SignUpFormInput from "./SignUpFormInput";
 import BirthForm from "./BirthForm";
 
-const SignUpForm = observer(({ setCheckUserInfo }) => {
-  const { userStore } = useContext(Context);
-
+const SignUpForm = ({ setCheckUserInfo }) => {
+  const dispatch = useDispatch();
+  const userInfoState = useSelector(visibilityUserInfo);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const divRef = useRef(null);
 
-  const [activeDivName, setActivedivName] = useState(false);
-  const [activeDivEmail, setActivedivEmail] = useState(false);
-  const [activeDivPassword, setActivedivPassword] = useState(false);
+  const [activeInputName, setActiveInputName] = useState(false);
+  const [activeInputEmail, setActiveInputEmail] = useState(false);
+  const [activeInputPassword, setActiveInputPassword] = useState(false);
   const [checkName, setCheckName] = useState(true);
   const [checkEmail, setCheckEmail] = useState(true);
   const [checkPassword, setCheckPassword] = useState(true);
 
-  const onClose = () => {
-    setActivedivName(false);
-    setActivedivEmail(false);
-    setActivedivPassword(false);
+  const unActiveInput = () => {
+    setActiveInputName(false);
+    setActiveInputEmail(false);
+    setActiveInputPassword(false);
   };
 
   const checkUserInfo = () => {
     if (
-      userStore.userRegistrationName &&
-      userStore.userRegistrationEmail &&
-      userStore.userRegistrationPassword &&
-      userStore.birthDate
+      userName &&
+      password &&
+      checkRegistrationEmail(email) &&
+      userInfoState.birthDate
     ) {
       setCheckUserInfo(true);
+      return true;
     } else {
-      setCheckName(userStore.userRegistrationName);
-      setCheckEmail(userStore.userRegistrationEmail);
-      setCheckPassword(userStore.userRegistrationPassword);
+      setCheckName(userName);
+      setCheckEmail(checkRegistrationEmail(email));
+      setCheckPassword(password);
+      return false;
     }
   };
 
   const createRegistrationUserInfo = () => {
-    if (userName && email && password && userStore.birthDate) {
-      userStore.setUserRegistrationName(userName);
-      userStore.setUserRegistrationEmail(email);
-      userStore.setUserRegistrationPassword(password);
-
-      checkUserInfo();
+    if (userName && email && password && userInfoState.birthDate) {
+      if (checkUserInfo()) {
+        dispatch(setUserRegistrationName(userName));
+        dispatch(setUserRegistrationEmail(email));
+        dispatch(setUserRegistrationPassword(password));
+      }
     }
   };
 
   const checkActiveButtonNext = () => {
-    if (!userName || !email || !password || !userStore.birthDate) {
+    if (!userName || !email || !password || !userInfoState.birthDate) {
       return "signup-form-button";
     } else {
       return "signup-form-button signup-form-button-active";
     }
   };
 
-  useOutsideClick(divRef, onClose);
+  useOutsideClick(divRef, unActiveInput);
 
   return (
     <main className="signup-form-main">
@@ -71,13 +80,13 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
           placeholder={"Name"}
           value={userName}
           setUserInfo={setUserName}
-          activeInput={activeDivName}
+          activeInput={activeInputName}
           checkUserInfo={checkName}
           length={20}
           onClick={() => {
-            setActivedivName(true);
-            setActivedivPassword(false);
-            setActivedivEmail(false);
+            setActiveInputName(true);
+            setActiveInputPassword(false);
+            setActiveInputEmail(false);
             setCheckName(true);
           }}
           name
@@ -86,13 +95,13 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
           placeholder={"Email"}
           value={email}
           setUserInfo={setEmail}
-          activeInput={activeDivEmail}
+          activeInput={activeInputEmail}
           checkUserInfo={checkEmail}
           length={300}
           onClick={() => {
-            setActivedivEmail(true);
-            setActivedivName(false);
-            setActivedivPassword(false);
+            setActiveInputEmail(true);
+            setActiveInputName(false);
+            setActiveInputPassword(false);
             setCheckEmail(true);
           }}
           email
@@ -101,13 +110,13 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
           placeholder={"Password"}
           value={password}
           setUserInfo={setPassword}
-          activeInput={activeDivPassword}
+          activeInput={activeInputPassword}
           checkUserInfo={checkPassword}
           length={100}
           onClick={() => {
-            setActivedivPassword(true);
-            setActivedivEmail(false);
-            setActivedivName(false);
+            setActiveInputPassword(true);
+            setActiveInputEmail(false);
+            setActiveInputName(false);
             setCheckPassword(true);
           }}
           password
@@ -132,6 +141,6 @@ const SignUpForm = observer(({ setCheckUserInfo }) => {
       </div>
     </main>
   );
-});
+};
 
 export default SignUpForm;

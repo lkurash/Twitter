@@ -1,9 +1,12 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
-import { Context } from "../../Context";
+import { useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
+import { buttonsStateStore } from "../../redux/buttons/buttons.selectors";
+import {
+  setActiveButtonReplies,
+  setHoverRepliesTweet,
+} from "../../redux/buttons/buttonsOnTweet";
 
 import CommentForm from "../forms/CommentForm";
 import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
@@ -11,16 +14,17 @@ import TooltipUserNotAuth from "../common/TooltipUserNotAuth";
 import activeComment from "../Imgs/active_comment_icon.png";
 import notactiveComment from "../Imgs/notactive_comment_icon.png";
 
-const RepliesButton = observer(({ tweet }) => {
+const RepliesButton = ({ tweet }) => {
+  const dispatch = useDispatch();
   const { isAuth } = useSelector(auth);
-  const { repliesStore } = useContext(Context);
+  const buttonState = useSelector(buttonsStateStore);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
 
   const imgRepliesButton = (tweet) => {
-    if (tweet.id === repliesStore.hoverButtonReplies.id) {
+    if (tweet.id === buttonState.hoverRepliesTweet.id) {
       return activeComment;
     }
-    if (tweet.id === repliesStore.activeRepliesOnTweet.id) {
+    if (tweet.id === buttonState.activeButtonReplies.id) {
       return activeComment;
     }
     return notactiveComment;
@@ -28,7 +32,7 @@ const RepliesButton = observer(({ tweet }) => {
 
   const onClickReplies = (tweet) => {
     if (isAuth) {
-      repliesStore.setActiveRepliesOnTweet(tweet);
+      dispatch(setActiveButtonReplies({ id: tweet.id }));
     } else {
       setTooltipUserNotAuth(true);
     }
@@ -49,10 +53,8 @@ const RepliesButton = observer(({ tweet }) => {
         className="tweet-action-button-comments"
         key={tweet.id}
         onClick={() => onClickReplies(tweet)}
-        onMouseEnter={() => {
-          repliesStore.setHoverButtonReplies(tweet);
-        }}
-        onMouseLeave={() => repliesStore.setHoverButtonReplies({})}
+        onMouseEnter={() => dispatch(setHoverRepliesTweet({ id: tweet.id }))}
+        onMouseLeave={() => dispatch(setHoverRepliesTweet({ id: null }))}
       >
         <img
           src={imgRepliesButton(tweet)}
@@ -61,11 +63,11 @@ const RepliesButton = observer(({ tweet }) => {
         />
       </div>
       {tweet.countComments > 0 && <p>{tweet.countComments}</p>}
-      {repliesStore.activeRepliesOnTweet.id === tweet.id && (
+      {buttonState.activeButtonReplies.id === tweet.id && (
         <CommentForm tweet={tweet} />
       )}
     </div>
   );
-});
+};
 
 export default RepliesButton;

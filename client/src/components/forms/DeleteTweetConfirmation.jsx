@@ -1,10 +1,12 @@
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 
-import { Context } from "../../Context";
-
 import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
+import {
+  setInfoMessageVisible,
+  setTextMessage,
+} from "../../redux/popupElements/infoMessage";
 
 import useOutsideClick from "../../utils/useOutsideClickFunction";
 
@@ -14,14 +16,14 @@ const DeleteTweetConfirmation = ({
   deleteTweetFormVisible,
 }) => {
   const dispatch = useDispatch();
-  const { infoMessageStore } = useContext(Context);
   const popUp = useRef(null);
   const deleteTweetForm = useRef(null);
 
   const deleteTweet = (tweet) => {
     dispatch(tweetOptionsActions.deleteTweet(tweet.id));
-    infoMessageStore.setTextMessage("Tweet has been deleted.");
-    infoMessageStore.setInfoMessageVisible(true);
+
+    dispatch(setTextMessage("Tweet has been deleted."));
+    dispatch(setInfoMessageVisible(true));
   };
 
   const onClose = () => {

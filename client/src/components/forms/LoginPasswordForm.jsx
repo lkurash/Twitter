@@ -1,8 +1,10 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SIGNUP_PAGE_PATH } from "../../utils/routs";
-import { Context } from "../../Context";
+import { useDispatch, useSelector } from "react-redux";
+import { setErrorVisible } from "../../redux/popupElements/infoMessage";
+import { popupElementsStateInfoMessage } from "../../redux/popupElements/popup.selectors";
+
 
 const LoginPasswordForm = ({
   email,
@@ -11,7 +13,8 @@ const LoginPasswordForm = ({
   signIn,
   message,
 }) => {
-  const { infoMessageStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const infoMessageStore = useSelector(popupElementsStateInfoMessage);
   const navigate = useNavigate();
 
   const signInKeyDown = (event) => {
@@ -42,7 +45,7 @@ const LoginPasswordForm = ({
               onChange={(e) => {
                 setPassword(e.target.value);
                 if (infoMessageStore.errorVisible) {
-                  infoMessageStore.setErrorVisible(false);
+                  dispatch(setErrorVisible(false));
                 }
               }}
               onKeyDown={(event) => signInKeyDown(event)}

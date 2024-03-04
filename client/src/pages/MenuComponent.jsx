@@ -1,5 +1,3 @@
-import { observer } from "mobx-react-lite";
-
 import { PUBLIC_EXPLORE_PAGE_PATH } from "../utils/routs";
 import privateMenu from "../utils/privateMenu";
 
@@ -11,7 +9,7 @@ import Logo from "../components/common/Logo";
 import hashtag from "../components/Imgs/hashtag_icon.png";
 import SignOutButton from "../components/buttons/SignOutButton";
 
-const MenuComponent = observer(({ page }) => {
+const MenuComponent = ({ page }) => {
   const buttonsAuthUser = privateMenu();
 
   return (
@@ -52,6 +50,6 @@ const MenuComponent = observer(({ page }) => {
       </nav>
     </aside>
   );
-});
+};
 
 export default MenuComponent;

@@ -10,6 +10,7 @@ const SignUpFormInput = ({
   email,
   length,
 }) => {
+  
   const getClassName = () => {
     if (activeInput) {
       return "signup-form-input signup-input-active";

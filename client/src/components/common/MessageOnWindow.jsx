@@ -1,20 +1,23 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useEffect } from "react";
-import { Context } from "../../Context";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setInfoMessageVisible } from "../../redux/popupElements/infoMessage";
+import { popupElementsStateInfoMessage } from "../../redux/popupElements/popup.selectors";
 
-const MessageOnWindow = observer(() => {
-  const { infoMessageStore } = useContext(Context);
+
+const MessageOnWindow = () => {
+  const dispatch = useDispatch();
+  const infoMessageStore = useSelector(popupElementsStateInfoMessage);
 
   useEffect(() => {
     setTimeout(() => {
-      infoMessageStore.setInfoMessageVisible(false);
+      dispatch(setInfoMessageVisible(false));
     }, 3000);
   }, [infoMessageStore.infoMessageVisible]);
 
   return (
     <div className="wrapper-message-on-window">
-      <p>{infoMessageStore.textMessage}</p>
+      <p>{infoMessageStore.text}</p>
     </div>
   );
-});
+};
 export default MessageOnWindow;

@@ -1,10 +1,13 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
-import { Context } from "../../Context";
+import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
 import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
+import {
+  setHoverLikeTweet,
+  setLikedTweet,
+} from "../../redux/buttons/buttonsOnTweet";
+import { buttonsStateStore } from "../../redux/buttons/buttons.selectors";
 
 import getAuthUserID from "../../utils/getAuthUserID";
 
@@ -14,10 +17,10 @@ import activeLike from "../Imgs/active_like.png";
 import notactiveLike from "../Imgs/notactive_like.png";
 import hoverLike from "../Imgs/hover_like.png";
 
-const LikeTweetButton = observer(({ tweet, like, countLikes }) => {
+const LikeTweetButton = ({ tweet, like, countLikes }) => {
   const { isAuth } = useSelector(auth);
   const dispatch = useDispatch();
-  const { tweetsStore } = useContext(Context);
+  const buttonState = useSelector(buttonsStateStore);
   const [tooltipUserNotAuth, setTooltipUserNotAuth] = useState(false);
   const authUserID = getAuthUserID();
 
@@ -30,12 +33,12 @@ const LikeTweetButton = observer(({ tweet, like, countLikes }) => {
   };
 
   const imgLikeButton = (tweet) => {
-    if (tweet.id === tweetsStore.hoverTweetLike.id) {
+    if (tweet.id === buttonState.hoverLikeTweet.id) {
       return hoverLike;
     }
 
     if (like) {
-      if (tweet.id === tweetsStore.likedTweet.id) {
+      if (tweet.id === buttonState.likedTweet.id) {
         return activeLike;
       }
 
@@ -51,7 +54,7 @@ const LikeTweetButton = observer(({ tweet, like, countLikes }) => {
         dislikeTweet(tweet);
       } else {
         createLikeTweet(tweet);
-        tweetsStore.setLikedTweet(tweet);
+        dispatch(setLikedTweet({ id: tweet.id }));
       }
     } else {
       setTooltipUserNotAuth(true);
@@ -75,14 +78,14 @@ const LikeTweetButton = observer(({ tweet, like, countLikes }) => {
           key={tweet.id}
           className="tweet-action-like-img"
           src={imgLikeButton(tweet)}
-          onMouseEnter={() => tweetsStore.sethoverTweetLike(tweet)}
-          onMouseLeave={() => tweetsStore.sethoverTweetLike({})}
+          onMouseEnter={() => dispatch(setHoverLikeTweet({ id: tweet.id }))}
+          onMouseLeave={() => dispatch(setHoverLikeTweet({ id: null }))}
           onClick={() => onClickLike(tweet)}
         />
       </div>
       <p className="tweet-action-count-like">{countLikes > 0 && countLikes}</p>
     </div>
   );
-});
+};
 
 export default LikeTweetButton;

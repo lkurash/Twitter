@@ -130,55 +130,51 @@ export function* deleteBookmark(action) {
 }
 
 export function* createComment(action) {
-  yield put(tweetActions.requestStarted());
-
   try {
     const tweet = yield call(
-      tweetAPI.createRetweetByUser,
+      tweetAPI.createCommentTweetByUser,
       action.userId,
       action.tweetId,
       action.text
     );
 
     yield put(tweetActions.setTweets(tweet));
-  } catch (error) {
-    yield put(tweetActions.requestFailed(error));
-  }
+  } catch (error) {}
 }
 
 export function* countRetweets(action) {
-  yield put(tweetActions.requestStarted());
+  // yield put(tweetActions.requestStarted());
 
   try {
     const tweet = yield call(tweetAPI.getCountRetweets, action.tweetId);
 
     yield put(tweetActions.setTweets(tweet));
   } catch (error) {
-    yield put(tweetActions.requestFailed(error));
+    // yield put(tweetActions.requestFailed(error));
   }
 }
 
 export function* countLikes(action) {
-  yield put(tweetActions.requestStarted());
+  // yield put(tweetActions.requestStarted());
 
   try {
     const tweet = yield call(tweetAPI.getCountLikes, action.tweetId);
 
     yield put(tweetActions.setTweets(tweet));
   } catch (error) {
-    yield put(tweetActions.requestFailed(error));
+    // yield put(tweetActions.requestFailed(error));
   }
 }
 
 export function* countComments(action) {
-  yield put(tweetActions.requestStarted());
+  // yield put(tweetActions.requestStarted());
 
   try {
     const tweet = yield call(tweetAPI.getCountComments, action.tweetId);
 
     yield put(tweetActions.setTweets(tweet));
   } catch (error) {
-    yield put(tweetActions.requestFailed(error));
+    // yield put(tweetActions.requestFailed(error));
   }
 }
 

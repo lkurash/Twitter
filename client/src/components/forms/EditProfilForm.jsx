@@ -1,11 +1,10 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { observer } from "mobx-react-lite";
-import { Context } from "../../Context";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/user/user.selectors";
 import { userActions } from "../../redux/user/user.actions";
+import { visibilityUserInfo } from "../../redux/user/visibilityUserInfo/userInfo.selector";
 
 import getUserPhoto from "../../utils/getUserPhoto";
 import { PROFILE_PAGE_USER_PATH } from "../../utils/routs";
@@ -23,32 +22,28 @@ BASE_URL += process.env.REACT_APP_API_PORT
   ? `:${process.env.REACT_APP_API_PORT}`
   : "";
 
-const EditProfileForm = observer(() => {
+const EditProfileForm = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfile);
-  const { userStore } = useContext(Context);
+  const userInfoState = useSelector(visibilityUserInfo);
   const navigate = useNavigate();
   const authUserID = getAuthUserID();
   const divRef = useRef(null);
-  const [newPhoto, setNewPhoto] = useState("");
-  const [newBackground, setNewBackground] = useState("");
-  const [newName, setNewName] = useState("");
-  const [newAbout, setNewAbout] = useState("");
-  const [newWebSiteUrl, setNewWebSiteUrl] = useState("");
+  const [userPhoto, setUserPhoto] = useState("");
+  const [userBackground, setUserBackground] = useState("");
+  const [userName, setUserName] = useState(profile.user_name);
+  const [userAbout, setUserAbout] = useState(profile.about);
+  const [userWebSite, setUserWebSite] = useState(profile.web_site_url);
   const [activInputName, setActivInputName] = useState(false);
   const [activInputAbout, setActivInputAbout] = useState(false);
   const [activInputSite, setActivInputSite] = useState(false);
 
-  useEffect(() => {
-    userStore.setUserInfo(profile);
-  }, []);
-
   const selectedFilePhoto = (e) => {
-    setNewPhoto(e.target.files[0]);
+    setUserPhoto(e.target.files[0]);
   };
 
   const selectedFileBackground = (e) => {
-    setNewBackground(e.target.files[0]);
+    setUserBackground(e.target.files[0]);
   };
 
   const getUserBackground = () => {
@@ -61,25 +56,22 @@ const EditProfileForm = observer(() => {
   const updateProfile = async () => {
     const formData = new FormData();
 
-    if (newPhoto) {
-      formData.append("photo", newPhoto);
+    if (userPhoto) {
+      formData.append("photo", userPhoto);
     }
-    if (newBackground) {
-      formData.append("background", newBackground);
+    if (userBackground) {
+      formData.append("background", userBackground);
     }
-    if (newName) {
-      formData.append("name", userStore.name);
+    if (userName !== profile.user_name) {
+      formData.append("name", userName);
     }
-    if (newWebSiteUrl) {
-      formData.append(
-        "web_site_url",
-        userStore.webSite && userStore.webSite.trim()
-      );
+    if (userWebSite !== profile.web_site_url) {
+      formData.append("web_site_url", userWebSite && userWebSite.trim());
     }
-    if (newAbout) {
-      formData.append("about", userStore.about && userStore.about.trim());
+    if (userAbout !== profile.about) {
+      formData.append("about", userAbout && userAbout.trim());
     }
-    formData.append("birthdate", userStore.birthDate);
+    formData.append("birthdate", userInfoState.birthDate);
 
     dispatch(userActions.updateProfile(authUserID, formData));
     navigate(PROFILE_PAGE_USER_PATH);
@@ -110,8 +102,8 @@ const EditProfileForm = observer(() => {
       <main className="edit-profile-form-main">
         <div className="edit-profile-background">
           <div className="edit-profile-background-photo">
-            {newBackground ? (
-              <img src={URL.createObjectURL(newBackground)} alt="background" />
+            {userBackground ? (
+              <img src={URL.createObjectURL(userBackground)} alt="background" />
             ) : (
               <img src={getUserBackground()} alt="background" />
             )}
@@ -129,8 +121,8 @@ const EditProfileForm = observer(() => {
             </div>
           </div>
           <div className="edit-profile-form-photo">
-            {newPhoto ? (
-              <img src={URL.createObjectURL(newPhoto)} alt="user" />
+            {userPhoto ? (
+              <img src={URL.createObjectURL(userPhoto)} alt="user" />
             ) : (
               <img src={getUserPhoto(profile)} alt="user" />
             )}
@@ -163,10 +155,9 @@ const EditProfileForm = observer(() => {
             <h4>Name</h4>
             <input
               name="editProfileFormInputName"
-              value={userStore.name || ""}
+              value={userName}
               onChange={(e) => {
-                userStore.setName(e.target.value);
-                setNewName(true);
+                setUserName(e.target.value);
               }}
             />
           </div>
@@ -186,10 +177,9 @@ const EditProfileForm = observer(() => {
             <h4>About me</h4>
             <textarea
               name="editProfileFormInputAbout"
-              value={userStore.about || ""}
+              value={userAbout}
               onChange={(e) => {
-                userStore.setAbout(e.target.value);
-                setNewAbout(true);
+                setUserAbout(e.target.value);
               }}
             />
           </div>
@@ -207,10 +197,9 @@ const EditProfileForm = observer(() => {
             <h4>Web site</h4>
             <input
               name="editProfileFormInputWebSite"
-              value={userStore.webSite || ""}
+              value={userWebSite}
               onChange={(e) => {
-                userStore.setWebSite(e.target.value);
-                setNewWebSiteUrl(true);
+                setUserWebSite(e.target.value);
               }}
             />
           </div>
@@ -222,6 +211,6 @@ const EditProfileForm = observer(() => {
       </main>
     </div>
   );
-});
+};
 
 export default EditProfileForm;

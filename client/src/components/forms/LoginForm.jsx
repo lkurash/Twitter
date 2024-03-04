@@ -1,13 +1,16 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { Context } from "../../Context";
 import LocalAuthClient from "../../store/LocalAuthClient";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../redux/user/user.actions";
 import { auth } from "../../redux/user/user.selectors";
+import { setLoginPageVisible } from "../../redux/popupElements/popupForm";
+import {
+  setErrorVisible,
+  setTextErrorMessage,
+} from "../../redux/popupElements/infoMessage";
 
 import spinner from "../../utils/spinner";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
@@ -16,13 +19,10 @@ import { HOME_PAGE_PATH } from "../../utils/routs";
 import LoginPasswordForm from "./LoginPasswordForm";
 import LoginEmailForm from "./LoginEmailForm";
 
-const LoginForm = observer(() => {
+const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation().pathname;
-
-  const { visiblePopUpStore } = useContext(Context);
-  const { infoMessageStore } = useContext(Context);
   const { token, error } = useSelector(auth);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -56,14 +56,15 @@ const LoginForm = observer(() => {
       }
       setTimeout(() => {
         dispatch(userActions.getAuth(getFlagIsAuth()));
-        visiblePopUpStore.setLoginPageVisible(false);
+        dispatch(setLoginPageVisible(false));
         setIsLoading(false);
       }, 500);
     }
     if (error) {
       setIsLoading(false);
-      infoMessageStore.setTextErrorMessage(error);
-      infoMessageStore.setErrorVisible(true);
+      dispatch(setTextErrorMessage(error));
+      dispatch(setErrorVisible(true));
+
       if (error.includes("password")) {
         setPasswordFieldVisible(true);
       } else {
@@ -97,6 +98,6 @@ const LoginForm = observer(() => {
       )}
     </>
   );
-});
+};
 
 export default LoginForm;

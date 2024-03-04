@@ -1,7 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Context } from "../../Context";
+import { useDispatch, useSelector } from "react-redux";
+import { popupElementsStateInfoMessage } from "../../redux/popupElements/popup.selectors";
+import { setErrorVisible } from "../../redux/popupElements/infoMessage";
 
 import { SIGNUP_PAGE_PATH } from "../../utils/routs";
 
@@ -11,7 +13,8 @@ const LoginEmailForm = ({
   showPasswordField,
   setEmailFieldVisible,
 }) => {
-  const { infoMessageStore } = useContext(Context);
+  const dispatch = useDispatch();
+  const infoMessageStore = useSelector(popupElementsStateInfoMessage);
   const navigate = useNavigate();
   const [emptyEmail, setEmptyEmail] = useState(false);
 
@@ -48,7 +51,7 @@ const LoginEmailForm = ({
                 setEmail(e.target.value);
                 if (infoMessageStore.errorVisible) {
                   setEmptyEmail(false);
-                  infoMessageStore.setErrorVisible(false);
+                  dispatch(setErrorVisible(false));
                 }
               }}
               onKeyDown={(event) => nextKeyDown(event)}
@@ -68,7 +71,7 @@ const LoginEmailForm = ({
             } else {
               setEmail("");
               setEmptyEmail(true);
-              infoMessageStore.setErrorVisible(true);
+              dispatch(setErrorVisible(true));
             }
           }}
         >

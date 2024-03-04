@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { observer } from "mobx-react-lite";
 
 import { useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
@@ -7,7 +6,7 @@ import { auth } from "../../redux/user/user.selectors";
 import getUserPhoto from "../../utils/getUserPhoto";
 import getUserPagePath from "../../utils/getUserPagePath";
 
-const UserInList = observer(({ profile }) => {
+const UserInList = ({ profile }) => {
   const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
 
@@ -23,6 +22,6 @@ const UserInList = observer(({ profile }) => {
       </div>
     </div>
   );
-});
+};
 
 export default UserInList;

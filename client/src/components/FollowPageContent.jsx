@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 import { useSelector } from "react-redux";
@@ -12,7 +11,7 @@ import {
   USER_FOLLOWING_PAGE_PATH,
 } from "../utils/routs";
 
-const FollowPageContent = observer(() => {
+const FollowPageContent =() => {
   const { profile } = useSelector(userProfileById);
   const location = useLocation().pathname;
   const pathHomeProfileUser = location.includes("home");
@@ -61,6 +60,6 @@ const FollowPageContent = observer(() => {
       <Outlet />
     </div>
   );
-});
+};
 
 export default FollowPageContent;

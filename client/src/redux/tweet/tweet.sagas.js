@@ -274,7 +274,6 @@ export function* fetchFavoriteTweets(action) {
 
 export function* fetchTweetsForAuthUser(action) {
   yield put(tweetLoadingActions.requestStartedTweetsAuthUser());
-
   try {
     const tweets = yield call(
       tweetAPI.getTweetsForAuthUser,
@@ -349,7 +348,7 @@ export function* fetchAnswers(action) {
     yield put(tweetActions.setTweets(tweets));
   } catch (error) {
     yield put(
-      tweetLoadingActions.requestFailedAnswerss(error.response.data.message)
+      tweetLoadingActions.requestFailedAnswers(error.response.data.message)
     );
   }
 }

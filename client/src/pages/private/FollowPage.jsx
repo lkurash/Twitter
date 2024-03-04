@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -10,7 +9,7 @@ import getAuthUserID from "../../utils/getAuthUserID";
 
 import FollowPageContent from "../../components/FollowPageContent";
 
-const FollowPage = observer(() => {
+const FollowPage = () => {
   const dispatch = useDispatch();
   const { loadingStatus } = useSelector(userProfileById);
   const { id } = useParams();
@@ -28,6 +27,6 @@ const FollowPage = observer(() => {
       <FollowPageContent />
     </>
   );
-});
+};
 
 export default FollowPage;

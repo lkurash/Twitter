@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -11,7 +10,7 @@ import path from "../../utils/path";
 
 import PublicProfileUser from "../../components/PublicProfileUser";
 
-const PublicProfilePageUser = observer(() => {
+const PublicProfilePageUser = () => {
   const dispatch = useDispatch();
   const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
@@ -31,6 +30,6 @@ const PublicProfilePageUser = observer(() => {
       <PublicProfileUser />
     </div>
   );
-});
+};
 
 export default PublicProfilePageUser;

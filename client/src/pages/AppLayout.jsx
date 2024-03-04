@@ -1,7 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react";
-import { observer } from "mobx-react-lite";
-import { Context } from "../Context";
+import { useEffect, useRef, useState } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -28,11 +26,16 @@ import {
   visibilityPrivatePage,
   visibilityPublicPage,
 } from "../redux/visibilityPage/visibilityPage.selectors";
+import {
+  popupElementsStateStore,
+  popupElementsStateInfoMessage,
+} from "../redux/popupElements/popup.selectors";
+
 import MessageAboutLoading from "../components/common/MessageAboutLoading";
 
-const AppLayout = observer(() => {
-  const { infoMessageStore } = useContext(Context);
-  const { visiblePopUpStore } = useContext(Context);
+const AppLayout = () => {
+  const infoMessageStore = useSelector(popupElementsStateInfoMessage);
+  const popupState = useSelector(popupElementsStateStore);
   const visibilityPublic = useSelector(visibilityPublicPage);
   const visibilityPrivate = useSelector(visibilityPrivatePage);
   const authUserID = getAuthUserID();
@@ -81,8 +84,8 @@ const AppLayout = observer(() => {
             </main>
             <Sidebar />
           </div>
-          {visiblePopUpStore.loginPage && <LoginPage />}
-          {visiblePopUpStore.signUpPage && <SignUpPage />}
+          {popupState.loginPage && <LoginPage />}
+          {popupState.signUpPage && <SignUpPage />}
 
           {infoMessageStore.infoMessageVisible && (
             <div className="message-on-window">
@@ -95,5 +98,5 @@ const AppLayout = observer(() => {
       )}
     </div>
   );
-});
+};
 export default AppLayout;

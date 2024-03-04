@@ -1,10 +1,12 @@
-import { observer } from "mobx-react-lite";
-import { useContext, useState } from "react";
-import { Context } from "../../Context";
+import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/user/user.selectors";
 import { tweetOptionsActions } from "../../redux/tweet/tweetOptions/tweetOptions.actions";
+import {
+  setInfoMessageVisible,
+  setTextMessage,
+} from "../../redux/popupElements/infoMessage";
 
 import getUserPhoto from "../../utils/getUserPhoto";
 import EmojiButton from "../buttons/EmojiButton";
@@ -12,10 +14,10 @@ import EmojiButton from "../buttons/EmojiButton";
 import imgFile from "../Imgs/file.png";
 import ImgsInTweetForm from "./ImgsInTweetForm";
 
-const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
+
+const TweetForm = ({ tweetFormVisible, setTweetFormVisible }) => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfile);
-  const { infoMessageStore } = useContext(Context);
   const [imgs, setImgs] = useState([]);
   const [changesImgsList, setChangesImgsList] = useState(false);
   const [text, setText] = useState("");
@@ -24,8 +26,8 @@ const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
   const getSelectedImgFile = (e) => {
     let arr = [];
     if (e.target.files.length > 4) {
-      infoMessageStore.setTextMessage("Select up to 4 photos.");
-      infoMessageStore.setInfoMessageVisible(true);
+      dispatch(setTextMessage("Select up to 4 photos."));
+      dispatch(setInfoMessageVisible(true));
     } else {
       for (let index = 0; index < e.target.files.length; index++) {
         arr.push(e.target.files[index]);
@@ -52,8 +54,9 @@ const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
     setTimeout(() => {
       dispatch(tweetOptionsActions.createTweet(formData()));
       setIsLoading(false);
-      infoMessageStore.setTextMessage("Tweet has been sent.");
-      infoMessageStore.setInfoMessageVisible(true);
+
+      dispatch(setTextMessage("Tweet has been sent."));
+      dispatch(setInfoMessageVisible(true));
     }, 1000);
 
     setText("");
@@ -138,6 +141,6 @@ const TweetForm = observer(({ tweetFormVisible, setTweetFormVisible }) => {
       </div>
     </>
   );
-});
+};
 
 export default TweetForm;

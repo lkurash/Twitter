@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 
 import { userProfileById } from "../redux/user/user.selectors";
@@ -9,7 +8,7 @@ import loadPageUserInfo from "./loadComponents/loadPageUserInfo";
 import ProfileUserInfo from "./ProfileUserInfo";
 import UserPageTweetsContent from "./UserPageTweetsContent";
 
-const PublicProfileUser = observer(() => {
+const PublicProfileUser = () => {
   const { profile } = useSelector(userProfileById);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +36,6 @@ const PublicProfileUser = observer(() => {
       </div>
     </div>
   );
-});
+};
 
 export default PublicProfileUser;

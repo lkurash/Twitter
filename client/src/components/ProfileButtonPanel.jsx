@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { NavLink, useParams } from "react-router-dom";
 import {
   USER_PAGE_ANSWERS_PATH,
@@ -12,7 +11,7 @@ import {
 } from "../utils/routs";
 import path from "../utils/path";
 
-const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
+const ProfileButtonPanel = ({ pathHomeProfileUser }) => {
   const { id } = useParams();
 
   const getClassNameActiveButton = (isActive) =>
@@ -84,6 +83,6 @@ const ProfileButtonPanel = observer(({ pathHomeProfileUser }) => {
       <div className="main-line" />
     </>
   );
-});
+};
 
 export default ProfileButtonPanel;

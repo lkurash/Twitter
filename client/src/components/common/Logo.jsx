@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
 import { HOME_PAGE_PATH, ROOT_PAGE_PATH } from "../../utils/routs";
@@ -7,7 +6,7 @@ import logo from "../Imgs/logo_icon.png";
 import { useSelector } from "react-redux";
 import { auth } from "../../redux/user/user.selectors";
 
-const Logo = observer(({ className, testid }) => {
+const Logo = ({ className, testid }) => {
   const { isAuth } = useSelector(auth);
   const navigate = useNavigate();
 
@@ -36,6 +35,6 @@ const Logo = observer(({ className, testid }) => {
       )}
     </>
   );
-});
+};
 
 export default Logo;
