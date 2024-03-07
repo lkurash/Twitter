@@ -14,7 +14,7 @@ import visibilityUserInfo from "../user/visibilityUserInfo/visibilityUserInfo";
 
 const sagaMiddleware = createSagaMiddleware();
 
-const appReducer = combineReducers({
+export const appReducer = combineReducers({
   tweetsStore: tweetReducer,
   userStore: userReducer,
   userPreview: userOptionsReducer,

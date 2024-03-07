@@ -26,7 +26,7 @@ const CommentForm = ({ tweet }) => {
 
   const createComment = (tweetId) => {
     dispatch(
-      tweetOptionsActions.createCommet(authUserID, tweetId, commentText)
+      tweetOptionsActions.createComment(authUserID, tweetId, commentText)
     );
 
     dispatch(setTextMessage("Comment has been sent."));
@@ -70,6 +70,7 @@ const CommentForm = ({ tweet }) => {
             </div>
             <div className="comment-wrapper-input">
               <textarea
+                data-testid="comment-textarea"
                 value={commentText}
                 className="tweet-input-text"
                 onChange={(e) => setCommentText(e.target.value)}
@@ -80,7 +81,10 @@ const CommentForm = ({ tweet }) => {
         </div>
         <div className="comment-panel">
           <EmojiButton addEmojiInTweetText={addEmojiInTweetText} />
-          <button onClick={() => createComment(tweet.id)}>
+          <button
+            data-testid="button-create-comment"
+            onClick={() => commentText && createComment(tweet.id)}
+          >
             <span>Answer</span>
           </button>
         </div>

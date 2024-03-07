@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setErrorVisible } from "../../redux/popupElements/infoMessage";
 import { popupElementsStateInfoMessage } from "../../redux/popupElements/popup.selectors";
 
-
 const LoginPasswordForm = ({
   email,
   password,
@@ -38,6 +37,7 @@ const LoginPasswordForm = ({
           <label className="label-input-login" htmlFor="input-form-password">
             <p className="password-form-hint">Password</p>
             <input
+              id="password"
               name="loginFormInput"
               type="password"
               className="input-form-password"
@@ -59,14 +59,19 @@ const LoginPasswordForm = ({
           <p>Forgot password?</p>
         </div>
         <div className="button password-form-button">
-          <button className="login-form-button" type="button" onClick={signIn}>
+          <button
+            id="logIn"
+            className="login-form-button"
+            type="button"
+            onClick={signIn}
+          >
             Log in
           </button>
         </div>
         <div className="password-form-footer">
           <p>Don’t have an account?</p>
           <button
-            type="button"
+            type="submit"
             className="login-form-button-singup"
             onClick={() => navigate(SIGNUP_PAGE_PATH)}
           >

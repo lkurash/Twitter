@@ -77,7 +77,7 @@ class TweetOptionsActions {
     };
   }
 
-  createCommet(userId, tweetId, text) {
+  createComment(userId, tweetId, text) {
     return {
       type: CREATE_COMMET,
       userId,

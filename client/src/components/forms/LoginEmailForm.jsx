@@ -42,7 +42,7 @@ const LoginEmailForm = ({
               Phone, email address, or username
             </p>
             <input
-              id="input-login"
+              id="email"
               min={1}
               autoFocus
               className="input-form-email"
@@ -62,6 +62,7 @@ const LoginEmailForm = ({
           {infoMessageStore.errorVisible && infoMessageStore.textErrorMessage}
         </p>
         <button
+          id="next"
           className="login-form-button"
           type="button"
           onClick={() => {
@@ -84,7 +85,7 @@ const LoginEmailForm = ({
       <div className="login-form-footer">
         Don’t have an account?
         <button
-          type="button"
+          type="submit"
           className="login-form-button-singup"
           onClick={() => navigate(SIGNUP_PAGE_PATH)}
         >

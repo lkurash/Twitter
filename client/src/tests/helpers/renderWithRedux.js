@@ -1,14 +1,26 @@
+import React from "react";
 import { render } from "@testing-library/react";
-
-import { CookiesProvider } from "react-cookie";
 import { Provider } from "react-redux";
 
-import { store } from "../../redux/store";
+import { configureStore } from "@reduxjs/toolkit";
+import { appReducer } from "../../redux/store";
 
-export const renderWithRedux = (components) => {
-  return render(
-    <Provider store={store}>
-      <CookiesProvider>{components}</CookiesProvider>
-    </Provider>
-  );
-};
+export function renderWithRedux(
+  component,
+  {
+    preloadedState = {},
+    store = configureStore({
+      reducer: appReducer,
+      preloadedState,
+    }),
+    ...renderOptions
+  } = {}
+) {
+  function Wrapper({ children }) {
+    return <Provider store={store}>{children}</Provider>;
+  }
+  return {
+    store,
+    ...render(component, { wrapper: Wrapper, ...renderOptions }),
+  };
+}

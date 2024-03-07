@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setInfoMessageVisible } from "../../redux/popupElements/infoMessage";
 import { popupElementsStateInfoMessage } from "../../redux/popupElements/popup.selectors";
 
-
 const MessageOnWindow = () => {
   const dispatch = useDispatch();
   const infoMessageStore = useSelector(popupElementsStateInfoMessage);
@@ -16,7 +15,7 @@ const MessageOnWindow = () => {
 
   return (
     <div className="wrapper-message-on-window">
-      <p>{infoMessageStore.text}</p>
+      <p data-testid="message">{infoMessageStore.text}</p>
     </div>
   );
 };

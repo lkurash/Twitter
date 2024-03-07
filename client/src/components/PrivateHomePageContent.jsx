@@ -55,7 +55,7 @@ const PrivateHomePageContent = () => {
   };
 
   return (
-    <div className="main-content-block" ref={ref}>
+    <div className="main-content-block" ref={ref} id="private-home-page">
       <MainStikyPanel
         homePage={{
           handleClickedButtonForYou,

@@ -33,6 +33,7 @@ const LayoutLoginAndSignUpPage = () => {
         </div>
         <div className="auth-page-button-panel">
           <button
+            id="signup"
             className="auth-page-button button-create-account"
             onClick={() => navigate(SIGNUP_PAGE_PATH)}
           >
@@ -46,6 +47,7 @@ const LayoutLoginAndSignUpPage = () => {
             Already have an account?
           </h4>
           <button
+            id="login"
             className="auth-page-button button-sign-in"
             onClick={() => navigate(LOGIN_PAGE_PATH)}
           >
