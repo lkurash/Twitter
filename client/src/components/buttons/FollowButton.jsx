@@ -35,6 +35,7 @@ const FollowButton = ({ follow, profile, userFollowingIds, classButton }) => {
     <>
       {follow ? (
         <button
+          data-testid="button-unfollow"
           key={profile.id}
           className={`follow-page-main-button-following ${classButton} button-following-hover`}
           onMouseEnter={() =>
@@ -47,6 +48,7 @@ const FollowButton = ({ follow, profile, userFollowingIds, classButton }) => {
         </button>
       ) : (
         <button
+          data-testid="button-follow"
           type="submit"
           className={`follow-page-main-button-following ${classButton} `}
           onClick={() => {

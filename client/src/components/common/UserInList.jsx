@@ -12,6 +12,7 @@ const UserInList = ({ profile }) => {
 
   return (
     <div
+      data-testid="founded-user"
       className="user-info-in-user-list"
       onClick={() => navigate(getUserPagePath(isAuth, profile.id))}
     >

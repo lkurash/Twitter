@@ -38,7 +38,7 @@ const LoginPasswordForm = ({
             <p className="password-form-hint">Password</p>
             <input
               id="password"
-              name="loginFormInput"
+              name="password"
               type="password"
               className="input-form-password"
               value={password}
@@ -60,7 +60,7 @@ const LoginPasswordForm = ({
         </div>
         <div className="button password-form-button">
           <button
-            id="logIn"
+            name="logIn"
             className="login-form-button"
             type="button"
             onClick={signIn}
@@ -71,6 +71,7 @@ const LoginPasswordForm = ({
         <div className="password-form-footer">
           <p>Don’t have an account?</p>
           <button
+            name="signup"
             type="submit"
             className="login-form-button-singup"
             onClick={() => navigate(SIGNUP_PAGE_PATH)}

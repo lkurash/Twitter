@@ -14,7 +14,6 @@ import EmojiButton from "../buttons/EmojiButton";
 import imgFile from "../Imgs/file.png";
 import ImgsInTweetForm from "./ImgsInTweetForm";
 
-
 const TweetForm = ({ tweetFormVisible, setTweetFormVisible }) => {
   const dispatch = useDispatch();
   const { profile } = useSelector(userProfile);
@@ -99,7 +98,7 @@ const TweetForm = ({ tweetFormVisible, setTweetFormVisible }) => {
             </div>
             <div className="tweet-form-input">
               <textarea
-                name="tweetInputForm"
+                name="tweetInput"
                 value={text}
                 autoFocus={tweetFormVisible}
                 className="tweet-input-text"
@@ -131,6 +130,7 @@ const TweetForm = ({ tweetFormVisible, setTweetFormVisible }) => {
             <EmojiButton addEmojiInTweetText={addEmojiInTweetText} />
           </div>
           <button
+            name="write-tweet"
             className="tweet-panel-button-tweet"
             type="button"
             onClick={handleTweetFormSubmit}

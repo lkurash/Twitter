@@ -95,6 +95,7 @@ const RetweetTweetButton = ({ tweet, retweet }) => {
         onMouseLeave={() => dispatch(setHoverRetweetTweet({ id: null }))}
       >
         <img
+          id={retweet ? "retweeted" : "retweet"}
           src={imgRetweetButton(tweet)}
           alt="button retweet"
           className="tweet-action-retweet-img"

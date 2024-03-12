@@ -77,6 +77,7 @@ const SignUpForm = ({ setCheckUserInfo }) => {
       <h2>Create your account</h2>
       <div ref={divRef}>
         <SignUpFormInput
+          name="userName"
           placeholder={"Name"}
           value={userName}
           setUserInfo={setUserName}
@@ -89,9 +90,10 @@ const SignUpForm = ({ setCheckUserInfo }) => {
             setActiveInputEmail(false);
             setCheckName(true);
           }}
-          name
+          userName
         />
         <SignUpFormInput
+          name="email"
           placeholder={"Email"}
           value={email}
           setUserInfo={setEmail}
@@ -107,6 +109,7 @@ const SignUpForm = ({ setCheckUserInfo }) => {
           email
         />
         <SignUpFormInput
+          name="password"
           placeholder={"Password"}
           value={password}
           setUserInfo={setPassword}
@@ -132,6 +135,7 @@ const SignUpForm = ({ setCheckUserInfo }) => {
       <div className="signup-birth-form">
         <BirthForm />
         <button
+          name="next"
           className={checkActiveButtonNext()}
           type="submit"
           onClick={createRegistrationUserInfo}

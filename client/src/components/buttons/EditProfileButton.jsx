@@ -7,6 +7,7 @@ const EditProfileButton = () => {
 
   return (
     <button
+      data-testid="button-edit-profile"
       type="button"
       className="button-edit-profile"
       onClick={() => navigate(EDIT_PROFILE_PAGE_PATH)}

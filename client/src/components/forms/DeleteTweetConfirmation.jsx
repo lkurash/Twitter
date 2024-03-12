@@ -43,6 +43,7 @@ const DeleteTweetConfirmation = ({
     >
       <div className="backgraund-confirmation" ref={popUp}>
         <div
+          id="confirmation"
           className="confirmation-message wrapper-border"
           ref={deleteTweetForm}
         >
@@ -54,6 +55,7 @@ const DeleteTweetConfirmation = ({
           </p>
           <div className="confirmation-message-buttons">
             <button
+              data-testid="confirmation-button-delete"
               type="button"
               className="confirmation-message-button button-delete"
               onClick={() => {

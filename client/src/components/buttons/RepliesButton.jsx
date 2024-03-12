@@ -57,6 +57,7 @@ const RepliesButton = ({ tweet }) => {
         onMouseLeave={() => dispatch(setHoverRepliesTweet({ id: null }))}
       >
         <img
+          data-testid="button-comment"
           src={imgRepliesButton(tweet)}
           alt="Comment"
           className="tweet-action-comments-img"

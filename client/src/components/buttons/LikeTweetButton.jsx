@@ -74,6 +74,7 @@ const LikeTweetButton = ({ tweet, like, countLikes }) => {
       />
       <div className="tweet-action-button-like">
         <img
+          id={like ? 'liked' : 'like'}
           alt="Like"
           key={tweet.id}
           className="tweet-action-like-img"

@@ -29,7 +29,7 @@ const DeleteTweetButton = ({ tweet }) => {
             setDeleteTweetFormVisible(true);
           }}
         >
-          <button className="button-delete-tweet" type="reset">
+          <button className="button-delete-tweet" type="reset" data-testid='delete'>
             <img alt="Delete" src={deleteIcon} className="delete-icon" />
             <span>Delete</span>
           </button>

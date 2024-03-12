@@ -107,6 +107,7 @@ const ProfileUserInfo = ({ pathHomeProfileUser }) => {
         </article>
         <div className="profile-button-panel-followers">
           <NavLink
+            data-testid="nav-to-followings"
             onClick={() => {
               if (!authUserID) {
                 setTooltipUserNotAuth(true);

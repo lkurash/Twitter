@@ -93,6 +93,7 @@ const EditProfileForm = () => {
           <h4 className="edit-profile-title">Edit Profile</h4>
         </div>
         <button
+          data-testid="save-new-profile"
           className="edit-profile-form-button-save"
           onClick={updateProfile}
         >
@@ -155,7 +156,7 @@ const EditProfileForm = () => {
             <h4>Name</h4>
             <input
               name="editProfileFormInputName"
-              value={userName}
+              value={userName || ""}
               onChange={(e) => {
                 setUserName(e.target.value);
               }}
@@ -177,7 +178,7 @@ const EditProfileForm = () => {
             <h4>About me</h4>
             <textarea
               name="editProfileFormInputAbout"
-              value={userAbout}
+              value={userAbout || ""}
               onChange={(e) => {
                 setUserAbout(e.target.value);
               }}
@@ -197,7 +198,7 @@ const EditProfileForm = () => {
             <h4>Web site</h4>
             <input
               name="editProfileFormInputWebSite"
-              value={userWebSite}
+              value={userWebSite || ""}
               onChange={(e) => {
                 setUserWebSite(e.target.value);
               }}

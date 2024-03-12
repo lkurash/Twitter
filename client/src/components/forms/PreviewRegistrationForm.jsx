@@ -13,7 +13,6 @@ import spinner from "../../utils/spinner";
 import getFlagIsAuth from "../../utils/getFlagIsAuth";
 import { HOME_PAGE_PATH } from "../../utils/routs";
 
-
 const PreviewRegistrationForm = ({ checkUserInfo }) => {
   const dispatch = useDispatch();
   const { token } = useSelector(auth);
@@ -83,6 +82,7 @@ const PreviewRegistrationForm = ({ checkUserInfo }) => {
           </div>
 
           <button
+            name="signUp"
             className="signup-form-button signup-form-button-active"
             type="submit"
             onClick={signUp}

@@ -42,7 +42,7 @@ const LoginEmailForm = ({
               Phone, email address, or username
             </p>
             <input
-              id="email"
+              name="email"
               min={1}
               autoFocus
               className="input-form-email"
@@ -62,7 +62,7 @@ const LoginEmailForm = ({
           {infoMessageStore.errorVisible && infoMessageStore.textErrorMessage}
         </p>
         <button
-          id="next"
+          name="next"
           className="login-form-button"
           type="button"
           onClick={() => {

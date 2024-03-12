@@ -16,14 +16,14 @@ const PublicFooter = () => {
         </div>
         <div className="footer-buttons">
           <button
+            name="footer-login-button"
             className="button-login"
-            data-testid="footer-login-button"
             onClick={() => dispatch(setLoginPageVisible(true))}
           >
             Log in
           </button>
           <button
-            data-testid="footer-signup-button"
+            name="footer-signup-button"
             className="button-singup"
             onClick={() => dispatch(setSignUpPageVisible(true))}
           >

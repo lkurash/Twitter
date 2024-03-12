@@ -89,6 +89,7 @@ const BookmarkButton = ({ tweet, bookmark }) => {
         onMouseLeave={() => dispatch(setHoverBookmarkTweet({ id: null }))}
       >
         <img
+          id={bookmark ? "bookmarked" : "bookmark"}
           src={imgBookmarkButton(tweet)}
           alt="Bookmark"
           className="tweet-action-bookmark-img"

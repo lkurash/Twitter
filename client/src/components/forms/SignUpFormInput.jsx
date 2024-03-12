@@ -6,11 +6,11 @@ const SignUpFormInput = ({
   checkUserInfo,
   onClick,
   name,
+  userName,
   password,
   email,
   length,
 }) => {
-  
   const getClassName = () => {
     if (activeInput) {
       return "signup-form-input signup-input-active";
@@ -21,6 +21,7 @@ const SignUpFormInput = ({
       return "signup-form-input";
     }
   };
+
   return (
     <>
       <div onClick={onClick} className={getClassName()}>
@@ -35,7 +36,7 @@ const SignUpFormInput = ({
           </div>
         )}
         <input
-          name="signUpFormInput"
+          name={name}
           placeholder={activeInput ? "" : placeholder}
           type={password ? "password" : "text"}
           value={value}
