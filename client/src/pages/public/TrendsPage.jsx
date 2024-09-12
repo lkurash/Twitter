@@ -1,0 +1,65 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import { useDispatch } from "react-redux";
+import { tweetActions } from "../../redux/tweet/tweet.actions";
+
+import getAuthUserID from "../../utils/getAuthUserID";
+
+import TweetsForTrends from "../../components/Tweets/TweetsForTrends";
+import DotMenuButton from "../../components/buttons/DotMenuButton";
+
+import searchIcon from "../../components/Imgs/zoom__icon.png";
+import arrowLeft from "../../components/Imgs/arrow_left_icon.png";
+
+const TrendsPage = () => {
+  const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const authUserID = getAuthUserID();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const trend = searchParams.get("trend");
+
+  useEffect(() => {
+    if (authUserID) {
+      dispatch(tweetActions.getTweetsForTrendsAuthUser(trend));
+      setIsLoading(true);
+    } else {
+      dispatch(tweetActions.getTweetsForTrends(trend));
+      setIsLoading(true);
+    }
+  }, [trend]);
+
+  return (
+    <div className="main-content-block">
+      <div className="page-trands-search-block" data-testid="trends-page">
+        <div
+          className="main-search-block-button-return"
+          onClick={() => navigate(-1)}
+        >
+          <img src={arrowLeft} alt="Button return" />
+        </div>
+        <div className="main-search-form-explore">
+          <div className="main-search-form">
+            <img
+              src={searchIcon}
+              alt="search_icon"
+              className="main-search-icon"
+            />
+            <div className="main-input">
+              {" "}
+              <p>#{trend}</p>
+            </div>
+          </div>
+        </div>
+        <div className="mobile-button-main-settings">
+          <DotMenuButton />
+        </div>
+      </div>
+      {isLoading && <TweetsForTrends trend={trend} />}
+    </div>
+  );
+};
+
+export default TrendsPage;
